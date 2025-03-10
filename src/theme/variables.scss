@@ -1,0 +1,54 @@
+:root {
+  // Ajusta estos valores con el color de tu logo
+  --ion-background-color: #f0f0f0;
+  --ion-color-primary: #2F88B0;
+  --ion-color-primary-rgb: 47, 136, 176;
+
+  /* Opcional: define colores secundarios o de texto */
+  --ion-color-secondary: #2F88B0;
+  --ion-text-color: #444;
+}
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--ion-background-color);
+  color: var(--ion-text-color);
+}
+
+/* Header (similar al estilo de dunks1980.com: oscuro y minimalista) */
+ion-toolbar {
+  --background: var(--ion-color-primary);
+  color: #fff;
+}
+
+/* Animación para entrada suave */
+.fadeInUp {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Efecto de hover para las tarjetas */
+ion-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+ion-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Ajustes para los ion-chip (en la sección de tecnologías) */
+ion-chip {
+  margin: 0.3rem;
+  font-weight: 500;
+}

@@ -1,0 +1,29 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title class="header-title">Mi Portafolio</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen class="ion-padding">
+  <div class="ion-padding about-page">
+    <!-- Tarjeta principal con animación de aparición -->
+    <ion-card class="fadeInUp">
+      <!-- Imagen/Logo -->
+      <ion-img src="assets/logo/logo-jnvr2.png" alt="JNVR Logo" class="animate-image"></ion-img>
+      <!-- Contenido principal -->
+      <ion-card-content>
+        <!-- Contenedor para el texto animado usando *ngFor -->
+        <div class="hero-text">
+          <ng-container *ngFor="let word of words; let i = index">
+            <span [ngClass]="{'visible': i < visibleWordsCount}" class="word">{{ word }}</span>
+            <!-- Si no es la última palabra, se inserta un espacio -->
+            <ng-container *ngIf="i < words.length - 1">&nbsp;</ng-container>
+          </ng-container>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <app-experience class="hero fadeInUp"></app-experience>
+  <app-projects class="hero fadeInUp"></app-projects>
+  <app-contact class="hero fadeInUp"></app-contact>
+</ion-content>
