@@ -5,26 +5,49 @@
 }
 
 .about-page {
-  background: #f5f7fa; /* Fondo suave */
   text-align: center;
 
   ion-card {
     margin: 0 auto;
-    max-width: 600px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--ion-background-color);
+    box-shadow: none; /* Remove the shadow */
   }
 
   ion-img {
+    width: 100%;
     height: auto;
-    margin: 1rem auto 0;
+    margin: 1rem;
     display: block;
+    order: 2;
   }
 
   ion-card-content {
+    order: 1; /* Ensure the text is on the left */
+
     .hero-text {
       font-size: 1.2rem;
       line-height: 1.4;
       text-align: justify;
       min-height: 5rem; /* Para mantener una altura estable */
+      color: var(--ion-text-color);
+    }
+  }
+
+  @media (max-width: 768px) {
+    ion-card {
+      flex-direction: column;
+    }
+
+    ion-img {
+      order: 1;
+    }
+
+    ion-card-content {
+      order: 2;
     }
   }
 }

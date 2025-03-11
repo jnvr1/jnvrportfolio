@@ -8,7 +8,7 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, Io
   templateUrl: './projects.page.html',
   styleUrls: ['./projects.page.scss'],
   standalone: true,
-  imports: [IonCardContent, IonLabel, IonChip, IonCardTitle, IonCardHeader, IonCard, CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule]
 })
 export class ProjectsPage implements OnInit {
 

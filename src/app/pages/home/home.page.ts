@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';  // Importa CommonModule
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonCardContent, IonImg, IonCard } from '@ionic/angular/standalone';
+import { IonContent, IonCardContent, IonImg, IonCard } from '@ionic/angular/standalone';
 import { ExperiencePage } from "../experience/experience.page";
 import { ContactPage } from '../contact/contact.page';
 import { ProjectsPage } from '../projects/projects.page';
@@ -10,11 +10,11 @@ import { ProjectsPage } from '../projects/projects.page';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   // Se agrega CommonModule para habilitar *ngFor y [ngClass]
-  imports: [CommonModule, IonHeader, IonToolbar, IonTitle, IonContent, ExperiencePage, ContactPage, ProjectsPage, IonCardContent, IonImg, IonCard],
+  imports: [CommonModule, IonContent, ExperiencePage, ContactPage, ProjectsPage, IonCardContent, IonImg, IonCard],
 })
 export class HomePage implements OnInit {
   // Texto completo a mostrar
-  fullText: string = "My name is Jonathan Noe Viramontes Ramirez, a software engineer passionate about technology and innovation. I love to create interactive applications and lead projects that make a positive impact.";
+  fullText: string = "Soy Jonathan Noe Viramontes Ramirez, Ingeniero de Software apasionado por la innovación. Me especializo en desarrollar microservicios con FastAPI, crear dashboards interactivos en Power BI y enseñar Python de forma remota. He colaborado con empresas como Fletes México, Museo La Rodadora, IA-Center y Bloomotion, transformando ideas en soluciones tecnológicas efectivas.";
 
   // Array de palabras a mostrar
   words: string[] = [];
