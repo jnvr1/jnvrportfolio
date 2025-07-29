@@ -14,4 +14,9 @@ describe('ExperiencePage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should render company name', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('h2')?.textContent).toContain('Fletes México');
+  });
 });

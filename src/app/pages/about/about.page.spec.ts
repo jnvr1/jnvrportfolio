@@ -14,4 +14,9 @@ describe('AboutPage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should prepare animated words on init', () => {
+    component.ngOnInit();
+    expect(component.wordsEls.length).toBe(component.fullText.split(' ').length);
+  });
 });

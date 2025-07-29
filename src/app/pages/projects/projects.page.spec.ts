@@ -14,4 +14,9 @@ describe('ProjectsPage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should render project title', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('h3')?.textContent).toContain('Vida Saludable');
+  });
 });

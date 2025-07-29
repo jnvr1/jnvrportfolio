@@ -15,4 +15,10 @@ describe('HomePage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should split text into words on init', () => {
+    component.ngOnInit();
+    expect(component.words.length).toBeGreaterThan(0);
+    expect(component.words).toEqual(component.fullText.split(' '));
+  });
 });
