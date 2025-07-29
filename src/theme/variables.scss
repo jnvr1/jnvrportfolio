@@ -1,21 +1,20 @@
 :root {
   /* Colores base */
-  --ion-background-color: #0a192f;
-  --ion-color-primary: #64ffda;
-  --ion-color-primary-rgb: 100, 255, 218;
-  --ion-color-secondary: #64ffda;
-  --ion-text-color: #ccd6f6;
-  --header-background: #0a192f;
+  --ion-background-color: #f2f4f8;
+  --ion-color-primary: #0066cc;
+  --ion-color-primary-rgb: 0, 102, 204;
+  --ion-color-secondary: #0066cc;
+  --ion-text-color: #333;
 }
 body {
-  font-family: 'Inter', Arial, sans-serif;
+  font-family: 'Poppins', Arial, sans-serif;
   background: var(--ion-background-color);
   color: var(--ion-text-color);
 }
 
 ion-toolbar {
-  --background: var(--header-background);
-  color: var(--ion-text-color);
+  --background: #fff;
+  color: var(--ion-color-primary);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -41,8 +40,6 @@ ion-toolbar {
 /* Efecto de hover para las tarjetas */
 ion-card {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  background: #112240;
-  color: var(--ion-text-color);
 }
 ion-card:hover {
   transform: translateY(-5px);

@@ -1,21 +1,14 @@
 ion-toolbar {
-  --background: var(--header-background);
-  color: var(--ion-text-color);
-  box-shadow: none;
+  --background: #fff;
+  color: var(--ion-color-primary);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 ion-title {
   font-weight: 600;
-  font-family: 'Fira Code', monospace;
-  color: var(--ion-color-primary);
 }
 
 ion-button {
-  color: var(--ion-text-color);
-  font-weight: 500;
-  font-family: 'Fira Code', monospace;
-}
-
-ion-button:hover {
   color: var(--ion-color-primary);
+  font-weight: 500;
 }
