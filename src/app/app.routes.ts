@@ -26,4 +26,8 @@ export const routes: Routes = [
     path: 'experience',
     loadComponent: () => import('./pages/experience/experience.page').then( m => m.ExperiencePage)
   },
+  {
+    path: '**',
+    loadComponent: () => import('./pages/not-found/not-found.page').then( m => m.NotFoundPage)
+  }
 ];
