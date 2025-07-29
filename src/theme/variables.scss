@@ -13,13 +13,18 @@
 body {
   font-family: 'Poppins', sans-serif;
   --ion-background-color: var(--ion-background-color2);
-  color: var(--ion-text-color);
+  /* Colores base */
+  --ion-background-color: #f2f4f8;
+  --ion-color-primary: #0066cc;
+  --ion-color-primary-rgb: 0, 102, 204;
+  --ion-color-secondary: #0066cc;
+  --ion-text-color: #333;
 }
 
-/* Header (similar al estilo de dunks1980.com: oscuro y minimalista) */
 ion-toolbar {
-  --background: var(--ion-color-primary);
-  color: #fff;
+  --background: #fff;
+  color: var(--ion-color-primary);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 
