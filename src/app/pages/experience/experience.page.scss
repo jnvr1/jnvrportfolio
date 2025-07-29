@@ -12,7 +12,7 @@
   top: 0;
   bottom: 0;
   width: 2px;
-  background: #ccc;
+  background: var(--ion-color-secondary);
 }
 
 .timeline-item {
@@ -27,12 +27,12 @@
   top: 0;
   width: 20px;
   height: 20px;
-  background: #007bff;
+  background: var(--ion-color-primary);
   border-radius: 50%;
 }
 
 .timeline-content {
-  background: #133849f3;
+  background: var(--card-bg);
   padding: 1rem 1.5rem;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -42,24 +42,24 @@
 }
 
 .timeline-content:hover {
-  background: linear-gradient(135deg, #2f87b085 30%, #1c5c8a70 100%);
+  background: var(--ion-color-primary);
 }
 
 .timeline-content h2 {
   margin: 0;
   font-size: 1.5rem;
-  color: #e9e9e9;
+  color: var(--ion-text-color);
 }
 
 .timeline-content h3 {
   margin: 0.5rem 0;
   font-size: 1.2rem;
-  color: #d3d3d3;
+  color: var(--ion-text-color);
 }
 
 .timeline-info {
   font-size: 0.9rem;
-  color: #e7e7e7;
+  color: var(--ion-text-color);
   margin-bottom: 0.5rem;
 }
 
@@ -87,7 +87,7 @@
   margin-top: 1rem;
 }
 .chip{
-  background: #007bff;
+  background: var(--ion-color-primary);
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 1rem;

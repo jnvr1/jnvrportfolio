@@ -1,16 +1,17 @@
-:root {
-  // Ajusta estos valores con el color de tu logo
-  --ion-background-color: linear-gradient(135deg, #2f87b085 30%, #1c5c8a70 100%);
-  --ion-background-color2: linear-gradient(135deg, #2f87b085 30%, #1c5c8a70 100%);
-  --ion-color-primary: #2F88B0;
-  --ion-color-primary-rgb: 47, 136, 176;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
-  /* Opcional: define colores secundarios o de texto */
-  --ion-color-secondary: #2F88B0;
-  --ion-text-color: #e0dede;
+:root {
+  --ion-background-color: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+  --ion-background-color2: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+  --ion-color-primary: #e63946;
+  --ion-color-primary-rgb: 230, 57, 70;
+
+  --ion-color-secondary: #457b9d;
+  --ion-text-color: #f1faee;
+  --card-bg: rgba(27, 38, 59, 0.85);
 }
 body {
-  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Poppins', sans-serif;
   --ion-background-color: var(--ion-background-color2);
   color: var(--ion-text-color);
 }
