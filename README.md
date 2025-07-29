@@ -2,6 +2,12 @@
 
 This project contains an Ionic/Angular application showcasing projects and experience.
 
+## Design
+
+The interface uses the **Poppins** font from Google Fonts and a clean light theme
+with a blue primary color. The layout has been simplified for a professional
+portfolio presentation.
+
 ## Setup
 
 Install dependencies:
