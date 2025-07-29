@@ -1,7 +1,7 @@
 ion-toolbar {
-  --background: #fff;
+  --background: #0a192f;
   color: var(--ion-color-primary);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 ion-title {
@@ -9,6 +9,11 @@ ion-title {
 }
 
 ion-button {
-  color: var(--ion-color-primary);
+  color: var(--ion-text-color);
   font-weight: 500;
+  --background: transparent;
+}
+
+ion-button:hover {
+  color: var(--ion-color-primary);
 }

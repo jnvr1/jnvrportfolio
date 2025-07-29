@@ -1,21 +1,21 @@
 :root {
   /* Colores base */
-  --ion-background-color: #f2f4f8;
-  --ion-color-primary: #0066cc;
-  --ion-color-primary-rgb: 0, 102, 204;
-  --ion-color-secondary: #0066cc;
-  --ion-text-color: #333;
+  --ion-background-color: #0a192f;
+  --ion-color-primary: #64ffda;
+  --ion-color-primary-rgb: 100, 255, 218;
+  --ion-color-secondary: #64ffda;
+  --ion-text-color: #ccd6f6;
 }
 body {
-  font-family: 'Poppins', Arial, sans-serif;
+  font-family: 'Inter', Arial, sans-serif;
   background: var(--ion-background-color);
   color: var(--ion-text-color);
 }
 
 ion-toolbar {
-  --background: #fff;
+  --background: #0a192f;
   color: var(--ion-color-primary);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 
