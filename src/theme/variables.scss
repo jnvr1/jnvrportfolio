@@ -1,15 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
 :root {
+  --ion-background-color: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+  --ion-background-color2: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+  --ion-color-primary: #e63946;
+  --ion-color-primary-rgb: 230, 57, 70;
+
+  --ion-color-secondary: #457b9d;
+  --ion-text-color: #f1faee;
+  --card-bg: rgba(27, 38, 59, 0.85);
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  --ion-background-color: var(--ion-background-color2);
   /* Colores base */
   --ion-background-color: #f2f4f8;
   --ion-color-primary: #0066cc;
   --ion-color-primary-rgb: 0, 102, 204;
   --ion-color-secondary: #0066cc;
   --ion-text-color: #333;
-}
-body {
-  font-family: 'Poppins', Arial, sans-serif;
-  background: var(--ion-background-color);
-  color: var(--ion-text-color);
 }
 
 ion-toolbar {

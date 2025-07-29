@@ -1,7 +1,7 @@
 ion-toolbar {
-  --background: #fff;
-  color: var(--ion-color-primary);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --background: var(--ion-color-primary);
+  color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 ion-title {
