@@ -13,8 +13,11 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    background-color: var(--ion-background-color);
     padding: 2%;
+    --background: transparent; /* Fondo transparente para el gradiente */
+    --box-shadow: none; /* Sin sombra para un efecto más limpio */
+    -webkit-box-shadow: none; /* Sin sombra para un efecto más limpio */
+    box-shadow: none;
   }
 
   ion-img {

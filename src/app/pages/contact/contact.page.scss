@@ -8,7 +8,7 @@
 
 /* Estilos para el ion-card modificado */
 .custom-card {
-  background: #004464f3;; /* Fondo blanco con ligera transparencia para resaltar sobre el gradiente */
+  background: #507494;; /* Fondo blanco con ligera transparencia para resaltar sobre el gradiente */
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   width: 90%;
@@ -25,7 +25,7 @@ ion-card-header {
 ion-card-title {
   font-size: 1.8rem;
   font-weight: bold;
-  color: var(--ion-text-color);
+  color: white;
 }
 
 /* Contenido del card */
@@ -44,7 +44,7 @@ ion-card-title {
   width: 100px; /* Ajusta el tamaño de la imagen */
   height: auto;
   border-radius: 50%;
-  border: 2px solid var(--ion-color-primary);
+  border: 2px solid #30566f;
 }
 
 .contact-info {
@@ -59,7 +59,7 @@ ion-item {
 }
 
 ion-label a {
-  color: var(--ion-color-text);
+  color: white;
   text-decoration: none;
   font-weight: 500;
 }
@@ -69,4 +69,7 @@ ion-label a:hover {
 }
 ion-list{
   background-color:  transparent;
+}
+ion-icon{
+  color: #30566f;
 }
