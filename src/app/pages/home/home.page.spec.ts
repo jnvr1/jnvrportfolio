@@ -21,4 +21,12 @@ describe('HomePage', () => {
     expect(component.words.length).toBeGreaterThan(0);
     expect(component.words).toEqual(component.fullText.split(' '));
   });
+
+  it('should clear timeouts on destroy', () => {
+    component.ngOnInit();
+    component.ionViewDidEnter();
+    expect((component as any).timeouts.length).toBeGreaterThan(0);
+    component.ngOnDestroy();
+    expect((component as any).timeouts.length).toBe(0);
+  });
 });
