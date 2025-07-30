@@ -23,20 +23,18 @@ ion-toolbar {
 
 
 /* Animación para entrada suave */
-.fadeInUp {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 0.8s forwards;
+@mixin fadeInUp($duration: 0.5s) {
+  animation: fadeInUp $duration ease both;
 }
 
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translate3d(0, 20%, 0);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
   }
 }
 

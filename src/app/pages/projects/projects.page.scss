@@ -9,15 +9,19 @@
   position: relative;
   overflow: hidden;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
   cursor: pointer;
   height: 250px;
+  display: flex; /* Para centrar contenido */
+  justify-content: center; /* Centrar horizontalmente */
+  align-items: center; /* Centrar verticalmente */
+  background-color: #004464f3; /* Usar el color primario */
 }
 
 .work-card img {
-  width: 100%;
-  height: auto;
+  max-width: 100%;
+  max-height: 100%;
   display: block;
   transition: transform 0.3s ease;
 }

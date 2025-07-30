@@ -14,13 +14,13 @@
     align-items: center;
     justify-content: center;
     background-color: var(--ion-background-color);
-    box-shadow: none; /* Remove the shadow */
+    padding: 2%;
   }
 
   ion-img {
     width: 100%;
     height: auto;
-    margin: 1rem;
+    margin: .5rem;
     display: block;
     order: 2;
   }
@@ -40,6 +40,7 @@
   @media (max-width: 768px) {
     ion-card {
       flex-direction: column;
+      box-shadow: none; /* Remove the shadow */
     }
 
     ion-img {
