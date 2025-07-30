@@ -5,7 +5,6 @@
   --ion-color-primary-rgb: 0, 102, 204;
   --ion-color-secondary: #0066cc;
   --ion-text-color: #333;
-  --font-mono: 'Fira Code', monospace;
 }
 body {
   font-family: 'Poppins', Arial, sans-serif;
@@ -49,30 +48,4 @@ ion-card:hover {
 ion-chip {
   margin: 0.3rem;
   font-weight: 500;
-}
-
-/* Estilo para titulos numerados similar a brittanychiang.com */
-.numbered-heading {
-  position: relative;
-  margin: 2rem 0;
-  font-size: 2rem;
-  font-weight: 600;
-
-  &:before {
-    counter-increment: section;
-    content: "0" counter(section) ".";
-    margin-right: 0.5rem;
-    color: var(--ion-color-primary);
-    font-family: var(--font-mono);
-  }
-
-  &:after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: calc(100% + 1rem);
-    width: 200px;
-    height: 1px;
-    background: #ccc;
-  }
 }
