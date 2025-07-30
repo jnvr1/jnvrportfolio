@@ -3,7 +3,6 @@ import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { Router, RouterModule } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HeaderComponent } from './header.component';
-import { RouterTestingModule } from '@angular/router/testing';
 
 describe('HeaderComponent', () => {
   beforeEach(async () => {

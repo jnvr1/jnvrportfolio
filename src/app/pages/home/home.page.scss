@@ -29,11 +29,12 @@
     order: 1; /* Ensure the text is on the left */
 
     .hero-text {
-      font-size: 1.2rem;
-      line-height: 1.4;
+      font-size: 1.5rem;
+      line-height: 1.5;
       text-align: justify;
       min-height: 5rem; /* Para mantener una altura estable */
       color: var(--ion-text-color);
+      font-family: var(--font-mono);
     }
   }
 
@@ -87,3 +88,5 @@
 .animate-image {
   animation: fadeInUp 0.8s ease-out forwards;
 }
+
+.cta-container { margin-top: 1rem; text-align: center; }

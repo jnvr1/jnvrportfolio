@@ -17,7 +17,7 @@ describe('ContactPage', () => {
 
   it('should render title', () => {
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('ion-card-title')?.textContent).toContain('Contáctame');
+    expect(compiled.querySelector('ion-card-title')?.textContent).toContain('Enlaces');
   });
 
   it('should contain mailto link with expected email', () => {
