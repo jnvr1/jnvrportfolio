@@ -8,7 +8,7 @@
 
 /* Estilos para el ion-card modificado */
 .custom-card {
-  background: #133849f3;; /* Fondo blanco con ligera transparencia para resaltar sobre el gradiente */
+  background: #004464f3;; /* Fondo blanco con ligera transparencia para resaltar sobre el gradiente */
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   width: 90%;
@@ -54,6 +54,8 @@ ion-card-title {
 /* Estilos para los ion-item y enlaces */
 ion-item {
   --padding-start: 0.5rem;
+  --background: transparent;
+  --border-color: transparent;
 }
 
 ion-label a {
@@ -66,5 +68,5 @@ ion-label a:hover {
   text-decoration: underline;
 }
 ion-list{
-  background-color: #133849f3;
+  background-color:  transparent;
 }

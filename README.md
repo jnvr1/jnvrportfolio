@@ -1,6 +1,7 @@
 # JNVR Portfolio
 
-This project contains an Ionic/Angular application showcasing projects and experience.
+This project contains an Ionic/Angular application showcasing projects and experience. Some design elements are inspired by [Brittany Chiang's portfolio](https://brittanychiang.com).
+
 
 ## Design
 
@@ -55,3 +56,7 @@ To deploy to GitHub Pages:
 ```bash
 npm run deploy
 ```
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).

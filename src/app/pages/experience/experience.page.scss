@@ -12,7 +12,7 @@
   top: 0;
   bottom: 0;
   width: 2px;
-  background: #ccc;
+  background: #91b9d4;
 }
 
 .timeline-item {
@@ -27,12 +27,12 @@
   top: 0;
   width: 20px;
   height: 20px;
-  background: #007bff;
+  background: #71a1bd;
   border-radius: 50%;
 }
 
 .timeline-content {
-  background: #133849f3;
+  background: #004464f3;
   padding: 1rem 1.5rem;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -42,7 +42,7 @@
 }
 
 .timeline-content:hover {
-  background: linear-gradient(135deg, #2f87b085 30%, #1c5c8a70 100%);
+  background: linear-gradient(135deg, #2f87b085 40%, #1c5c8a70 180%);
 }
 
 .timeline-content h2 {
