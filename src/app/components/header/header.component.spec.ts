@@ -3,12 +3,22 @@ import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { Router, RouterModule } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HeaderComponent } from './header.component';
-import { RouterTestingModule } from '@angular/router/testing';
+
+@Component({template: ''})
+class DummyComponent {}
 
 describe('HeaderComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HeaderComponent]
+      imports: [
+        HeaderComponent,
+        RouterTestingModule.withRoutes([
+          { path: 'home', component: DummyComponent },
+          { path: 'about', component: DummyComponent },
+          { path: 'projects', component: DummyComponent },
+          { path: 'contact', component: DummyComponent },
+        ])
+      ]
     }).compileComponents();
   });
 
