@@ -2,10 +2,10 @@
   <ion-toolbar>
     <ion-title>JNVR</ion-title>
     <ion-buttons slot="end">
-      <ion-button routerLink="/home">Home</ion-button>
-      <ion-button routerLink="/about">About</ion-button>
-      <ion-button routerLink="/projects">Projects</ion-button>
-      <ion-button routerLink="/contact">Contact</ion-button>
+      <ion-button routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</ion-button>
+      <ion-button routerLink="/about" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">About</ion-button>
+      <ion-button routerLink="/projects" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Projects</ion-button>
+      <ion-button routerLink="/contact" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Contact</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
