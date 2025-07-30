@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonImg, IonCardSubtitle, IonHeader, IonToolbar } from '@ionic/angular/standalone';
@@ -10,7 +10,7 @@ import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonImg, IonCardSu
   standalone: true,
   imports: [IonImg, IonCardContent, IonCard, CommonModule, FormsModule]
 })
-export class AboutPage implements OnInit {
+export class AboutPage implements OnInit, OnDestroy {
 
   // Texto completo a mostrar
   fullText: string = "My name is Jonathan Noe Viramontes Ramirez, a software engineer passionate about technology and innovation. I love to create interactive applications and lead projects that make a positive impact.";
@@ -20,6 +20,7 @@ export class AboutPage implements OnInit {
 
   // Variable que se inyecta en el template mediante [innerHTML]
   displayedText: string = '';
+  private timeouts: any[] = [];
 
   ngOnInit() {
     // Separamos el texto en palabras y las envolvemos en un span con clase "word"
@@ -32,16 +33,23 @@ export class AboutPage implements OnInit {
         this.wordsEls[index] = this.wordsEls[index].replace('class="word"', 'class="word visible"');
         // Actualizamos el contenido a mostrar
         this.displayedText = this.wordsEls.join('');
-        setTimeout(() => {
+        const id = setTimeout(() => {
           updateArrayWithDelay(index + 1);
         }, 100); // Ajusta este valor (30ms) según la velocidad deseada
+        this.timeouts.push(id);
       }
     };
 
     // Iniciamos la animación con un pequeño retraso
-    setTimeout(() => {
+    const startId = setTimeout(() => {
       updateArrayWithDelay();
     }, 60);
+    this.timeouts.push(startId);
+  }
+
+  ngOnDestroy() {
+    this.timeouts.forEach(clearTimeout);
+    this.timeouts = [];
   }
 
 }

@@ -19,4 +19,11 @@ describe('AboutPage', () => {
     component.ngOnInit();
     expect(component.wordsEls.length).toBe(component.fullText.split(' ').length);
   });
+
+  it('should clear timeouts on destroy', () => {
+    component.ngOnInit();
+    expect((component as any).timeouts.length).toBeGreaterThan(0);
+    component.ngOnDestroy();
+    expect((component as any).timeouts.length).toBe(0);
+  });
 });
