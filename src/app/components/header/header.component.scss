@@ -1,0 +1,14 @@
+ion-toolbar {
+  --background: #fff;
+  color: var(--ion-color-primary);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+ion-title {
+  font-weight: 600;
+}
+
+ion-button {
+  color: var(--ion-color-primary);
+  font-weight: 500;
+}
