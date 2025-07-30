@@ -1,4 +1,7 @@
-import { TestBed } from '@angular/core/testing';
+import { Component } from '@angular/core';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { Router, RouterModule } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { HeaderComponent } from './header.component';
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -22,4 +25,16 @@ describe('HeaderComponent', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelectorAll('ion-button').length).toBeGreaterThan(0);
   });
+
+  it('should apply active class to current route button', fakeAsync(() => {
+    const fixture = TestBed.createComponent(HeaderComponent);
+    const router = TestBed.inject(Router);
+    router.navigateByUrl('/about');
+    tick();
+    fixture.detectChanges();
+
+    const buttons = fixture.nativeElement.querySelectorAll('ion-button');
+    const aboutButton = buttons[1];
+    expect(aboutButton.classList.contains('active')).toBeTrue();
+  }));
 });

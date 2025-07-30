@@ -12,3 +12,8 @@ ion-button {
   color: var(--ion-color-primary);
   font-weight: 500;
 }
+
+ion-button.active {
+  background: var(--ion-color-primary);
+  color: #fff;
+}
