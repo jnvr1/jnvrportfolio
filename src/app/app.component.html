@@ -1,3 +1,9 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <a class="skip-link" href="#main-content">Saltar al contenido principal</a>
+  <ion-router-outlet id="main-content" role="main" aria-label="Contenido principal" tabindex="-1"></ion-router-outlet>
+
+  <!-- Toggle de tema (Light/Dark) -->
+  <ion-button class="theme-toggle" fill="solid" size="small" (click)="toggleTheme()" aria-label="Alternar tema">
+    <ion-icon [name]="isDark ? 'sunny' : 'moon'" slot="icon-only"></ion-icon>
+  </ion-button>
 </ion-app>

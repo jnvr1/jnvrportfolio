@@ -1,24 +1,57 @@
-<ion-content fullscreen class="ion-padding">
-  <div class="about-page">
-    <!-- Tarjeta principal con animación de aparición -->
-    <ion-card class="fadeInUp">
-      <!-- Imagen/Logo -->
-      <ion-img src="assets/logo/logo-jnvr.svg" alt="JNVR Logo" class="animate-image"></ion-img>
+<ion-content fullscreen class="home-landing">
+  <!-- Fondo de red (líneas y nodos) -->
+  <div class="network-bg" aria-hidden="true"></div>
 
-      <!-- Contenido principal -->
-      <ion-card-content>
-        <!-- Contenedor para el texto animado usando *ngFor -->
-        <div class="hero-text">
-          <ng-container *ngFor="let word of words; let i = index">
-            <span [ngClass]="{'visible': i < visibleWordsCount}" class="word">{{ word }}</span>
-            <!-- Si no es la última palabra, se inserta un espacio -->
-            <ng-container *ngIf="i < words.length - 1">&nbsp;</ng-container>
-          </ng-container>
-        </div>
-      </ion-card-content>
-    </ion-card>
-  </div>
-  <app-projects class="hero fadeInUp"></app-projects>
-  <app-experience class="hero fadeInUp"></app-experience>
-  <app-contact class="hero fadeInUp"></app-contact>
+  <!-- Elementos geométricos flotantes -->
+  <div class="geo-decor geo-1" aria-hidden="true"></div>
+  <div class="geo-decor geo-2" aria-hidden="true"></div>
+  <div class="geo-decor geo-3" aria-hidden="true"></div>
+
+  <!-- HERO -->
+  <section class="hero-section">
+    <div class="logo-hero" aria-label="Logo JNVR animado">
+      <svg viewBox="0 0 600 200" role="img" aria-labelledby="logoTitle">
+        <title id="logoTitle">JNVR</title>
+        <text x="50" y="140" class="logo-stroke" [@drawLine]>JNVR</text>
+      </svg>
+    </div>
+
+    <h1 class="hero-title" [@textReveal] aria-label="Nombre completo">
+      <span class="word" style="--i:0">Jonathan</span>
+      <span class="word" style="--i:1">Noe</span>
+      <span class="word" style="--i:2">Viramontes</span>
+      <span class="word" style="--i:3">R.</span>
+    </h1>
+
+    <p class="hero-subtitle">
+      Ingeniero de Software — Microservicios FastAPI • Ionic • Power BI
+    </p>
+
+    <div class="cta-group">
+      <a class="btn-geom primary" href="/projects">Ver Proyectos</a>
+      <a class="btn-geom outline" href="/contact">Contáctame</a>
+    </div>
+
+    <!-- Indicador de scroll -->
+    <div class="scroll-indicator" aria-hidden="true">
+      <span class="wheel"></span>
+    </div>
+  </section>
+
+  <!-- ONE-PAGE SECTIONS -->
+  <section id="projects" class="onepage-section">
+    <h2 class="section-title">Projects</h2>
+    <app-projects></app-projects>
+  </section>
+
+  <section id="experience" class="onepage-section">
+    <h2 class="section-title">Experience</h2>
+    <app-experience></app-experience>
+  </section>
+
+  <section id="contact" class="onepage-section">
+    <h2 class="section-title">Contact</h2>
+    <app-contact></app-contact>
+  </section>
 </ion-content>
+

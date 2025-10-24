@@ -1,0 +1,110 @@
+@keyframes shimmerMove {
+  from { background-position: -200% 0; }
+  to { background-position: 200% 0; }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: .6; }
+  50% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); opacity: .6; }
+}
+
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+
+.geo-skel {
+  --skel-bg: color-mix(in oklab, var(--ion-background-color) 75%, #ffffff);
+  --skel-fg: color-mix(in oklab, var(--ion-color-primary) 30%, var(--ion-text-color));
+  --skel-line: color-mix(in oklab, var(--ion-text-color) 20%, transparent);
+  --skel-shimmer: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent);
+  --radius: var(--radius-sm, 8px);
+  display: block;
+}
+
+.dark .geo-skel {
+  --skel-bg: color-mix(in oklab, var(--ion-background-color) 70%, #0b1117);
+  --skel-fg: color-mix(in oklab, var(--ion-color-primary) 55%, #7aa3b9);
+  --skel-line: color-mix(in oklab, var(--ion-text-color) 10%, transparent);
+  --skel-shimmer: linear-gradient(90deg, transparent, rgba(255,255,255,.06), transparent);
+}
+
+/* Utilidad shimmer */
+.shimmer {
+  background: linear-gradient(90deg, transparent, transparent) , var(--skel-bg);
+  background-image: var(--skel-shimmer);
+  background-size: 200% 100%;
+  animation: shimmerMove 1.4s linear infinite;
+}
+
+.pulse { animation: pulse 1.2s ease-in-out infinite; }
+
+/* =============== Variantes ================= */
+.v-card .frame {
+  position: relative;
+  border-radius: var(--radius);
+  padding: 12px;
+  overflow: hidden;
+}
+.v-card .media {
+  height: 140px;
+  border-radius: var(--radius);
+}
+.v-card .lines { padding: 10px 4px 4px; }
+.v-card .l {
+  display: block;
+  height: 10px;
+  border-radius: 6px;
+  margin: 8px 0;
+}
+.v-card .l1 { width: 75%; }
+.v-card .l2 { width: 50%; }
+.v-card .l3 { width: 35%; }
+.v-card .build-lines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.v-card .build-lines polyline {
+  stroke: var(--skel-line);
+  stroke-width: 2;
+  fill: none;
+  stroke-dasharray: 260;
+  stroke-dashoffset: 260;
+  animation: draw 900ms ease-out forwards;
+}
+.v-card .build-lines polyline:nth-child(2) { animation-delay: 100ms; }
+.v-card .build-lines polyline:nth-child(3) { animation-delay: 200ms; }
+
+.v-list .list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+.v-list li { display: grid; grid-template-columns: 16px 1fr; gap: 10px; align-items: center; }
+.v-list .dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--skel-fg);
+}
+.v-list .bar { height: 10px; border-radius: 6px; }
+
+.v-text .text { display: grid; gap: 10px; }
+.v-text .row { height: 12px; border-radius: 6px; }
+.v-text .short { width: 60%; }
+
+.v-image .image {
+  height: 180px;
+  border-radius: var(--radius);
+}
+.v-image .build-lines { width: 100%; height: 0; }
+.v-image .build-lines polyline {
+  stroke: var(--skel-line);
+  stroke-width: 2;
+  fill: none;
+  stroke-dasharray: 220;
+  stroke-dashoffset: 220;
+  animation: draw 900ms ease-out forwards;
+}
+

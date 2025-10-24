@@ -1,63 +1,133 @@
-.my-work-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  padding: 2rem;
-}
+.projects { padding: var(--space-3) var(--space-4); }
 
-.work-card {
+/* Filtros */
+.filters {
+  display: flex; flex-wrap: wrap; gap: var(--space-1);
+  margin-bottom: var(--space-3);
+}
+.filter-chip {
+  --background: var(--surface-1);
+  --color: var(--ion-text-color);
+  padding-inline: var(--space-1);
+  min-height: 44px; min-width: 44px;
+  border: var(--border-width-1) solid var(--border-color);
+  border-radius: var(--radius-xs);
+  box-shadow: var(--shadow-sm);
+  clip-path: polygon(0 0, calc(100% - var(--space-1)) 0, 100% var(--space-1), 100% 100%, 0 100%);
+  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base), background var(--transition-base);
+}
+.filter-chip:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.filter-chip.active { --background: var(--ion-color-primary); --color: var(--ion-color-primary-contrast); border-color: var(--ion-color-primary); }
+
+/* Bento */
+.bento-wrapper { position: relative; }
+.connection-overlay {
+  position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity var(--transition-base);
+  background:
+    linear-gradient(90deg, color-mix(in oklab, var(--ion-color-primary) 10%, transparent) 1px, transparent 1px) 0 0/120px 120px,
+    linear-gradient(0deg, color-mix(in oklab, var(--ion-color-primary) 10%, transparent) 1px, transparent 1px) 0 0/120px 120px;
+  mask-image: radial-gradient(ellipse at center, black, transparent 70%);
+  z-index: 0;
+}
+.connection-overlay.active { opacity: .4; }
+
+.bento-grid {
   position: relative;
-  overflow: hidden;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-  cursor: pointer;
-  height: 250px;
-  display: flex; /* Para centrar contenido */
-  justify-content: center; /* Centrar horizontalmente */
-  align-items: center; /* Centrar verticalmente */
-  background-color: #7da8c6; /* Usar el color primario */
+  z-index: 1;
+  display: grid;
+  grid-auto-flow: dense;
+  gap: var(--space-3);
+  /* Evita superposiciones: las filas crecen con el contenido */
+  grid-auto-rows: minmax(240px, auto);
 }
 
-.work-card img {
-  max-width: 100%;
-  max-height: 100%;
-  display: block;
-  transition: transform 0.3s ease;
-}
+/* Columnas por breakpoint (uniformes) */
+@media (max-width: 575.98px) { .bento-grid { grid-template-columns: 1fr; } }
+@media (min-width: 576px) and (max-width: 767.98px) { .bento-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 768px) and (max-width: 1023.98px) { .bento-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1024px) and (max-width: 1439.98px) { .bento-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 1440px) { .bento-grid { grid-template-columns: repeat(6, 1fr); } }
+@media (min-width: 1440px) { .bento-grid { grid-template-columns: repeat(14, 1fr); } }
+@media (min-width: 1920px) { .bento-grid { grid-template-columns: repeat(16, 1fr); } }
 
-.work-card:hover {
-  transform: translateY(-5px);
-}
-
-.work-card:hover img {
-  transform: scale(1.05);
-}
-
-.card-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.7);
-  color: #fff;
-  padding: 1rem;
+.bento-item {
+  position: relative;
+  grid-column: span 1;
+  /* Animación controlada por IntersectionObserver */
   opacity: 0;
-  transition: opacity 0.3s ease;
-  text-align: center;
+  transform: translateY(12px) scale(.985);
+  transition: opacity 520ms var(--transition-curve), transform 520ms var(--transition-curve);
+}
+.bento-item.in-view { opacity: 1; transform: none; }
+/* Tamaños responsivos: en móvil todos iguales; en desktop se activan variantes */
+@media (max-width: 1023.98px) {
+  .size-wide, .size-large { grid-column: span 1; }
+  .size-tall { grid-row: auto; }
+}
+@media (min-width: 1024px) {
+  .size-wide { grid-column: span 2; }
+  .size-tall { grid-row: span 2; }
+  .size-large { grid-column: span 2; grid-row: span 2; }
 }
 
-.work-card:hover .card-overlay {
-  opacity: 1;
-}
+/* itemIn keyframes reemplazado por IntersectionObserver */
 
-.card-overlay h3 {
-  margin: 0;
-  font-size: 1.2rem;
-  font-weight: bold;
-}
+/* Hover connections (resaltado de relacionados) */
+.bento-item.related { outline: var(--border-width-2) dashed color-mix(in oklab, var(--ion-color-primary) 40%, transparent); outline-offset: -2px; }
+.bento-item.active { outline: var(--border-width-2) solid color-mix(in oklab, var(--ion-color-primary) 60%, transparent); box-shadow: 0 0 0 3px color-mix(in oklab, var(--ion-color-primary) 20%, transparent); }
 
-.card-overlay p {
-  margin: 0.5rem 0 0;
-  font-size: 0.95rem;
+/* Skeleton */
+.bento-item.loading app-geometric-card { opacity: 0; pointer-events: none; }
+.skeleton-card {
+  position: absolute; inset: 0; border-radius: var(--radius-sm);
+  border: var(--border-width-1) solid var(--border-color);
+  overflow: hidden; background: var(--surface-2);
 }
+.skeleton-media {
+  height: 60%; background:
+    linear-gradient(120deg, transparent 0%, color-mix(in oklab, var(--ion-text-color) 6%, transparent) 20%, transparent 40%),
+    linear-gradient(0deg, color-mix(in oklab, var(--ion-text-color) 8%, transparent), color-mix(in oklab, var(--ion-text-color) 8%, transparent));
+  animation: shimmer 1.2s linear infinite;
+  clip-path: polygon(0 0, calc(100% - var(--space-2)) 0, 100% var(--space-2), 100% 100%, 0 100%);
+}
+.skeleton-lines { padding: var(--space-2); display: grid; gap: .5rem; }
+.skeleton-lines .line { height: 10px; border-radius: 6px; background: color-mix(in oklab, var(--ion-text-color) 8%, transparent); }
+.skeleton-lines .l1 { width: 80%; }
+.skeleton-lines .l2 { width: 60%; }
+.skeleton-lines .l3 { width: 40%; }
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+/* Modal detalle (glass) */
+ion-modal::part(backdrop) { background: radial-gradient( circle at 50% 20%, rgba(0,0,0,.35), rgba(0,0,0,.6)); opacity: 1; }
+ion-modal::part(content) {
+  /* Evita colapsar la altura cuando hay ion-content dentro */
+  --height: 80vh;
+  --max-height: 90vh;
+  --width: min(900px, 95vw);
+  --border-radius: var(--radius-md);
+  background: transparent;
+}
+.detail-content { --background: transparent; }
+.detail-card.glass {
+  background: color-mix(in oklab, var(--surface-1) 30%, transparent);
+  border: var(--border-width-1) solid color-mix(in oklab, var(--border-color) 60%, transparent);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(14px) saturate(1.2);
+}
+.detail-media img { width: 100%; border-bottom: var(--border-width-1) solid var(--border-color); display: block; }
+.detail-media { max-height: 40vh; overflow: hidden; }
+.detail-media img { height: 100%; object-fit: cover; }
+.detail-body { padding: var(--space-2); }
+.detail-body h3 { margin: 0 0 .25rem; font-weight: 800; }
+.detail-tags { margin-top: var(--space-1); display: flex; flex-wrap: wrap; gap: .35rem; }
+.detail-about { margin: .25rem 0 .5rem; }
+.detail-features { margin: .25rem 0 .75rem; padding-left: 1.1rem; }
+.detail-features li { margin: .15rem 0; }
+.detail-actions { margin-top: var(--space-2); display: flex; gap: .5rem; flex-wrap: wrap; }
+.detail-meta { display: flex; gap: .5rem; flex-wrap: wrap; margin: 0 0 .5rem; }
+.pill { background: var(--surface-2); border: var(--border-width-1) solid var(--border-color); border-radius: 999px; padding: .15rem .5rem; font-size: .8rem; }
+.detail-outcomes { margin: .25rem 0 .75rem; padding-left: 1.1rem; }
+.detail-outcomes li { margin: .15rem 0; }
+.detail-gallery { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(160px, 1fr); gap: .5rem; overflow-x: auto; padding-bottom: .25rem; }
+.detail-gallery img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-xs); border: var(--border-width-1) solid var(--border-color); }

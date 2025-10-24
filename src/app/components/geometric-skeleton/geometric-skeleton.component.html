@@ -1,0 +1,47 @@
+<div class="geo-skel" [ngClass]="'v-' + variant">
+  <!-- Variante: Tarjeta con corte geométrico -->
+  <ng-container *ngIf="variant === 'card'">
+    <div class="frame clip-corner-tl glass-effect">
+      <div class="media shimmer"></div>
+      <div class="lines">
+        <span class="l l1 shimmer"></span>
+        <span class="l l2 shimmer"></span>
+        <span class="l l3 shimmer"></span>
+      </div>
+      <svg class="build-lines" viewBox="0 0 300 160" aria-hidden="true">
+        <polyline points="6,6 220,6 294,34"/>
+        <polyline points="6,50 140,50 200,80"/>
+        <polyline points="6,100 120,100 200,140"/>
+      </svg>
+    </div>
+  </ng-container>
+
+  <!-- Variante: Lista (tres filas) -->
+  <ng-container *ngIf="variant === 'list'">
+    <ul class="list">
+      <li *ngFor="let _ of [0,1,2]">
+        <span class="dot pulse"></span>
+        <span class="bar shimmer"></span>
+      </li>
+    </ul>
+  </ng-container>
+
+  <!-- Variante: Texto -->
+  <ng-container *ngIf="variant === 'text'">
+    <div class="text">
+      <span class="row shimmer r1"></span>
+      <span class="row shimmer r2"></span>
+      <span class="row shimmer r3"></span>
+      <span class="row shimmer r4 short"></span>
+    </div>
+  </ng-container>
+
+  <!-- Variante: Imagen -->
+  <ng-container *ngIf="variant === 'image'">
+    <div class="image clip-corner-br shimmer"></div>
+    <svg class="build-lines" viewBox="0 0 300 160" aria-hidden="true">
+      <polyline points="6,6 220,6 294,34"/>
+    </svg>
+  </ng-container>
+</div>
+

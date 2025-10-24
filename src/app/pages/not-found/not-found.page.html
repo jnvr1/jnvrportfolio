@@ -1,7 +1,44 @@
-<ion-content class="ion-padding">
-  <div class="not-found">
-    <ion-text color="medium">
-      <h2>Página no encontrada</h2>
+<ion-content class="ion-padding not-found-content grid-bg" fullscreen>
+  <div class="not-found-container">
+    <!-- 404 con líneas geométricas -->
+    <section class="hero-404">
+      <svg class="digits" viewBox="0 0 720 220" role="img" aria-label="404">
+        <!-- 4 izquierdo -->
+        <g class="digit" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="120,20 120,120 200,120"></polyline>
+          <line x1="200" y1="20" x2="200" y2="200"></line>
+        </g>
+        <!-- 0 -->
+        <g class="digit">
+          <ellipse cx="360" cy="110" rx="80" ry="90"></ellipse>
+        </g>
+        <!-- 4 derecho -->
+        <g class="digit" transform="translate(320,0)" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="120,20 120,120 200,120"></polyline>
+          <line x1="200" y1="20" x2="200" y2="200"></line>
+        </g>
+      </svg>
+    </section>
+
+    <!-- Mensaje de error estilo tech -->
+    <ion-text>
+      <p class="tech-message">Ruta no encontrada: enlace fuera de circuito.</p>
+      <p class="tech-sub">Error 404 · Verifica la URL o regresa al inicio.</p>
     </ion-text>
+
+    <!-- Circuito desconectado -->
+    <div class="circuit">
+      <svg class="circuit-svg" viewBox="0 0 420 80" aria-hidden="true">
+        <circle cx="40" cy="40" r="10"></circle>
+        <circle cx="380" cy="40" r="10"></circle>
+        <line class="trace moving" x1="50" y1="40" x2="190" y2="40"></line>
+        <line class="trace gap" x1="190" y1="40" x2="230" y2="40"></line>
+        <line class="trace moving" x1="230" y1="40" x2="370" y2="40"></line>
+      </svg>
+    </div>
+
+    <!-- Botón volver a home con efecto geométrico -->
+    <ion-button class="geom-btn" size="large" (click)="goHome()">Volver a Home</ion-button>
   </div>
 </ion-content>
+

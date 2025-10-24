@@ -1,62 +1,134 @@
-# JNVR Portfolio
+# Portafolio JNVR (Ionic + Angular)
 
-This project contains an Ionic/Angular application showcasing projects and experience. Some design elements are inspired by [Brittany Chiang's portfolio](https://brittanychiang.com).
+Aplicación de portafolio personal construida con Ionic 8 y Angular 19. Presenta inicio, proyectos, experiencia y contacto. Usa componentes standalone, lazy-loading y SCSS. Diseño con tipografía Poppins y paleta en tonos azules.
 
+## Stack
 
-## Design
+- Angular 19, Ionic 8, TypeScript ~5.6
+- Capacitor (webDir `www/`)
+- ESLint + Angular-ESLint, Karma + Jasmine
 
-The interface uses the **Poppins** font from Google Fonts and a clean light theme
-with a blue primary color. The layout has been simplified for a professional
-portfolio presentation.
+Referencias: `package.json:1`, `angular.json:1`, `capacitor.config.ts:1`.
 
-## Setup
+## Requisitos
 
-Install dependencies:
+- Node.js 18.19+ o 20/22 y npm 9+
+- Chrome disponible para pruebas headless (Karma)
+
+## Instalación y scripts
 
 ```bash
 npm install
+npm start        # dev server http://localhost:4200
+npm run build    # build producción a www/
+npm run watch    # build en modo watch (dev)
+npm run lint     # ESLint
+npm test         # Karma + Jasmine
+npm run deploy   # publica www/ en gh-pages
 ```
 
-## Development Server
+## Estructura clave
 
-Run the development server with live reload:
+- `src/index.html:1` base HTML y fuentes
+- `src/global.scss:1` estilos globales Ionic
+- `src/theme/variables.scss:1` variables de tema y mixins
+- `src/app/app.routes.ts:1` rutas (lazy load)
+- `src/app/pages/**` páginas standalone (home, projects, experience, contact, not-found)
+- `src/app/components/header/*` header opcional
+- `src/assets/**` logos, íconos y proyectos
+
+## Rutas
+
+- `/home` (raíz redirige a home)
+- `/projects`
+- `/experience`
+- `/contact`
+- `**` → 404 (NotFoundPage)
+
+Nota: el Header incluye un enlace `/about` que no existe en `app.routes.ts`. Crea la página y ruta, o elimina ese botón.
+
+## Páginas
+
+- Home: logo + texto animado palabra por palabra, incluye secciones Projects/Experience/Contact.
+- Projects: grid responsivo con tarjetas (imagen + overlay en hover).
+- Experience: línea de tiempo con chips de tecnologías.
+- Contact: tarjeta con correo, LinkedIn y GitHub (SVG propios).
+- Not Found: 404 con animación SVG y botón a Home.
+
+## Estilos y tema
+
+- Base y utilidades: `src/global.scss:1`
+- Variables: `src/theme/variables.scss:1` (`--ion-color-primary`, `--ion-text-color`, mixin `fadeInUp`)
+- Estilos por página: `*.page.scss` (home, projects, experience, contact, not-found)
+- Tipografía Poppins: `src/index.html:1`
+
+## Desarrollo
 
 ```bash
 npm start
 ```
 
-Navigate to `http://localhost:4200/`.
-
-## Lint
+## Lint y pruebas
 
 ```bash
 npm run lint
-```
-
-## Unit Tests
-
-The project uses Karma and Jasmine. Execute tests with:
-
-```bash
 npm test
 ```
 
-Note: a Chrome browser or compatible headless binary is required. Set the `CHROME_BIN` environment variable if running in a minimal environment.
+Si Karma no detecta Chrome, define la variable de entorno `CHROME_BIN` con la ruta a tu navegador.
 
-## Deployment
+## Despliegue
 
-Build the production files with:
+Build producción:
 
 ```bash
 npm run build
 ```
 
-To deploy to GitHub Pages:
+### GitHub Pages
+
+Para repos con subcarpeta (p. ej. `/jnvrportfolio/`), compila con base-href:
 
 ```bash
-npm run deploy
+ng build --configuration production --base-href /jnvrportfolio/ --deploy-url /jnvrportfolio/
+npx gh-pages -d www
 ```
 
-## License
+También puedes actualizar el script `deploy` en `package.json` para incluir `--base-href`.
 
-This project is licensed under the [MIT License](LICENSE).
+### Firebase Hosting
+
+`firebase.json` ya redirige todo a `index.html`.
+
+```bash
+npm run build
+npx firebase login
+npx firebase deploy
+```
+
+## Capacitor (opcional)
+
+```bash
+npm run build
+npx cap add android   # o ios
+npx cap copy
+npx cap open android
+```
+
+## Personalización rápida
+
+- Home text: `src/app/pages/home/home.page.ts:1` (propiedad `fullText`)
+- Proyectos: `src/app/pages/projects/projects.page.html:1` + imágenes en `src/assets/proyectos/`
+- Experiencia: `src/app/pages/experience/experience.page.html:1`
+- Contacto: `src/app/pages/contact/contact.page.html:1`
+- Colores: `src/theme/variables.scss:1`
+- Header: `src/app/components/header/header.component.html:1` (y montar en `app.component.*` si se usa)
+
+## Problemas conocidos
+
+- Enlace `/about` del Header sin ruta definida.
+- En GitHub Pages, usar `--base-href`/`--deploy-url` para rutas bajo subcarpeta.
+
+## Licencia
+
+MIT. Ver `LICENSE`.

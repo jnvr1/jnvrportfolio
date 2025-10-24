@@ -1,27 +1,219 @@
+/*
+  Sistema de diseño JNVR – alineado al logo
+  - Estilo geométrico, minimalista
+  - Paleta de azules: #6BA3C3 (principal), #4A8FB0, #8BB8D0
+  - Líneas y nodos como elementos de conexión
+  - Tipografía bold y geométrica (Poppins)
+
+  Incluye Light y Dark Mode, y variables para:
+  1) Paleta y superficies
+  2) Espaciado modular (múltiplos de 8px)
+  3) Bordes y radios geométricos
+  4) Sombras sutiles
+  5) Transiciones fluidas (300ms cubic-bezier)
+  6) Efectos de líneas/conexiones decorativas
+*/
+
+/* =========================
+   LIGHT MODE (por defecto)
+   ========================= */
 :root {
-  /* Colores base */
-  --ion-background-color: #719fc066;
-  --ion-color-primary: #0066cc;
-  --ion-color-primary-rgb: 0, 102, 204;
-  --ion-color-secondary: #0066cc;
-  --ion-text-color: #010001;
+  /* Paleta base (derivada del logo) */
+  --brand-primary: #6BA3C3; /* azul principal */
+  --brand-secondary: #4A8FB0; /* apoyo/navegación */
+  --brand-accent: #8BB8D0; /* acento */
+
+  /* Neutros y superficies (light) */
+  --neutral-0: #ffffff;
+  --neutral-25: #fbfdff;
+  --neutral-50: #f6f9fc;
+  --neutral-100: #eef3f7;
+  --neutral-200: #dde7ef;
+  --neutral-300: #c9d8e4;
+  --neutral-700: #2b3a45;
+  --neutral-800: #1f2a32;
+  --neutral-900: #121820;
+
+  /* Ionic – colores de tema */
+  --ion-background-color: var(--neutral-50);
+  --ion-background-color-rgb: 246, 249, 252;
+  --ion-text-color: #0f1b24;
+  --ion-text-color-rgb: 15, 27, 36;
+  --ion-card-background: var(--neutral-0);
+
+  /* Primary */
+  --ion-color-primary: var(--brand-primary);
+  --ion-color-primary-rgb: 107, 163, 195;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #5f92af; /* -12% aprox */
+  --ion-color-primary-tint: #79aec9;  /* +12% aprox */
+
+  /* Secondary */
+  --ion-color-secondary: var(--brand-secondary);
+  --ion-color-secondary-rgb: 74, 143, 176;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #437f9e;
+  --ion-color-secondary-tint: #5c9ab8;
+
+  /* Tertiary (accent) */
+  --ion-color-tertiary: var(--brand-accent);
+  --ion-color-tertiary-rgb: 139, 184, 208;
+  --ion-color-tertiary-contrast: #0f1b24;
+  --ion-color-tertiary-contrast-rgb: 15, 27, 36;
+  --ion-color-tertiary-shade: #7aa3b9;
+  --ion-color-tertiary-tint: #9bc2d6;
+
+  /* Superficies */
+  --surface-1: var(--neutral-0);
+  --surface-2: var(--neutral-25);
+  --surface-3: var(--neutral-100);
+  --border-color: var(--neutral-200);
+
+  /* 2) Espaciado modular (8px) */
+  --space-0: 0px;
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 40px;
+  --space-6: 48px;
+  --space-8: 64px;
+  --space-10: 80px;
+
+  /* 3) Bordes y radios geométricos */
+  --border-width-1: 1px;
+  --border-width-2: 2px;
+  --radius-none: 0;
+  --radius-xs: 4px;  /* para chips/badges */
+  --radius-sm: 8px;  /* tarjetas, inputs */
+  --radius-md: 12px; /* modales, contenedores */
+  --radius-lg: 16px; /* secciones destacadas */
+
+  /* 4) Sombras sutiles */
+  --shadow-sm: 0 1px 2px rgba(15, 27, 36, 0.06), 0 1px 1px rgba(15, 27, 36, 0.04);
+  --shadow-md: 0 2px 8px rgba(15, 27, 36, 0.08);
+  --shadow-lg: 0 8px 24px rgba(15, 27, 36, 0.10);
+
+  /* 5) Transiciones fluidas (300ms cubic-bezier) */
+  --transition-curve: cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: 180ms var(--transition-curve);
+  --transition-base: 300ms var(--transition-curve);
+  --transition-slow: 500ms var(--transition-curve);
+
+  /* 6) Efectos de líneas/nodos decorativos */
+  --conn-line-color: var(--ion-color-primary);
+  --conn-line-width: 2px;
+  --conn-line-style: solid;  /* o dashed */
+  --conn-line-dash: 0;       /* longitud dash; 0 para sólido */
+  --conn-line-gap: 0;        /* separación dash */
+  --conn-node-size: 8px;
+  --conn-node-radius: 50%;   /* círculos (nodos) */
+  --conn-node-color: var(--ion-color-primary);
+  --conn-node-border-color: var(--ion-color-primary-shade);
+  --conn-node-border-width: 2px;
+  --conn-node-glow: 0 0 0 3px color-mix(in oklab, var(--ion-color-primary) 30%, transparent);
 }
+
+/* ========================
+   DARK MODE (preferencia)
+   ======================== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ion-background-color: #0f141a;
+    --ion-background-color-rgb: 15, 20, 26;
+    --ion-text-color: #e6edf3;
+    --ion-text-color-rgb: 230, 237, 243;
+    --ion-card-background: #141a22;
+
+    /* Ajuste de superficies/bordes en dark */
+    --surface-1: #141a22;
+    --surface-2: #10161d;
+    --surface-3: #0c1218;
+    --border-color: #223041;
+
+    /* Colores de marca conservados; contraste y sombras suavizadas */
+    --ion-color-primary-contrast: #0a1217;
+    --ion-color-tertiary-contrast: #0a1217;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+    --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.40);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.45);
+
+    --conn-line-color: color-mix(in oklab, var(--ion-color-primary) 80%, #0f141a);
+    --conn-node-border-color: color-mix(in oklab, var(--ion-color-primary) 70%, #0f141a);
+  }
+}
+
+/* ==============================
+   DARK MODE (clase .dark de Ionic)
+   ============================== */
+.dark {
+  --ion-background-color: #0f141a;
+  --ion-background-color-rgb: 15, 20, 26;
+  --ion-text-color: #e6edf3;
+  --ion-text-color-rgb: 230, 237, 243;
+  --ion-card-background: #141a22;
+
+  --surface-1: #141a22;
+  --surface-2: #10161d;
+  --surface-3: #0c1218;
+  --border-color: #223041;
+
+  --ion-color-primary-contrast: #0a1217;
+  --ion-color-tertiary-contrast: #0a1217;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.40);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.45);
+
+  --conn-line-color: color-mix(in oklab, var(--ion-color-primary) 80%, #0f141a);
+  --conn-node-border-color: color-mix(in oklab, var(--ion-color-primary) 70%, #0f141a);
+}
+
+/* =========================
+   Tipografía global y base
+   ========================= */
 body {
   font-family: 'Poppins', Arial, sans-serif;
   background: var(--ion-background-color);
   color: var(--ion-text-color);
 }
 
+/* =========================
+   Componentes base Ionic
+   ========================= */
 ion-toolbar {
-  --background: #fff;
+  --background: var(--surface-1);
   color: var(--ion-color-primary);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm);
+  border-bottom: var(--border-width-1) solid var(--border-color);
 }
 
+ion-card {
+  --background: var(--ion-card-background);
+  border: var(--border-width-1) solid var(--border-color);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+ion-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
 
-/* Animación para entrada suave */
+ion-chip {
+  margin: calc(var(--space-1) / 2);
+  font-weight: 600; /* alinear con tipografía bold del logo */
+  border-radius: var(--radius-xs);
+}
+
+/* =========================
+   Animación reutilizable
+   ========================= */
 @mixin fadeInUp($duration: 0.5s) {
-  animation: fadeInUp $duration ease both;
+  animation: fadeInUp $duration var(--transition-curve) both;
 }
 
 @keyframes fadeInUp {
@@ -35,17 +227,28 @@ ion-toolbar {
   }
 }
 
-/* Efecto de hover para las tarjetas */
-ion-card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-ion-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+/* =============================
+   Utilidades para líneas y nodos
+   ============================= */
+/* Ejemplo de clase utilitaria para elementos conectores */
+.conn-line {
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; top: 50%;
+    height: var(--conn-line-width);
+    background: var(--conn-line-color);
+    border-bottom: var(--conn-line-width) var(--conn-line-style) var(--conn-line-color);
+    /* Para dashed, usa dash/gap como background-image con gradientes si se requiere */
+  }
 }
 
-/* Ajustes para los ion-chip (en la sección de tecnologías) */
-ion-chip {
-  margin: 0.3rem;
-  font-weight: 500;
+.conn-node {
+  width: var(--conn-node-size);
+  height: var(--conn-node-size);
+  background: var(--conn-node-color);
+  border: var(--conn-node-border-width) solid var(--conn-node-border-color);
+  border-radius: var(--conn-node-radius);
+  box-shadow: var(--conn-node-glow);
 }

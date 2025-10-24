@@ -35,3 +35,196 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 
+/* =====================================================
+   Reset + Base Styles (optimizados y respetuosos de Ionic)
+   ===================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  background: var(--ion-background-color);
+  color: var(--ion-text-color);
+}
+img, svg, video { max-width: 100%; height: auto; }
+button, input, textarea, select { font: inherit; color: inherit; }
+a { color: inherit; text-decoration: none; }
+
+/* =====================================================
+   Theming helpers (propiedades personalizadas)
+   ===================================================== */
+:root {
+  --geo-cut: 18px;
+  --geo-border-color: var(--border-color, rgba(0,0,0,0.12));
+  --geo-accent: var(--ion-color-primary);
+  --glass-bg: color-mix(in oklab, var(--ion-card-background, #fff) 70%, transparent);
+  --glass-border: color-mix(in oklab, var(--ion-color-primary) 18%, transparent);
+  --glass-blur: 14px;
+  --hover-lift-y: 4px;
+  --hover-glow-color: color-mix(in oklab, var(--ion-color-primary) 35%, transparent);
+  --scrollbar-size: 10px;
+  --scrollbar-thumb: color-mix(in oklab, var(--ion-color-primary) 45%, #8897a7);
+  --scrollbar-thumb-hover: color-mix(in oklab, var(--ion-color-primary) 65%, #6b8299);
+  --focus-ring-color: color-mix(in oklab, var(--ion-color-primary) 55%, #7fb0cc);
+  --focus-ring-offset: 2px;
+  --focus-ring-width: 3px;
+}
+
+.dark {
+  --glass-bg: color-mix(in oklab, #0b1117 40%, transparent);
+  --glass-border: color-mix(in oklab, var(--ion-color-primary) 22%, transparent);
+  --hover-glow-color: color-mix(in oklab, var(--ion-color-primary) 45%, transparent);
+  --scrollbar-thumb: color-mix(in oklab, var(--ion-color-primary) 50%, #4a5a6b);
+  --scrollbar-thumb-hover: color-mix(in oklab, var(--ion-color-primary) 70%, #576b80);
+  --focus-ring-color: color-mix(in oklab, var(--ion-color-primary) 65%, #31576e);
+}
+
+/* =====================================================
+   Utilidades: efectos geométricos
+   ===================================================== */
+/* Esquinas cortadas (top-left, bottom-right) */
+.clip-corner-tl {
+  clip-path: polygon(var(--geo-cut) 0, 100% 0, 100% 100%, 0 100%, 0 var(--geo-cut));
+}
+.clip-corner-br {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--geo-cut)), calc(100% - var(--geo-cut)) 100%, 0 100%);
+}
+
+/* Borde geométrico con acentos en vértices */
+.geometric-border {
+  position: relative;
+  border: var(--border-width-1, 1px) solid var(--geo-border-color);
+  border-radius: var(--radius-sm, 8px);
+}
+.geometric-border::before,
+.geometric-border::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  background: linear-gradient(90deg, var(--geo-accent), transparent);
+  height: 2px;
+  width: 36%;
+}
+.geometric-border::before { top: 0; left: 0; }
+.geometric-border::after {
+  right: 0; bottom: 0;
+  transform: rotate(180deg);
+}
+
+/* Glassmorphism utilitario */
+.glass-effect {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  backdrop-filter: blur(var(--glass-blur));
+  border: var(--border-width-1, 1px) solid var(--glass-border);
+  box-shadow: var(--shadow-sm, 0 1px 2px rgba(0,0,0,.06));
+}
+
+/* Hover: elevación y glow geométrico */
+.hover-lift { transition: transform var(--transition-base, 300ms cubic-bezier(0.4,0,0.2,1)), box-shadow var(--transition-base, 300ms cubic-bezier(0.4,0,0.2,1)); }
+.hover-lift:hover { transform: translateY(calc(-1 * var(--hover-lift-y))); box-shadow: var(--shadow-md, 0 2px 8px rgba(0,0,0,.08)); }
+
+.hover-glow { transition: box-shadow var(--transition-base, 300ms cubic-bezier(0.4,0,0.2,1)); }
+.hover-glow:hover { box-shadow: 0 0 0 4px var(--hover-glow-color), var(--shadow-sm, 0 1px 2px rgba(0,0,0,.06)); }
+
+/* =====================================================
+   Lazy image blur utility (used by LazyImgDirective)
+   ===================================================== */
+img.lazy-blur {
+  filter: blur(14px);
+  transform: scale(1.02);
+  transition: filter var(--transition-base), transform var(--transition-base);
+  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,.08) 20%, transparent 40%), color-mix(in oklab, var(--ion-text-color) 6%, transparent);
+}
+img.lazy-blur.is-loaded {
+  filter: none;
+  transform: none;
+}
+
+/* =====================================================
+   Scrollbar minimalista
+   ===================================================== */
+/* Firefox */
+* { scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb) transparent; }
+/* WebKit */
+*::-webkit-scrollbar { width: var(--scrollbar-size); height: var(--scrollbar-size); }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--scrollbar-thumb), color-mix(in oklab, var(--scrollbar-thumb) 70%, transparent));
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+*::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, var(--scrollbar-thumb-hover), color-mix(in oklab, var(--scrollbar-thumb-hover) 70%, transparent)); }
+
+/* =====================================================
+   Selección de texto acorde a marca
+   ===================================================== */
+::selection { background: color-mix(in oklab, var(--ion-color-primary) 28%, transparent); color: var(--ion-color-primary-contrast); }
+::-moz-selection { background: color-mix(in oklab, var(--ion-color-primary) 28%, transparent); color: var(--ion-color-primary-contrast); }
+
+/* =====================================================
+   Focus styles accesibles pero estilizados
+   ===================================================== */
+:where(a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+  box-shadow: 0 0 0 calc(var(--focus-ring-width) + 1px) color-mix(in oklab, var(--focus-ring-color) 25%, transparent);
+}
+
+/* Utilidad para forzar anillo de enfoque en contenedores */
+.focus-ring {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* =====================================================
+   Skip navigation link
+   ===================================================== */
+.skip-link {
+  position: absolute;
+  left: 8px; top: -60px;
+  z-index: 1000;
+  background: var(--ion-color-primary);
+  color: var(--ion-color-primary-contrast);
+  padding: 8px 12px;
+  border-radius: var(--radius-xs);
+  box-shadow: var(--shadow-sm);
+  transition: top var(--transition-fast);
+}
+.skip-link:focus { top: 8px; }
+
+/* =====================================================
+   Touch targets (min 44px)
+   ===================================================== */
+ion-chip, .filter-chip { min-height: 44px; min-width: 44px; }
+ion-button::part(native), .geom-button { min-height: 44px; min-width: 44px; }
+ion-chip:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: 4px; }
+
+/* =====================================================
+   Reduced motion support
+   ===================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* =====================================================
+   High contrast improvements (prefers-contrast)
+   ===================================================== */
+@media (prefers-contrast: more) {
+  :root, .dark {
+    --border-color: color-mix(in oklab, var(--ion-text-color) 25%, var(--border-color));
+    --ion-text-color: color-mix(in oklab, var(--ion-text-color) 95%, black);
+  }
+  ion-card, .geometric-border { box-shadow: none; border-width: var(--border-width-2); }
+}
+
+

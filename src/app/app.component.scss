@@ -1,0 +1,16 @@
+.theme-toggle {
+  position: fixed;
+  right: var(--space-3);
+  bottom: var(--space-3);
+  z-index: 1000;
+  --background: var(--surface-1);
+  --color: var(--ion-text-color);
+  border: var(--border-width-1) solid var(--border-color);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-base), transform var(--transition-base);
+}
+.theme-toggle:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}

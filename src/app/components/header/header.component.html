@@ -1,11 +1,44 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>JNVR</ion-title>
-    <ion-buttons slot="end">
-      <ion-button routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</ion-button>
-      <ion-button routerLink="/about" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">About</ion-button>
-      <ion-button routerLink="/projects" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Projects</ion-button>
-      <ion-button routerLink="/contact" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Contact</ion-button>
-    </ion-buttons>
+<ion-header class="site-header" [class.scrolled]="isScrolled">
+  <ion-toolbar class="nav-toolbar">
+    <div class="nav-container">
+      <!-- Brand / Logo corto -->
+      <a class="brand" routerLink="/home" aria-label="JNVR Home">
+        <span class="logo-short" aria-hidden="true">JNVR</span>
+      </a>
+
+      <!-- Navegación desktop -->
+      <nav class="nav-desktop">
+        <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+        <a routerLink="/home" fragment="projects">Projects</a>
+        <a routerLink="/home" fragment="experience">Experience</a>
+        <a routerLink="/home" fragment="contact">Contact</a>
+        <button class="theme-toggle" (click)="toggleTheme()" aria-label="Alternar tema">
+          <ion-icon [name]="isDark ? 'sunny' : 'moon'"></ion-icon>
+        </button>
+      </nav>
+
+      <!-- Botón hamburguesa (mobile) -->
+      <button class="hamburger" [class.open]="menuOpen" (click)="toggleMenu()" aria-label="Abrir menú">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
   </ion-toolbar>
 </ion-header>
+
+<!-- Overlay móvil a pantalla completa -->
+<div class="mobile-overlay" [class.open]="menuOpen" (click)="closeMenu()" aria-hidden="true">
+  <div class="mobile-menu" (click)="$event.stopPropagation()">
+    <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenu()">Home</a>
+    <a routerLink="/home" fragment="projects" (click)="closeMenu()">Projects</a>
+    <a routerLink="/home" fragment="experience" (click)="closeMenu()">Experience</a>
+    <a routerLink="/home" fragment="contact" (click)="closeMenu()">Contact</a>
+
+    <button class="theme-toggle large" (click)="toggleTheme()" aria-label="Alternar tema">
+      <ion-icon [name]="isDark ? 'sunny' : 'moon'"></ion-icon>
+      <span>{{ isDark ? 'Light' : 'Dark' }}</span>
+    </button>
+  </div>
+  <div class="mobile-lines" aria-hidden="true"></div>
+</div>

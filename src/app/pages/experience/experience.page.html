@@ -1,177 +1,64 @@
-<div>
-  <div class="timeline">
+<section class="experience-grid">
+  <!-- Skeletons mientras carga -->
+  <ng-container *ngIf="loading; else content">
+    <app-geometric-skeleton variant="list"></app-geometric-skeleton>
+    <app-geometric-skeleton variant="card" style="margin-top:12px;"></app-geometric-skeleton>
+  </ng-container>
 
-    <a href="https://teotech.mx/inicio-2/" target="_blank" class="timeline-item-link">
-      <div class="timeline-item">
-        <div class="timeline-marker"></div>
-        <div class="timeline-content">
-            <h2>Teotech</h2>
-            <h3>Desarrollador de Software | Freelance</h3>
-            <p class="timeline-info">Ciudad Juárez, México (Remoto)</p>
-            <ul>
-            <li>Desarrollé múltiples CRM personalizados enfocados en ventas y gestión escolar, adaptados a las necesidades de cada cliente.</li>
-            <li>Optimicé procesos internos y mejoré la administración de información mediante soluciones intuitivas y eficientes.</li>
-            <li>Facilité la toma de decisiones a través de herramientas digitales personalizadas.</li>
-            </ul>
-          <div>
-            <ion-chip class="chip">
-              <ion-label>PHP</ion-label>
-            </ion-chip>
-            <ion-chip class="chip">
-              <ion-label>HTML</ion-label>
-            </ion-chip>
-            <ion-chip class="chip">
-              <ion-label>Js</ion-label>
-            </ion-chip>
-            <ion-chip class="chip">
-              <ion-label>SQL</ion-label>
-            </ion-chip>
-            <ion-chip class="chip">
-              <ion-label>GitHub</ion-label>
-            </ion-chip>
-          </div>
-        </div>
-      </div>
-    </a>
-    <!-- Fletes México -->
-    <a href="https://www.fletes-mexico.com" target="_blank" class="timeline-item-link">
-      <div class="timeline-item">
-        <div class="timeline-marker"></div>
-        <div class="timeline-content">
-          <h2>Fletes México</h2>
-          <h3>Desarrollador de Software</h3>
-          <p class="timeline-info">Ciudad Juárez, México (Remoto) | Ene 2023 – Presente</p>
-          <ul>
-            <li>Diseñé e implementé más de 10 microservicios backend utilizando FastAPI, mejorando la escalabilidad.
-            </li>
-            <li>Incrementé la eficiencia operativa en un 25% mediante herramientas de software personalizadas.</li>
-            <li>Creé tableros en Power BI para ofrecer información accionable a los principales interesados.</li>
-          </ul>
-          <div>
-            <ion-chip class="chip">
-              <ion-label>Python</ion-label>
-            </ion-chip>
-            <ion-chip class="chip">
-              <ion-label>FastAPI</ion-label>
-            </ion-chip>
-            <ion-chip class="chip">
-              <ion-label>Power BI</ion-label>
-            </ion-chip>
-            <ion-chip class="chip">
-              <ion-label>Ionic</ion-label>
-            </ion-chip>
-            <ion-chip class="chip">
-              <ion-label>SQL</ion-label>
-            </ion-chip>
-            <ion-chip class="chip">
-              <ion-label>GitLab</ion-label>
-            </ion-chip>
-            <ion-chip class="chip">
-              <ion-label>Linux</ion-label>
-            </ion-chip>
-          </div>
-        </div>
-      </div>
-    </a>
+  <ng-template #content>
+    <app-geometric-card
+      variant="featured"
+      badge="Actual"
+      icon="briefcase"
+      title="Fletes México — Desarrollador de Software"
+      description="Diseño e implementación de microservicios con FastAPI, herramientas personalizadas y tableros de Power BI para decisiones informadas."
+      [tags]="['Python','FastAPI','Power BI','Ionic','SQL','GitLab','Linux']"
+      link="https://www.fletes-mexico.com">
+    </app-geometric-card>
 
-    <!-- Museo La Rodadora - Coordinador de Sistemas -->
-    <a href="https://www.larodadora.org" target="_blank" class="timeline-item-link">
-      <div class="timeline-item">
-        <div class="timeline-marker"></div>
-        <div class="timeline-content">
-          <h2>Museo La Rodadora</h2>
-          <h3>Coordinador de Sistemas</h3>
-          <p class="timeline-info">Ciudad Juárez, México | Ene 2021 – Dic 2023</p>
-          <ul>
-            <li>Desarrollé software interactivo que incrementó la participación de los visitantes en un 15%.</li>
-            <li>Mejoré la confiabilidad de la red en un 30% mediante actualizaciones de sistemas de TI.</li>
-            <li>Proveí soporte técnico mensual a más de 40 usuarios, asegurando la continuidad del sistema.</li>
-          </ul>
-          <div>
-            <ion-chip class="chip">
-              <ion-label>CCTV</ion-label>
-            </ion-chip>
-            <ion-chip class="chip">
-              <ion-label>Cableado Estructurado</ion-label>
-            </ion-chip>
-            <ion-chip class="chip">
-              <ion-label>Soporte</ion-label>
-            </ion-chip>
-            <ion-chip class="chip">
-              <ion-label>Ionic</ion-label>
-            </ion-chip>
-            <ion-chip class="chip">
-              <ion-label>Administración y Gestión de Redes</ion-label>
-            </ion-chip>
-          </div>
-        </div>
+    <app-geometric-card
+      badge="Freelance"
+      icon="rocket"
+      title="Teotech — Desarrollador de Software"
+      description="CRM personalizados enfocados en ventas y gestión escolar, mejorando administración de información y procesos internos."
+      [tags]="['PHP','HTML','JS','SQL','GitHub']"
+      link="https://teotech.mx/inicio-2/">
+    </app-geometric-card>
 
-      </div>
-    </a>
+    <app-geometric-card
+      badge="Coordinador"
+      icon="business"
+      title="Museo La Rodadora — Coordinador de Sistemas"
+      description="Software interactivo, mejora de infraestructura de red y soporte a +40 usuarios, asegurando continuidad operativa."
+      [tags]="['CCTV','Redes','Ionic','Soporte']"
+      link="https://www.larodadora.org">
+    </app-geometric-card>
 
-    <!-- Museo La Rodadora - Practicante -->
-    <a href="https://www.larodadora.org" target="_blank" class="timeline-item-link">
-      <div class="timeline-item">
-        <div class="timeline-marker"></div>
-        <div class="timeline-content">
-          <h2>Museo La Rodadora</h2>
-          <h3>Practicante</h3>
-          <p class="timeline-info">Ciudad Juárez, México | Ene 2020 – Dic 2020</p>
-          <ul>
-            <li>Creé un sistema interactivo de lotería que mejoró la participación de los visitantes.</li>
-            <li>Desarrollé un sistema personalizado para la gestión de eventos en el museo.</li>
-          </ul>
-          <div>
-            <ion-chip class="chip">
-              <ion-label>Ionic</ion-label>
-            </ion-chip>
-          </div>
-        </div>
-      </div>
-    </a>
-    <!-- IA-Center -->
-    <a href="https://www.ia.center" target="_blank" class="timeline-item-link">
-      <div class="timeline-item">
-        <div class="timeline-marker"></div>
-        <div class="timeline-content">
-          <h2>IA-Center</h2>
-          <h3>Instructor de Python (Remoto)</h3>
-          <p class="timeline-info">2021</p>
-          <ul>
-            <li>Impartí cursos de programación en Python a más de 40 estudiantes, logrando un índice de éxito del 90%.
-            </li>
-          </ul>
-          <div>
-            <ion-chip class="chip">
-              <ion-label>Python</ion-label>
-            </ion-chip>
-            <ion-chip class="chip">
-              <ion-label>Remote Teaching</ion-label>
-            </ion-chip>
-          </div>
-        </div>
-      </div>
-    </a>
+    <app-geometric-card
+      badge="Prácticas"
+      icon="school"
+      title="Museo La Rodadora — Practicante"
+      description="Sistema interactivo de lotería y sistema de gestión de eventos a medida."
+      [tags]="['Ionic']"
+      link="https://www.larodadora.org">
+    </app-geometric-card>
 
-    <!-- Bloomotion -->
-    <a href="https://www.bloomotion.tech" target="_blank" class="timeline-item-link">
-      <div class="timeline-item">
-        <div class="timeline-marker"></div>
-        <div class="timeline-content">
-          <h2>Bloomotion</h2>
-          <h3>Desarrollador de Software (Remoto)</h3>
-          <p class="timeline-info">2019 – 2021</p>
-          <ul>
-            <li>Desarrollé una aplicación móvil publicada en la Playstore.</li>
-            <li>Integré sistemas logísticos con Penske Logistics y Assistcargo para optimizar flujos de trabajo.</li>
-          </ul>
-          <div>
-            <ion-chip class="chip">
-              <ion-label>Ionic</ion-label>
-            </ion-chip>
-          </div>
-        </div>
-      </div>
-    </a>
-  </div>
-</div>
+    <app-geometric-card
+      badge="Instructor"
+      icon="terminal"
+      title="IA-Center — Instructor de Python"
+      description="Cursos de programación en Python con alto índice de éxito (90%+)."
+      [tags]="['Python','Remote Teaching']"
+      link="https://www.ia.center">
+    </app-geometric-card>
+
+    <app-geometric-card
+      badge="Remoto"
+      icon="globe"
+      title="Bloomotion — Desarrollador de Software"
+      description="App móvil publicada y conexiones logísticas (Penske / Assistcargo) para optimizar flujos."
+      [tags]="['Ionic']"
+      link="https://www.bloomotion.tech">
+    </app-geometric-card>
+  </ng-template>
+</section>

@@ -1,98 +1,22 @@
-.timeline {
-  position: relative;
-  padding: 2rem 0;
-  margin: 0 auto;
-  max-width: 800px;
+.experience-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-3);
+  padding: var(--space-4);
 }
 
-.timeline::before {
-  content: "";
-  position: absolute;
-  left: 20px;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: #7da8c6;
+@media (max-width: 575.98px) {
+  .experience-grid { grid-template-columns: 1fr; }
 }
-
-.timeline-item {
-  position: relative;
-  padding-left: 50px;
-  margin-bottom: 2rem;
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .experience-grid { grid-template-columns: repeat(2, 1fr); }
 }
-
-.timeline-marker {
-  position: absolute;
-  left: 10px;
-  top: 0;
-  width: 20px;
-  height: 20px;
-  background: #7da8c6;
-  border-radius: 50%;
+@media (min-width: 768px) and (max-width: 1023.98px) {
+  .experience-grid { grid-template-columns: repeat(2, 1fr); }
 }
-
-.timeline-content {
-  background: #507494;
-  padding: 1rem 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-decoration: none;  /* Elimina el subrayado */
-  color: inherit;         /* Mantiene el color del texto */
-  transition: background 0.3s;
+@media (min-width: 1024px) and (max-width: 1439.98px) {
+  .experience-grid { grid-template-columns: repeat(3, 1fr); }
 }
-
-.timeline-content:hover {
-  background: linear-gradient(135deg, #2f87b085 40%, #1c5c8a70 180%);
-}
-
-.timeline-content h2 {
-  margin: 0;
-  font-size: 1.5rem;
-  color: #e9e9e9;
-}
-
-.timeline-content h3 {
-  margin: 0.5rem 0;
-  font-size: 1.2rem;
-  color: #d3d3d3;
-}
-
-.timeline-info {
-  font-size: 0.9rem;
-  color: #e7e7e7;
-  margin-bottom: 0.5rem;
-}
-
-.timeline-content ul {
-  margin: 0.5rem 0 0;
-  padding-left: 1.2rem;
-}
-
-.timeline-content li {
-  margin-bottom: 0.5rem;
-  font-size: 0.95rem;
-  line-height: 1.4;
-}
-.timeline-item-link{
-  text-decoration: none;
-  color: inherit;
-  transition: color 0.3s;
-}
-
-.skills-chips{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-.chip{
-  background: #30566f;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 1rem;
-  font-size: 0.9rem;
-  display: inline-block;
-  text-align: center;
-  transition: background 0.3s;
+@media (min-width: 1440px) {
+  .experience-grid { grid-template-columns: repeat(4, 1fr); }
 }

@@ -1,92 +1,179 @@
-.hero {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 1s forwards;
+/* Contenedor principal */
+.home-landing {
+  position: relative;
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
 }
 
-.about-page {
+/* Fondo de red (líneas y nodos) */
+.network-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 20% 30%, color-mix(in oklab, var(--ion-color-primary) 14%, transparent) 0 3px, transparent 4px) 0 0/120px 120px,
+    radial-gradient(circle at 70% 60%, color-mix(in oklab, var(--ion-color-primary) 10%, transparent) 0 2px, transparent 3px) 0 0/160px 160px,
+    linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--ion-color-primary) 12%, transparent) 1px,
+      transparent 1px
+    ) 0 0/120px 120px,
+    linear-gradient(
+      0deg,
+      color-mix(in oklab, var(--ion-color-primary) 12%, transparent) 1px,
+      transparent 1px
+    ) 0 0/120px 120px;
+  opacity: 0.35;
+  mask-image: linear-gradient(to bottom, black, transparent 75%);
+}
+
+/* Elementos geométricos flotantes */
+.geo-decor {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: var(--radius-xs);
+  border: var(--border-width-2) solid color-mix(in oklab, var(--ion-color-primary) 60%, transparent);
+  box-shadow: var(--shadow-sm);
+  animation: float 9s ease-in-out infinite;
+  pointer-events: none;
+}
+.geo-1 { top: 8%; left: 6%; transform: rotate(12deg); }
+.geo-2 { top: 18%; right: 8%; transform: rotate(-8deg); animation-duration: 12s; }
+.geo-3 { bottom: 12%; left: 14%; width: 80px; height: 80px; border-radius: 50%; animation-duration: 10s; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+  50% { transform: translateY(-10px) rotate(calc(var(--rot, 0deg) + 6deg)); }
+}
+
+/* HERO */
+.hero-section {
+  position: relative;
+  padding: clamp(var(--space-4), 8vw, var(--space-8)) var(--space-4) var(--space-6);
   text-align: center;
-
-  ion-card {
-    margin: 0 auto;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 2%;
-    --background: transparent; /* Fondo transparente para el gradiente */
-    --box-shadow: none; /* Sin sombra para un efecto más limpio */
-    -webkit-box-shadow: none; /* Sin sombra para un efecto más limpio */
-    box-shadow: none;
-  }
-
-  ion-img {
-    width: 100%;
-    height: auto;
-    margin: .5rem;
-    display: block;
-    order: 2;
-  }
-
-  ion-card-content {
-    order: 1; /* Ensure the text is on the left */
-
-    .hero-text {
-      font-size: 1.2rem;
-      line-height: 1.4;
-      text-align: justify;
-      min-height: 5rem; /* Para mantener una altura estable */
-      color: var(--ion-text-color);
-    }
-  }
-
-  @media (max-width: 768px) {
-    ion-card {
-      flex-direction: column;
-      box-shadow: none; /* Remove the shadow */
-    }
-
-    ion-img {
-      order: 1;
-    }
-
-    ion-card-content {
-      order: 2;
-    }
-  }
 }
 
-/* Estilos para cada palabra */
-.word {
+.logo-hero {
+  width: min(680px, 90%);
+  margin: 0 auto var(--space-3);
+}
+.logo-hero svg { width: 100%; height: auto; }
+.logo-hero .logo-stroke {
+  font: 900 120px/1 'Poppins', Arial, sans-serif;
+  fill: none;
+  stroke: var(--ion-text-color);
+  stroke-width: 3px;
+  /* Animación CSS de trazo como fallback si no hay Angular Animations */
+  stroke-dasharray: 640;
+  stroke-dashoffset: 640;
+  animation: draw 1.6s var(--transition-curve) forwards;
+  paint-order: stroke fill;
+}
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .logo-hero .logo-stroke { animation: none; }
+}
+
+.hero-title {
+  margin: 0 auto;
+  color: var(--ion-text-color);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 800;
+}
+.hero-title .word {
   display: inline-block;
   opacity: 0;
-  transform: translateX(0.5rem);
-  transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.6s ease-in-out;
+  transform: translateY(10px);
+  animation: wordIn 700ms var(--transition-curve) forwards;
+  animation-delay: calc(var(--i) * 120ms + 400ms);
+  margin: 0 .15em;
+}
+@keyframes wordIn {
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* Cuando la palabra se vuelve visible */
-.word.visible {
-  transform: translateX(0);
-  opacity: 1;
+.hero-subtitle {
+  margin: var(--space-1) 0 0;
+  color: color-mix(in oklab, var(--ion-text-color) 80%, var(--ion-background-color) 20%);
+  font-size: clamp(1rem, 2.2vw, 1.25rem);
 }
 
-/* Animación para la tarjeta (fadeInUp) */
-.fadeInUp {
-  animation: fadeInUp 0.8s ease-out forwards;
+/* CTA geométricos */
+.cta-group {
+  margin-top: var(--space-3);
+  display: flex;
+  justify-content: center;
+  gap: var(--space-2);
+}
+.btn-geom {
+  position: relative;
+  display: inline-block;
+  padding: .85rem 1.25rem;
+  border-radius: var(--radius-sm);
+  border: var(--border-width-2) solid var(--ion-color-primary);
+  color: var(--ion-color-primary);
+  background: var(--surface-1);
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: .02em;
+  transition: color var(--transition-base), transform var(--transition-base), box-shadow var(--transition-base);
+  box-shadow: var(--shadow-sm);
+}
+.btn-geom::before, .btn-geom::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: var(--border-width-2) solid transparent;
+  border-radius: var(--radius-sm);
+  transition: border-color var(--transition-base);
+}
+.btn-geom::before {
+  border-top-color: var(--ion-color-primary);
+  border-left-color: var(--ion-color-primary);
+}
+.btn-geom::after {
+  border-bottom-color: var(--ion-color-primary);
+  border-right-color: var(--ion-color-primary);
+}
+.btn-geom:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.btn-geom.primary { color: var(--ion-color-primary-contrast); background: var(--ion-color-primary); }
+.btn-geom.outline { background: transparent; }
+
+/* Indicador de scroll */
+.scroll-indicator {
+  position: relative;
+  width: 28px;
+  height: 42px;
+  border-radius: 16px;
+  margin: var(--space-4) auto 0;
+  border: var(--border-width-2) solid color-mix(in oklab, var(--ion-text-color) 60%, transparent);
+}
+.scroll-indicator .wheel {
+  position: absolute;
+  top: 6px; left: 50%; transform: translateX(-50%);
+  width: 4px; height: 8px; border-radius: 4px;
+  background: color-mix(in oklab, var(--ion-text-color) 70%, transparent);
+  animation: wheel 1.2s ease-in-out infinite;
+}
+@keyframes wheel {
+  0% { opacity: 0; transform: translate(-50%, 0); }
+  50% { opacity: 1; transform: translate(-50%, 8px); }
+  100% { opacity: 0; transform: translate(-50%, 14px); }
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* FEATURED WORK */
+/* One-page sections */
+.onepage-section { padding: var(--space-4) var(--space-4) var(--space-6); }
+.section-title {
+  text-align: center;
+  margin: 0 0 var(--space-3);
+  color: var(--ion-text-color);
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
 }
 
-/* Ejemplo de animación para la imagen */
-.animate-image {
-  animation: fadeInUp 0.8s ease-out forwards;
-}

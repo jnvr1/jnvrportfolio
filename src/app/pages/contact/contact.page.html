@@ -1,51 +1,86 @@
-<div class="contact-page">
-  <ion-card class="fadeInUp custom-card">
-    <ion-card-header>
-      <ion-card-title>Contáctame</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <div class="contact-card">
-        <div class="logo-container">
-          <img src="../../../assets/logo/logo-jnvr.png" alt="Logo" class="logo">
-        </div>
-        <div class="contact-info">
-          <ion-list lines="none">
-            <!-- Correo -->
-            <ion-item>
-              <ion-icon src="../../../assets/icons-extras/mail-outline.svg" slot="start" ></ion-icon>
-              <ion-label>
-                <a href="mailto:jonathan.viramontes.ramirez@gmail.com">
-                  jonathan.viramontes.ramirez&#64;gmail.com
-                </a>
-              </ion-label>
-            </ion-item>
+<section class="contact-landing">
+  <!-- Fondo animado: red de nodos (SVG) -->
+  <div class="network-bg" aria-hidden="true">
+    <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+      <!-- Líneas -->
+      <g class="links">
+        <line x1="120" y1="120" x2="420" y2="180" class="link"></line>
+        <line x1="420" y1="180" x2="760" y2="140" class="link"></line>
+        <line x1="760" y1="140" x2="980" y2="260" class="link"></line>
+        <line x1="260" y1="360" x2="520" y2="420" class="link"></line>
+        <line x1="520" y1="420" x2="860" y2="520" class="link"></line>
+        <line x1="300" y1="640" x2="620" y2="560" class="link"></line>
+      </g>
+      <!-- Nodos -->
+      <g class="nodes">
+        <circle cx="120" cy="120" r="6" class="node"  [@nodesPulse]/>
+        <circle cx="420" cy="180" r="6" class="node"  [@nodesPulse]/>
+        <circle cx="760" cy="140" r="6" class="node"  [@nodesPulse]/>
+        <circle cx="980" cy="260" r="6" class="node"  [@nodesPulse]/>
+        <circle cx="260" cy="360" r="6" class="node"  [@nodesPulse]/>
+        <circle cx="520" cy="420" r="6" class="node"  [@nodesPulse]/>
+        <circle cx="860" cy="520" r="6" class="node"  [@nodesPulse]/>
+        <circle cx="300" cy="640" r="6" class="node"  [@nodesPulse]/>
+        <circle cx="620" cy="560" r="6" class="node"  [@nodesPulse]/>
+      </g>
+    </svg>
+  </div>
 
-            <!-- LinkedIn -->
-            <ion-item>
-              <ion-icon src="../../../assets/icons-extras/logo-linkedin.svg" slot="start" ></ion-icon>
-              <ion-label>
-                <a href="https://linkedin.com/in/jonathan-noe-viramontes-ramirez-7b708b162"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                  LinkedIn
-                </a>
-              </ion-label>
-            </ion-item>
+  <!-- Card principal (glass) -->
+  <section class="contact-card glass">
+    <header class="card-header">
+      <h2>Contáctame</h2>
+      <p>¿Tienes un proyecto o idea? Hablemos.</p>
+    </header>
 
-            <!-- GitHub -->
-            <ion-item>
-              <ion-icon src="../../../assets/icons-extras/logo-github.svg" slot="start" ></ion-icon>
-              <ion-label>
-                <a href="https://github.com/jnvr1/jnvr1"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                  GitHub
-                </a>
-              </ion-label>
-            </ion-item>
-          </ion-list>
-        </div>
-      </div>
-    </ion-card-content>
-  </ion-card>
-</div>
+    <!-- Acciones rápidas -->
+    <div class="contact-actions">
+      <a class="geom-button primary" href="mailto:jonathan.viramontes.ramirez@gmail.com" aria-label="Enviar correo a Jonathan">
+        <ion-icon src="assets/icons-extras/mail-outline.svg" aria-hidden="true"></ion-icon>
+        Email
+      </a>
+      <a class="geom-button outline" href="https://linkedin.com/in/jonathan-noe-viramontes-ramirez-7b708b162" target="_blank" rel="noopener noreferrer" aria-label="Abrir perfil de LinkedIn en nueva pestaña">
+        <ion-icon src="assets/icons-extras/logo-linkedin.svg" aria-hidden="true"></ion-icon>
+        LinkedIn
+      </a>
+      <a class="geom-button outline" href="https://github.com/jnvr1/jnvr1" target="_blank" rel="noopener noreferrer" aria-label="Abrir perfil de GitHub en nueva pestaña">
+        <ion-icon src="assets/icons-extras/logo-github.svg" aria-hidden="true"></ion-icon>
+        GitHub
+      </a>
+    </div>
+
+    <div class="divider"><span>o envíame un mensaje</span></div>
+
+    <!-- Formulario (UI) -->
+    <form class="contact-form" (submit)="false">
+      <ion-item class="input">
+        <ion-input label="Nombre" labelPlacement="stacked" placeholder="Tu nombre"></ion-input>
+      </ion-item>
+      <ion-item class="input">
+        <ion-input type="email" label="Email" labelPlacement="stacked" placeholder="tu@email"></ion-input>
+      </ion-item>
+      <ion-item class="input">
+        <ion-input label="Asunto" labelPlacement="stacked" placeholder="¿Sobre qué te contacto?"></ion-input>
+      </ion-item>
+      <ion-item class="input">
+        <ion-textarea label="Mensaje" labelPlacement="stacked" autoGrow="true" placeholder="Escribe tu mensaje"></ion-textarea>
+      </ion-item>
+      <ion-button type="submit" class="send-btn" expand="block" size="large">
+        Enviar
+      </ion-button>
+    </form>
+
+    <footer class="social-footer">
+      <a class="social" href="https://linkedin.com/in/jonathan-noe-viramontes-ramirez-7b708b162" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+        <ion-icon src="assets/icons-extras/logo-linkedin.svg" aria-hidden="true"></ion-icon>
+      </a>
+      <a class="social" href="https://github.com/jnvr1/jnvr1" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+        <ion-icon src="assets/icons-extras/logo-github.svg" aria-hidden="true"></ion-icon>
+      </a>
+      <a class="social" href="mailto:jonathan.viramontes.ramirez@gmail.com" aria-label="Enviar correo">
+        <ion-icon src="assets/icons-extras/mail-outline.svg" aria-hidden="true"></ion-icon>
+      </a>
+    </footer>
+  </section>
+</section>
+

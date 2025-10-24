@@ -1,0 +1,21 @@
+<article class="geometric-card" [class.featured]="variant==='featured'" [class.minimal]="variant==='minimal'">
+  <a class="card-link" [href]="link || '#'" [attr.target]="isExternal ? '_blank' : null" [attr.rel]="isExternal ? 'noopener noreferrer' : null" [attr.aria-label]="title ? 'Abrir proyecto: ' + title : null">
+    <div class="media" *ngIf="image">
+      <img [lazyImg]="image" [alt]="title || 'Imagen del proyecto'" decoding="async" (load)="imageLoaded.emit()" />
+    </div>
+
+    <div class="content">
+      <div class="badge" *ngIf="badge || icon">
+        <ion-icon *ngIf="icon" [name]="icon" aria-hidden="true"></ion-icon>
+        <span *ngIf="badge">{{ badge }}</span>
+      </div>
+      <h3 class="title" *ngIf="title">{{ title }}</h3>
+      <p class="description" *ngIf="description">{{ description }}</p>
+      <div class="tags" *ngIf="tags?.length">
+        <ion-chip class="tag" *ngFor="let t of tags">{{ t }}</ion-chip>
+      </div>
+    </div>
+
+    <div class="overlay" aria-hidden="true"></div>
+  </a>
+</article>
