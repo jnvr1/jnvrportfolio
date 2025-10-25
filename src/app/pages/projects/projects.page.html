@@ -92,7 +92,7 @@
 
         <h4>Tecnologías</h4>
         <div class="detail-tags">
-          <ion-chip *ngFor="let t of s.tags">{{ t }}</ion-chip>
+          <ion-chip *ngFor="let t of (s?.tags || [])">{{ t }}</ion-chip>
         </div>
 
         <ng-container *ngIf="s?.details?.outcomes?.length">

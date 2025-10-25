@@ -169,7 +169,7 @@ export class ProjectsPage implements OnInit, OnDestroy {
           this.isDetailOpen = true;
           this.hoveredId = id;
           // Espera al render y centra la tarjeta en vista
-          setTimeout(() => this.scrollToProject(id), 0);
+          setTimeout(() => this.scrollToProject(id, { focus: false }), 0);
           return;
         }
       }
@@ -207,7 +207,7 @@ export class ProjectsPage implements OnInit, OnDestroy {
       fragment: p.id,
       replaceUrl: false,
     });
-    setTimeout(() => this.scrollToProject(p.id), 0);
+    setTimeout(() => this.scrollToProject(p.id, { focus: false }), 0);
   }
 
   closeDetail() {
@@ -246,11 +246,14 @@ export class ProjectsPage implements OnInit, OnDestroy {
     this.qpSub?.unsubscribe();
   }
 
-  private scrollToProject(id: string) {
+  private scrollToProject(id: string, opts: { focus?: boolean } = {}) {
+    const { focus = true } = opts;
     const el = document.getElementById('project-' + id);
     if (el) {
       try { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch {}
-      try { (el as HTMLElement).focus({ preventScroll: true }); } catch {}
+      if (focus && !this.isDetailOpen) {
+        try { (el as HTMLElement).focus({ preventScroll: true }); } catch {}
+      }
     }
   }
 }
