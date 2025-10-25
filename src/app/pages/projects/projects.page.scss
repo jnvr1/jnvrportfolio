@@ -1,133 +1,387 @@
-.projects { padding: var(--space-3) var(--space-4); }
+.projects {
+  padding: var(--space-3) var(--space-4);
+}
 
 /* Filtros */
 .filters {
-  display: flex; flex-wrap: wrap; gap: var(--space-1);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
   margin-bottom: var(--space-3);
 }
+
 .filter-chip {
   --background: var(--surface-1);
   --color: var(--ion-text-color);
   padding-inline: var(--space-1);
-  min-height: 44px; min-width: 44px;
+  min-height: 44px;
+  min-width: 44px;
   border: var(--border-width-1) solid var(--border-color);
   border-radius: var(--radius-xs);
   box-shadow: var(--shadow-sm);
   clip-path: polygon(0 0, calc(100% - var(--space-1)) 0, 100% var(--space-1), 100% 100%, 0 100%);
   transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base), background var(--transition-base);
 }
-.filter-chip:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
-.filter-chip.active { --background: var(--ion-color-primary); --color: var(--ion-color-primary-contrast); border-color: var(--ion-color-primary); }
 
-/* Bento */
-.bento-wrapper { position: relative; }
-.connection-overlay {
-  position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity var(--transition-base);
-  background:
-    linear-gradient(90deg, color-mix(in oklab, var(--ion-color-primary) 10%, transparent) 1px, transparent 1px) 0 0/120px 120px,
-    linear-gradient(0deg, color-mix(in oklab, var(--ion-color-primary) 10%, transparent) 1px, transparent 1px) 0 0/120px 120px;
-  mask-image: radial-gradient(ellipse at center, black, transparent 70%);
-  z-index: 0;
+.filter-chip:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
-.connection-overlay.active { opacity: .4; }
 
-.bento-grid {
-  position: relative;
-  z-index: 1;
+.filter-chip.active {
+  --background: var(--ion-color-primary);
+  --color: var(--ion-color-primary-contrast);
+  border-color: var(--ion-color-primary);
+}
+
+/* Showcase */
+.showcase {
   display: grid;
-  grid-auto-flow: dense;
-  gap: var(--space-3);
-  /* Evita superposiciones: las filas crecen con el contenido */
-  grid-auto-rows: minmax(240px, auto);
+  gap: var(--space-4);
 }
 
-/* Columnas por breakpoint (uniformes) */
-@media (max-width: 575.98px) { .bento-grid { grid-template-columns: 1fr; } }
-@media (min-width: 576px) and (max-width: 767.98px) { .bento-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 768px) and (max-width: 1023.98px) { .bento-grid { grid-template-columns: repeat(3, 1fr); } }
-@media (min-width: 1024px) and (max-width: 1439.98px) { .bento-grid { grid-template-columns: repeat(4, 1fr); } }
-@media (min-width: 1440px) { .bento-grid { grid-template-columns: repeat(6, 1fr); } }
-@media (min-width: 1440px) { .bento-grid { grid-template-columns: repeat(14, 1fr); } }
-@media (min-width: 1920px) { .bento-grid { grid-template-columns: repeat(16, 1fr); } }
-
-.bento-item {
-  position: relative;
-  grid-column: span 1;
-  /* Animación controlada por IntersectionObserver */
-  opacity: 0;
-  transform: translateY(12px) scale(.985);
-  transition: opacity 520ms var(--transition-curve), transform 520ms var(--transition-curve);
-}
-.bento-item.in-view { opacity: 1; transform: none; }
-/* Tamaños responsivos: en móvil todos iguales; en desktop se activan variantes */
-@media (max-width: 1023.98px) {
-  .size-wide, .size-large { grid-column: span 1; }
-  .size-tall { grid-row: auto; }
-}
-@media (min-width: 1024px) {
-  .size-wide { grid-column: span 2; }
-  .size-tall { grid-row: span 2; }
-  .size-large { grid-column: span 2; grid-row: span 2; }
+@media (min-width: 992px) {
+  .showcase {
+    grid-template-columns: minmax(0, 360px) minmax(0, 1fr);
+    align-items: flex-start;
+  }
 }
 
-/* itemIn keyframes reemplazado por IntersectionObserver */
-
-/* Hover connections (resaltado de relacionados) */
-.bento-item.related { outline: var(--border-width-2) dashed color-mix(in oklab, var(--ion-color-primary) 40%, transparent); outline-offset: -2px; }
-.bento-item.active { outline: var(--border-width-2) solid color-mix(in oklab, var(--ion-color-primary) 60%, transparent); box-shadow: 0 0 0 3px color-mix(in oklab, var(--ion-color-primary) 20%, transparent); }
-
-/* Skeleton */
-.bento-item.loading app-geometric-card { opacity: 0; pointer-events: none; }
-.skeleton-card {
-  position: absolute; inset: 0; border-radius: var(--radius-sm);
-  border: var(--border-width-1) solid var(--border-color);
-  overflow: hidden; background: var(--surface-2);
+.project-track {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  order: 1;
 }
-.skeleton-media {
-  height: 60%; background:
-    linear-gradient(120deg, transparent 0%, color-mix(in oklab, var(--ion-text-color) 6%, transparent) 20%, transparent 40%),
-    linear-gradient(0deg, color-mix(in oklab, var(--ion-text-color) 8%, transparent), color-mix(in oklab, var(--ion-text-color) 8%, transparent));
-  animation: shimmer 1.2s linear infinite;
-  clip-path: polygon(0 0, calc(100% - var(--space-2)) 0, 100% var(--space-2), 100% 100%, 0 100%);
-}
-.skeleton-lines { padding: var(--space-2); display: grid; gap: .5rem; }
-.skeleton-lines .line { height: 10px; border-radius: 6px; background: color-mix(in oklab, var(--ion-text-color) 8%, transparent); }
-.skeleton-lines .l1 { width: 80%; }
-.skeleton-lines .l2 { width: 60%; }
-.skeleton-lines .l3 { width: 40%; }
-@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
 
-/* Modal detalle (glass) */
-ion-modal::part(backdrop) { background: radial-gradient( circle at 50% 20%, rgba(0,0,0,.35), rgba(0,0,0,.6)); opacity: 1; }
-ion-modal::part(content) {
-  /* Evita colapsar la altura cuando hay ion-content dentro */
-  --height: 80vh;
-  --max-height: 90vh;
-  --width: min(900px, 95vw);
-  --border-radius: var(--radius-md);
-  background: transparent;
+.detail-panel {
+  order: 2;
 }
-.detail-content { --background: transparent; }
-.detail-card.glass {
-  background: color-mix(in oklab, var(--surface-1) 30%, transparent);
-  border: var(--border-width-1) solid color-mix(in oklab, var(--border-color) 60%, transparent);
+
+@media (min-width: 992px) {
+  .detail-panel {
+    position: sticky;
+    top: var(--space-4);
+    order: 2;
+  }
+}
+
+.project-summary {
+  appearance: none;
+  border: none;
+  background: color-mix(in oklab, var(--surface-1) 92%, transparent);
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-lg);
-  backdrop-filter: blur(14px) saturate(1.2);
+  box-shadow: var(--shadow-sm);
+  border: var(--border-width-1) solid color-mix(in oklab, var(--border-color) 85%, transparent);
+  padding: var(--space-2);
+  display: grid;
+  gap: var(--space-2);
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+  opacity: 0;
+  transform: translateY(16px);
 }
-.detail-media img { width: 100%; border-bottom: var(--border-width-1) solid var(--border-color); display: block; }
-.detail-media { max-height: 40vh; overflow: hidden; }
-.detail-media img { height: 100%; object-fit: cover; }
-.detail-body { padding: var(--space-2); }
-.detail-body h3 { margin: 0 0 .25rem; font-weight: 800; }
-.detail-tags { margin-top: var(--space-1); display: flex; flex-wrap: wrap; gap: .35rem; }
-.detail-about { margin: .25rem 0 .5rem; }
-.detail-features { margin: .25rem 0 .75rem; padding-left: 1.1rem; }
-.detail-features li { margin: .15rem 0; }
-.detail-actions { margin-top: var(--space-2); display: flex; gap: .5rem; flex-wrap: wrap; }
-.detail-meta { display: flex; gap: .5rem; flex-wrap: wrap; margin: 0 0 .5rem; }
-.pill { background: var(--surface-2); border: var(--border-width-1) solid var(--border-color); border-radius: 999px; padding: .15rem .5rem; font-size: .8rem; }
-.detail-outcomes { margin: .25rem 0 .75rem; padding-left: 1.1rem; }
-.detail-outcomes li { margin: .15rem 0; }
-.detail-gallery { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(160px, 1fr); gap: .5rem; overflow-x: auto; padding-bottom: .25rem; }
-.detail-gallery img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-xs); border: var(--border-width-1) solid var(--border-color); }
+
+.project-summary.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.project-summary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.project-summary.active {
+  border-color: color-mix(in oklab, var(--ion-color-primary) 65%, transparent);
+  box-shadow: 0 12px 28px -12px color-mix(in oklab, var(--ion-color-primary) 45%, transparent);
+  transform: translateY(-2px);
+}
+
+.project-summary:focus-visible {
+  outline: 2px solid var(--ion-color-primary);
+  outline-offset: 3px;
+}
+
+@media (min-width: 768px) {
+  .project-summary {
+    grid-template-columns: 180px 1fr;
+    align-items: stretch;
+  }
+}
+
+.summary-media {
+  position: relative;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--surface-2);
+  aspect-ratio: 16 / 10;
+}
+
+@media (min-width: 768px) {
+  .summary-media {
+    aspect-ratio: auto;
+    min-height: 140px;
+  }
+}
+
+.summary-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0;
+  transition: opacity 320ms ease;
+}
+
+.summary-media img.is-loaded {
+  opacity: 1;
+}
+
+.media-skeleton {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 0%, color-mix(in oklab, var(--ion-text-color) 8%, transparent) 25%, transparent 50%);
+  animation: shimmer 1.2s linear infinite;
+}
+
+.summary-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.summary-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+}
+
+.summary-header h3 {
+  margin: 0;
+  font-size: clamp(1.05rem, 2.4vw, 1.25rem);
+  font-weight: 700;
+  flex: 1;
+}
+
+.summary-badge {
+  background: color-mix(in oklab, var(--ion-color-primary) 22%, transparent);
+  color: var(--ion-color-primary);
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.summary-description {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--ion-color-step-700);
+}
+
+.summary-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.summary-tags span {
+  background: var(--surface-2);
+  color: var(--ion-color-step-650);
+  border-radius: var(--radius-xs);
+  padding: 0.2rem 0.55rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+.summary-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.summary-categories ion-chip {
+  --background: transparent;
+  --color: var(--ion-color-step-600);
+  --border-color: color-mix(in oklab, var(--border-color) 75%, transparent);
+  --border-style: dashed;
+  --padding-start: 8px;
+  --padding-end: 8px;
+  --min-height: 28px;
+}
+
+.summary-meta {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 600;
+  color: var(--ion-color-primary);
+  font-size: 0.85rem;
+}
+
+.summary-meta ion-icon {
+  font-size: 1.25rem;
+}
+
+.empty-list,
+.empty-detail {
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  border: var(--border-width-1) dashed var(--border-color);
+  text-align: center;
+  background: color-mix(in oklab, var(--surface-1) 92%, transparent);
+  color: var(--ion-color-step-700);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--border-color) 55%, transparent);
+}
+
+/* Detail */
+.project-detail {
+  background: color-mix(in oklab, var(--surface-1) 96%, transparent);
+  border-radius: var(--radius-lg);
+  border: var(--border-width-1) solid color-mix(in oklab, var(--border-color) 70%, transparent);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.detail-cover {
+  position: relative;
+  background: var(--surface-2);
+}
+
+.detail-cover img {
+  width: 100%;
+  display: block;
+  max-height: 360px;
+  object-fit: cover;
+}
+
+.detail-content {
+  padding: clamp(1.25rem, 2.2vw, 2.25rem);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.detail-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.detail-header h2 {
+  margin: 0;
+  font-size: clamp(1.6rem, 3vw, 2.15rem);
+  line-height: 1.2;
+  font-weight: 800;
+}
+
+.detail-badge {
+  align-self: flex-start;
+  background: color-mix(in oklab, var(--ion-color-primary) 24%, transparent);
+  color: var(--ion-color-primary);
+  border-radius: 999px;
+  padding: 0.25rem 0.8rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.detail-about {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ion-color-step-700);
+}
+
+.detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+}
+
+.pill {
+  background: var(--surface-2);
+  border: var(--border-width-1) solid var(--border-color);
+  border-radius: 999px;
+  padding: 0.2rem 0.7rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.detail-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: var(--space-1);
+}
+
+.detail-tags ion-chip {
+  --background: var(--surface-2);
+  --color: var(--ion-color-step-700);
+  --padding-start: 10px;
+  --padding-end: 10px;
+}
+
+.detail-features,
+.detail-outcomes {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: grid;
+  gap: 0.3rem;
+  color: var(--ion-color-step-650);
+}
+
+.detail-gallery {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(160px, 1fr);
+  gap: 0.75rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+.detail-gallery img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  border: var(--border-width-1) solid var(--border-color);
+}
+
+.detail-actions {
+  margin-top: var(--space-2);
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 767.98px) {
+  .detail-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .detail-actions ion-button {
+    width: 100%;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
