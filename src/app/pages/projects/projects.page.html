@@ -72,9 +72,6 @@
     <div class="detail-panel">
       <ng-container *ngIf="selected as s; else detailPlaceholder">
         <article class="project-detail">
-          <div class="detail-cover" *ngIf="s?.image as cover">
-            <img [lazyImg]="cover" [alt]="s?.title || ''" />
-          </div>
           <div class="detail-content">
             <div class="detail-header">
               <span class="detail-badge" *ngIf="s?.badge">{{ s?.badge }}</span>
@@ -105,48 +102,8 @@
               </ul>
             </ng-container>
 
-            <ng-container *ngIf="s?.details?.screenshots?.length">
-              <h3>Capturas</h3>
-              <div class="detail-gallery">
-                <img
-                  *ngFor="let img of s?.details?.screenshots"
-                  [lazyImg]="img"
-                  [alt]="'Captura de ' + (s?.title || '')"
-                />
-              </div>
-            </ng-container>
 
-            <div class="detail-actions">
-              <ion-button
-                *ngIf="s?.details?.links?.demo"
-                fill="outline"
-                size="default"
-                [href]="s?.details?.links?.demo"
-                target="_blank"
-                rel="noopener"
-              >
-                Ver demo
-              </ion-button>
-              <ion-button
-                *ngIf="s?.details?.links?.repo"
-                size="default"
-                [href]="s?.details?.links?.repo"
-                target="_blank"
-                rel="noopener"
-              >
-                Ver repo
-              </ion-button>
-              <ion-button
-                *ngIf="s?.details?.links?.caso"
-                size="default"
-                fill="clear"
-                [href]="s?.details?.links?.caso"
-                target="_blank"
-                rel="noopener"
-              >
-                Caso de estudio
-              </ion-button>
-            </div>
+
           </div>
         </article>
       </ng-container>
