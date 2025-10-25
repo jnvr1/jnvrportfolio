@@ -16,107 +16,146 @@
     </ion-chip>
   </div>
 
-  <!-- Grid Bento + overlay de conexiones -->
-    <div class="bento-wrapper">
-      <div class="connection-overlay" [class.active]="!!hoveredId"></div>
-
-      <div class="bento-grid" [@fadeInUpStagger]="filteredProjects.length">
-      <div
-        class="bento-item reveal"
-        *ngFor="let p of filteredProjects; let i = index"
-        appInView
-        [attr.id]="'project-' + p.id"
-        tabindex="-1"
-        [class.active]="selected?.id === p.id"
-        [class.size-wide]="p.size==='wide'"
-        [class.size-tall]="p.size==='tall'"
-        [class.size-large]="p.size==='large'"
-        [class.loading]="!loaded[p.id]"
-        [class.related]="shareTagsWith(p, hoveredId)"
+  <!-- Showcase principal -->
+  <div class="showcase">
+    <div class="project-track" [@fadeInUpStagger]="filteredProjects.length">
+      <ng-container *ngIf="filteredProjects.length; else emptyProjects">
+        <button
+          *ngFor="let p of filteredProjects; let i = index"
+          appInView
+          class="project-summary"
+          type="button"
+          [attr.id]="'project-' + p.id"
           [style.animationDelay.ms]="i * 90"
-          (mouseenter)="hoveredId = p.id"
-          (mouseleave)="hoveredId = null"
+          [class.active]="selected?.id === p.id"
+          [attr.aria-pressed]="selected?.id === p.id"
+          [attr.aria-label]="'Ver detalle de ' + p.title"
+          (click)="onSummaryClick(p)"
         >
-        <!-- Skeleton geométrico -->
-        <app-geometric-skeleton *ngIf="!loaded[p.id]" variant="card"></app-geometric-skeleton>
+          <div class="summary-media">
+            <div class="media-skeleton" *ngIf="!loaded[p.id]"></div>
+            <img
+              [lazyImg]="p.image"
+              [alt]="p.title"
+              (load)="onSummaryImageLoaded(p.id)"
+              (error)="onSummaryImageLoaded(p.id)"
+            />
+          </div>
 
-        <app-geometric-card
-          [variant]="p.variant || 'default'"
-          [badge]="p.badge"
-          [icon]="p.icon"
-          [title]="p.title"
-          [description]="p.description"
-          [image]="p.image"
-          [tags]="p.tags"
-          [link]="p.link"
-          (imageLoaded)="onCardImageLoaded(p.id)"
-          (click)="onCardClick($event, p)"
-        ></app-geometric-card>
-      </div>
+          <div class="summary-body">
+            <div class="summary-header">
+              <span class="summary-badge" *ngIf="p.badge">{{ p.badge }}</span>
+              <h3>{{ p.title }}</h3>
+            </div>
+            <p class="summary-description">{{ p.description }}</p>
+            <div class="summary-tags">
+              <span *ngFor="let t of p.tags">{{ t }}</span>
+            </div>
+            <div class="summary-categories">
+              <ion-chip *ngFor="let c of p.categories" size="small">{{ c }}</ion-chip>
+            </div>
+            <div class="summary-meta">
+              <span>Ver detalles</span>
+              <ion-icon name="arrow-forward-circle"></ion-icon>
+            </div>
+          </div>
+        </button>
+      </ng-container>
+      <ng-template #emptyProjects>
+        <div class="empty-list">
+          <h3>No hay proyectos disponibles.</h3>
+          <p>Prueba con otra categoría para ver más trabajos.</p>
+        </div>
+      </ng-template>
+    </div>
+
+    <div class="detail-panel">
+      <ng-container *ngIf="selected as s; else detailPlaceholder">
+        <article class="project-detail">
+          <div class="detail-cover" *ngIf="s?.image as cover">
+            <img [lazyImg]="cover" [alt]="s?.title || ''" />
+          </div>
+          <div class="detail-content">
+            <div class="detail-header">
+              <span class="detail-badge" *ngIf="s?.badge">{{ s?.badge }}</span>
+              <h2>{{ s?.title }}</h2>
+            </div>
+            <p class="detail-about">{{ s?.details?.about || s?.description }}</p>
+
+            <div class="detail-meta" *ngIf="s?.details?.role || s?.details?.period">
+              <span *ngIf="s?.details?.role" class="pill">{{ s?.details?.role }}</span>
+              <span *ngIf="s?.details?.period" class="pill">{{ s?.details?.period }}</span>
+            </div>
+
+            <div class="detail-tags">
+              <ion-chip *ngFor="let t of (s?.tags || [])">{{ t }}</ion-chip>
+            </div>
+
+            <ng-container *ngIf="s?.details?.features?.length">
+              <h3>Características destacadas</h3>
+              <ul class="detail-features">
+                <li *ngFor="let f of s?.details?.features">{{ f }}</li>
+              </ul>
+            </ng-container>
+
+            <ng-container *ngIf="s?.details?.outcomes?.length">
+              <h3>Resultados</h3>
+              <ul class="detail-outcomes">
+                <li *ngFor="let o of s?.details?.outcomes">{{ o }}</li>
+              </ul>
+            </ng-container>
+
+            <ng-container *ngIf="s?.details?.screenshots?.length">
+              <h3>Capturas</h3>
+              <div class="detail-gallery">
+                <img
+                  *ngFor="let img of s?.details?.screenshots"
+                  [lazyImg]="img"
+                  [alt]="'Captura de ' + (s?.title || '')"
+                />
+              </div>
+            </ng-container>
+
+            <div class="detail-actions">
+              <ion-button
+                *ngIf="s?.details?.links?.demo"
+                fill="outline"
+                size="default"
+                [href]="s?.details?.links?.demo"
+                target="_blank"
+                rel="noopener"
+              >
+                Ver demo
+              </ion-button>
+              <ion-button
+                *ngIf="s?.details?.links?.repo"
+                size="default"
+                [href]="s?.details?.links?.repo"
+                target="_blank"
+                rel="noopener"
+              >
+                Ver repo
+              </ion-button>
+              <ion-button
+                *ngIf="s?.details?.links?.caso"
+                size="default"
+                fill="clear"
+                [href]="s?.details?.links?.caso"
+                target="_blank"
+                rel="noopener"
+              >
+                Caso de estudio
+              </ion-button>
+            </div>
+          </div>
+        </article>
+      </ng-container>
+      <ng-template #detailPlaceholder>
+        <div class="empty-detail">
+          <h3>Selecciona un proyecto</h3>
+          <p>Elige un proyecto de la lista para revisar sus detalles y resultados.</p>
+        </div>
+      </ng-template>
     </div>
   </div>
 </section>
-
-<!-- Modal detalle (glassmorphism) -->
-<ion-modal [isOpen]="isDetailOpen" (didDismiss)="onModalDidDismiss()" aria-modal="true" role="dialog">
-  <ion-header translucent>
-    <ion-toolbar>
-      <ion-title>{{ selected?.title }}</ion-title>
-      <ion-buttons slot="end">
-        <ion-button (click)="closeDetail()" aria-label="Cerrar detalle">
-          <ion-icon name="close"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content class="ion-padding detail-content">
-    <article class="detail-card glass" *ngIf="selected as s">
-      <div class="detail-media" *ngIf="s?.image as img">
-        <img [lazyImg]="img" [alt]="s?.title || ''" />
-      </div>
-      <div class="detail-body">
-        <h3>{{ s?.title }}</h3>
-        <p class="detail-about">{{ s?.details?.about || s?.description }}</p>
-
-        <p class="detail-meta" *ngIf="s?.details?.role || s?.details?.period">
-          <span *ngIf="s?.details?.role" class="pill">{{ s?.details?.role }}</span>
-          <span *ngIf="s?.details?.period" class="pill">{{ s?.details?.period }}</span>
-        </p>
-
-        <ng-container *ngIf="s?.details?.features?.length">
-          <h4>Características</h4>
-          <ul class="detail-features">
-            <li *ngFor="let f of s?.details?.features">{{ f }}</li>
-          </ul>
-        </ng-container>
-
-        <h4>Tecnologías</h4>
-        <div class="detail-tags">
-          <ion-chip *ngFor="let t of (s?.tags || [])">{{ t }}</ion-chip>
-        </div>
-
-        <ng-container *ngIf="s?.details?.outcomes?.length">
-          <h4>Resultados</h4>
-          <ul class="detail-outcomes">
-            <li *ngFor="let o of s?.details?.outcomes">{{ o }}</li>
-          </ul>
-        </ng-container>
-
-        <ng-container *ngIf="s?.details?.screenshots?.length">
-          <h4>Capturas</h4>
-          <div class="detail-gallery">
-            <img *ngFor="let img of s?.details?.screenshots" [lazyImg]="img" [alt]="'Captura de ' + (s?.title || '')" />
-          </div>
-        </ng-container>
-
-        <div class="detail-actions">
-          <ion-button *ngIf="s?.details?.links?.demo" fill="outline" size="default" [href]="s?.details?.links?.demo" target="_blank" rel="noopener">Ver demo</ion-button>
-          <ion-button *ngIf="s?.details?.links?.repo" size="default" [href]="s?.details?.links?.repo" target="_blank" rel="noopener">Ver repo</ion-button>
-          <ion-button *ngIf="s?.details?.links?.caso" size="default" fill="clear" [href]="s?.details?.links?.caso" target="_blank" rel="noopener">Caso de estudio</ion-button>
-        </div>
-      </div>
-    </article>
-  </ion-content>
-</ion-modal>
-
-
