@@ -233,6 +233,11 @@ export class ProjectsPage implements OnInit, OnDestroy {
   }
 
   onModalDidDismiss() {
+    if (this.isDetailOpen) {
+      // Si el modal se cerró sin actualizar la URL (p.e. swipe/backdrop), sincroniza el estado.
+      this.closeDetail();
+      return;
+    }
     this.selected = undefined;
     this.hoveredId = null;
   }
