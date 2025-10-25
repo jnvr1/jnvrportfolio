@@ -39,7 +39,6 @@ export interface ProjectItem {
     CommonModule,
     IonChip,
     IonIcon,
-    IonButton,
     InViewDirective,
     LazyImgDirective,
   ],

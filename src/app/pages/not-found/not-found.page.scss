@@ -1,104 +1,129 @@
-.not-found-content {
-  /* Fondo con patrón de grid sutil */
-  --background: var(--ion-background-color);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
+/* Layout base */
+.body{
+  overflow: hidden;
+  scrollbar-width: none;
+}
+.not-found-page {
+  position: relative;
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  display: grid;
+  place-items: center;
 }
 
-/* Grid sutil utilizando gradients (se asigna a --background) */
-.grid-bg {
-  --grid-size: 22px;
-  --grid-color: rgba(127, 127, 127, 0.08);
-  --background:
-    linear-gradient(var(--grid-color) 1px, transparent 1px) 0 0/var(--grid-size) var(--grid-size),
-    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px) 0 0/var(--grid-size) var(--grid-size),
-    var(--ion-background-color);
+/* Fondo de red (líneas y nodos) */
+.network-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 20% 30%, color-mix(in oklab, var(--ion-color-primary) 14%, transparent) 0 3px, transparent 4px) 0 0/120px 120px,
+    radial-gradient(circle at 70% 60%, color-mix(in oklab, var(--ion-color-primary) 10%, transparent) 0 2px, transparent 3px) 0 0/160px 160px,
+    linear-gradient(90deg, color-mix(in oklab, var(--ion-color-primary) 12%, transparent) 1px, transparent 1px) 0 0/120px 120px,
+    linear-gradient(0deg, color-mix(in oklab, var(--ion-color-primary) 12%, transparent) 1px, transparent 1px) 0 0/120px 120px;
+  opacity: 0.35;
+  mask-image: linear-gradient(to bottom, black, transparent 85%);
 }
 
-.not-found-container {
-  text-align: center;
-  color: var(--ion-text-color);
-  max-width: 960px;
-  width: 100%;
-  margin-inline: auto;
+/* Elementos geométricos flotantes */
+.geo-decor {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 8px;
+  border: 2px solid color-mix(in oklab, var(--ion-color-primary) 55%, transparent);
+  box-shadow: 0 6px 24px color-mix(in oklab, var(--ion-color-primary) 16%, transparent);
+  animation: float 9s ease-in-out infinite;
+  pointer-events: none;
+}
+.geo-1 { top: 8%; left: 6%; transform: rotate(12deg); }
+.geo-2 { top: 18%; right: 8%; transform: rotate(-8deg); animation-duration: 12s; }
+.geo-3 { bottom: 12%; left: 14%; width: 82px; height: 82px; border-radius: 50%; animation-duration: 10s; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+  50% { transform: translateY(-10px) rotate(calc(var(--rot, 0deg) + 6deg)); }
 }
 
-/* 404 geométrico */
-.hero-404 { margin-bottom: 1rem; }
-.digits {
-  width: min(90vw, 720px);
-  height: auto;
-  display: block;
+/* Hero */
+.nf-hero { width: 100%; padding: clamp(2rem, 6vw, 4rem) 1rem; }
+.nf-card {
+  position: relative;
+  width: min(720px, 92%);
   margin: 0 auto;
+  padding: clamp(1.5rem, 4vw, 2rem);
+  border-radius: 14px;
+  border: 1.5px solid color-mix(in oklab, var(--ion-color-primary) 30%, transparent);
+  background: color-mix(in oklab, var(--ion-background-color) 88%, var(--ion-color-primary) 12%);
+  box-shadow: 0 20px 60px color-mix(in oklab, var(--ion-color-primary) 18%, transparent);
+  text-align: center;
+  clip-path: inset(0 100% 0 0 round 14px);
+  opacity: 0;
+  animation: cardReveal 900ms var(--transition-curve, cubic-bezier(.2,.7,.2,1)) forwards;
 }
-.digits *, .circuit-svg * {
-  vector-effect: non-scaling-stroke;
-  stroke: var(--ion-text-color);
-  fill: none;
-  stroke-width: 6;
-  stroke-linecap: round;
-}
-/* Construcción progresiva */
-.digits polyline, .digits line, .digits ellipse {
-  stroke-dasharray: 600;
-  stroke-dashoffset: 600;
-  animation: draw 1100ms ease-out forwards;
-}
-.digits g:nth-child(2) * { animation-delay: 180ms; }
-.digits g:nth-child(3) * { animation-delay: 360ms; }
-
-/* Mensaje estilo tech */
-.tech-message {
-  margin: .25rem 0 0;
-  font-weight: 600;
-  letter-spacing: .04em;
-  text-transform: uppercase;
-}
-.tech-sub {
-  margin: .25rem 0 0.75rem;
-  opacity: .7;
+.nf-card::after {
+  content: "";
+  position: absolute; inset: -12px;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 35%, color-mix(in oklab, var(--ion-color-primary) 82%, white 18%) 50%, transparent 65%);
+  opacity: 0; transform: translateX(-120%) skewX(-16deg);
+  mix-blend-mode: screen;
+  animation: logoSheen 2.1s var(--transition-curve, cubic-bezier(.2,.7,.2,1)) forwards 800ms;
 }
 
-/* Circuito desconectado */
-.circuit-svg {
-  width: min(90vw, 420px);
-  height: auto;
-  display: block;
-  margin: .25rem auto 1.25rem;
+.nf-404 {
+  font-size: clamp(3rem, 18vw, 8rem);
+  line-height: .9;
+  margin: 0 0 .25rem;
+  font-weight: 900;
+  letter-spacing: .02em;
+  background: linear-gradient(135deg, color-mix(in oklab, var(--ion-color-primary) 80%, white 20%), color-mix(in oklab, var(--ion-color-primary) 35%, var(--ion-background-color) 65%));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 10px 28px color-mix(in oklab, var(--ion-color-primary) 24%, transparent));
 }
-.circuit-svg .trace { stroke-width: 3.5; }
-.circuit-svg .moving {
-  stroke-dasharray: 10 12;
-  animation: dash 1.2s linear infinite, draw 900ms ease-out forwards;
-}
-.circuit-svg .gap {
-  stroke-dasharray: 3 8;
-  opacity: .45;
-  animation: blink 900ms steps(2, end) infinite;
-}
+.nf-title { margin: 0; font-size: clamp(1.25rem, 3.2vw, 1.8rem); font-weight: 800; color: var(--ion-text-color); }
+.nf-sub { margin: .35rem 0 1rem; color: color-mix(in oklab, var(--ion-text-color) 78%, var(--ion-background-color) 22%); }
 
-/* Botón con corte geométrico */
-ion-button.geom-btn { margin-top: 0.5rem; }
+.cta-group { margin-top: .5rem; display: flex; justify-content: center; gap: .75rem; flex-wrap: wrap; }
+ion-button.geom-btn { --border-radius: 10px; }
 ion-button.geom-btn::part(native) {
   --background: transparent;
   --background-hover: transparent;
-  --color: var(--ion-color-primary);
+  --color: var(--ion-color-primary-contrast);
   border: 2px solid var(--ion-color-primary);
   clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%);
-  transition: transform 160ms ease;
+  transition: transform 160ms ease, background-color 160ms ease, color 160ms ease;
 }
-ion-button.geom-btn:hover::part(native) {
-  transform: translateY(-2px);
-  background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+ion-button.geom-btn.primary::part(native) {
+  --background: var(--ion-color-primary);
+  --color: var(--ion-color-primary-contrast);
+}
+ion-button.geom-btn.outline::part(native) {
+  --background: transparent;
+  --color: var(--ion-color-primary);
+}
+ion-button.geom-btn:hover::part(native) { transform: translateY(-2px); }
+
+/* Scanline sutil */
+.scanline {
+  position: absolute; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgba(255,255,255,.04) 0 1px, transparent 1px 3px);
+  mask-image: linear-gradient(to bottom, black, transparent 92%);
+  animation: scan 7s linear infinite;
 }
 
-/* Animaciones base */
-@keyframes draw { to { stroke-dashoffset: 0; } }
-@keyframes dash { to { stroke-dashoffset: -22; } }
-@keyframes blink {
-  0% { opacity: 1; }
-  50% { opacity: 0.6; }
-  100% { opacity: 1; }
+/* Animaciones */
+@keyframes cardReveal { 0% { clip-path: inset(0 100% 0 0 round 14px); opacity: 0; transform: translateY(6px) scale(.995);} 100% { clip-path: inset(0 0 0 0 round 14px); opacity: 1; transform: translateY(0) scale(1);} }
+@keyframes logoSheen { 0% { opacity: 0; transform: translateX(-120%) skewX(-16deg);} 25% { opacity: .75;} 55% { opacity: .35;} 100% { opacity: 0; transform: translateX(120%) skewX(-16deg);} }
+@keyframes scan { 0% { transform: translateY(-100%);} 100% { transform: translateY(100%);} }
+
+@media (prefers-reduced-motion: reduce) {
+  .network-bg { opacity: .2; }
+  .geo-decor { animation: none; }
+  .nf-card { clip-path: none; opacity: 1; animation: none; }
+  .nf-card::after, .scanline { animation: none; opacity: 0; }
 }

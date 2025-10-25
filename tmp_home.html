@@ -10,10 +10,16 @@
   <!-- HERO -->
   <section class="hero-section">
     <div class="logo-hero" aria-label="Logo JNVR animado">
-      <img class="jnvr-logo" src="assets/logo/logo-jnvr2.svg" alt="Logotipo JNVR" />
+      <img class="jnvr-logo" src="assets/logo/logo.svg" alt="Logotipo JNVR" />
 
     </div>
 
+    <h1 class="hero-title" [@textReveal] aria-label="Nombre completo">
+      <span class="word" style="--i:0">Jonathan</span>
+      <span class="word" style="--i:1">Noe</span>
+      <span class="word" style="--i:2">Viramontes</span>
+      <span class="word" style="--i:3">R.</span>
+    </h1>
 
     <p class="hero-subtitle">
       Ingeniero de Software — Microservicios FastAPI • Ionic • Power BI
@@ -40,4 +46,5 @@
     <app-contact></app-contact>
   </section>
 </ion-content>
+
 

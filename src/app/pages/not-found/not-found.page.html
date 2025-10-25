@@ -1,44 +1,23 @@
-<ion-content class="ion-padding not-found-content grid-bg" fullscreen>
-  <div class="not-found-container">
-    <!-- 404 con líneas geométricas -->
-    <section class="hero-404">
-      <svg class="digits" viewBox="0 0 720 220" role="img" aria-label="404">
-        <!-- 4 izquierdo -->
-        <g class="digit" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="120,20 120,120 200,120"></polyline>
-          <line x1="200" y1="20" x2="200" y2="200"></line>
-        </g>
-        <!-- 0 -->
-        <g class="digit">
-          <ellipse cx="360" cy="110" rx="80" ry="90"></ellipse>
-        </g>
-        <!-- 4 derecho -->
-        <g class="digit" transform="translate(320,0)" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="120,20 120,120 200,120"></polyline>
-          <line x1="200" y1="20" x2="200" y2="200"></line>
-        </g>
-      </svg>
-    </section>
+<ion-content fullscreen class="not-found-page">
+  <!-- Fondo de red y decoraciones geométricas -->
+  <div class="network-bg" aria-hidden="true"></div>
+  <div class="geo-decor geo-1" aria-hidden="true"></div>
+  <div class="geo-decor geo-2" aria-hidden="true"></div>
+  <div class="geo-decor geo-3" aria-hidden="true"></div>
 
-    <!-- Mensaje de error estilo tech -->
-    <ion-text>
-      <p class="tech-message">Ruta no encontrada: enlace fuera de circuito.</p>
-      <p class="tech-sub">Error 404 · Verifica la URL o regresa al inicio.</p>
-    </ion-text>
+  <section class="nf-hero">
+    <div class="nf-card" role="group" aria-label="Página no encontrada">
+      <div class="nf-404" aria-hidden="true">404</div>
+      <h1 class="nf-title">Página no encontrada</h1>
+      <p class="nf-sub">La ruta solicitada no existe o fue movida.</p>
 
-    <!-- Circuito desconectado -->
-    <div class="circuit">
-      <svg class="circuit-svg" viewBox="0 0 420 80" aria-hidden="true">
-        <circle cx="40" cy="40" r="10"></circle>
-        <circle cx="380" cy="40" r="10"></circle>
-        <line class="trace moving" x1="50" y1="40" x2="190" y2="40"></line>
-        <line class="trace gap" x1="190" y1="40" x2="230" y2="40"></line>
-        <line class="trace moving" x1="230" y1="40" x2="370" y2="40"></line>
-      </svg>
+      <div class="cta-group">
+        <ion-button class="geom-btn primary" size="large" (click)="goHome()">Volver al inicio</ion-button>
+        <ion-button class="geom-btn outline" size="large" href="/home#projects">Ver proyectos</ion-button>
+      </div>
     </div>
 
-    <!-- Botón volver a home con efecto geométrico -->
-    <ion-button class="geom-btn" size="large" (click)="goHome()">Volver a Home</ion-button>
-  </div>
+    <!-- Indicador sutil de escaneo -->
+    <div class="scanline" aria-hidden="true"></div>
+  </section>
 </ion-content>
-

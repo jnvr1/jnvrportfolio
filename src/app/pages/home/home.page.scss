@@ -63,7 +63,7 @@
   filter: drop-shadow(0 16px 32px color-mix(in oklab, var(--ion-color-primary) 22%, transparent));
 }
 
-.logo-hero::after {
+.home-landing::after {
   content: "";
   position: absolute;
   inset: clamp(-1.5rem, -3vw, -1rem);
@@ -80,11 +80,11 @@
   animation: logoSheen 2.1s var(--transition-curve) forwards 1s;
 }
 
-.logo-hero svg {
+.logo-hero .jnvr-logo, .logo-hero svg {
   width: 100%;
   height: auto;
   display: block;
-  animation: logoFloat 8s ease-in-out 2.4s infinite;
+  animation: imgFadeIn 900ms var(--transition-curve) forwards, logoFloat 8s ease-in-out 2.4s infinite;
   transform-origin: center;
 }
 
@@ -131,10 +131,15 @@
   50% { transform: translateY(-8px); }
 }
 
+@keyframes imgFadeIn {
+  0% { opacity: 0; filter: blur(6px); }
+  100% { opacity: 1; filter: blur(0); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .logo-hero { filter: none; }
   .logo-hero::after { animation: none; opacity: 0; }
-  .logo-hero svg { animation: none; }
+  .logo-hero .jnvr-logo, .logo-hero svg { animation: none; }
   .logo-hero .logo-fill {
     clip-path: none;
     opacity: 1;

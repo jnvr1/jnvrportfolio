@@ -7,7 +7,7 @@ import { IonContent, IonText, IonButton } from '@ionic/angular/standalone';
   standalone: true,
   templateUrl: './not-found.page.html',
   styleUrls: ['./not-found.page.scss'],
-  imports: [IonButton, CommonModule, IonContent, IonText]
+  imports: [IonButton, CommonModule, IonContent]
 })
 export class NotFoundPage {
   constructor() {}
