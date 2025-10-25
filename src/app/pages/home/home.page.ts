@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonContent } from '@ionic/angular/standalone';
-import { textReveal, drawLine } from '../../animations/geometric.animations';
+import { textReveal } from '../../animations/geometric.animations';
 import { ProjectsPage } from '../projects/projects.page';
 import { ExperiencePage } from '../experience/experience.page';
 import { ContactPage } from '../contact/contact.page';
@@ -12,6 +12,6 @@ import { ContactPage } from '../contact/contact.page';
   styleUrls: ['home.page.scss'],
   standalone: true,
   imports: [CommonModule, IonContent, ProjectsPage, ExperiencePage, ContactPage],
-  animations: [textReveal, drawLine]
+  animations: [textReveal]
 })
 export class HomePage {}
