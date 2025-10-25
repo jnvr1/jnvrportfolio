@@ -76,17 +76,17 @@
       </div>
       <div class="detail-body">
         <h3>{{ s?.title }}</h3>
-        <p class="detail-about">{{ s.details?.about || s.description }}</p>
+        <p class="detail-about">{{ s?.details?.about || s?.description }}</p>
 
-        <p class="detail-meta" *ngIf="s.details?.role || s.details?.period">
-          <span *ngIf="s.details?.role" class="pill">{{ s.details?.role }}</span>
-          <span *ngIf="s.details?.period" class="pill">{{ s.details?.period }}</span>
+        <p class="detail-meta" *ngIf="s?.details?.role || s?.details?.period">
+          <span *ngIf="s?.details?.role" class="pill">{{ s?.details?.role }}</span>
+          <span *ngIf="s?.details?.period" class="pill">{{ s?.details?.period }}</span>
         </p>
 
-        <ng-container *ngIf="s.details?.features?.length">
+        <ng-container *ngIf="s?.details?.features?.length">
           <h4>Características</h4>
           <ul class="detail-features">
-            <li *ngFor="let f of s.details?.features">{{ f }}</li>
+            <li *ngFor="let f of s?.details?.features">{{ f }}</li>
           </ul>
         </ng-container>
 
@@ -95,24 +95,24 @@
           <ion-chip *ngFor="let t of s.tags">{{ t }}</ion-chip>
         </div>
 
-        <ng-container *ngIf="s.details?.outcomes?.length">
+        <ng-container *ngIf="s?.details?.outcomes?.length">
           <h4>Resultados</h4>
           <ul class="detail-outcomes">
-            <li *ngFor="let o of s.details?.outcomes">{{ o }}</li>
+            <li *ngFor="let o of s?.details?.outcomes">{{ o }}</li>
           </ul>
         </ng-container>
 
-        <ng-container *ngIf="s.details?.screenshots?.length">
+        <ng-container *ngIf="s?.details?.screenshots?.length">
           <h4>Capturas</h4>
           <div class="detail-gallery">
-            <img *ngFor="let img of s.details?.screenshots" [lazyImg]="img" [alt]="'Captura de ' + (s?.title || '')" />
+            <img *ngFor="let img of s?.details?.screenshots" [lazyImg]="img" [alt]="'Captura de ' + (s?.title || '')" />
           </div>
         </ng-container>
 
         <div class="detail-actions">
-          <ion-button *ngIf="s.details?.links?.demo" fill="outline" size="default" [href]="s.details?.links?.demo" target="_blank" rel="noopener">Ver demo</ion-button>
-          <ion-button *ngIf="s.details?.links?.repo" size="default" [href]="s.details?.links?.repo" target="_blank" rel="noopener">Ver repo</ion-button>
-          <ion-button *ngIf="s.details?.links?.caso" size="default" fill="clear" [href]="s.details?.links?.caso" target="_blank" rel="noopener">Caso de estudio</ion-button>
+          <ion-button *ngIf="s?.details?.links?.demo" fill="outline" size="default" [href]="s?.details?.links?.demo" target="_blank" rel="noopener">Ver demo</ion-button>
+          <ion-button *ngIf="s?.details?.links?.repo" size="default" [href]="s?.details?.links?.repo" target="_blank" rel="noopener">Ver repo</ion-button>
+          <ion-button *ngIf="s?.details?.links?.caso" size="default" fill="clear" [href]="s?.details?.links?.caso" target="_blank" rel="noopener">Caso de estudio</ion-button>
         </div>
       </div>
     </article>
