@@ -1,5 +1,5 @@
+/* eslint-disable @angular-eslint/directive-selector */
 import { Directive, ElementRef, Input, OnDestroy, OnInit, Renderer2 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 @Directive({
   selector: 'img[lazyImg]',

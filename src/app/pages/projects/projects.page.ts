@@ -1,8 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonChip, IonIcon, IonModal, IonButton, IonHeader, IonToolbar, IonTitle, IonButtons, IonContent } from '@ionic/angular/standalone';
-import { GeometricCardComponent } from '../../components/geometric-card/geometric-card.component';
-import { GeometricSkeletonComponent } from '../../components/geometric-skeleton/geometric-skeleton.component';
+import { IonChip, IonIcon, IonButton } from '@ionic/angular/standalone';
 import { InViewDirective } from '../../directives/in-view.directive';
 import { LazyImgDirective } from '../../directives/lazy-img.directive';
 import { fadeInUpStagger } from '../../animations/geometric.animations';
@@ -42,16 +40,7 @@ export interface ProjectItem {
     // Ionic standalone components used in the template
     IonChip,
     IonIcon,
-    IonModal,
     IonButton,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonButtons,
-    IonContent,
-    // Shared components
-    GeometricCardComponent,
-    GeometricSkeletonComponent,
     InViewDirective,
     LazyImgDirective,
   ],
@@ -152,7 +141,6 @@ export class ProjectsPage implements OnInit, OnDestroy {
   ];
 
   loaded: Record<string, boolean> = {};
-  isDetailOpen = false;
   selected?: ProjectItem;
   private qpSub?: Subscription;
 
@@ -166,7 +154,6 @@ export class ProjectsPage implements OnInit, OnDestroy {
         const p = this.projects.find(x => x.id === id);
         if (p) {
           this.selected = p;
-          this.isDetailOpen = true;
           this.hoveredId = id;
           // Espera al render y centra la tarjeta en vista
           setTimeout(() => this.scrollToProject(id, { focus: false }), 0);
@@ -174,7 +161,6 @@ export class ProjectsPage implements OnInit, OnDestroy {
         }
       }
       // Si no hay project o no coincide, cierra
-      this.isDetailOpen = false;
       this.selected = undefined;
       this.hoveredId = null;
     });
@@ -190,15 +176,18 @@ export class ProjectsPage implements OnInit, OnDestroy {
 
   selectFilter(f: 'All' | 'Web' | 'Mobile' | 'Design') {
     this.selectedFilter = f;
-  }
-
-  onCardClick(ev: Event, p: ProjectItem) {
-    ev.preventDefault();
-    this.openDetail(p);
+    if (this.selected && f !== 'All' && !this.selected.categories.includes(f)) {
+      this.closeDetail();
+    }
   }
 
   openDetail(p: ProjectItem) {
+    if (this.selected?.id === p.id) {
+      this.closeDetail();
+      return;
+    }
     // Actualiza query param y fragment para deep link
+    this.selected = p;
     this.hoveredId = p.id;
     this.router.navigate([], {
       relativeTo: this.route,
@@ -212,6 +201,8 @@ export class ProjectsPage implements OnInit, OnDestroy {
 
   closeDetail() {
     // Quita el query param ?project y el fragment para cerrar
+    this.selected = undefined;
+    this.hoveredId = null;
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: { project: null },
@@ -232,16 +223,6 @@ export class ProjectsPage implements OnInit, OnDestroy {
     this.loaded[id] = true;
   }
 
-  onModalDidDismiss() {
-    if (this.isDetailOpen) {
-      // Si el modal se cerró sin actualizar la URL (p.e. swipe/backdrop), sincroniza el estado.
-      this.closeDetail();
-      return;
-    }
-    this.selected = undefined;
-    this.hoveredId = null;
-  }
-
   ngOnDestroy(): void {
     this.qpSub?.unsubscribe();
   }
@@ -251,7 +232,7 @@ export class ProjectsPage implements OnInit, OnDestroy {
     const el = document.getElementById('project-' + id);
     if (el) {
       try { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch {}
-      if (focus && !this.isDetailOpen) {
+      if (focus && !this.selected) {
         try { (el as HTMLElement).focus({ preventScroll: true }); } catch {}
       }
     }
