@@ -57,24 +57,89 @@
 }
 
 .logo-hero {
+  position: relative;
   width: min(680px, 90%);
   margin: 0 auto var(--space-3);
+  filter: drop-shadow(0 16px 32px color-mix(in oklab, var(--ion-color-primary) 22%, transparent));
 }
-.logo-hero svg { width: 100%; height: auto; }
-.logo-hero .logo-stroke {
-  font: 900 120px/1 'Poppins', Arial, sans-serif;
-  fill: none;
-  stroke: var(--ion-text-color);
-  stroke-width: 3px;
-  /* Animación CSS de trazo como fallback si no hay Angular Animations */
-  stroke-dasharray: 640;
-  stroke-dashoffset: 640;
-  animation: draw 1.6s var(--transition-curve) forwards;
+
+.logo-hero::after {
+  content: "";
+  position: absolute;
+  inset: clamp(-1.5rem, -3vw, -1rem);
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 35%,
+    color-mix(in oklab, var(--ion-color-primary) 82%, white 18%) 50%,
+    transparent 65%
+  );
+  opacity: 0;
+  transform: translateX(-120%) skewX(-16deg);
+  mix-blend-mode: screen;
+  animation: logoSheen 2.1s var(--transition-curve) forwards 1s;
+}
+
+.logo-hero svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  animation: logoFloat 8s ease-in-out 2.4s infinite;
+  transform-origin: center;
+}
+
+.logo-hero .logo-fill {
+  clip-path: inset(0 100% 0 0);
+  opacity: 0;
+  transform-origin: center;
+  animation: logoReveal 1.8s var(--transition-curve) forwards;
+}
+
+.logo-hero .logo-fill path {
+  stroke: color-mix(in oklab, var(--ion-text-color) 32%, transparent);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
   paint-order: stroke fill;
+  transition: filter 280ms ease;
 }
-@keyframes draw { to { stroke-dashoffset: 0; } }
+
+.logo-hero .cls-1 { fill: #73a0be; }
+.logo-hero .cls-2 { fill: #0f293f; }
+.logo-hero .cls-3 { fill: #1b1b1b; }
+.logo-hero .cls-4 { fill: #a7a6a8; }
+
+.logo-hero:hover .logo-fill path {
+  filter: drop-shadow(0 6px 14px color-mix(in oklab, var(--ion-color-primary) 40%, transparent));
+}
+
+@keyframes logoReveal {
+  0% { clip-path: inset(0 100% 0 0); opacity: 0; transform: scale(.96); }
+  55% { opacity: 1; }
+  100% { clip-path: inset(0 0 0 0); opacity: 1; transform: scale(1); }
+}
+
+@keyframes logoSheen {
+  0% { opacity: 0; transform: translateX(-120%) skewX(-16deg); }
+  25% { opacity: .75; }
+  55% { opacity: .35; }
+  100% { opacity: 0; transform: translateX(120%) skewX(-16deg); }
+}
+
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .logo-hero .logo-stroke { animation: none; }
+  .logo-hero { filter: none; }
+  .logo-hero::after { animation: none; opacity: 0; }
+  .logo-hero svg { animation: none; }
+  .logo-hero .logo-fill {
+    clip-path: none;
+    opacity: 1;
+    animation: none;
+  }
 }
 
 .hero-title {
