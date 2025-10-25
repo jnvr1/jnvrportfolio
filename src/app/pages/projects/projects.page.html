@@ -16,125 +16,146 @@
     </ion-chip>
   </div>
 
-  <div class="projects-layout">
-    <div class="project-list" [@fadeInUpStagger]="filteredProjects.length">
-      <article
-        class="project-card"
-        *ngFor="let p of filteredProjects; let i = index"
-        appInView
-        [attr.id]="'project-' + p.id"
-        tabindex="0"
-        role="button"
-        [attr.aria-expanded]="selected?.id === p.id"
-        [attr.aria-controls]="'project-detail'"
-        [attr.aria-label]="p.title ? 'Abrir detalle de ' + p.title : 'Abrir detalle del proyecto'"
-        [class.active]="selected?.id === p.id"
-        [class.related]="shareTagsWith(p, hoveredId)"
-        [style.animationDelay.ms]="i * 90"
-        (click)="openDetail(p)"
-        (keyup.enter)="openDetail(p)"
-        (keyup.space)="openDetail(p)"
-        (focus)="hoveredId = p.id"
-        (blur)="hoveredId = selected?.id || null"
-        (mouseenter)="hoveredId = p.id"
-        (mouseleave)="hoveredId = selected?.id || null"
-      >
-        <div class="card-media">
-          <div class="media-skeleton" *ngIf="!loaded[p.id]"></div>
-          <img [lazyImg]="p.image" (load)="onCardImageLoaded(p.id)" [alt]="p.title || 'Imagen del proyecto'" />
-        </div>
+  <!-- Showcase principal -->
+  <div class="showcase">
+    <div class="project-track" [@fadeInUpStagger]="filteredProjects.length">
+      <ng-container *ngIf="filteredProjects.length; else emptyProjects">
+        <button
+          *ngFor="let p of filteredProjects; let i = index"
+          appInView
+          class="project-summary"
+          type="button"
+          [attr.id]="'project-' + p.id"
+          [style.animationDelay.ms]="i * 90"
+          [class.active]="selected?.id === p.id"
+          [attr.aria-pressed]="selected?.id === p.id"
+          [attr.aria-label]="'Ver detalle de ' + p.title"
+          (click)="onSummaryClick(p)"
+        >
+          <div class="summary-media">
+            <div class="media-skeleton" *ngIf="!loaded[p.id]"></div>
+            <img
+              [lazyImg]="p.image"
+              [alt]="p.title"
+              (load)="onSummaryImageLoaded(p.id)"
+              (error)="onSummaryImageLoaded(p.id)"
+            />
+          </div>
 
-        <div class="card-body">
-          <div class="card-meta">
-            <div class="card-badges">
-              <span class="badge" *ngIf="p.badge">{{ p.badge }}</span>
-              <ion-icon *ngIf="p.icon" [name]="p.icon" aria-hidden="true"></ion-icon>
+          <div class="summary-body">
+            <div class="summary-header">
+              <span class="summary-badge" *ngIf="p.badge">{{ p.badge }}</span>
+              <h3>{{ p.title }}</h3>
             </div>
-            <span class="card-period" *ngIf="p.details?.period">{{ p.details?.period }}</span>
+            <p class="summary-description">{{ p.description }}</p>
+            <div class="summary-tags">
+              <span *ngFor="let t of p.tags">{{ t }}</span>
+            </div>
+            <div class="summary-categories">
+              <ion-chip *ngFor="let c of p.categories" size="small">{{ c }}</ion-chip>
+            </div>
+            <div class="summary-meta">
+              <span>Ver detalles</span>
+              <ion-icon name="arrow-forward-circle"></ion-icon>
+            </div>
           </div>
-
-          <h3 class="card-title">
-            <span>{{ p.title }}</span>
-          </h3>
-
-          <p class="card-description">{{ p.description }}</p>
-
-          <div class="card-categories" *ngIf="p.categories?.length">
-            {{ p.categories.join(' · ') }}
-          </div>
-
-          <div class="card-tags" *ngIf="p.tags?.length">
-            <ion-chip *ngFor="let t of p.tags">{{ t }}</ion-chip>
-          </div>
-
-          <div class="card-foot">
-            <span>Ver detalles</span>
-            <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
-          </div>
-        </div>
-      </article>
-    </div>
-
-    <aside class="project-detail" id="project-detail" [class.is-empty]="!selected">
-      <ng-container *ngIf="selected as s; else detailEmpty">
-        <div class="detail-header">
-          <div class="detail-eyebrow" *ngIf="s.details?.role || s.details?.period">
-            <span *ngIf="s.details?.role">{{ s.details?.role }}</span>
-            <span *ngIf="s.details?.role && s.details?.period" aria-hidden="true">·</span>
-            <span *ngIf="s.details?.period">{{ s.details?.period }}</span>
-          </div>
-          <ion-button fill="clear" size="small" class="detail-close" (click)="closeDetail()" aria-label="Cerrar detalle">
-            <ion-icon slot="icon-only" name="close"></ion-icon>
-          </ion-button>
-        </div>
-
-        <h2 class="detail-title">{{ s.title }}</h2>
-        <p class="detail-summary">{{ s.details?.about || s.description }}</p>
-
-        <div class="detail-media" *ngIf="s.image as img">
-          <img [lazyImg]="img" [alt]="s.title || 'Imagen del proyecto'" />
-        </div>
-
-        <div class="detail-tags" *ngIf="s.tags?.length">
-          <ion-chip *ngFor="let t of s.tags">{{ t }}</ion-chip>
-        </div>
-
-        <section *ngIf="s.details?.features?.length" class="detail-section">
-          <h3>Características clave</h3>
-          <ul>
-            <li *ngFor="let f of s.details?.features">{{ f }}</li>
-          </ul>
-        </section>
-
-        <section *ngIf="s.details?.outcomes?.length" class="detail-section">
-          <h3>Resultados</h3>
-          <ul>
-            <li *ngFor="let o of s.details?.outcomes">{{ o }}</li>
-          </ul>
-        </section>
-
-        <section *ngIf="s.details?.screenshots?.length" class="detail-section">
-          <h3>Galería</h3>
-          <div class="detail-gallery">
-            <img *ngFor="let img of s.details?.screenshots" [lazyImg]="img" [alt]="'Captura de ' + (s.title || '')" />
-          </div>
-        </section>
-
-        <div class="detail-actions">
-          <ion-button *ngIf="s.details?.links?.demo" fill="solid" size="default" [href]="s.details?.links?.demo" target="_blank" rel="noopener">Ver demo</ion-button>
-          <ion-button *ngIf="s.details?.links?.repo" fill="outline" size="default" [href]="s.details?.links?.repo" target="_blank" rel="noopener">Ver repo</ion-button>
-          <ion-button *ngIf="s.details?.links?.caso" fill="clear" size="default" [href]="s.details?.links?.caso" target="_blank" rel="noopener">Caso de estudio</ion-button>
-        </div>
+        </button>
       </ng-container>
-
-      <ng-template #detailEmpty>
-        <div class="detail-empty">
-          <h3>Selecciona un proyecto</h3>
-          <p>El panel mostrará la historia completa, métricas y capturas del proyecto que elijas.</p>
+      <ng-template #emptyProjects>
+        <div class="empty-list">
+          <h3>No hay proyectos disponibles.</h3>
+          <p>Prueba con otra categoría para ver más trabajos.</p>
         </div>
       </ng-template>
-    </aside>
+    </div>
+
+    <div class="detail-panel">
+      <ng-container *ngIf="selected as s; else detailPlaceholder">
+        <article class="project-detail">
+          <div class="detail-cover" *ngIf="s?.image as cover">
+            <img [lazyImg]="cover" [alt]="s?.title || ''" />
+          </div>
+          <div class="detail-content">
+            <div class="detail-header">
+              <span class="detail-badge" *ngIf="s?.badge">{{ s?.badge }}</span>
+              <h2>{{ s?.title }}</h2>
+            </div>
+            <p class="detail-about">{{ s?.details?.about || s?.description }}</p>
+
+            <div class="detail-meta" *ngIf="s?.details?.role || s?.details?.period">
+              <span *ngIf="s?.details?.role" class="pill">{{ s?.details?.role }}</span>
+              <span *ngIf="s?.details?.period" class="pill">{{ s?.details?.period }}</span>
+            </div>
+
+            <div class="detail-tags">
+              <ion-chip *ngFor="let t of (s?.tags || [])">{{ t }}</ion-chip>
+            </div>
+
+            <ng-container *ngIf="s?.details?.features?.length">
+              <h3>Características destacadas</h3>
+              <ul class="detail-features">
+                <li *ngFor="let f of s?.details?.features">{{ f }}</li>
+              </ul>
+            </ng-container>
+
+            <ng-container *ngIf="s?.details?.outcomes?.length">
+              <h3>Resultados</h3>
+              <ul class="detail-outcomes">
+                <li *ngFor="let o of s?.details?.outcomes">{{ o }}</li>
+              </ul>
+            </ng-container>
+
+            <ng-container *ngIf="s?.details?.screenshots?.length">
+              <h3>Capturas</h3>
+              <div class="detail-gallery">
+                <img
+                  *ngFor="let img of s?.details?.screenshots"
+                  [lazyImg]="img"
+                  [alt]="'Captura de ' + (s?.title || '')"
+                />
+              </div>
+            </ng-container>
+
+            <div class="detail-actions">
+              <ion-button
+                *ngIf="s?.details?.links?.demo"
+                fill="outline"
+                size="default"
+                [href]="s?.details?.links?.demo"
+                target="_blank"
+                rel="noopener"
+              >
+                Ver demo
+              </ion-button>
+              <ion-button
+                *ngIf="s?.details?.links?.repo"
+                size="default"
+                [href]="s?.details?.links?.repo"
+                target="_blank"
+                rel="noopener"
+              >
+                Ver repo
+              </ion-button>
+              <ion-button
+                *ngIf="s?.details?.links?.caso"
+                size="default"
+                fill="clear"
+                [href]="s?.details?.links?.caso"
+                target="_blank"
+                rel="noopener"
+              >
+                Caso de estudio
+              </ion-button>
+            </div>
+          </div>
+        </article>
+      </ng-container>
+      <ng-template #detailPlaceholder>
+        <div class="empty-detail">
+          <h3>Selecciona un proyecto</h3>
+          <p>Elige un proyecto de la lista para revisar sus detalles y resultados.</p>
+        </div>
+      </ng-template>
+    </div>
   </div>
 </section>
-
-

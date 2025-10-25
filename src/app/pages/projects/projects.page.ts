@@ -37,7 +37,6 @@ export interface ProjectItem {
   standalone: true,
   imports: [
     CommonModule,
-    // Ionic standalone components used in the template
     IonChip,
     IonIcon,
     IonButton,
@@ -49,7 +48,6 @@ export interface ProjectItem {
 export class ProjectsPage implements OnInit, OnDestroy {
   filters: Array<'All' | 'Web' | 'Mobile' | 'Design'> = ['All', 'Web', 'Mobile', 'Design'];
   selectedFilter: 'All' | 'Web' | 'Mobile' | 'Design' = 'All';
-  hoveredId: string | null = null;
 
   projects: ProjectItem[] = [
     {
@@ -147,22 +145,20 @@ export class ProjectsPage implements OnInit, OnDestroy {
   constructor(private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    // Deep link: abre/cierra modal según ?project=
+    this.ensureSelection(false);
+
     this.qpSub = this.route.queryParamMap.subscribe((params) => {
       const id = params.get('project');
       if (id) {
-        const p = this.projects.find(x => x.id === id);
-        if (p) {
-          this.selected = p;
-          this.hoveredId = id;
-          // Espera al render y centra la tarjeta en vista
-          setTimeout(() => this.scrollToProject(id, { focus: false }), 0);
+        const match = this.projects.find(x => x.id === id);
+        if (match) {
+          if (this.selected?.id !== match.id) {
+            this.setSelected(match, false, { scroll: true, focus: false });
+          }
           return;
         }
       }
-      // Si no hay project o no coincide, cierra
-      this.selected = undefined;
-      this.hoveredId = null;
+      this.ensureSelection(false);
     });
   }
 
@@ -175,51 +171,22 @@ export class ProjectsPage implements OnInit, OnDestroy {
   }
 
   selectFilter(f: 'All' | 'Web' | 'Mobile' | 'Design') {
-    this.selectedFilter = f;
-    if (this.selected && f !== 'All' && !this.selected.categories.includes(f)) {
-      this.closeDetail();
-    }
-  }
-
-  openDetail(p: ProjectItem) {
-    if (this.selected?.id === p.id) {
-      this.closeDetail();
+    if (this.selectedFilter === f) {
       return;
     }
-    // Actualiza query param y fragment para deep link
-    this.selected = p;
-    this.hoveredId = p.id;
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: { project: p.id },
-      queryParamsHandling: 'merge',
-      fragment: p.id,
-      replaceUrl: false,
-    });
-    setTimeout(() => this.scrollToProject(p.id, { focus: false }), 0);
+    this.selectedFilter = f;
+    this.ensureSelection(true);
   }
 
-  closeDetail() {
-    // Quita el query param ?project y el fragment para cerrar
-    this.selected = undefined;
-    this.hoveredId = null;
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: { project: null },
-      queryParamsHandling: 'merge',
-      fragment: '' as any,
-      replaceUrl: false,
-    });
+  onSummaryClick(p: ProjectItem) {
+    const alreadySelected = this.selected?.id === p.id;
+    this.setSelected(p, true, { scroll: true, focus: true });
+    if (!alreadySelected && typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches) {
+      setTimeout(() => this.scrollDetailPanelIntoView(), 250);
+    }
   }
 
-  shareTagsWith(a: ProjectItem, bId: string | null): boolean {
-    if (!bId) return false;
-    const b = this.projects.find(x => x.id === bId);
-    if (!b) return false;
-    return a.tags.some(t => b.tags.includes(t));
-  }
-
-  onCardImageLoaded(id: string) {
+  onSummaryImageLoaded(id: string) {
     this.loaded[id] = true;
   }
 
@@ -227,15 +194,77 @@ export class ProjectsPage implements OnInit, OnDestroy {
     this.qpSub?.unsubscribe();
   }
 
-  private scrollToProject(id: string, opts: { focus?: boolean } = {}) {
-    const { focus = true } = opts;
-    const el = document.getElementById('project-' + id);
-    if (el) {
-      try { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch {}
-      if (focus && !this.selected) {
-        try { (el as HTMLElement).focus({ preventScroll: true }); } catch {}
+  private ensureSelection(updateUrl: boolean) {
+    const list = this.filteredProjects;
+    if (!list.length) {
+      this.selected = undefined;
+      if (updateUrl) {
+        this.updateUrlWithProject(undefined);
       }
+      return;
+    }
+
+    if (!this.selected || !list.some(item => item.id === this.selected?.id)) {
+      this.setSelected(list[0], updateUrl, { scroll: false, focus: false });
     }
   }
-}
 
+  private setSelected(p: ProjectItem, updateUrl = true, opts: { focus?: boolean; scroll?: boolean } = {}) {
+    this.selected = p;
+    if (updateUrl) {
+      this.updateUrlWithProject(p);
+    }
+
+    if (opts.scroll || opts.focus) {
+      this.scrollToProject(p.id, opts);
+    }
+  }
+
+  private updateUrlWithProject(p?: ProjectItem) {
+    const current = this.route.snapshot.queryParamMap.get('project');
+    const next = p?.id ?? null;
+    if (current === next) {
+      return;
+    }
+
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { project: next },
+      queryParamsHandling: 'merge',
+      replaceUrl: false,
+    });
+  }
+
+  private scrollToProject(id: string, opts: { focus?: boolean; scroll?: boolean } = {}) {
+    if (typeof document === 'undefined') {
+      return;
+    }
+
+    const { focus = true, scroll = true } = opts;
+    setTimeout(() => {
+      const el = document.getElementById('project-' + id);
+      if (!el) {
+        return;
+      }
+      if (scroll) {
+        try { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch {}
+      }
+      if (focus) {
+        try { (el as HTMLElement).focus({ preventScroll: true }); } catch {}
+      }
+    }, 0);
+  }
+
+  private scrollDetailPanelIntoView() {
+    if (typeof document === 'undefined') {
+      return;
+    }
+    const detail = document.querySelector('.detail-panel');
+    if (!detail) {
+      return;
+    }
+    try {
+      detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } catch {}
+  }
+}
