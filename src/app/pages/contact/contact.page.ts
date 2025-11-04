@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonButton, IonIcon, IonItem, IonInput, IonTextarea } from '@ionic/angular/standalone';
+import { IonIcon } from '@ionic/angular/standalone';
+import { ContactFormComponent } from '../../shared/contact-form/contact-form.component';
 import { drawLine, nodesPulse } from '../../animations/geometric.animations';
 
 @Component({
@@ -8,14 +9,7 @@ import { drawLine, nodesPulse } from '../../animations/geometric.animations';
   templateUrl: './contact.page.html',
   styleUrls: ['./contact.page.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    IonButton,
-    IonIcon,
-    IonItem,
-    IonInput,
-    IonTextarea,
-  ],
+  imports: [CommonModule, IonIcon, ContactFormComponent],
   animations: [drawLine, nodesPulse]
 })
 export class ContactPage {

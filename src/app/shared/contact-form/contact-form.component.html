@@ -1,0 +1,62 @@
+<form class="contact-form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+  <ion-item class="input">
+    <ion-input
+      label="Nombre"
+      labelPlacement="stacked"
+      placeholder="Tu nombre"
+      formControlName="name"
+      aria-label="Nombre"
+    ></ion-input>
+  </ion-item>
+  <ion-note color="danger" class="helper" *ngIf="f.name.touched && f.name.invalid">
+    Ingresa al menos 2 caracteres.
+  </ion-note>
+
+  <ion-item class="input">
+    <ion-input
+      type="email"
+      label="Email"
+      labelPlacement="stacked"
+      placeholder="tu@email"
+      formControlName="email"
+      aria-label="Email"
+    ></ion-input>
+  </ion-item>
+  <ion-note color="danger" class="helper" *ngIf="f.email.touched && f.email.invalid">
+    Ingresa un correo válido.
+  </ion-note>
+
+  <ion-item class="input">
+    <ion-input
+      label="Asunto"
+      labelPlacement="stacked"
+      placeholder="¿Sobre qué te contacto?"
+      formControlName="subject"
+      aria-label="Asunto"
+    ></ion-input>
+  </ion-item>
+  <ion-note color="danger" class="helper" *ngIf="f.subject.touched && f.subject.errors?.['maxlength']">
+    El asunto no debe exceder 120 caracteres.
+  </ion-note>
+
+  <ion-item class="input">
+    <ion-textarea
+      label="Mensaje"
+      labelPlacement="stacked"
+      autoGrow="true"
+      placeholder="Escribe tu mensaje"
+      formControlName="message"
+      aria-label="Mensaje"
+    ></ion-textarea>
+  </ion-item>
+  <ion-note color="danger" class="helper" *ngIf="f.message.touched && f.message.invalid">
+    El mensaje debe tener al menos 10 caracteres.
+  </ion-note>
+
+  <ion-button type="submit" class="send-btn" expand="block" size="large" [disabled]="form.invalid || loading()">
+    {{ loading() ? 'Enviando...' : 'Enviar' }}
+  </ion-button>
+
+  <ion-note color="success" *ngIf="sent()">¡Gracias! He recibido tu mensaje.</ion-note>
+  <ion-note color="danger" *ngIf="errorMsg()">{{ errorMsg() }}</ion-note>
+</form>

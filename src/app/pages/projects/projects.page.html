@@ -1,23 +1,9 @@
 <section class="projects">
-  <!-- Filtros -->
-  <div class="filters">
-    <ion-chip
-      *ngFor="let f of filters"
-      class="filter-chip"
-      [class.active]="selectedFilter === f"
-      role="button"
-      tabindex="0"
-      [attr.aria-pressed]="selectedFilter === f"
-      [attr.aria-label]="'Filtrar por ' + f"
-      (click)="selectFilter(f)"
-      (keyup.enter)="selectFilter(f)"
-    >
-      {{ f }}
-    </ion-chip>
-  </div>
+  <!-- Filtros removidos por simplicidad -->
 
   <!-- Showcase principal -->
   <div class="showcase">
+    <div class="mobile-hint" aria-hidden="true">Desliza para ver proyectos →</div>
     <div class="project-track" [@fadeInUpStagger]="filteredProjects.length">
       <ng-container *ngIf="filteredProjects.length; else emptyProjects">
         <button

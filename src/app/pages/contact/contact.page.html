@@ -51,24 +51,8 @@
 
     <div class="divider"><span>o envíame un mensaje</span></div>
 
-    <!-- Formulario (UI) -->
-    <form class="contact-form" (submit)="false">
-      <ion-item class="input">
-        <ion-input label="Nombre" labelPlacement="stacked" placeholder="Tu nombre"></ion-input>
-      </ion-item>
-      <ion-item class="input">
-        <ion-input type="email" label="Email" labelPlacement="stacked" placeholder="tu@email"></ion-input>
-      </ion-item>
-      <ion-item class="input">
-        <ion-input label="Asunto" labelPlacement="stacked" placeholder="¿Sobre qué te contacto?"></ion-input>
-      </ion-item>
-      <ion-item class="input">
-        <ion-textarea label="Mensaje" labelPlacement="stacked" autoGrow="true" placeholder="Escribe tu mensaje"></ion-textarea>
-      </ion-item>
-      <ion-button type="submit" class="send-btn" expand="block" size="large">
-        Enviar
-      </ion-button>
-    </form>
+    <!-- Formulario funcional (EmailJS) -->
+    <app-contact-form></app-contact-form>
 
     <footer class="social-footer">
       <a class="social" href="https://linkedin.com/in/jonathan-noe-viramontes-ramirez-7b708b162" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">

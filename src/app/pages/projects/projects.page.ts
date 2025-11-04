@@ -45,8 +45,6 @@ export interface ProjectItem {
   animations: [fadeInUpStagger]
 })
 export class ProjectsPage implements OnInit, OnDestroy {
-  filters: Array<'All' | 'Web' | 'Mobile' | 'Design'> = ['All', 'Web', 'Mobile', 'Design'];
-  selectedFilter: 'All' | 'Web' | 'Mobile' | 'Design' = 'All';
 
   projects: ProjectItem[] = [
     {
@@ -162,19 +160,7 @@ export class ProjectsPage implements OnInit, OnDestroy {
   }
 
   get filteredProjects(): ProjectItem[] {
-    const f = this.selectedFilter;
-    if (f === 'All') {
-      return this.projects;
-    }
-    return this.projects.filter(p => p.categories.includes(f));
-  }
-
-  selectFilter(f: 'All' | 'Web' | 'Mobile' | 'Design') {
-    if (this.selectedFilter === f) {
-      return;
-    }
-    this.selectedFilter = f;
-    this.ensureSelection(true);
+    return this.projects; // Filtros removidos: siempre mostrar todos
   }
 
   onSummaryClick(p: ProjectItem) {
