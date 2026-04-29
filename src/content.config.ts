@@ -1,7 +1,12 @@
+/**
+ * Astro 5 content collection configuration.
+ * NOTE: Astro 5 uses src/content.config.ts (NOT src/content/config.ts).
+ *
+ * Schemas are imported from src/content/schemas.ts so they can be unit-tested
+ * independently without pulling in astro:content.
+ */
 import { defineCollection, z } from 'astro:content';
-
-const CLIENTS = ['Angel', 'Teotech', 'FEMN', 'Personal'] as const;
-const LOCALES = ['es', 'en'] as const;
+import { CLIENTS, LOCALES } from './content/schemas';
 
 const projects = defineCollection({
   type: 'content',

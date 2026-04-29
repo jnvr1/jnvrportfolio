@@ -12,7 +12,8 @@
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
     "deploy": "firebase deploy --only hosting",
-    "deploy:preview": "firebase hosting:channel:deploy"
+    "deploy:preview": "firebase hosting:channel:deploy",
+    "check:parity": "npx tsx scripts/check-bilingual-parity.ts"
   },
   "dependencies": {
     "astro": "^5.0.0",
