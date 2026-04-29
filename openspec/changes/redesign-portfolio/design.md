@@ -88,7 +88,7 @@ No 3rd-party i18n library. Translation strings for UI chrome (nav labels, CTAs, 
 
 ## 3. Content Collections (Zod schemas)
 
-`src/content/config.ts`:
+`src/content.config.ts` (Astro 5 path — NOT `src/content/config.ts`):
 
 ```ts
 import { z, defineCollection } from 'astro:content';
@@ -215,7 +215,7 @@ jnvrportfolio/
 |-- src/
 |   |-- env.d.ts
 |   |-- content/
-|   |   |-- config.ts               # Zod schemas
+|   |-- content.config.ts           # Zod schemas (Astro 5 root-level path)
 |   |   |-- _lint.ts                # bilingual parity check
 |   |   |-- projects/
 |   |   |   |-- es/
