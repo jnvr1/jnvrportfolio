@@ -1,70 +1,42 @@
-# Specifies intentionally untracked files to ignore when using Git
-# http://git-scm.com/docs/gitignore
+# Astro build output
+dist/
+.astro/
 
-*~
-*.sw[mnpcod]
-.tmp
-*.tmp
-*.tmp.*
-UserInterfaceState.xcuserstate
-$RECYCLE.BIN/
+# Dependencies
+node_modules/
 
-*.log
-log.txt
+# Environment variables
+.env
+.env.*
+!.env.example
 
+# Firebase
+.firebase/
 
-/.sourcemaps
-/.versions
-/coverage
+# Firebase config (keep)
+!.firebaserc
 
-# Ionic
-/.ionic
-/www
-/platforms
-/plugins
-
-# Compiled output
-/dist
-/tmp
-/out-tsc
-/bazel-out
-
-# Node
-/node_modules
-npm-debug.log
-yarn-error.log
-
-# IDEs and editors
-.idea/
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-project
-*.sublime-workspace
-
-# Visual Studio Code
+# Editor
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-.history/*
+.idea/
 
-
-# Miscellaneous
-/.angular
-/.angular/cache
-.sass-cache/
-/.nx
-/.nx/cache
-/connect.lock
-/coverage
-/libpeerconnection.log
-testem.log
-/typings
-
-# System files
+# OS
 .DS_Store
 Thumbs.db
+
+# Test output
+playwright-report/
+test-results/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-error.log
+
+# Miscellaneous
+*.tmp
+*.tmp.*
