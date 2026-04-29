@@ -53,23 +53,23 @@
 
 ## Phase 3 — Content Collections & Schemas
 
-- [ ] 3.1 [TEST] Write unit tests for Zod `projects` schema: valid entry passes, missing `title` fails, invalid `client` fails, `placeholder:false` + no cover fails refine — `tests/unit/content-schema.test.ts` — Spec: REQ-PC-1 — Est: M — Deps: 1.8
-- [ ] 3.2 [TEST] Write unit tests for Zod `experience` schema: valid entry passes, missing `company` fails — `tests/unit/content-schema.test.ts` — Spec: REQ-ET-1 — Est: S — Deps: 3.1
-- [ ] 3.3 [IMPL] Create `src/content/config.ts` with Zod schemas for `projects` and `experience` collections (including `.refine()` for `placeholder || cover`) — Spec: REQ-PC-1, REQ-ET-1 — Est: M — Deps: 3.1, 3.2
-- [ ] 3.4 [IMPL] Create `src/content/_lint.ts` bilingual parity hook (`assertBilingualParity`) wired to `astro:build:done` in `astro.config.mjs` — `src/content/_lint.ts`, `astro.config.mjs` — Spec: REQ-PC-2, REQ-ET-2, REQ-IR-4 — Est: M — Deps: 3.3
-- [ ] 3.5 [TEST] Write unit test for `assertBilingualParity`: fails when EN slug missing, passes when both present — `tests/unit/bilingual-parity.test.ts` — Spec: REQ-PC-2, REQ-IR-4 — Est: M — Deps: 3.4
-- [ ] 3.6 [CONTENT] Create `src/content/projects/es/centinela-app.md` — placeholder content, correct frontmatter, `placeholder:true` if no screenshot — Spec: REQ-PC-3 — Est: S — Deps: 3.3
-- [ ] 3.7 [CONTENT] Create `src/content/projects/en/centinela-app.md` — EN translation of 3.6 — Spec: REQ-PC-2, REQ-PC-3 — Est: S — Deps: 3.6
-- [ ] 3.8 [CONTENT] Create `src/content/projects/es/centinela-web.md` + EN counterpart — Spec: REQ-PC-3 — Est: S — Deps: 3.3
-- [ ] 3.9 [CONTENT] Create `src/content/projects/es/bloomotion-tech.md` (include bloom v1 context per REQ-PC-8) + EN counterpart — Spec: REQ-PC-3, REQ-PC-8 — Est: S — Deps: 3.3
-- [ ] 3.10 [CONTENT] Create `src/content/projects/es/pos-la-brocha.md` + EN counterpart (`placeholder:true` until screenshot approved) — Spec: REQ-PC-3, REQ-PC-5 — Est: S — Deps: 3.3
-- [ ] 3.11 [CONTENT] Create `src/content/projects/es/teotech-suite.md` + EN counterpart (sanitized — NO real CFDI) — Spec: REQ-PC-3, REQ-PC-5 — Est: M — Deps: 3.3
-- [ ] 3.12 [CONTENT] Create `src/content/projects/es/brocha-facturacion.md` + EN counterpart — Spec: REQ-PC-3 — Est: S — Deps: 3.3
-- [ ] 3.13 [CONTENT] Create `src/content/projects/es/crm-pedidos.md` + EN counterpart (sanitized — NO real student data) — Spec: REQ-PC-3, REQ-PC-5 — Est: S — Deps: 3.3
-- [ ] 3.14 [CONTENT] Create `src/content/projects/es/tita.md` + EN counterpart — Spec: REQ-PC-3 — Est: S — Deps: 3.3
-- [ ] 3.15 [CONTENT] Create `src/content/projects/es/femn.md` + EN counterpart — title MUST contain "FEMN", NO "Vida Saludable" anywhere — Spec: REQ-PC-3, REQ-PC-4, REQ-IR-6 — Est: S — Deps: 3.3
-- [ ] 3.16 [CONTENT] Create `src/content/experience/es/fletes-mexico.md` (`current:true`, `featured:true`) + EN counterpart — Spec: REQ-ET-1, REQ-ET-2, REQ-ET-3, REQ-ET-4 — Est: S — Deps: 3.3
-- [ ] 3.17 [CONTENT] Create experience ES + EN files: `teotech.md`, `museo-rodadora.md`, `ia-center.md`, `bloomotion.md` — Spec: REQ-ET-2 — Est: M — Deps: 3.3
+- [x] 3.1 [TEST] Write unit tests for Zod `projects` schema: valid entry passes, missing `title` fails, invalid `client` fails, `placeholder:false` + no cover fails refine — `tests/unit/content-schema.test.ts` — Spec: REQ-PC-1 — Est: M — Deps: 1.8
+- [x] 3.2 [TEST] Write unit tests for Zod `experience` schema: valid entry passes, missing `company` fails — `tests/unit/content-schema.test.ts` — Spec: REQ-ET-1 — Est: S — Deps: 3.1
+- [x] 3.3 [IMPL] Create `src/content.config.ts` with Zod schemas for `projects` and `experience` collections (including `.refine()` for `placeholder || cover`); raw schemas extracted to `src/content/schemas.ts` for unit testing — Spec: REQ-PC-1, REQ-ET-1 — Est: M — Deps: 3.1, 3.2
+- [x] 3.4 [IMPL] Create `src/content/bilingual-parity.ts` bilingual parity helper (`assertBilingualParity`, `checkBilingualParity`) wired to `astro:build:done` in `astro.config.mjs`; `npm run check:parity` script added — `src/content/bilingual-parity.ts`, `astro.config.mjs`, `scripts/check-bilingual-parity.ts` — Spec: REQ-PC-2, REQ-ET-2, REQ-IR-4 — Est: M — Deps: 3.3
+- [x] 3.5 [TEST] Write unit test for `assertBilingualParity`: fails when EN slug missing, passes when both present — `tests/unit/bilingual-parity.test.ts` — Spec: REQ-PC-2, REQ-IR-4 — Est: M — Deps: 3.4
+- [x] 3.6 [CONTENT] Create `src/content/projects/es/centinela-app.md` — placeholder content, correct frontmatter, `placeholder:true` if no screenshot — Spec: REQ-PC-3 — Est: S — Deps: 3.3
+- [x] 3.7 [CONTENT] Create `src/content/projects/en/centinela-app.md` — EN translation of 3.6 — Spec: REQ-PC-2, REQ-PC-3 — Est: S — Deps: 3.6
+- [x] 3.8 [CONTENT] Create `src/content/projects/es/centinela-web.md` + EN counterpart — Spec: REQ-PC-3 — Est: S — Deps: 3.3
+- [x] 3.9 [CONTENT] Create `src/content/projects/es/bloomotion-tech.md` (include bloom v1 context per REQ-PC-8) + EN counterpart — Spec: REQ-PC-3, REQ-PC-8 — Est: S — Deps: 3.3
+- [x] 3.10 [CONTENT] Create `src/content/projects/es/pos-la-brocha.md` + EN counterpart (`placeholder:true` until screenshot approved) — Spec: REQ-PC-3, REQ-PC-5 — Est: S — Deps: 3.3
+- [x] 3.11 [CONTENT] Create `src/content/projects/es/teotech-suite.md` + EN counterpart (sanitized — NO real CFDI) — Spec: REQ-PC-3, REQ-PC-5 — Est: M — Deps: 3.3
+- [x] 3.12 [CONTENT] Create `src/content/projects/es/brocha-facturacion.md` + EN counterpart — Spec: REQ-PC-3 — Est: S — Deps: 3.3
+- [x] 3.13 [CONTENT] Create `src/content/projects/es/crm-pedidos.md` + EN counterpart (sanitized — NO real student data) — Spec: REQ-PC-3, REQ-PC-5 — Est: S — Deps: 3.3
+- [x] 3.14 [CONTENT] Create `src/content/projects/es/tita.md` + EN counterpart — Spec: REQ-PC-3 — Est: S — Deps: 3.3
+- [x] 3.15 [CONTENT] Create `src/content/projects/es/femn.md` + EN counterpart — title MUST contain "FEMN", NO "Vida Saludable" anywhere — Spec: REQ-PC-3, REQ-PC-4, REQ-IR-6 — Est: S — Deps: 3.3
+- [x] 3.16 [CONTENT] Create `src/content/experience/es/fletes-mexico.md` (`current:true`, `featured:true`) + EN counterpart — Spec: REQ-ET-1, REQ-ET-2, REQ-ET-3, REQ-ET-4 — Est: S — Deps: 3.3
+- [x] 3.17 [CONTENT] Create experience ES + EN files: `teotech.md`, `museo-rodadora.md`, `ia-center.md`, `bloomotion.md` — Spec: REQ-ET-2 — Est: M — Deps: 3.3
 - [ ] 3.18 [IMPL] Create `src/i18n/es.ts`, `src/i18n/en.ts`, `src/i18n/index.ts` (`t(locale, key)` helper) for all UI strings (nav, CTAs, form labels, status messages) — `src/i18n/` — Spec: REQ-CF-9, REQ-IR-4 — Est: M — Deps: 1.4
 - [ ] 3.19 [IMPL] Create `src/utils/sortProjects.ts` and `src/utils/formatters.ts` — Spec: — Est: S — Deps: 1.4
 - [ ] 3.20 [TEST] Write unit tests for `sortProjects` and `formatters` — `tests/unit/sortProjects.test.ts`, `tests/unit/formatters.test.ts` — Spec: — Est: S — Deps: 3.19
