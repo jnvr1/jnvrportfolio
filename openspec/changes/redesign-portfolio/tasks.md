@@ -20,21 +20,21 @@
 
 ## Phase 1 — Infrastructure & Bootstrap
 
-- [ ] 1.1 [OPS] Create tag `pre-redesign-v1` on `main` HEAD and push — `git tag pre-redesign-v1 && git push origin pre-redesign-v1` — Spec: REQ-FH-7 — Est: S — Deps: —
-- [ ] 1.2 [OPS] Create branch `redesign-astro` from `main` and push upstream — Spec: REQ-FH-7 — Est: S — Deps: 1.1
-- [ ] 1.3 [OPS] Move Angular source tree to `legacy/` on `redesign-astro` branch (keep as reference; deleted in Phase 13) — Spec: REQ-PS-7 — Est: M — Deps: 1.2
-- [ ] 1.4 [CONFIG] Initialize Astro 5 project at repo root on `redesign-astro` branch — `astro.config.mjs`, `tsconfig.json`, `package.json`, `.nvmrc` (20.10) — Spec: REQ-PS-1 — Est: M — Deps: 1.3
-- [ ] 1.5 [CONFIG] Install runtime deps: `astro@^5`, `@astrojs/sitemap`, `@astrojs/check`, `sharp`, `@fontsource-variable/inter`, `@fontsource-variable/space-grotesk`, `@fontsource-variable/jetbrains-mono` — Spec: REQ-PS-1, REQ-TS-4 — Est: S — Deps: 1.4
-- [ ] 1.6 [CONFIG] Install dev deps: `typescript~5.6`, `vitest@^2.1`, `@playwright/test@^1.48`, `prettier`, `prettier-plugin-astro`, `eslint`, `eslint-plugin-astro` — Spec: — Est: S — Deps: 1.4
-- [ ] 1.7 [CONFIG] Configure `astro.config.mjs`: `output: 'static'` (no adapter), `i18n` (`defaultLocale:'es'`, `locales:['es','en']`, `prefixDefaultLocale:false`), `@astrojs/sitemap`, `site:'https://jnvr-portafolio.web.app'` — Spec: REQ-PS-1, REQ-IR-1, REQ-IR-5, REQ-FH-1 — Est: M — Deps: 1.5
-- [ ] 1.8 [CONFIG] Update `firebase.json`: set `hosting.public` to `dist`, add `cleanUrls: true`, `trailingSlash: false`, replace SPA catch-all rewrite with `{ "source": "**", "destination": "/404.html" }`, add `/_astro/**` immutable header and `/ngsw-worker.js` no-cache header — `firebase.json` — Spec: REQ-FH-1, REQ-FH-2, REQ-FH-3, REQ-FH-4, REQ-FH-6 — Est: S — Deps: 1.1
-- [ ] 1.9 [TEST] Write smoke test that validates `firebase.json` structure: `hosting.public === 'dist'`, `cleanUrls === true`, no `"destination": "/index.html"` rewrite present — `tests/unit/firebase-config.test.ts` — Spec: REQ-FH-2, REQ-FH-3, REQ-FH-4 — Est: S — Deps: 1.8
-- [ ] 1.10 [OPS] Verify Firebase CLI access: `firebase projects:list` must include `jnvr-portafolio`; confirm `firebase login` state — Spec: REQ-FH-1 — Est: S — Deps: PF-5
-- [ ] 1.11 [CONFIG] Configure `vitest.config.ts` with `happy-dom` environment — `vitest.config.ts` — Est: S — Deps: 1.6
-- [ ] 1.12 [CONFIG] Configure `playwright.config.ts` with base URL `http://localhost:4321`, Chromium + Firefox + Safari projects — `playwright.config.ts` — Est: S — Deps: 1.6
-- [ ] 1.13 [CONFIG] Install Playwright browsers: `pnpm exec playwright install --with-deps` — Est: S — Deps: 1.12
-- [ ] 1.14 [CONFIG] Add `package.json` scripts: `dev`, `build` (`astro check && astro build`), `preview`, `test`, `test:e2e`, `lint`, `format`, `deploy` (`firebase deploy --only hosting`), `deploy:preview` (`firebase hosting:channel:deploy`) — Spec: — Est: S — Deps: 1.4
-- [ ] 1.15 [CONFIG] Create `.gitignore` (Astro defaults + `dist/`, `.firebase/`, `node_modules/`) — Est: S — Deps: 1.4
+- [x] 1.1 [OPS] Create tag `pre-redesign-v1` on `main` HEAD and push — `git tag pre-redesign-v1 && git push origin pre-redesign-v1` — Spec: REQ-FH-7 — Est: S — Deps: —
+- [x] 1.2 [OPS] Create branch `redesign-astro` from `main` and push upstream — Spec: REQ-FH-7 — Est: S — Deps: 1.1
+- [x] 1.3 [OPS] Move Angular source tree to `legacy/` on `redesign-astro` branch (keep as reference; deleted in Phase 13) — Spec: REQ-PS-7 — Est: M — Deps: 1.2
+- [x] 1.4 [CONFIG] Initialize Astro 5 project at repo root on `redesign-astro` branch — `astro.config.mjs`, `tsconfig.json`, `package.json`, `.nvmrc` (20.10) — Spec: REQ-PS-1 — Est: M — Deps: 1.3
+- [x] 1.5 [CONFIG] Install runtime deps: `astro@^5`, `@astrojs/sitemap`, `@astrojs/check`, `sharp`, `@fontsource-variable/inter`, `@fontsource-variable/space-grotesk`, `@fontsource-variable/jetbrains-mono` — Spec: REQ-PS-1, REQ-TS-4 — Est: S — Deps: 1.4
+- [x] 1.6 [CONFIG] Install dev deps: `typescript~5.6`, `vitest@^2.1`, `@playwright/test@^1.48`, `prettier`, `prettier-plugin-astro`, `eslint`, `eslint-plugin-astro` — Spec: — Est: S — Deps: 1.4
+- [x] 1.7 [CONFIG] Configure `astro.config.mjs`: `output: 'static'` (no adapter), `i18n` (`defaultLocale:'es'`, `locales:['es','en']`, `prefixDefaultLocale:false`), `@astrojs/sitemap`, `site:'https://jnvr-portafolio.web.app'` — Spec: REQ-PS-1, REQ-IR-1, REQ-IR-5, REQ-FH-1 — Est: M — Deps: 1.5
+- [x] 1.8 [CONFIG] Update `firebase.json`: set `hosting.public` to `dist`, add `cleanUrls: true`, `trailingSlash: false`, replace SPA catch-all rewrite with `{ "source": "**", "destination": "/404.html" }`, add `/_astro/**` immutable header and `/ngsw-worker.js` no-cache header — `firebase.json` — Spec: REQ-FH-1, REQ-FH-2, REQ-FH-3, REQ-FH-4, REQ-FH-6 — Est: S — Deps: 1.1
+- [x] 1.9 [TEST] Write smoke test that validates `firebase.json` structure: `hosting.public === 'dist'`, `cleanUrls === true`, no `"destination": "/index.html"` rewrite present — `tests/unit/firebase-config.test.ts` — Spec: REQ-FH-2, REQ-FH-3, REQ-FH-4 — Est: S — Deps: 1.8
+- [x] 1.10 [OPS] Verify Firebase CLI access: `firebase projects:list` must include `jnvr-portafolio`; confirm `firebase login` state — Spec: REQ-FH-1 — Est: S — Deps: PF-5
+- [x] 1.11 [CONFIG] Configure `vitest.config.ts` with `happy-dom` environment — `vitest.config.ts` — Est: S — Deps: 1.6
+- [x] 1.12 [CONFIG] Configure `playwright.config.ts` with base URL `http://localhost:4321`, Chromium + Firefox + Safari projects — `playwright.config.ts` — Est: S — Deps: 1.6
+- [x] 1.13 [CONFIG] Install Playwright browsers: `pnpm exec playwright install --with-deps` — Est: S — Deps: 1.12
+- [x] 1.14 [CONFIG] Add `package.json` scripts: `dev`, `build` (`astro check && astro build`), `preview`, `test`, `test:e2e`, `lint`, `format`, `deploy` (`firebase deploy --only hosting`), `deploy:preview` (`firebase hosting:channel:deploy`) — Spec: — Est: S — Deps: 1.4
+- [x] 1.15 [CONFIG] Create `.gitignore` (Astro defaults + `dist/`, `.firebase/`, `node_modules/`) — Est: S — Deps: 1.4
 
 ---
 
