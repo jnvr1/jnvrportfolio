@@ -81,7 +81,12 @@ const base = locale === 'es' ? '' : '/en';
   .hero-logo-wrap {
     display: flex;
     justify-content: center;
-    filter: drop-shadow(0 0 32px rgba(115, 160, 190, 0.22));
+    animation: logo-breathing 8s ease-in-out infinite;
+  }
+
+  @keyframes logo-breathing {
+    0%, 100% { filter: drop-shadow(0 0 24px rgba(115, 160, 190, 0.18)); }
+    50%       { filter: drop-shadow(0 0 40px rgba(115, 160, 190, 0.28)); }
   }
 
   .hero-content {
