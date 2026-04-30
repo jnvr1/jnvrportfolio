@@ -811,41 +811,40 @@ section {
  * Delay triple: (draw-start, fill-start, stroke-fade-start) per nth-child group.
  */
 
+/* Logo always visible by default; strokes overlay as a blueprint effect that draws in then fades.
+   If the stroke animation fails to apply for any reason, the logo still renders normally. */
 .logo-wrapper > svg path {
   stroke: #73a0be;
   stroke-width: 1;
-  stroke-opacity: 0.85;
+  stroke-opacity: 0;
   stroke-dasharray: 2000;
   stroke-dashoffset: 2000;
-  fill-opacity: 0;
   animation:
     logo-path-draw  1.2s ease-out both,
-    logo-path-fill  0.8s ease-out 0.7s both,
     logo-path-stroke-fade 0.5s ease-out 1.3s both;
 }
 
-/* Stagger: 10 buckets × 10ms step = 100ms spread across every 10 paths */
-.logo-wrapper > svg path:nth-child(10n+1)  { animation-delay: 0.00s, 0.70s, 1.30s; }
-.logo-wrapper > svg path:nth-child(10n+2)  { animation-delay: 0.01s, 0.71s, 1.31s; }
-.logo-wrapper > svg path:nth-child(10n+3)  { animation-delay: 0.02s, 0.72s, 1.32s; }
-.logo-wrapper > svg path:nth-child(10n+4)  { animation-delay: 0.03s, 0.73s, 1.33s; }
-.logo-wrapper > svg path:nth-child(10n+5)  { animation-delay: 0.04s, 0.74s, 1.34s; }
-.logo-wrapper > svg path:nth-child(10n+6)  { animation-delay: 0.05s, 0.75s, 1.35s; }
-.logo-wrapper > svg path:nth-child(10n+7)  { animation-delay: 0.06s, 0.76s, 1.36s; }
-.logo-wrapper > svg path:nth-child(10n+8)  { animation-delay: 0.07s, 0.77s, 1.37s; }
-.logo-wrapper > svg path:nth-child(10n+9)  { animation-delay: 0.08s, 0.78s, 1.38s; }
-.logo-wrapper > svg path:nth-child(10n+10) { animation-delay: 0.09s, 0.79s, 1.39s; }
+/* Stagger via nth-of-type so <defs> and other non-path siblings don't shift the index.
+   Each bucket: (draw-start, stroke-fade-start) */
+.logo-wrapper > svg path:nth-of-type(10n+1)  { animation-delay: 0.00s, 1.30s; }
+.logo-wrapper > svg path:nth-of-type(10n+2)  { animation-delay: 0.04s, 1.34s; }
+.logo-wrapper > svg path:nth-of-type(10n+3)  { animation-delay: 0.08s, 1.38s; }
+.logo-wrapper > svg path:nth-of-type(10n+4)  { animation-delay: 0.12s, 1.42s; }
+.logo-wrapper > svg path:nth-of-type(10n+5)  { animation-delay: 0.16s, 1.46s; }
+.logo-wrapper > svg path:nth-of-type(10n+6)  { animation-delay: 0.20s, 1.50s; }
+.logo-wrapper > svg path:nth-of-type(10n+7)  { animation-delay: 0.24s, 1.54s; }
+.logo-wrapper > svg path:nth-of-type(10n+8)  { animation-delay: 0.28s, 1.58s; }
+.logo-wrapper > svg path:nth-of-type(10n+9)  { animation-delay: 0.32s, 1.62s; }
+.logo-wrapper > svg path:nth-of-type(10n+10) { animation-delay: 0.36s, 1.66s; }
 
 @keyframes logo-path-draw {
-  to { stroke-dashoffset: 0; }
-}
-
-@keyframes logo-path-fill {
-  to { fill-opacity: 1; }
+  from { stroke-opacity: 0.85; stroke-dashoffset: 2000; }
+  to   { stroke-opacity: 0.85; stroke-dashoffset: 0; }
 }
 
 @keyframes logo-path-stroke-fade {
-  to { stroke-opacity: 0; }
+  from { stroke-opacity: 0.85; }
+  to   { stroke-opacity: 0; }
 }
 
 /* Respect user motion preference — disable ALL backdrop and facet motion */
@@ -886,9 +885,9 @@ section {
   /* Logo path animation: skip entrance — show logo fully rendered immediately */
   .logo-wrapper > svg path {
     animation: none !important;
-    fill-opacity: 1 !important;
     stroke: none !important;
     stroke-dashoffset: 0 !important;
+    stroke-opacity: 0 !important;
   }
 }
 
