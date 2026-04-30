@@ -39,48 +39,60 @@
     -->
 
     <!-- Top-left wing: large diagonal cut echoing the N/J letter diagonal -->
-    <polygon
-      points="0,0 420,0 280,180 0,240"
-      fill="#0F293F"
-      opacity="0.55"
-    />
+    <g class="facet facet-1">
+      <polygon
+        points="0,0 420,0 280,180 0,240"
+        fill="#0F293F"
+        opacity="0.55"
+      />
+    </g>
 
     <!-- Top-right wing: mirrors the V letterform wedge from the logo -->
-    <polygon
-      points="780,0 1200,0 1200,200 960,120"
-      fill="#1A3A5C"
-      opacity="0.45"
-    />
+    <g class="facet facet-2">
+      <polygon
+        points="780,0 1200,0 1200,200 960,120"
+        fill="#1A3A5C"
+        opacity="0.45"
+      />
+    </g>
 
     <!-- Left-center shard: brand-blue highlight at very low opacity -->
     <!-- Echoes the st0 diagonal cut in the N letterform -->
-    <polygon
-      points="0,180 200,120 260,300 40,340"
-      fill="#73A0BE"
-      opacity="0.06"
-    />
+    <g class="facet facet-3">
+      <polygon
+        points="0,180 200,120 260,300 40,340"
+        fill="#73A0BE"
+        opacity="0.06"
+      />
+    </g>
 
     <!-- Bottom-left anchor: heavy base mass like the J's foot -->
-    <polygon
-      points="0,480 360,420 440,600 180,700 0,700"
-      fill="#0F293F"
-      opacity="0.50"
-    />
+    <g class="facet facet-4">
+      <polygon
+        points="0,480 360,420 440,600 180,700 0,700"
+        fill="#0F293F"
+        opacity="0.50"
+      />
+    </g>
 
     <!-- Bottom-right anchor: mirrors logo's lower-right shadow stack -->
-    <polygon
-      points="760,520 1200,440 1200,700 700,700"
-      fill="#1A3A5C"
-      opacity="0.40"
-    />
+    <g class="facet facet-5">
+      <polygon
+        points="760,520 1200,440 1200,700 700,700"
+        fill="#1A3A5C"
+        opacity="0.40"
+      />
+    </g>
 
     <!-- Center subtle warm-gray shimmer: echoes logo's st3 dot (#A7A6A8) -->
     <!-- Very low opacity — just a whisper of warmth behind the logo -->
-    <polygon
-      points="480,60 720,40 760,160 500,180"
-      fill="#A7A6A8"
-      opacity="0.03"
-    />
+    <g class="facet facet-6">
+      <polygon
+        points="480,60 720,40 760,160 500,180"
+        fill="#A7A6A8"
+        opacity="0.03"
+      />
+    </g>
   </svg>
 </div>
 
@@ -99,10 +111,35 @@
     display: block;
   }
 
-  /* Mobile: fewer visual elements, simpler composition */
+  /* ── Drifting Facet Animations ──────────────────────────────────────────── */
+
+  .hero-backdrop .facet {
+    transform-origin: center;
+    will-change: transform;
+    animation: hero-facet-drift 18s ease-in-out infinite alternate;
+  }
+
+  /* Staggered timing: each facet drifts on its own schedule */
+  .hero-backdrop .facet-1 { animation-duration: 22s; animation-delay: -2s; }
+  .hero-backdrop .facet-2 { animation-duration: 16s; animation-delay: -7s; }
+  .hero-backdrop .facet-3 { animation-duration: 20s; animation-delay: -12s; }
+  .hero-backdrop .facet-4 { animation-duration: 14s; animation-delay: -4s; }
+  .hero-backdrop .facet-5 { animation-duration: 19s; animation-delay: -9s; }
+  .hero-backdrop .facet-6 { animation-duration: 17s; animation-delay: -14s; }
+
+  @keyframes hero-facet-drift {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(6px, -4px) scale(1.03); }
+  }
+
+  /* Mobile: disable facet drift to reduce GPU load on low-end devices */
   @media (max-width: 480px) {
     .hero-backdrop__svg {
       opacity: 0.6;
+    }
+
+    .hero-backdrop .facet {
+      animation: none;
     }
   }
 </style>
