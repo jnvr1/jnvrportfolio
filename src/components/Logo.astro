@@ -2,17 +2,15 @@
 /**
  * Logo.astro — JNVR brand mark (square faceted icon, no wordmark).
  *
- * Inlined SVG (via Vite's ?raw import) so the inner <path> elements are
- * targetable by global CSS for the blueprint draw-in entrance animation.
- * Vite watches the file and hot-reloads the dev server when it changes.
+ * Uses a plain <img> tag for maximum compatibility. Per-path animations
+ * via inlined SVG were attempted but the inline approach failed to render
+ * reliably across Astro dev server / readFileSync / ?raw paths. Wrapper-level
+ * animations (entrance, breathing, halo) still work via .hero-logo-wrap.
  *
  * Props:
- *   size      — CSS width value (default: 560px). Height scales automatically
- *               via the SVG's natural viewBox (0 0 1600 1600).
+ *   size      — CSS width value (default: 560px). Height scales automatically.
  *   ariaLabel — Accessible label (default: 'JNVR')
  */
-import logoSvg from '../assets/logo-mark.svg?raw';
-
 interface Props {
   size?: number;
   ariaLabel?: string;
@@ -23,11 +21,17 @@ const { size = 560, ariaLabel = 'JNVR' } = Astro.props;
 
 <span
   class="logo-wrapper"
-  role="img"
-  aria-label={ariaLabel}
   style={`--logo-size: ${size}px`}
-  set:html={logoSvg}
-/>
+>
+  <img
+    src="/logo-mark.svg"
+    alt={ariaLabel}
+    width={size}
+    height={size}
+    decoding="async"
+    fetchpriority="high"
+  />
+</span>
 
 <style>
   .logo-wrapper {
@@ -36,24 +40,21 @@ const { size = 560, ariaLabel = 'JNVR' } = Astro.props;
     justify-content: center;
   }
 
-  /* Target the inlined SVG directly */
-  .logo-wrapper > svg {
-    width: var(--logo-size, 480px);
+  .logo-wrapper > img {
+    width: var(--logo-size, 560px);
     height: auto;
     display: block;
   }
 
-  /* Mobile: scale down to 300px */
   @media (max-width: 768px) {
-    .logo-wrapper > svg {
-      width: 300px;
+    .logo-wrapper > img {
+      width: 360px;
     }
   }
 
-  /* Small mobile */
   @media (max-width: 480px) {
-    .logo-wrapper > svg {
-      width: 260px;
+    .logo-wrapper > img {
+      width: 280px;
     }
   }
 </style>
