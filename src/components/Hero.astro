@@ -12,6 +12,7 @@ import type { Locale } from '../i18n/index';
 import { t } from '../i18n/index';
 import Logo from './Logo.astro';
 import FletesBadge from './FletesBadge.astro';
+import HeroBackdrop from './HeroBackdrop.astro';
 
 interface Props {
   locale: Locale;
@@ -22,6 +23,7 @@ const base = locale === 'es' ? '' : '/en';
 ---
 
 <section id="hero" class="hero" aria-labelledby="hero-heading">
+  <HeroBackdrop />
   <div class="hero-inner">
     <div class="hero-logo-wrap" aria-hidden="true">
       <Logo size={240} ariaLabel="JNVR" />
@@ -55,15 +57,12 @@ const base = locale === 'es' ? '' : '/en';
     display: flex;
     align-items: center;
     padding: var(--space-16) var(--space-4) var(--space-12);
-    /* Background atmosphere handled by the global SVG faceted backdrop +
-       orbs on body. Hero keeps transparent background so the global layers
-       show through cleanly. A faint top-edge vignette adds local depth
-       without obscuring the body backdrop beneath. */
-    background-image: linear-gradient(
-      to bottom,
-      rgba(10, 25, 41, 0.35) 0%,
-      transparent 40%
-    );
+    /* Position context for HeroBackdrop (absolute, inset: 0).
+       Overflow hidden keeps the facet polygons clipped to the hero bounds.
+       The global SVG facets + orbs on body remain visible through the
+       transparent hero background; HeroBackdrop adds a denser local layer. */
+    position: relative;
+    overflow: hidden;
   }
 
   .hero-inner {
@@ -74,6 +73,9 @@ const base = locale === 'es' ? '' : '/en';
     flex-direction: column;
     align-items: center;
     gap: var(--space-8);
+    /* Elevate above HeroBackdrop (z-index: 0) */
+    position: relative;
+    z-index: 1;
   }
 
   .hero-logo-wrap {

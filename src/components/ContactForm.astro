@@ -15,6 +15,7 @@
 import type { Locale } from '../i18n/index';
 import { t } from '../i18n/index';
 import ScrollReveal from './ScrollReveal.astro';
+import SectionBackdrop from './SectionBackdrop.astro';
 
 interface Props {
   locale: Locale;
@@ -26,6 +27,7 @@ const formId = 'contact-form';
 ---
 
 <section id="contact" class="contact-section" aria-labelledby="contact-heading">
+  <SectionBackdrop variant="contact" />
   <div class="contact-inner">
     <ScrollReveal>
       <h2 id="contact-heading">{t(locale, 'contact.title')}</h2>
@@ -151,6 +153,9 @@ const formId = 'contact-form';
 <style>
   .contact-section {
     padding: var(--space-16) var(--space-4);
+    /* Position context for SectionBackdrop (position: absolute, inset: 0) */
+    position: relative;
+    overflow: hidden;
   }
 
   .contact-inner {
@@ -159,6 +164,9 @@ const formId = 'contact-form';
     display: flex;
     flex-direction: column;
     gap: var(--space-8);
+    /* Elevate above SectionBackdrop */
+    position: relative;
+    z-index: 1;
   }
 
   .contact-inner h2 {
