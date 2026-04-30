@@ -869,29 +869,42 @@ The result: the **logo brings energy that the page does not return**. Visitors r
 - **A11y**: All inline SVGs `aria-hidden="true"`. Parallax respects `prefers-reduced-motion: reduce` (handler bails out). Hero text against the densest facet stop (`#1A3A5C`) = 11.6:1.
 - **Tradeoffs**: Highest design-debt: each new section needs a backdrop variant. Tasks phase grows ~2-3 tasks. Mobile considerations: the hero composition needs a simplified mobile variant (3-4 polygons, not 8) to avoid visual noise on small screens. Risk of looking "designed-for-the-portfolio" rather than "the work IS the design".
 
-### 11.3 Recommended option: **Option 2 — "Faceted Backdrop"**
+### 11.3 Implemented option: **Option 4 — "Full Composition" (built atop Option 2+3 base layer)**
 
-**Decision rationale**:
+> **Status**: Updated 2026-04-29. Originally Option 2+3 was accepted and implemented (global faceted SVG backdrop + animated orbs). Option 4 is now ADDITIVE on top — the base layers are preserved unchanged.
 
-1. **Logo fidelity, honest**: Option 2 uses the literal vocabulary of the logo — the same diagonal-cut polygon shapes, the same color stack (`st0`/`st1`/`st1A3A5C`), the same layered shadow technique. It IS the logo's grammar applied to a page. Options 1 and 3 are tonally adjacent but lose the geometric DNA. Option 4 is closest but pays a 4-5x cost for marginal gain.
-2. **Performance budget unbroken**: +0 KB JS, +3 KB SVG (out-of-band, cached). LCP, INP, CLS — all unaffected. Option 3 risks low-end mobile FPS; Option 4 adds JS and per-section authoring debt.
-3. **Recruiter-readable**: A static, professional, geometric backdrop reads as "intentional craft" — matches the senior-engineer positioning of the proposal. Animated backgrounds (Option 3) can read as "trying too hard" to non-technical reviewers; bold compositions (Option 4) can dominate the work itself.
-4. **Future-extensible**: If the user later wants atmosphere, we can ADD Option 1 spotlights ON TOP of Option 2 facets (they compose cleanly). Option 2 is the floor; Option 3 / 4 elements remain available as enhancements without rework.
-5. **Reduced-motion safe by default**: Static, so reduced-motion users get the same experience as everyone else — no second design path to maintain.
+**What was built (additive, does not remove Option 2+3)**:
 
-### 11.4 ADR-7: Background treatment chosen as Faceted Backdrop (Option 2)
+- **Global atmosphere (Option 2+3 base — unchanged)**:
+  - `public/backdrop-facets.svg` — fixed-position faceted SVG on `body` background
+  - `body::before/::after` — two animated blurred radial-gradient orbs (brand + accent) at low opacity
 
-- **Status**: Accepted
-- **Context**: Body background was a flat navy + 0.8% diagonal lines, which read as flat next to the JNVR logo's multi-layered faceted color depth.
-- **Decision**: Adopt **Option 2 — Faceted Backdrop**. A single static SVG (`public/backdrop-facets.svg`) of large overlapping polygons echoing the logo's diagonal-cut geometry, fixed-attached as `body` background, uses `--bg`, `--surface`, `--surface-elevated` token values for all polygon fills. Hero gets a slightly denser inline facet cluster behind the Logo. No animation, no JS.
+- **Per-section identity layer (Option 4 additions)**:
+  - `src/components/HeroBackdrop.astro` — 6-polygon inline SVG facet cluster local to the hero, denser than the global backdrop. Colors sourced directly from logo SVG class fills (st0=#73A0BE, st1=#0F293F, st3=#A7A6A8). Hero section gets `position: relative; overflow: hidden` to contain it.
+  - `src/components/SectionBackdrop.astro` — shared backdrop component with `variant` prop:
+    - `variant="projects"` → 10 scattered small diamond facets distributed across the grid's column rhythm
+    - `variant="experience"` → vertical accent strips on left/right edges + diagonal facets leaning leftward (reinforces top-to-bottom timeline read)
+    - `variant="contact"` → 4 convergent corner shards + thin radiating wedges pointing toward the center form
+  - CSS scroll-driven parallax in `src/styles/global.css` (`@supports (animation-timeline: view())`): backdrops translate -30px as their section scrolls through view. Graceful degradation: no parallax where unsupported. `prefers-reduced-motion: reduce` disables animation entirely. 0 KB JS added.
+
+**Bundle impact**: ~3.2 KB total inline SVG across 4 components (hero + 3 section variants), ~350 B CSS for parallax, 0 KB JS.
+
+**A11y**: All inline SVGs `aria-hidden="true"`. Worst-case polygon fill is `#1A3A5C` (surface-elevated); white text contrast against that = 11.6:1, well above WCAG AA. `prefers-reduced-motion: reduce` disables all parallax animation.
+
+### 11.4 ADR-7: Background treatment — Full Composition (Option 4 atop Option 2+3 base)
+
+- **Status**: Updated — Option 4 implemented atop previously accepted Option 2+3
+- **Context**: Option 2 (Faceted Backdrop) + Option 3 (Atmospheric Orbs) were built and committed. User requested Option 4 ("Full Composition") as an ADDITIVE upgrade — each section gets its own thematic backdrop identity while the global layers remain.
+- **Decision**: Adopt **Option 4 — Full Composition** as a layer ON TOP of Option 2+3. The global `backdrop-facets.svg` + orbs are the atmosphere floor. Per-section components (`HeroBackdrop.astro`, `SectionBackdrop.astro`) add identity layers positioned absolutely inside each section. Parallax via CSS scroll-driven animations only (`@supports`), zero JS, graceful degradation.
 - **Consequences**:
-  - **Files affected** when implementing: `public/backdrop-facets.svg` (new), `src/styles/global.css` (replace body `background-image`), `src/components/Hero.astro` (replace 45° pattern with inline facet cluster), optionally `src/components/HeroBackdrop.astro` (new, only if hero cluster is non-trivial).
-  - **No changes** required to `src/styles/tokens.css` (palette already aligned).
-  - **Bundle delta**: +3 KB SVG out-of-band, ~+200 B CSS, +0 KB JS.
-  - **A11y**: SVGs are `aria-hidden`; all text contrast remains ≥11.6:1 against worst-case polygon fill.
-  - **Performance**: 1 paint at load; `background-attachment: fixed` falls back to `scroll` on `(max-width: 768px)` to avoid iOS Safari jank.
-- **Alternatives considered**: Option 1 (Navy Topography) — too subtle, no geometric DNA. Option 3 (Atmospheric Depth) — animated mobile-FPS risk, doesn't echo facets. Option 4 (Full Composition) — over-designed for an editorial portfolio, +per-section authoring debt.
-- **Forward path**: If user wants more atmosphere later, the spotlights from Option 1 can be additively layered on top without removing the facets.
+  - **Files added**: `src/components/HeroBackdrop.astro`, `src/components/SectionBackdrop.astro`
+  - **Files modified**: `src/components/Hero.astro` (import + render HeroBackdrop, add `position: relative; overflow: hidden`), `src/components/ProjectGrid.astro` (import + render SectionBackdrop variant="projects"), `src/components/ExperienceList.astro` (import + render SectionBackdrop variant="experience"), `src/components/ContactForm.astro` (import + render SectionBackdrop variant="contact"), `src/styles/global.css` (parallax `@supports` block)
+  - **No changes** to `public/backdrop-facets.svg`, `src/styles/tokens.css`, any page file, any test
+  - **Bundle delta**: ~3.2 KB inline SVG (HTML), ~350 B CSS, 0 KB JS
+  - **A11y**: SVGs `aria-hidden`; all text contrast ≥11.6:1; reduced-motion respected
+  - **Performance**: Parallax uses `transform` only → GPU composited, no reflow. Mobile: SVG opacity reduced at ≤480px. Parallax has no JS scroll listener — CSS-only, no continuous event handlers
+- **Alternatives considered**: Option 4 with JS IntersectionObserver parallax — rejected (CSS scroll-driven achieves same with 0 KB JS; non-supporting browsers get static backdrop, which is still better than nothing). Client-tinted backdrops for project detail pages — deferred (scope creep; home sections deliver the visual identity upgrade; project pages continue using the global atmosphere).
+- **Forward path**: Project detail pages (`/projects/[slug]`) can receive `SectionBackdrop` with a `client` prop tint in a future pass. The system is already built; it's a prop + CSS variable addition.
 
 ### 11.5 Non-obvious technique discovered
 
