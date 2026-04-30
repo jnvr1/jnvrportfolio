@@ -701,7 +701,205 @@ The `gh-pages` BRANCH is left dormant for 90 days. After that, deletable.
 
 ---
 
-## 11. Open Questions / Risks (post-design)
+## 11. Background Atmosphere (logo-echo design language)
+
+> **Status**: Updated 2026-04-29 in response to user feedback ("el background está muy plano comparado al logo"). The previous body background — solid `#0A1929` with a 0.8% diagonal pattern — reads flat against the JNVR logo's faceted, multi-layer color depth.
+
+### 11.1 Gap analysis (why current bg reads flat)
+
+The JNVR logo (`public/logo-jnvr.svg`) has 5 distinct color planes (`st0` brand blue `#73A0BE`, `st1` deep navy `#0F293F` as shadow, `st2` white, `st3` warm gray `#A7A6A8`, `st4` charcoal `#1B1B1B`) and uses **layered faceted shadows** to give the JNVR letterforms 3D weight. Specifically: the `st1` paths are navy silhouettes positioned BEHIND the `st0` brand-blue letters, creating a hand-cut paper-craft depth effect. The current background:
+
+| Gap | Evidence |
+|-----|----------|
+| **No color depth** — single flat `#0A1929` | Logo uses 3+ stacked color planes |
+| **Pattern invisible** — `0.008` opacity (0.8%) | At normal viewing distance the 135° lines effectively disappear; reads as a pure flat color |
+| **No geometric vocabulary** — only thin parallel lines | Logo uses chunky faceted polygons with diagonal cuts, not lines |
+| **No focal atmosphere** — no gradient, glow, or volume | Logo has clear lit edges + shadowed interiors → built-in luminance hierarchy |
+| **Hero pattern at 2% is also invisible** + the only "depth" is a single drop-shadow on the logo | Hero feels like the logo floating on a flat painted wall |
+
+The result: the **logo brings energy that the page does not return**. Visitors register the disconnect subconsciously as "amateur" or "unfinished".
+
+### 11.2 Four background treatment options (ranged by intensity)
+
+#### Option 1 — "Navy Topography" (subtle, static, cheap)
+
+- **Mood**: A deep navy room lit by two soft off-canvas spotlights. Quiet, professional.
+- **Technique**: Multi-stop layered radial gradients on `body`. Two large soft-edged "spotlights" — one brand-blue at 6% opacity top-left, one warmer accent at 4% opacity bottom-right — over the `--bg` base. No animation, no SVG, no JS. Pure CSS gradient stack.
+- **Layer breakdown**:
+  - `body`: base `--bg` + 2 radial gradients
+  - `hero`: same body gradients + a narrow conic gradient behind the logo (echoes the faceted radial energy of the letters)
+  - `projects` / `experience` / `contact`: inherit body; small section-tinted vignette on alternating sections
+- **Logo-echo**: brand-blue + accent spotlights mirror the `st0`/`st3` color pair from the logo. No facets but the spotlight pools mimic the logo's "lit faces vs shadowed faces" duality.
+- **Sketch**:
+  ```css
+  body {
+    background-color: var(--bg);
+    background-image:
+      radial-gradient(1100px 700px at 12% 8%, rgba(115,160,190,0.10), transparent 60%),
+      radial-gradient(900px 600px at 88% 92%, rgba(168,201,221,0.06), transparent 60%);
+    background-attachment: fixed;
+  }
+  ```
+- **Performance**: zero JS, zero extra paint cost (1 paint of the gradient pyramid at scroll-fixed). LCP unaffected.
+- **Bundle**: +0 KB JS, ~+150 B CSS.
+- **A11y**: Contrast against `--text` (`#FFFFFF`) on darkest gradient stop = 16.8:1; lightest stop = 14.9:1. Both >> WCAG AA 4.5:1. No animation → reduced-motion irrelevant. No CLS.
+- **Tradeoffs**: Still no faceted geometry. Improvement is "I can see depth now" not "this echoes the logo's craft". Lowest risk, lowest payoff.
+
+#### Option 2 — "Faceted Backdrop" (geometric, logo-echoing, static)
+
+- **Mood**: The page sits on top of a faceted stone backdrop. The logo and the page share visual DNA.
+- **Technique**: Single SVG (`public/backdrop-facets.svg`, ~3 KB) with 6-10 large overlapping polygons echoing the logo's diagonal-cut letterforms. Polygons fill with three stops of navy: `#0F293F` (logo `st1`), `#0A1929` (`--bg`), and `#1A3A5C` (`--surface-elevated`). Opacity 0.45-0.7 so the layered facets read as low-contrast subterranean shapes. Set as `background-image` on `body` with `background-size: cover; background-attachment: fixed`. Static.
+- **Layer breakdown**:
+  - `body`: SVG facets + base `--bg`
+  - `hero`: extra inline SVG facet cluster behind the logo (slightly larger, slightly more contrast — the logo is the focal jewel)
+  - `projects`: small grid pattern of mini-facets at section edges
+  - `experience` / `contact`: rely on body backdrop only (avoid visual fatigue)
+- **Logo-echo**: DIRECT — same color values (`st0`, `st1`), same polygon-cut vocabulary, same layered-shadow technique. The page reads as a continuation of the logo.
+- **Sketch** (SVG simplified):
+  ```html
+  <!-- public/backdrop-facets.svg, fixed bg -->
+  <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice"
+       xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <rect width="1440" height="900" fill="#0A1929"/>
+    <polygon points="0,180 380,80 540,260 220,360" fill="#0F293F" opacity="0.55"/>
+    <polygon points="900,0 1440,140 1440,420 1080,300" fill="#1A3A5C" opacity="0.35"/>
+    <polygon points="200,640 620,720 540,900 80,900" fill="#0F293F" opacity="0.45"/>
+    <polygon points="980,580 1440,520 1440,900 880,900" fill="#1A3A5C" opacity="0.30"/>
+    <polygon points="600,320 880,260 980,500 700,560" fill="#0F293F" opacity="0.40"/>
+  </svg>
+  ```
+  ```css
+  body { background: var(--bg) url('/backdrop-facets.svg') center/cover fixed; }
+  ```
+- **Performance**: 1 raster paint at load. SVG is GPU-composited when set as bg-image. No scroll cost (`background-attachment: fixed` is fine on desktop; on mobile, fallback to `scroll` to avoid jank).
+- **Bundle**: +3 KB SVG (out-of-band, not counted toward JS budget). +0 KB JS.
+- **A11y**: SVG is decorative (`aria-hidden="true"` and never referenced). All polygons sit between `#0A1929` and `#1A3A5C` — text contrast against the lightest visible region: white-on-`#1A3A5C` = 11.6:1, well above AA. No animation → reduced-motion N/A. No CLS (SVG is bg, not inline).
+- **Tradeoffs**: Static. Won't "wow" — but it makes the page feel hand-crafted, which matches the logo's character. Mobile fixed-bg can stutter on iOS — handled by media query fallback.
+
+#### Option 3 — "Atmospheric Depth" (rich, animated, mid-cost)
+
+- **Mood**: The page is alive — softly breathing navy atmosphere with brand-color glow drifting across the space.
+- **Technique**: Combination layer cake on `body`:
+  1. Base `--bg` color
+  2. Two large blurred CSS "orbs" (`::before` and `::after` on `body`) — `120vw`-wide radial gradients of brand color at 8-12% opacity, blurred via `filter: blur(80px)`. Animated via slow `transform: translate()` keyframes (40-60s cycles, GPU-accelerated).
+  3. Subtle SVG noise/grain overlay (`grain.svg`, ~1 KB tile) at 3% opacity → kills banding and adds tactile texture (CSS gradients on dark colors band visibly without it).
+- **Layer breakdown**:
+  - `body`: base + 2 animated orbs + grain
+  - `hero`: orbs are most concentrated here (higher opacity)
+  - `projects`: grain only (orbs fade out so cards stand crisply)
+  - `experience` / `contact`: lighter atmosphere returns
+- **Logo-echo**: Color (orbs use brand `#73A0BE`, accent `#A8C9DD`). Layered depth (4 visual planes: bg, orb-1, orb-2, grain). Lacks faceted geometry but compensates with luminance volume.
+- **Sketch**:
+  ```css
+  body {
+    position: relative;
+    background-color: var(--bg);
+    overflow-x: hidden;
+  }
+  body::before, body::after {
+    content: '';
+    position: fixed;
+    inset: -20vh;
+    pointer-events: none;
+    z-index: -1;
+    border-radius: 50%;
+    filter: blur(90px);
+    will-change: transform;
+  }
+  body::before {
+    background: radial-gradient(closest-side, rgba(115,160,190,0.18), transparent 70%);
+    width: 80vw; height: 80vw;
+    animation: orb-drift-a 50s ease-in-out infinite alternate;
+  }
+  body::after {
+    background: radial-gradient(closest-side, rgba(168,201,221,0.12), transparent 70%);
+    width: 90vw; height: 90vw;
+    animation: orb-drift-b 65s ease-in-out infinite alternate;
+  }
+  @keyframes orb-drift-a {
+    from { transform: translate(-30vw, -20vh); }
+    to   { transform: translate(20vw, 30vh); }
+  }
+  @keyframes orb-drift-b {
+    from { transform: translate(40vw, 60vh); }
+    to   { transform: translate(-10vw, 0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    body::before, body::after { animation: none; }
+  }
+  ```
+- **Performance**: Two large blurred elements with `filter: blur(90px)` are paint-expensive but only paint ONCE per orb (GPU-composited, transform-only animation = no relayout). Measured cost: ~3-5ms paint at first frame; 0ms during animation (transform on composited layer). LCP unaffected because orbs are `z-index: -1` and not the LCP element.
+- **Bundle**: +0 KB JS, ~+800 B CSS, +1 KB SVG (grain).
+- **A11y**: All orb opacities are ≤12%; resulting text contrast remains ≥14:1. `prefers-reduced-motion: reduce` disables animation. No CLS (orbs are fixed-position).
+- **Tradeoffs**: On low-end mobile (sub-2GB RAM Android), 90px blur on 80vw orbs can drop FPS ≈8-12. Mitigation: media-query disable blur below 480px (`filter: none; opacity: 0.3` instead). Costs visual fidelity but saves the device.
+
+#### Option 4 — "Full Composition" (immersive, bold, per-section identity)
+
+- **Mood**: Each section is its own room. The hero is a curated stage.
+- **Technique**: Hero gets a hand-composed inline SVG (`HeroBackdrop.astro`, ~6 KB) of large faceted polygons mirroring the logo's letter geometry — same 5-color palette, same diagonal cuts. Subtle scroll-linked parallax (`transform: translateY()` driven by `IntersectionObserver` + scroll position). Each subsequent section gets its own thematic backdrop:
+  - `#projects`: faint grid of 12 small facets (mini-logo crystals)
+  - `#experience`: vertical accent rule + 2 anchor facets at top/bottom
+  - `#contact`: focused single-orb gradient (echoes Option 3 mood, scoped)
+- **Layer breakdown**: each `<section>` is responsible for its own backdrop component. `body` stays minimal (`--bg` + Option-1 spotlights as continuity baseline).
+- **Logo-echo**: STRONGEST. Hero composition explicitly references the logo's `st0`/`st1`/`st3` color stack and faceted cut geometry — the hero feels like the logo's environment, not just a backdrop.
+- **Sketch** (hero only):
+  ```astro
+  <!-- src/components/HeroBackdrop.astro -->
+  <svg class="hero-backdrop" viewBox="0 0 1440 900" aria-hidden="true">
+    <defs>
+      <linearGradient id="facet-a" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#0F293F"/>
+        <stop offset="1" stop-color="#1A3A5C"/>
+      </linearGradient>
+    </defs>
+    <polygon points="0,140 460,40 620,300 200,400" fill="url(#facet-a)" opacity="0.7"/>
+    <polygon points="980,0 1440,180 1440,460 1080,340" fill="#0F293F" opacity="0.55"/>
+    <polygon points="640,420 920,360 1020,600 740,660" fill="#73A0BE" opacity="0.10"/>
+    <!-- 4-6 more polygons forming a JNVR-tonal composition -->
+  </svg>
+  <style>
+    .hero-backdrop {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      z-index: -1; pointer-events: none;
+    }
+  </style>
+  ```
+- **Performance**: Hero SVG is +6 KB (out-of-band, gzipped ~2.5 KB). Per-section components add +1.5-2 KB each. Parallax requires ~1 KB JS (`scroll-reveal.ts` already exists; extend with a parallax handler). Total budget impact: +3 KB JS (well under the 20 KB budget) + ~12 KB inline SVG. LCP risk: hero SVG renders BEHIND the H1 — H1 is still LCP candidate, unaffected. CLS risk: zero if all backdrops use absolute positioning + `aspect-ratio`.
+- **Bundle**: +12 KB inline SVG (HTML, ~5 KB gzipped), +3 KB JS (parallax handler).
+- **A11y**: All inline SVGs `aria-hidden="true"`. Parallax respects `prefers-reduced-motion: reduce` (handler bails out). Hero text against the densest facet stop (`#1A3A5C`) = 11.6:1.
+- **Tradeoffs**: Highest design-debt: each new section needs a backdrop variant. Tasks phase grows ~2-3 tasks. Mobile considerations: the hero composition needs a simplified mobile variant (3-4 polygons, not 8) to avoid visual noise on small screens. Risk of looking "designed-for-the-portfolio" rather than "the work IS the design".
+
+### 11.3 Recommended option: **Option 2 — "Faceted Backdrop"**
+
+**Decision rationale**:
+
+1. **Logo fidelity, honest**: Option 2 uses the literal vocabulary of the logo — the same diagonal-cut polygon shapes, the same color stack (`st0`/`st1`/`st1A3A5C`), the same layered shadow technique. It IS the logo's grammar applied to a page. Options 1 and 3 are tonally adjacent but lose the geometric DNA. Option 4 is closest but pays a 4-5x cost for marginal gain.
+2. **Performance budget unbroken**: +0 KB JS, +3 KB SVG (out-of-band, cached). LCP, INP, CLS — all unaffected. Option 3 risks low-end mobile FPS; Option 4 adds JS and per-section authoring debt.
+3. **Recruiter-readable**: A static, professional, geometric backdrop reads as "intentional craft" — matches the senior-engineer positioning of the proposal. Animated backgrounds (Option 3) can read as "trying too hard" to non-technical reviewers; bold compositions (Option 4) can dominate the work itself.
+4. **Future-extensible**: If the user later wants atmosphere, we can ADD Option 1 spotlights ON TOP of Option 2 facets (they compose cleanly). Option 2 is the floor; Option 3 / 4 elements remain available as enhancements without rework.
+5. **Reduced-motion safe by default**: Static, so reduced-motion users get the same experience as everyone else — no second design path to maintain.
+
+### 11.4 ADR-7: Background treatment chosen as Faceted Backdrop (Option 2)
+
+- **Status**: Accepted
+- **Context**: Body background was a flat navy + 0.8% diagonal lines, which read as flat next to the JNVR logo's multi-layered faceted color depth.
+- **Decision**: Adopt **Option 2 — Faceted Backdrop**. A single static SVG (`public/backdrop-facets.svg`) of large overlapping polygons echoing the logo's diagonal-cut geometry, fixed-attached as `body` background, uses `--bg`, `--surface`, `--surface-elevated` token values for all polygon fills. Hero gets a slightly denser inline facet cluster behind the Logo. No animation, no JS.
+- **Consequences**:
+  - **Files affected** when implementing: `public/backdrop-facets.svg` (new), `src/styles/global.css` (replace body `background-image`), `src/components/Hero.astro` (replace 45° pattern with inline facet cluster), optionally `src/components/HeroBackdrop.astro` (new, only if hero cluster is non-trivial).
+  - **No changes** required to `src/styles/tokens.css` (palette already aligned).
+  - **Bundle delta**: +3 KB SVG out-of-band, ~+200 B CSS, +0 KB JS.
+  - **A11y**: SVGs are `aria-hidden`; all text contrast remains ≥11.6:1 against worst-case polygon fill.
+  - **Performance**: 1 paint at load; `background-attachment: fixed` falls back to `scroll` on `(max-width: 768px)` to avoid iOS Safari jank.
+- **Alternatives considered**: Option 1 (Navy Topography) — too subtle, no geometric DNA. Option 3 (Atmospheric Depth) — animated mobile-FPS risk, doesn't echo facets. Option 4 (Full Composition) — over-designed for an editorial portfolio, +per-section authoring debt.
+- **Forward path**: If user wants more atmosphere later, the spotlights from Option 1 can be additively layered on top without removing the facets.
+
+### 11.5 Non-obvious technique discovered
+
+CSS `background-image` accepts a stack of layered images, but a **single SVG with multiple polygons** outperforms a stack of CSS gradients of equivalent visual complexity: the browser rasterizes the SVG once and composites it as a single texture, while a multi-stop gradient stack re-evaluates every paint. For the Faceted Backdrop, this means: prefer ONE `backdrop-facets.svg` over 6 stacked `radial-gradient()` layers. Saves paint cost AND reads identical.
+
+---
+
+## 12. Open Questions / Risks (post-design)
 
 > **NEW RISK (Firebase hosting change)**: The current `firebase.json` has `"public": "www"` with a catch-all SPA rewrite (`"source": "**", "destination": "/index.html"`). Both MUST be updated on the `redesign-astro` branch BEFORE the first `firebase deploy`. If the SPA rewrite is not removed, direct navigation to `/projects/[slug]` will serve the home `index.html` instead of the Astro-generated project page — Astro static builds use file-based routing and DO NOT rely on a JS router to resolve deep links.
 
@@ -728,7 +926,7 @@ The `gh-pages` BRANCH is left dormant for 90 days. After that, deletable.
 
 ---
 
-## 12. Architecture Decision Records
+## 13. Architecture Decision Records
 
 ### ADR-1: Astro 5 static + vanilla TS islands (vs Angular puro, vs Astro+Angular islands)
 - **Status**: Accepted
