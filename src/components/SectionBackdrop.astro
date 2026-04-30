@@ -1,0 +1,184 @@
+---
+/**
+ * SectionBackdrop.astro — Thematic per-section backdrop layer.
+ *
+ * Renders an inline SVG that sits behind section content.
+ * Each variant echoes the logo's geometry but with section-appropriate character.
+ *
+ * Props:
+ *   variant — 'projects' | 'experience' | 'contact'
+ *
+ * Stacking: position absolute, inset: 0, z-index: 0.
+ * Parent section must have: position: relative; overflow: hidden.
+ *
+ * Spec: Option 4 Full Composition — per-section identity
+ *
+ * Variants:
+ *   projects   → scattered floating diamonds/dots in deep navy (card-grid rhythm)
+ *   experience → vertical accent strips + diagonal facets (timeline rail)
+ *   contact    → convergent radial shimmer toward the center (spotlight)
+ */
+
+type Variant = 'projects' | 'experience' | 'contact';
+
+interface Props {
+  variant: Variant;
+}
+
+const { variant } = Astro.props;
+---
+
+<div class={`section-backdrop section-backdrop--${variant}`} aria-hidden="true">
+  {variant === 'projects' && (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 1200 600"
+      preserveAspectRatio="xMidYMid slice"
+      aria-hidden="true"
+      focusable="false"
+      class="section-backdrop__svg"
+    >
+      <!--
+        Projects: scattered small facet diamonds/squares — echo the card grid rhythm.
+        10 shapes total, deep navy palette, very low opacity.
+        Distributed across the viewport so each grid column has visual company.
+        Logo color: st1 = #0F293F (deep navy), surface-elevated = #1A3A5C
+      -->
+
+      <!-- Column 1 region — top cluster -->
+      <polygon points="60,40 120,20 150,80 90,100" fill="#1A3A5C" opacity="0.35"/>
+      <polygon points="40,160 80,140 100,200 60,220" fill="#0F293F" opacity="0.40"/>
+
+      <!-- Column 2 region — mid-upper -->
+      <polygon points="380,80 440,60 460,130 400,150" fill="#1A3A5C" opacity="0.30"/>
+      <polygon points="340,300 380,280 400,350 360,370" fill="#0F293F" opacity="0.25"/>
+
+      <!-- Column 3 region (center) — staggered lower -->
+      <polygon points="620,120 680,100 700,170 640,190" fill="#1A3A5C" opacity="0.28"/>
+      <polygon points="580,420 640,400 660,460 600,480" fill="#0F293F" opacity="0.22"/>
+
+      <!-- Column 4 region — mid upper -->
+      <polygon points="860,60 920,40 940,110 880,130" fill="#1A3A5C" opacity="0.32"/>
+      <polygon points="820,320 870,295 895,360 845,385" fill="#0F293F" opacity="0.30"/>
+
+      <!-- Column 5 region — right edge -->
+      <polygon points="1080,100 1140,80 1160,150 1100,170" fill="#1A3A5C" opacity="0.35"/>
+      <polygon points="1060,380 1120,360 1140,420 1080,440" fill="#0F293F" opacity="0.28"/>
+
+      <!-- Brand-blue micro-shards: very subtle warmth across the grid -->
+      <polygon points="200,220 240,200 255,245 215,265" fill="#73A0BE" opacity="0.04"/>
+      <polygon points="750,190 790,170 805,215 765,235" fill="#73A0BE" opacity="0.04"/>
+      <polygon points="1000,270 1040,250 1055,295 1015,315" fill="#73A0BE" opacity="0.04"/>
+    </svg>
+  )}
+
+  {variant === 'experience' && (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 1200 700"
+      preserveAspectRatio="xMidYMid slice"
+      aria-hidden="true"
+      focusable="false"
+      class="section-backdrop__svg"
+    >
+      <!--
+        Experience: vertical accent strips on left/right + diagonal facets
+        leaning leftward to reinforce the top-to-bottom timeline reading direction.
+        Left strip is stronger (timeline rail side), right is echoing/mirroring.
+      -->
+
+      <!-- Left accent strip: vertical band, deep navy, timeline rail suggestion -->
+      <rect x="0" y="0" width="80" height="700" fill="#0F293F" opacity="0.50"/>
+      <!-- Left strip fade — tapers to nothing by ~180px -->
+      <polygon points="80,0 180,0 180,700 80,700" fill="#0F293F" opacity="0.15"/>
+
+      <!-- Right accent strip: mirror, lighter -->
+      <rect x="1120" y="0" width="80" height="700" fill="#0F293F" opacity="0.35"/>
+
+      <!-- Top anchor facet: diagonal cut leaning leftward -->
+      <polygon points="0,0 320,0 200,140 0,180" fill="#1A3A5C" opacity="0.40"/>
+
+      <!-- Mid-left diagonal facet: reinforces the leftward timeline lean -->
+      <polygon points="0,260 160,220 200,380 0,420" fill="#0F293F" opacity="0.35"/>
+
+      <!-- Bottom anchor facet: heavy base, mirrors logo's J foot -->
+      <polygon points="0,560 280,500 320,620 120,700 0,700" fill="#1A3A5C" opacity="0.40"/>
+
+      <!-- Right side mid echo: subtle, doesn't compete with timeline content -->
+      <polygon points="1000,180 1200,120 1200,320 1060,280" fill="#0F293F" opacity="0.25"/>
+      <polygon points="960,500 1200,460 1200,700 940,700" fill="#1A3A5C" opacity="0.22"/>
+
+      <!-- Brand-blue accent shard: single highlight on the rail side -->
+      <polygon points="0,100 100,70 120,140 20,170" fill="#73A0BE" opacity="0.05"/>
+    </svg>
+  )}
+
+  {variant === 'contact' && (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 1200 600"
+      preserveAspectRatio="xMidYMid slice"
+      aria-hidden="true"
+      focusable="false"
+      class="section-backdrop__svg"
+    >
+      <!--
+        Contact: convergent focus — radiating shimmer from edges toward the center
+        where the form lives. Echoes the logo's st3 dot (warm gray) and
+        brand-blue (#73A0BE) as a soft spotlight.
+
+        Approach: 4 "lens flare" polygons pointing inward from each corner,
+        plus a radial gradient overlay circle at center for the spotlight effect.
+        Thin radiating lines modeled as very thin wedge polygons.
+      -->
+
+      <!-- Top-left convergent shard -->
+      <polygon points="0,0 280,0 420,200 0,320" fill="#0F293F" opacity="0.40"/>
+      <!-- Top-right convergent shard -->
+      <polygon points="920,0 1200,0 1200,280 780,200" fill="#0F293F" opacity="0.35"/>
+
+      <!-- Bottom-left convergent shard -->
+      <polygon points="0,380 320,280 480,500 160,600 0,600" fill="#1A3A5C" opacity="0.35"/>
+      <!-- Bottom-right convergent shard -->
+      <polygon points="720,280 1200,340 1200,600 760,600" fill="#1A3A5C" opacity="0.30"/>
+
+      <!-- Radiating thin wedges — converge toward center (600, 300) -->
+      <!-- Top wedge (thin) -->
+      <polygon points="540,0 660,0 620,220 580,220" fill="#73A0BE" opacity="0.04"/>
+      <!-- Left wedge (thin) -->
+      <polygon points="0,260 220,280 220,320 0,340" fill="#73A0BE" opacity="0.04"/>
+      <!-- Right wedge (thin) -->
+      <polygon points="980,280 1200,260 1200,340 980,320" fill="#73A0BE" opacity="0.04"/>
+      <!-- Bottom wedge (thin) -->
+      <polygon points="560,380 640,380 620,600 580,600" fill="#73A0BE" opacity="0.04"/>
+
+      <!-- Warm-gray center shimmer: echoes logo st3 dot (#A7A6A8) -->
+      <!-- Modeled as a softly offset polygon cluster at form position -->
+      <polygon points="440,140 760,140 800,260 400,260" fill="#A7A6A8" opacity="0.025"/>
+      <polygon points="460,240 740,240 780,380 420,380" fill="#A7A6A8" opacity="0.02"/>
+    </svg>
+  )}
+</div>
+
+<style>
+  .section-backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .section-backdrop__svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  /* Low-end mobile: reduce opacity to keep it light */
+  @media (max-width: 480px) {
+    .section-backdrop__svg {
+      opacity: 0.5;
+    }
+  }
+</style>
