@@ -541,39 +541,39 @@ section {
    */
 
   @keyframes facet-bloom-up {
-    /*  Entry: rises from below; Exit: drifts upward, fades */
-    0%   { transform: translateY(36px)  scale(0.82); opacity: 0; }
+    /*  Entry: rises from below + slight CCW twist; Exit: drifts upward + CW, fades */
+    0%   { transform: translateY(36px)  scale(0.82) rotate(-3deg); opacity: 0; }
     20%  { opacity: 0.75; }
-    50%  { transform: translateY(0)     scale(1);    opacity: 1; }
+    50%  { transform: translateY(0)     scale(1)    rotate(0deg);  opacity: 1; }
     80%  { opacity: 0.75; }
-    100% { transform: translateY(-18px) scale(1.04); opacity: 0; }
+    100% { transform: translateY(-18px) scale(1.04) rotate(2deg);  opacity: 0; }
   }
 
   @keyframes facet-bloom-down {
-    /*  Entry: drops from above; Exit: drifts downward, fades */
-    0%   { transform: translateY(-36px) scale(0.82); opacity: 0; }
+    /*  Entry: drops from above + slight CW twist; Exit: drifts downward + CCW, fades */
+    0%   { transform: translateY(-36px) scale(0.82) rotate(4deg);  opacity: 0; }
     20%  { opacity: 0.75; }
-    50%  { transform: translateY(0)     scale(1);    opacity: 1; }
+    50%  { transform: translateY(0)     scale(1)    rotate(0deg);  opacity: 1; }
     80%  { opacity: 0.75; }
-    100% { transform: translateY(18px)  scale(1.04); opacity: 0; }
+    100% { transform: translateY(18px)  scale(1.04) rotate(-3deg); opacity: 0; }
   }
 
   @keyframes facet-bloom-left {
-    /*  Entry: slides from the left; Exit: drifts right, fades */
-    0%   { transform: translateX(-28px) scale(0.84); opacity: 0; }
+    /*  Entry: slides from the left + CW twist; Exit: drifts right + CCW, fades */
+    0%   { transform: translateX(-28px) scale(0.84) rotate(3deg);  opacity: 0; }
     20%  { opacity: 0.75; }
-    50%  { transform: translateX(0)     scale(1);    opacity: 1; }
+    50%  { transform: translateX(0)     scale(1)    rotate(0deg);  opacity: 1; }
     80%  { opacity: 0.75; }
-    100% { transform: translateX(14px)  scale(1.04); opacity: 0; }
+    100% { transform: translateX(14px)  scale(1.04) rotate(-2deg); opacity: 0; }
   }
 
   @keyframes facet-bloom-right {
-    /*  Entry: slides from the right; Exit: drifts left, fades */
-    0%   { transform: translateX(28px)  scale(0.84); opacity: 0; }
+    /*  Entry: slides from the right + CCW twist; Exit: drifts left + CW, fades */
+    0%   { transform: translateX(28px)  scale(0.84) rotate(-4deg); opacity: 0; }
     20%  { opacity: 0.75; }
-    50%  { transform: translateX(0)     scale(1);    opacity: 1; }
+    50%  { transform: translateX(0)     scale(1)    rotate(0deg);  opacity: 1; }
     80%  { opacity: 0.75; }
-    100% { transform: translateX(-14px) scale(1.04); opacity: 0; }
+    100% { transform: translateX(-14px) scale(1.04) rotate(3deg);  opacity: 0; }
   }
 }
 
@@ -625,34 +625,167 @@ section {
   }
 
   @keyframes hero-disperse-upleft {
-    0%   { transform: translate(0, 0)      scale(1);    opacity: 1; }
-    100% { transform: translate(-24px, -32px) scale(0.78); opacity: 0; }
+    /* top-left wing rotates CW as it flies away */
+    0%   { transform: translate(0, 0)         scale(1)    rotate(0deg);  opacity: 1; }
+    100% { transform: translate(-24px, -32px) scale(0.78) rotate(6deg);  opacity: 0; }
   }
 
   @keyframes hero-disperse-upright {
-    0%   { transform: translate(0, 0)     scale(1);    opacity: 1; }
-    100% { transform: translate(24px, -28px) scale(0.78); opacity: 0; }
+    /* top-right wing rotates CCW as it peels off */
+    0%   { transform: translate(0, 0)        scale(1)    rotate(0deg);  opacity: 1; }
+    100% { transform: translate(24px, -28px) scale(0.78) rotate(-8deg); opacity: 0; }
   }
 
   @keyframes hero-disperse-left {
-    0%   { transform: translate(0, 0)   scale(1);    opacity: 1; }
-    100% { transform: translate(-30px, 0) scale(0.82); opacity: 0; }
+    /* left shard tilts CW as it slides out */
+    0%   { transform: translate(0, 0)   scale(1)    rotate(0deg); opacity: 1; }
+    100% { transform: translate(-30px, 0) scale(0.82) rotate(5deg); opacity: 0; }
   }
 
   @keyframes hero-disperse-downleft {
-    0%   { transform: translate(0, 0)      scale(1);    opacity: 1; }
-    100% { transform: translate(-20px, 30px) scale(0.80); opacity: 0; }
+    /* bottom-left anchor rotates CCW as it sinks */
+    0%   { transform: translate(0, 0)       scale(1)    rotate(0deg);   opacity: 1; }
+    100% { transform: translate(-20px, 30px) scale(0.80) rotate(-6deg);  opacity: 0; }
   }
 
   @keyframes hero-disperse-downright {
-    0%   { transform: translate(0, 0)     scale(1);    opacity: 1; }
-    100% { transform: translate(20px, 28px) scale(0.80); opacity: 0; }
+    /* bottom-right anchor rotates CW as it sinks */
+    0%   { transform: translate(0, 0)      scale(1)    rotate(0deg);  opacity: 1; }
+    100% { transform: translate(20px, 28px) scale(0.80) rotate(7deg);  opacity: 0; }
   }
 
   @keyframes hero-disperse-center {
-    0%   { transform: scale(1);    opacity: 1; }
-    100% { transform: scale(0.88); opacity: 0; }
+    /* center shimmer spins slightly as it dissolves */
+    0%   { transform: scale(1)    rotate(0deg);  opacity: 1; }
+    100% { transform: scale(0.88) rotate(-4deg); opacity: 0; }
   }
+}
+
+/* ── Stroke Draw-In (scroll-driven blueprint sketch) ────────────────────── */
+/*
+ * Fallback (non-supporting browsers): strokes are always visible — just static.
+ * The @supports block overrides to animate only when scroll-driven animations
+ * are available. stroke-dashoffset:0 outside means: always shown by default.
+ */
+
+.section-backdrop .facet polygon,
+.section-backdrop .facet rect {
+  stroke-dashoffset: 0;
+}
+
+.hero-backdrop .facet polygon {
+  stroke-dashoffset: 0;
+}
+
+@supports (animation-timeline: view()) {
+  @keyframes facet-stroke-draw {
+    from { stroke-dashoffset: 1200; }
+    to   { stroke-dashoffset: 0; }
+  }
+
+  .section-backdrop .facet polygon,
+  .section-backdrop .facet rect {
+    stroke-dasharray: 1200;
+    stroke-dashoffset: 1200;
+    animation: facet-stroke-draw linear;
+    animation-timeline: view();
+    animation-range: entry 0% cover 50%;
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  @keyframes facet-stroke-draw-hero {
+    from { stroke-dashoffset: 1200; }
+    to   { stroke-dashoffset: 0; }
+  }
+
+  .hero-backdrop .facet polygon {
+    stroke-dasharray: 1200;
+    stroke-dashoffset: 1200;
+    animation: facet-stroke-draw-hero linear;
+    animation-timeline: scroll();
+    animation-range: 0% 30%;
+  }
+}
+
+/* ── Floating Particles ──────────────────────────────────────────────────── */
+/*
+ * Small SVG diamond rects that drift on independent time-based loops.
+ * Transform-only → GPU composited. will-change: transform applied only here.
+ * Different durations and delays make each particle feel independent.
+ */
+
+@keyframes particle-drift-a {
+  from { transform: translate(0, 0)     rotate(45deg); }
+  to   { transform: translate(-18px, 28px) rotate(225deg); }
+}
+
+@keyframes particle-drift-b {
+  from { transform: translate(0, 0)    rotate(45deg); }
+  to   { transform: translate(22px, -16px) rotate(225deg); }
+}
+
+@keyframes particle-drift-c {
+  from { transform: translate(0, 0)    rotate(45deg); }
+  to   { transform: translate(-12px, -24px) rotate(225deg); }
+}
+
+@keyframes particle-drift-hero {
+  /* Ascending sparks: float upward and slightly sideways */
+  from { transform: translate(0, 0)    rotate(45deg); opacity: 0.4; }
+  to   { transform: translate(8px, -32px) rotate(225deg); opacity: 0.1; }
+}
+
+/* Section particles */
+.section-backdrop .particle {
+  will-change: transform;
+}
+
+.section-backdrop .particle-1 {
+  animation: particle-drift-a 25s ease-in-out infinite alternate;
+  animation-delay: -3s;
+}
+.section-backdrop .particle-2 {
+  animation: particle-drift-b 18s ease-in-out infinite alternate;
+  animation-delay: -8s;
+}
+.section-backdrop .particle-3 {
+  animation: particle-drift-c 22s ease-in-out infinite alternate;
+  animation-delay: -13s;
+}
+.section-backdrop .particle-4 {
+  animation: particle-drift-a 28s ease-in-out infinite alternate;
+  animation-delay: -5s;
+}
+.section-backdrop .particle-5 {
+  animation: particle-drift-b 16s ease-in-out infinite alternate;
+  animation-delay: -10s;
+}
+
+/* Hero particles — ascending sparks */
+.hero-backdrop .particle {
+  will-change: transform;
+}
+
+.hero-backdrop .particle-1 {
+  animation: particle-drift-hero 20s ease-in-out infinite alternate;
+  animation-delay: -4s;
+}
+.hero-backdrop .particle-2 {
+  animation: particle-drift-hero 26s ease-in-out infinite alternate;
+  animation-delay: -9s;
+}
+.hero-backdrop .particle-3 {
+  animation: particle-drift-hero 17s ease-in-out infinite alternate;
+  animation-delay: -2s;
+}
+.hero-backdrop .particle-4 {
+  animation: particle-drift-hero 23s ease-in-out infinite alternate;
+  animation-delay: -14s;
+}
+.hero-backdrop .particle-5 {
+  animation: particle-drift-hero 19s ease-in-out infinite alternate;
+  animation-delay: -7s;
 }
 
 /* Respect user motion preference — disable ALL backdrop and facet motion */
@@ -668,5 +801,28 @@ section {
   .hero-logo-wrap {
     animation: none !important;
     will-change: auto;
+  }
+
+  /* Disable particle drift — particles remain at static positions */
+  .section-backdrop .particle,
+  .hero-backdrop .particle {
+    animation: none !important;
+  }
+
+  /* Stroke-draw: show strokes static (already default via non-@supports rule) */
+  .section-backdrop .facet polygon,
+  .section-backdrop .facet rect,
+  .hero-backdrop .facet polygon {
+    stroke-dashoffset: 0 !important;
+    stroke-dasharray: none !important;
+  }
+}
+
+/* Mobile ≤480px: disable particle drift, reduce opacity slightly */
+@media (max-width: 480px) {
+  .section-backdrop .particle,
+  .hero-backdrop .particle {
+    animation: none;
+    opacity: 0.3;
   }
 }
