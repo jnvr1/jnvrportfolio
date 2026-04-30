@@ -1,20 +1,12 @@
 /**
- * hreflang E2E tests — Phase 4 (task 4.4).
+ * hreflang E2E tests — Phase 4 (task 4.4), enabled by Phase 5 routes.
  *
- * NOTE: These tests require Phase 5 routes (/projects/[slug]) to exist.
- * They are written here (RED) and will pass after Phase 5 is implemented.
- *
- * Until then, the tests are marked with test.skip() to document the intent
- * without blocking the test suite.
+ * Tests that project pages include hreflang alternate links in <head>.
+ * Route /projects/centinela-app is generated in Phase 5 via getStaticPaths.
  */
 import { test, expect } from '@playwright/test';
 
 test.describe('hreflang SEO tags', () => {
-  test.skip(
-    true,
-    'Phase 5 required: /projects/[slug] routes must exist for this test to pass',
-  );
-
   test('Project page has hreflang="es" link in <head>', async ({ page }) => {
     await page.goto('/projects/centinela-app');
     const esLink = page.locator('link[rel="alternate"][hreflang="es"]');
