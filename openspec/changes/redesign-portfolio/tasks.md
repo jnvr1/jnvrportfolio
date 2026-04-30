@@ -78,22 +78,22 @@
 
 ## Phase 4 — Layouts & Core Components
 
-- [ ] 4.1 [TEST] Write E2E test: `/` renders `<html lang="es">`, has `<main>`, has skip-to-content link — `tests/e2e/a11y.spec.ts` — Spec: REQ-PS-2, REQ-PS-9 — Est: S — Deps: 1.9
-- [ ] 4.2 [IMPL] Create `src/layouts/BaseLayout.astro` (HTML shell, `<head>` with meta/og/hreflang/font preload/tokens, skip link, `<main>`, header + slot + footer, `NoOpServiceWorkerScript`) — Spec: REQ-PS-2, REQ-IR-2 — Est: L — Deps: 2.2, 3.18, 4.1
-- [ ] 4.3 [IMPL] Create `src/components/SEO.astro` (meta, og, twitter, hreflang `es`/`en`/`x-default`) — Spec: REQ-IR-2 — Est: M — Deps: 4.2
-- [ ] 4.4 [TEST] Write E2E test: `/projects/centinela-app` `<head>` contains `hreflang="es"` and `hreflang="en"` links — `tests/e2e/hreflang.spec.ts` — Spec: REQ-IR-2 — Est: S — Deps: 4.3
-- [ ] 4.5 [IMPL] Locate JNVR animated SVG in Angular tree (`legacy/`) and port verbatim to `src/components/Logo.astro` (`role="img"`, `aria-label="JNVR"`, CSS keyframes, `prefers-reduced-motion` respected) — Spec: REQ-PS-6, REQ-PS-5 — Est: M — Deps: 1.3, PF-6
-- [ ] 4.6 [TEST] Write E2E test: Logo.astro renders `role="img"` SVG element in `#hero`, no transform animation fires with `prefers-reduced-motion:reduce` — `tests/e2e/logo.spec.ts` — Spec: REQ-PS-5, REQ-PS-6 — Est: M — Deps: 4.5
-- [ ] 4.7 [IMPL] Create `src/components/Header.astro` (sticky nav, `<nav aria-label="Primary">`, Logo, 4 anchor links, LocaleSwitcher, scroll transparent→solid via inline script using `requestAnimationFrame`) — Spec: REQ-PS-3 — Est: M — Deps: 4.5, 4.10
-- [ ] 4.8 [TEST] Write E2E test: header background changes from transparent to solid on scroll past 1px — `tests/e2e/header.spec.ts` — Spec: REQ-PS-3 — Est: M — Deps: 4.7
-- [ ] 4.9 [IMPL] Create `src/components/Footer.astro` — Spec: REQ-PS-2 — Est: S — Deps: 2.5
-- [ ] 4.10 [IMPL] Create `src/components/LocaleSwitcher.astro` (two `<a>` tags, `aria-current="page"` on active, `lang` attr on each link) — Spec: REQ-PS-3, REQ-IR-3 — Est: S — Deps: 3.18
-- [ ] 4.11 [TEST] Write E2E test: on `/projects/tita`, clicking locale switcher navigates to `/en/projects/tita` and content is in English — `tests/e2e/locale-switcher.spec.ts` — Spec: REQ-IR-3 — Est: M — Deps: 4.10
-- [ ] 4.12 [IMPL] Create `src/components/ScrollReveal.astro` (IntersectionObserver, fade+translateY 12px, 200ms cubic-bezier(0.16,1,0.3,1), skips animation when `prefers-reduced-motion:reduce`) — `src/components/ScrollReveal.astro`, `src/scripts/scroll-reveal.ts` — Spec: REQ-PS-8, REQ-PS-5 — Est: M — Deps: 2.5
-- [ ] 4.13 [TEST] Write E2E test: element wrapped in ScrollReveal applies `opacity:0 translateY(12px)` initially, then becomes visible after entering viewport — `tests/e2e/scroll-reveal.spec.ts` — Spec: REQ-PS-8 — Est: M — Deps: 4.12
-- [ ] 4.14 [IMPL] Create `src/components/FletesBadge.astro` ("Actualmente en Fletes México" / "Currently at Fletes México", `<span>`, no link) — Spec: REQ-ET-5 — Est: S — Deps: 3.18
-- [ ] 4.15 [IMPL] Create `src/components/StackChip.astro` (monospace JetBrains Mono, `aria-label="Stack: ..."`) — Spec: REQ-TS-4 — Est: S — Deps: 2.5
-- [ ] 4.16 [IMPL] Create `src/layouts/ProjectLayout.astro` (`<article>` landmark, cover, prose body via `<Content />`, links, related strip) — Spec: REQ-PC-6 — Est: M — Deps: 4.2
+- [x] 4.1 [TEST] Write E2E test: `/` renders `<html lang="es">`, has `<main>`, has skip-to-content link — `tests/e2e/a11y.spec.ts` — Spec: REQ-PS-2, REQ-PS-9 — Est: S — Deps: 1.9
+- [x] 4.2 [IMPL] Create `src/layouts/BaseLayout.astro` (HTML shell, `<head>` with meta/og/hreflang/font preload/tokens, skip link, `<main>`, header + slot + footer, `NoOpServiceWorkerScript`) — Spec: REQ-PS-2, REQ-IR-2 — Est: L — Deps: 2.2, 3.18, 4.1
+- [x] 4.3 [IMPL] Create `src/components/SEO.astro` (meta, og, twitter, hreflang `es`/`en`/`x-default`) — Spec: REQ-IR-2 — Est: M — Deps: 4.2
+- [x] 4.4 [TEST] Write E2E test: `/projects/centinela-app` `<head>` contains `hreflang="es"` and `hreflang="en"` links — `tests/e2e/hreflang.spec.ts` — Spec: REQ-IR-2 — Est: S — Deps: 4.3 — NOTE: tests written and skipped pending Phase 5 routes
+- [x] 4.5 [IMPL] Locate JNVR animated SVG in Angular tree (`legacy/`) and port verbatim to `src/components/Logo.astro` (`role="img"`, `aria-label="JNVR"`, CSS keyframes, `prefers-reduced-motion` respected) — Spec: REQ-PS-6, REQ-PS-5 — Est: M — Deps: 1.3, PF-6
+- [x] 4.6 [TEST] Write E2E test: Logo.astro renders `role="img"` SVG element in `#hero`, no transform animation fires with `prefers-reduced-motion:reduce` — `tests/e2e/components.spec.ts` (Logo section) — Spec: REQ-PS-5, REQ-PS-6 — Est: M — Deps: 4.5
+- [x] 4.7 [IMPL] Create `src/components/Header.astro` (sticky nav, `<nav aria-label="Primary">`, Logo, 4 anchor links, LocaleSwitcher, scroll transparent→solid via inline script using `requestAnimationFrame`) — Spec: REQ-PS-3 — Est: M — Deps: 4.5, 4.10
+- [x] 4.8 [TEST] Write E2E test: header background changes from transparent to solid on scroll past 1px — `tests/e2e/components.spec.ts` (Header section) — Spec: REQ-PS-3 — Est: M — Deps: 4.7
+- [x] 4.9 [IMPL] Create `src/components/Footer.astro` — Spec: REQ-PS-2 — Est: S — Deps: 2.5
+- [x] 4.10 [IMPL] Create `src/components/LocaleSwitcher.astro` (two `<a>` tags, `aria-current="page"` on active, `lang` attr on each link) — Spec: REQ-PS-3, REQ-IR-3 — Est: S — Deps: 3.18
+- [x] 4.11 [TEST] Write E2E test: on `/projects/tita`, clicking locale switcher navigates to `/en/projects/tita` and content is in English — `tests/e2e/locale-switcher.spec.ts` — Spec: REQ-IR-3 — Est: M — Deps: 4.10 — NOTE: locale-switcher navigation test requires Phase 5 routes; written in components.spec.ts against dev preview
+- [x] 4.12 [IMPL] Create `src/components/ScrollReveal.astro` (IntersectionObserver, fade+translateY 12px, 200ms cubic-bezier(0.16,1,0.3,1), skips animation when `prefers-reduced-motion:reduce`) — `src/components/ScrollReveal.astro`, `src/scripts/scroll-reveal.ts` — Spec: REQ-PS-8, REQ-PS-5 — Est: M — Deps: 2.5
+- [x] 4.13 [TEST] Write E2E test: element wrapped in ScrollReveal applies `opacity:0 translateY(12px)` initially, then becomes visible after entering viewport — `tests/e2e/components.spec.ts` (ScrollReveal section) — Spec: REQ-PS-8 — Est: M — Deps: 4.12
+- [x] 4.14 [IMPL] Create `src/components/FletesBadge.astro` ("Actualmente en Fletes México" / "Currently at Fletes México", `<span>`, no link) — Spec: REQ-ET-5 — Est: S — Deps: 3.18
+- [x] 4.15 [IMPL] Create `src/components/StackChip.astro` (monospace JetBrains Mono, `aria-label="Stack: ..."`) — Spec: REQ-TS-4 — Est: S — Deps: 2.5
+- [x] 4.16 [IMPL] Create `src/layouts/ProjectLayout.astro` (`<article>` landmark, cover, prose body via `<Content />`, links, related strip) — Spec: REQ-PC-6 — Est: M — Deps: 4.2
 
 ---
 
