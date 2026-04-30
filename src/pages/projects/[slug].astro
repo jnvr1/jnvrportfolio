@@ -1,0 +1,37 @@
+---
+/**
+ * /projects/[slug].astro — ES project detail page.
+ *
+ * Uses getStaticPaths to generate one static page per ES project entry.
+ * The slug is derived from the Astro 5 path-based entry.id:
+ *   entry.id = "es/centinela-app" → slug = "centinela-app"
+ *
+ * Route: /projects/{slug}
+ */
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import ProjectLayout from '../../layouts/ProjectLayout.astro';
+
+export async function getStaticPaths() {
+  const allProjects = await getCollection('projects');
+  // Filter to ES locale only — EN has its own route under /en/projects/
+  const esProjects = allProjects.filter((p) => p.data.locale === 'es');
+
+  return esProjects.map((entry) => ({
+    // Strip the "es/" prefix AND the .md extension from the path-based id to get the route slug
+    params: { slug: entry.id.replace(/^(es|en)\//, '').replace(/\.mdx?$/, '') },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'projects'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<ProjectLayout entry={entry} locale="es">
+  <Content />
+</ProjectLayout>

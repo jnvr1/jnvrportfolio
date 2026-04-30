@@ -1,0 +1,62 @@
+---
+/**
+ * en/index.astro — EN home page.
+ *
+ * Route: /en/
+ *
+ * Mirror of index.astro but with locale='en' and EN content.
+ *
+ * Spec: REQ-IR-1 (prefixed EN locale), REQ-PS-2
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Hero from '../../components/Hero.astro';
+import ProjectGrid from '../../components/ProjectGrid.astro';
+import ExperienceList from '../../components/ExperienceList.astro';
+import ContactForm from '../../components/ContactForm.astro';
+import Footer from '../../components/Footer.astro';
+import { t } from '../../i18n/index';
+
+const locale = 'en' as const;
+const siteUrl = 'https://jnvr-portafolio.web.app';
+
+// Canonical and alternates
+const canonical = `${siteUrl}/en/`;
+const alternates = {
+  es: `${siteUrl}/`,
+  en: canonical,
+};
+
+// Page meta
+const title = t(locale, 'meta.siteTitle');
+const description = t(locale, 'meta.siteDescription');
+
+// Fetch content — filter to EN locale only
+const allProjects = await getCollection('projects');
+const enProjects = allProjects
+  .filter((p) => p.data.locale === 'en')
+  .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+
+const allExperience = await getCollection('experience');
+const enExperience = allExperience.filter((e) => e.data.locale === 'en');
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  locale={locale}
+  canonical={canonical}
+  alternates={alternates}
+>
+  <Header locale={locale} alternates={alternates} />
+
+  <main id="main-content">
+    <Hero locale={locale} />
+    <ProjectGrid projects={enProjects} locale={locale} />
+    <ExperienceList entries={enExperience} locale={locale} />
+    <ContactForm locale={locale} />
+  </main>
+
+  <Footer locale={locale} />
+</BaseLayout>

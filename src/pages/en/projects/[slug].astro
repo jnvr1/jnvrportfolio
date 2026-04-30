@@ -1,0 +1,34 @@
+---
+/**
+ * /en/projects/[slug].astro — EN project detail page.
+ *
+ * Mirrors /projects/[slug].astro but filters for locale === 'en'.
+ *
+ * Route: /en/projects/{slug}
+ */
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import ProjectLayout from '../../../layouts/ProjectLayout.astro';
+
+export async function getStaticPaths() {
+  const allProjects = await getCollection('projects');
+  // Filter to EN locale only
+  const enProjects = allProjects.filter((p) => p.data.locale === 'en');
+
+  return enProjects.map((entry) => ({
+    params: { slug: entry.id.replace(/^(es|en)\//, '').replace(/\.mdx?$/, '') },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'projects'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<ProjectLayout entry={entry} locale="en">
+  <Content />
+</ProjectLayout>
