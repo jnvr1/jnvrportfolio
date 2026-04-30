@@ -40,14 +40,14 @@
 
 ## Phase 2 — Design Tokens & Styles
 
-- [ ] 2.1 [TEST] Write unit test asserting `tokens.css` contains all 11 required CSS custom properties with exact hex values — `tests/unit/tokens.test.ts` — Spec: REQ-TS-1, REQ-TS-2 — Est: S — Deps: 1.8
-- [ ] 2.2 [IMPL] Create `src/styles/tokens.css` with all 11 color tokens (`--bg:#0D1117` … `--danger:#F85149`), 4px spacing scale, breakpoint custom media — Spec: REQ-TS-1, REQ-TS-2 — Est: S — Deps: 2.1
-- [ ] 2.3 [IMPL] Create `src/styles/reset.css` (modern CSS reset, box-sizing, no hardcoded colors) — Spec: REQ-TS-7 — Est: S — Deps: 2.2
-- [ ] 2.4 [IMPL] Create `src/styles/fonts.css` with `@font-face` for Inter, Space Grotesk, JetBrains Mono variable woff2 with `size-adjust` + `ascent-override` fallback metrics, `font-display:swap` — Spec: REQ-TS-4 — Est: M — Deps: 2.2
-- [ ] 2.5 [IMPL] Create `src/styles/global.css` (base typography scale, container 1200px, utility classes, motion defaults) — Spec: REQ-TS-5, REQ-PS-8 — Est: M — Deps: 2.3, 2.4
-- [ ] 2.6 [IMPL] Create `src/styles/prose.css` (markdown body styles for project detail pages) — Spec: — Est: S — Deps: 2.5
-- [ ] 2.7 [TEST] Write E2E test asserting no request to `fonts.googleapis.com` or `fonts.gstatic.com` on home load — `tests/e2e/fonts.spec.ts` — Spec: REQ-TS-4 — Est: S — Deps: 1.9
-- [ ] 2.8 [TEST] Write E2E test asserting `background-color` of `body` equals `#0D1117` (dark theme only, no light fallback) — `tests/e2e/theme.spec.ts` — Spec: REQ-TS-2, REQ-TS-3 — Est: S — Deps: 1.9
+- [x] 2.1 [TEST] Write unit test asserting `tokens.css` contains all 11 required CSS custom properties with exact hex values — `tests/unit/tokens.test.ts` — Spec: REQ-TS-1, REQ-TS-2 — Est: S — Deps: 1.8
+- [x] 2.2 [IMPL] Create `src/styles/tokens.css` with all 11 color tokens (`--bg:#0D1117` … `--danger:#F85149`), 4px spacing scale, breakpoint custom media — Spec: REQ-TS-1, REQ-TS-2 — Est: S — Deps: 2.1
+- [x] 2.3 [IMPL] Create `src/styles/reset.css` (modern CSS reset, box-sizing, no hardcoded colors) — Spec: REQ-TS-7 — Est: S — Deps: 2.2
+- [x] 2.4 [IMPL] Create `src/styles/fonts.css` with `@font-face` for Inter, Space Grotesk, JetBrains Mono variable woff2 with `size-adjust` + `ascent-override` fallback metrics, `font-display:swap` — Spec: REQ-TS-4 — Est: M — Deps: 2.2
+- [x] 2.5 [IMPL] Create `src/styles/global.css` (base typography scale, container 1200px, utility classes, motion defaults) — Spec: REQ-TS-5, REQ-PS-8 — Est: M — Deps: 2.3, 2.4
+- [x] 2.6 [IMPL] Create `src/styles/prose.css` (markdown body styles for project detail pages) — Spec: — Est: S — Deps: 2.5
+- [x] 2.7 [TEST] Write E2E test asserting no request to `fonts.googleapis.com` or `fonts.gstatic.com` on home load — `tests/e2e/fonts.spec.ts` — Spec: REQ-TS-4 — Est: S — Deps: 1.9
+- [x] 2.8 [TEST] Write E2E test asserting `background-color` of `body` equals `#0D1117` (dark theme only, no light fallback) — `tests/e2e/theme.spec.ts` — Spec: REQ-TS-2, REQ-TS-3 — Est: S — Deps: 1.9
 
 ---
 
