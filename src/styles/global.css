@@ -379,3 +379,41 @@ section {
   box-shadow: var(--focus-ring);
   border-radius: var(--radius-sm);
 }
+
+/* ── Section Backdrop Parallax (Option 4 Full Composition) ───────────────── */
+/*
+ * CSS scroll-driven animation for per-section backdrops.
+ * Supported: Chrome/Edge 115+, partial Safari 18+, Firefox 110+ (with flag).
+ * Fallback: no parallax (static). No JS added.
+ *
+ * The .section-backdrop class is on the backdrop's outer div inside each
+ * section (HeroBackdrop and SectionBackdrop components).
+ *
+ * Motion: each backdrop translates -30px as the section scrolls through view.
+ * This is a subtle depth cue — the backdrop moves slower than the content,
+ * creating a sense of the atmosphere being "behind" the section.
+ *
+ * Transforms only → GPU composited, no reflow/repaint during scroll.
+ */
+
+@supports (animation-timeline: view()) {
+  .section-backdrop {
+    animation: backdrop-parallax linear;
+    animation-timeline: view();
+    animation-range: entry 0% exit 100%;
+    will-change: transform;
+  }
+
+  @keyframes backdrop-parallax {
+    from { transform: translateY(0); }
+    to   { transform: translateY(-30px); }
+  }
+}
+
+/* Respect user motion preference — disable parallax entirely */
+@media (prefers-reduced-motion: reduce) {
+  .section-backdrop {
+    animation: none !important;
+    will-change: auto;
+  }
+}
