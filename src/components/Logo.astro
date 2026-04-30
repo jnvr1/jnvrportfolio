@@ -2,51 +2,62 @@
 /**
  * Logo.astro — JNVR brand mark (square faceted icon, no wordmark).
  *
- * Switched from logo-jnvr.svg (wordmark with split text) to logo-mark.svg
- * (clean 1600×1600 faceted brand icon). The component renders it via <img>
- * so the wrapper element in Hero.astro can own all entrance / breathing
- * animations without conflicting with inline SVG animation concerns.
+ * Inlined SVG (via readFileSync) so Hero.astro can target individual
+ * <path> elements with CSS for the blueprint draw-in entrance animation.
  *
  * Props:
- *   size      — Width/height in px (default: 320). Square aspect ratio.
+ *   size      — CSS width value (default: 480px). Height scales automatically
+ *               via the SVG's natural aspect ratio (viewBox: -175 -20 1429 1010,
+ *               ratio ≈ 1.41). At 480px width the visible mark is ~339px tall.
  *   ariaLabel — Accessible label (default: 'JNVR')
  */
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+
 interface Props {
   size?: number;
   ariaLabel?: string;
 }
 
-const { size = 320, ariaLabel = 'JNVR' } = Astro.props;
+const { size = 480, ariaLabel = 'JNVR' } = Astro.props;
+
+const svgPath = fileURLToPath(new URL('../../public/logo-mark.svg', import.meta.url));
+const logoSvg = readFileSync(svgPath, 'utf-8');
 ---
 
-<span class="logo-wrapper" role="img" aria-label={ariaLabel}>
-  <img
-    src="/logo-mark.svg"
-    alt={ariaLabel}
-    width={size}
-    height={size}
-    class="logo-img"
-    loading="eager"
-    decoding="async"
-  />
-</span>
+<span
+  class="logo-wrapper"
+  role="img"
+  aria-label={ariaLabel}
+  style={`--logo-size: ${size}px`}
+  set:html={logoSvg}
+/>
 
 <style>
   .logo-wrapper {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
   }
 
-  .logo-img {
-    width: var(--logo-size, 320px);
-    height: var(--logo-size, 320px);
+  /* Target the inlined SVG directly */
+  .logo-wrapper > svg {
+    width: var(--logo-size, 480px);
+    height: auto;
+    display: block;
   }
 
-  /* Mobile: scale down to 220px */
+  /* Mobile: scale down to 300px */
   @media (max-width: 768px) {
-    .logo-img {
-      width: 220px;
-      height: 220px;
+    .logo-wrapper > svg {
+      width: 300px;
+    }
+  }
+
+  /* Small mobile */
+  @media (max-width: 480px) {
+    .logo-wrapper > svg {
+      width: 260px;
     }
   }
 </style>

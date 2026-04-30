@@ -25,8 +25,8 @@ const base = locale === 'es' ? '' : '/en';
 <section id="hero" class="hero" aria-labelledby="hero-heading">
   <HeroBackdrop />
   <div class="hero-inner">
-    <div class="hero-logo-wrap" aria-hidden="true">
-      <Logo size={320} ariaLabel="JNVR" />
+    <div class="hero-logo-wrap">
+      <Logo size={480} ariaLabel="JNVR" />
     </div>
 
     <div class="hero-content">
@@ -183,6 +183,6 @@ const base = locale === 'es' ? '' : '/en';
       padding-top: var(--space-12);
       min-height: auto;
     }
-    /* Logo mobile sizing is handled in Logo.astro (220px at ≤768px) */
+    /* Logo mobile sizing is handled in Logo.astro (300px at ≤768px, 260px at ≤480px) */
   }
 </style>
