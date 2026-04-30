@@ -803,6 +803,12 @@ section {
     will-change: auto;
   }
 
+  /* Disable logo entrance + halo burst; logo appears static at full opacity */
+  .hero-logo-wrap::before {
+    animation: none !important;
+    display: none;
+  }
+
   /* Disable particle drift — particles remain at static positions */
   .section-backdrop .particle,
   .hero-backdrop .particle {
