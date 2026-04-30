@@ -30,15 +30,15 @@ describe('tokens.css — required color custom properties', () => {
   });
 
   const REQUIRED_TOKENS: Record<string, string> = {
-    '--bg': '#0D1117',
-    '--surface': '#161B22',
-    '--surface-elevated': '#1C2333',
-    '--border': '#30363D',
-    '--text': '#F0F6FF',
-    '--text-muted': '#8B949E',
-    '--brand': '#6BA3C3',
-    '--brand-strong': '#4A8FB0',
-    '--accent': '#8BB8D0',
+    '--bg': '#0A1929',
+    '--surface': '#0F293F',
+    '--surface-elevated': '#1A3A5C',
+    '--border': '#1F4060',
+    '--text': '#FFFFFF',
+    '--text-muted': '#A7A6A8',
+    '--brand': '#73A0BE',
+    '--brand-strong': '#4A7A98',
+    '--accent': '#A8C9DD',
     '--success': '#3FB950',
     '--danger': '#F85149',
   };
@@ -132,8 +132,8 @@ describe('fonts.css — CLS regression guards', () => {
     expect(css).toMatch(/Inter/);
   });
 
-  it('declares @font-face for Space Grotesk', () => {
-    expect(css).toMatch(/Space Grotesk/);
+  it('declares @font-face for Bricolage Grotesque', () => {
+    expect(css).toMatch(/Bricolage Grotesque/);
   });
 
   it('declares @font-face for JetBrains Mono', () => {
