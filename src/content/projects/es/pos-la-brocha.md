@@ -1,6 +1,5 @@
 ---
 title: "POS Multi-Negocio — Sistema La Brocha"
-slug: pos-la-brocha
 client: Teotech
 year: 2025
 stack: ["React", "FastAPI", "PostgreSQL", "Docker", "Capacitor"]

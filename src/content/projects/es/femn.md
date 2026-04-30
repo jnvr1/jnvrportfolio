@@ -1,6 +1,5 @@
 ---
 title: "FEMN — Encuestas Socioeconómicas"
-slug: femn
 client: FEMN
 year: 2025
 yearRange: "2024–2025"

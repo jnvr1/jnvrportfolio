@@ -1,6 +1,5 @@
 ---
 title: "Teotech CRM — Invoicing and Files (Brocha)"
-slug: brocha-facturacion
 client: Teotech
 year: 2025
 yearRange: "2023–2025"

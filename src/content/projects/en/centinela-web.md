@@ -1,6 +1,5 @@
 ---
 title: "Centinela — Marketing Website"
-slug: centinela-web
 client: Angel
 year: 2025
 yearRange: "2024–2025"

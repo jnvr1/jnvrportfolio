@@ -14,8 +14,12 @@ const bilingualCheck = {
     'astro:build:done': async () => {
       const { getCollection } = await import('astro:content');
       const all = await getCollection('projects');
-      // In Astro 5, slug is stripped from entry.data and used as entry.id
-      const entries = all.map((p) => ({ slug: p.id, locale: p.data.locale }));
+      // In Astro 5, entry.id is the path-based id: "es/centinela-app" or "en/centinela-app".
+      // Strip the locale prefix to get the canonical slug for parity comparison.
+      const entries = all.map((p) => ({
+        slug: p.id.replace(/^(es|en)\//, ''),
+        locale: p.data.locale,
+      }));
       assertBilingualParity(entries);
     },
   },

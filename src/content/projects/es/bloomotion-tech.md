@@ -1,6 +1,5 @@
 ---
 title: "Bloomotion Tech — Sitio Corporativo"
-slug: bloomotion-tech
 client: Angel
 year: 2024
 yearRange: "2022–2024"

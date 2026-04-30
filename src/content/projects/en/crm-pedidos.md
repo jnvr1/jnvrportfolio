@@ -1,6 +1,5 @@
 ---
 title: "Order Management CRM — Private Educational Institution"
-slug: crm-pedidos
 client: Teotech
 year: 2025
 yearRange: "2023–2025"

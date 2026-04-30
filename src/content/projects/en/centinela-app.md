@@ -1,6 +1,5 @@
 ---
 title: "Centinela — Residential Access Control System"
-slug: centinela-app
 client: Angel
 year: 2024
 yearRange: "2022–2024"

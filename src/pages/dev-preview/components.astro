@@ -1,0 +1,144 @@
+---
+/**
+ * _dev/components.astro — Component preview page (DEV ONLY).
+ *
+ * This page mounts all Phase 4 components with sample data for Playwright
+ * render contract tests. It is ONLY available in dev mode — Astro prefixes
+ * pages with `_` by excluding them from static generation via a file convention.
+ *
+ * Note: In Astro 5, files in pages/ with a leading _ ARE generated unless
+ * excluded. We gate by `import.meta.env.DEV` to prevent production rendering.
+ *
+ * Playwright tests hit http://localhost:4321/_dev/components (dev server only).
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import FletesBadge from '../../components/FletesBadge.astro';
+import LocaleSwitcher from '../../components/LocaleSwitcher.astro';
+import Logo from '../../components/Logo.astro';
+import StackChip from '../../components/StackChip.astro';
+import ScrollReveal from '../../components/ScrollReveal.astro';
+import ContactForm from '../../components/ContactForm.astro';
+import ExperienceCard from '../../components/ExperienceCard.astro';
+
+// Bail out in production (this page should never reach build output)
+if (!import.meta.env.DEV) {
+  return Astro.redirect('/');
+}
+
+// Sample experience entry for ExperienceCard preview
+const sampleExperience = {
+  id: 'fletes-mexico',
+  collection: 'experience' as const,
+  data: {
+    company: 'Fletes México',
+    role: 'Frontend Engineer',
+    startYear: 2023,
+    current: true,
+    featured: true,
+    location: 'Monterrey, MX',
+    summary: 'Building mission-critical logistics features for Mexico\'s freight platform.',
+    highlights: ['Migrated Angular monolith to Astro static site', 'Reduced JS payload by 85%'],
+    stack: ['Angular', 'TypeScript', 'Firebase'],
+    locale: 'es' as const,
+    order: 1,
+  },
+  render: async () => ({ Content: () => null, headings: [], remarkPluginFrontmatter: {} }),
+};
+---
+
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Component Dev Preview — JNVR</title>
+  <style is:global>
+    @import '../../styles/tokens.css';
+    @import '../../styles/reset.css';
+    @import '../../styles/fonts.css';
+    @import '../../styles/global.css';
+    body { background: var(--bg); color: var(--text); }
+    .dev-section { padding: 2rem; border-bottom: 1px solid var(--border); }
+    .dev-label { font-family: monospace; font-size: 0.75rem; color: var(--muted); margin-bottom: 0.5rem; }
+  </style>
+</head>
+<body>
+
+  <!-- Header test -->
+  <div class="dev-section" id="test-header">
+    <div class="dev-label">Header.astro</div>
+    <Header locale="es" alternates={{ es: '/', en: '/en/' }} />
+  </div>
+
+  <!-- Skip link target -->
+  <main id="main-content">
+
+    <!-- Hero test -->
+    <div class="dev-section" id="test-hero">
+      <div class="dev-label">Hero.astro</div>
+      <Hero locale="es" />
+    </div>
+
+    <!-- FletesBadge test -->
+    <div class="dev-section" id="test-fletes-badge">
+      <div class="dev-label">FletesBadge.astro</div>
+      <FletesBadge locale="es" />
+      <br />
+      <FletesBadge locale="en" />
+    </div>
+
+    <!-- Logo test -->
+    <div class="dev-section" id="test-logo">
+      <div class="dev-label">Logo.astro</div>
+      <Logo size={48} ariaLabel="JNVR" />
+    </div>
+
+    <!-- LocaleSwitcher test -->
+    <div class="dev-section" id="test-locale-switcher">
+      <div class="dev-label">LocaleSwitcher.astro (currentLocale=es)</div>
+      <LocaleSwitcher currentLocale="es" alternates={{ es: '/test', en: '/en/test' }} />
+    </div>
+
+    <!-- StackChip test -->
+    <div class="dev-section" id="test-stack-chip">
+      <div class="dev-label">StackChip.astro</div>
+      <StackChip tech="Flutter" locale="es" />
+      <StackChip tech="React" locale="es" />
+      <StackChip tech="TypeScript" locale="es" />
+    </div>
+
+    <!-- ScrollReveal test -->
+    <div class="dev-section" id="test-scroll-reveal">
+      <div class="dev-label">ScrollReveal.astro</div>
+      <ScrollReveal>
+        <p data-testid="scroll-reveal-content">This content fades in on scroll.</p>
+      </ScrollReveal>
+    </div>
+
+    <!-- ExperienceCard test -->
+    <div class="dev-section" id="test-experience-card">
+      <div class="dev-label">ExperienceCard.astro (featured=true)</div>
+      <ol style="list-style:none;padding:0;padding-left:1rem;">
+        <ExperienceCard entry={sampleExperience as any} locale="es" />
+      </ol>
+    </div>
+
+    <!-- ContactForm test -->
+    <div class="dev-section" id="test-contact-form">
+      <div class="dev-label">ContactForm.astro</div>
+      <ContactForm locale="es" />
+    </div>
+
+  </main>
+
+  <!-- Footer test -->
+  <div class="dev-section" id="test-footer">
+    <div class="dev-label">Footer.astro</div>
+    <Footer locale="es" />
+  </div>
+
+</body>
+</html>

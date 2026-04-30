@@ -1,6 +1,5 @@
 ---
 title: "CRM de Pedidos — Sistema de Gestión para Institución Educativa"
-slug: crm-pedidos
 client: Teotech
 year: 2025
 yearRange: "2023–2025"

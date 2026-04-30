@@ -1,6 +1,5 @@
 ---
 title: "Teotech CRM — Suite de Facturación y Repositorio"
-slug: teotech-suite
 client: Teotech
 year: 2025
 yearRange: "2022–2025"

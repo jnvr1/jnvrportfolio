@@ -1,6 +1,5 @@
 ---
 title: "Tita — School Management App"
-slug: tita
 client: FEMN
 year: 2025
 yearRange: "2024–2025"

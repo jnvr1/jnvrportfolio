@@ -1,6 +1,5 @@
 ---
 title: "Teotech CRM — Invoicing Suite and Document Repository"
-slug: teotech-suite
 client: Teotech
 year: 2025
 yearRange: "2022–2025"
