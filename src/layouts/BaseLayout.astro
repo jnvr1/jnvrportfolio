@@ -1,0 +1,159 @@
+---
+/**
+ * BaseLayout.astro — HTML shell for all pages.
+ *
+ * Props:
+ *   title       — Page <title> (required)
+ *   description — Meta description (required)
+ *   locale      — 'es' | 'en' (required)
+ *   canonical   — Canonical URL for this page
+ *   alternates  — { es: string; en: string } — hreflang alternate URLs
+ *   ogImage     — Optional OG image URL (default: /og-default.png)
+ */
+import type { Locale } from '../i18n/index';
+
+interface Props {
+  title: string;
+  description: string;
+  locale: Locale;
+  canonical: string;
+  alternates: { es: string; en: string };
+  ogImage?: string;
+}
+
+const {
+  title,
+  description,
+  locale,
+  canonical,
+  alternates,
+  ogImage = '/og-default.png',
+} = Astro.props;
+
+const siteUrl = 'https://jnvr-portafolio.web.app';
+const ogImageAbsolute = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+
+    <!-- Primary meta -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <!-- hreflang for bilingual SEO -->
+    <link rel="alternate" hreflang="es" href={alternates.es} />
+    <link rel="alternate" hreflang="en" href={alternates.en} />
+    <link rel="alternate" hreflang="x-default" href={alternates.es} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageAbsolute} />
+    <meta property="og:locale" content={locale === 'es' ? 'es_MX' : 'en_US'} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageAbsolute} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/logo-jnvr.svg" />
+
+    <!-- Font preload: Inter (primary UI font) -->
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+      href="/fonts/inter/inter-latin-wght-normal.woff2"
+    />
+
+    <!-- Structured data: Person + WebSite -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "https://jnvr-portafolio.web.app/#person",
+            "name": "Juan Nicolás Viramontes",
+            "url": "https://jnvr-portafolio.web.app",
+            "jobTitle": "Full-Stack Developer",
+            "sameAs": [
+              "https://github.com/jnvr1",
+              "https://linkedin.com/in/jnvr"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://jnvr-portafolio.web.app/#website",
+            "url": "https://jnvr-portafolio.web.app",
+            "name": "JNVR — Desarrollador Full-Stack",
+            "author": { "@id": "https://jnvr-portafolio.web.app/#person" }
+          }
+        ]
+      }
+    </script>
+
+    <!-- Styles -->
+    <style is:global>
+      @import '../styles/tokens.css';
+      @import '../styles/reset.css';
+      @import '../styles/fonts.css';
+      @import '../styles/global.css';
+    </style>
+
+    <!-- Named slot for page-specific head tags -->
+    <slot name="head" />
+  </head>
+
+  <body>
+    <!-- Skip to content link (a11y) -->
+    <a class="skip-link" href="#main-content">
+      {locale === 'es' ? 'Ir al contenido principal' : 'Skip to main content'}
+    </a>
+
+    <slot />
+
+    <!-- No-op Service Worker registration (evicts Angular SW) -->
+    <script>
+      import '../scripts/noop-sw-register.ts';
+    </script>
+  </body>
+</html>
+
+<style>
+  .skip-link {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    background: var(--accent);
+    color: var(--bg);
+    padding: var(--space-2) var(--space-4);
+    font-weight: 600;
+    z-index: 9999;
+    border-radius: 0 0 4px 0;
+    text-decoration: none;
+  }
+
+  .skip-link:focus {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: auto;
+    height: auto;
+    overflow: visible;
+  }
+</style>

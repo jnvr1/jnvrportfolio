@@ -1,0 +1,31 @@
+---
+/**
+ * NoOpServiceWorkerScript.astro — Registers the no-op SW from BaseLayout <head>.
+ *
+ * The actual SW source is in public/ngsw-worker.js (same path as the Angular SW).
+ * Returning visitors with the Angular SW cached will auto-update to our no-op version,
+ * which clears Angular caches and unregisters itself.
+ *
+ * Design decision: register on window.load to avoid LCP penalty.
+ */
+---
+
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker
+        .register('/ngsw-worker.js', { updateViaCache: 'none' })
+        .catch(() => {
+          // Ignore — site works without SW
+        });
+
+      let reloaded = false;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (!reloaded) {
+          reloaded = true;
+          window.location.reload();
+        }
+      });
+    });
+  }
+</script>

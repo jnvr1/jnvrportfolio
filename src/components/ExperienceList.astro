@@ -1,0 +1,75 @@
+---
+/**
+ * ExperienceList.astro — Vertical timeline of experience entries.
+ *
+ * Renders featured entries (Fletes México) first with visual emphasis.
+ * Uses <ol> semantics — entries have a meaningful order.
+ *
+ * Props:
+ *   entries — CollectionEntry<'experience'>[]
+ *   locale  — 'es' | 'en'
+ */
+import type { CollectionEntry } from 'astro:content';
+import type { Locale } from '../i18n/index';
+import { t } from '../i18n/index';
+import ExperienceCard from './ExperienceCard.astro';
+import ScrollReveal from './ScrollReveal.astro';
+
+interface Props {
+  entries: CollectionEntry<'experience'>[];
+  locale: Locale;
+}
+
+const { entries, locale } = Astro.props;
+
+// Sort: featured first, then by order field (ascending)
+const sorted = [...entries].sort((a, b) => {
+  if (a.data.featured && !b.data.featured) return -1;
+  if (!a.data.featured && b.data.featured) return 1;
+  return (a.data.order ?? 0) - (b.data.order ?? 0);
+});
+---
+
+<section id="experience" class="experience-section" aria-labelledby="experience-heading">
+  <div class="experience-inner">
+    <ScrollReveal>
+      <h2 id="experience-heading">{t(locale, 'experience.title')}</h2>
+    </ScrollReveal>
+
+    <ol class="experience-timeline">
+      {sorted.map((entry, i) => (
+        <ScrollReveal delay={i * 80}>
+          <ExperienceCard entry={entry} locale={locale} />
+        </ScrollReveal>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .experience-section {
+    padding: var(--space-16) var(--space-4);
+    background: var(--surface);
+  }
+
+  .experience-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .experience-inner h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .experience-timeline {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    padding-left: var(--space-4);
+  }
+</style>

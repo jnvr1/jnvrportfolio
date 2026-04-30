@@ -1,0 +1,44 @@
+---
+/**
+ * StackChip.astro — Single technology badge.
+ *
+ * Uses JetBrains Mono, rendered as a non-interactive chip.
+ *
+ * Props:
+ *   tech   — Technology name (e.g. "Flutter")
+ *   locale — 'es' | 'en' (for aria-label)
+ */
+import type { Locale } from '../i18n/index';
+import { t } from '../i18n/index';
+
+interface Props {
+  tech: string;
+  locale: Locale;
+}
+
+const { tech, locale } = Astro.props;
+---
+
+<span
+  class="stack-chip"
+  aria-label={`${t(locale, 'projects.stackLabel')}: ${tech}`}
+>
+  {tech}
+</span>
+
+<style>
+  .stack-chip {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    line-height: 1;
+    background: var(--surface-2);
+    color: var(--accent);
+    padding: 3px var(--space-2);
+    border-radius: 4px;
+    border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+</style>

@@ -1,0 +1,219 @@
+---
+/**
+ * ProjectCard.astro — Single project tile in the project grid.
+ *
+ * - placeholder:true → CSS gradient with initials (no broken <img>)
+ * - confidential:true → shows a "Confidential" badge
+ * - Uses <a> for the full-title link, <article> as landmark
+ *
+ * Props:
+ *   entry  — CollectionEntry<'projects'>
+ *   locale — 'es' | 'en'
+ */
+import type { CollectionEntry } from 'astro:content';
+import type { Locale } from '../i18n/index';
+import { t } from '../i18n/index';
+import StackChip from './StackChip.astro';
+
+interface Props {
+  entry: CollectionEntry<'projects'>;
+  locale: Locale;
+}
+
+const { entry, locale } = Astro.props;
+const { title, client, year, yearRange, stack, summary, placeholder, confidential } = entry.data;
+// In Astro 5, slug is stripped from entry.data and used as entry.id instead
+const slug = entry.id;
+
+const href = locale === 'es' ? `/projects/${slug}` : `/en/projects/${slug}`;
+const yearDisplay = yearRange ?? String(year);
+
+// Initials for placeholder cover
+const initials = title
+  .split(' ')
+  .slice(0, 2)
+  .map((w: string) => w[0])
+  .join('')
+  .toUpperCase();
+---
+
+<article
+  class="project-card"
+  data-stack={stack.join(',')}
+>
+  <!-- Cover area -->
+  <a href={href} class="card-cover-link" tabindex="-1" aria-hidden="true">
+    {placeholder ? (
+      <div class="card-placeholder" role="presentation">
+        <span class="card-placeholder__initials">{initials}</span>
+      </div>
+    ) : (
+      <div class="card-image-wrapper">
+        {/* Real cover image — wired in Phase 10 via astro:assets */}
+        <div class="card-placeholder card-placeholder--image" role="presentation">
+          <span class="card-placeholder__initials">{initials}</span>
+        </div>
+      </div>
+    )}
+  </a>
+
+  <div class="card-body">
+    <!-- Client + year row -->
+    <div class="card-meta">
+      <span class="card-client">{client}</span>
+      <span class="card-year">{yearDisplay}</span>
+      {confidential && (
+        <span class="card-confidential" aria-label="Confidential project">
+          Confidential
+        </span>
+      )}
+    </div>
+
+    <!-- Title (the link) -->
+    <h3 class="card-title">
+      <a href={href}>{title}</a>
+    </h3>
+
+    <!-- Summary -->
+    <p class="card-summary">{summary}</p>
+
+    <!-- Stack chips -->
+    <div class="card-stack" aria-label={`${t(locale, 'projects.stackLabel')}: ${stack.join(', ')}`}>
+      {stack.slice(0, 4).map((tech: string) => (
+        <StackChip tech={tech} locale={locale} />
+      ))}
+      {stack.length > 4 && (
+        <span class="card-stack-more">+{stack.length - 4}</span>
+      )}
+    </div>
+  </div>
+</article>
+
+<style>
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 200ms, box-shadow 200ms;
+  }
+
+  .project-card:hover {
+    border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+    box-shadow: 0 4px 24px color-mix(in srgb, var(--bg) 50%, transparent);
+  }
+
+  .card-cover-link {
+    display: block;
+    text-decoration: none;
+  }
+
+  .card-placeholder {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--accent) 8%, var(--surface)) 0%,
+      color-mix(in srgb, var(--accent) 4%, var(--surface-2)) 100%
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card-placeholder__initials {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    opacity: 0.25;
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    user-select: none;
+  }
+
+  .card-body {
+    padding: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    flex: 1;
+  }
+
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .card-client {
+    font-weight: 500;
+  }
+
+  .card-year {
+    margin-left: auto;
+  }
+
+  .card-confidential {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.6875rem;
+    background: color-mix(in srgb, var(--warning, #F0883E) 15%, transparent);
+    color: var(--warning, #F0883E);
+    border: 1px solid color-mix(in srgb, var(--warning, #F0883E) 30%, transparent);
+    padding: 2px var(--space-2);
+    border-radius: 4px;
+  }
+
+  .card-confidential::before {
+    content: '🔒';
+    font-style: normal;
+  }
+
+  .card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  .card-title a {
+    color: var(--text);
+    text-decoration: none;
+    transition: color 150ms;
+  }
+
+  .card-title a:hover {
+    color: var(--accent);
+  }
+
+  .card-summary {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.5;
+    margin: 0;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    margin-top: var(--space-1);
+  }
+
+  .card-stack-more {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--muted);
+    padding: 3px var(--space-2);
+  }
+</style>

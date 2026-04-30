@@ -200,13 +200,13 @@ describe('t()', () => {
   });
 
   it('returns the key itself as fallback for unknown key', () => {
-    // @ts-expect-error — testing runtime fallback for unknown keys
+    // t() accepts any string — runtime fallback for unknown keys
     const result = t('es', 'nonexistent.key.that.does.not.exist');
     expect(result).toBe('nonexistent.key.that.does.not.exist');
   });
 
   it('handles unknown key gracefully in en too', () => {
-    // @ts-expect-error — testing runtime fallback for unknown keys
+    // t() accepts any string — runtime fallback for unknown keys
     const result = t('en', 'another.missing.key');
     expect(result).toBe('another.missing.key');
   });

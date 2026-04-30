@@ -14,7 +14,9 @@ const projects = defineCollection({
     z
       .object({
         title: z.string().min(3).max(80),
-        slug: z.string().regex(/^[a-z0-9-]+$/),
+        // NOTE: Astro 5 strips 'slug' from frontmatter before Zod validation for type:'content'
+        // collections (it uses it as the entry id). Mark optional; use entry.id in components.
+        slug: z.string().regex(/^[a-z0-9-]+$/).optional(),
         client: z.enum(CLIENTS),
         year: z.number().int().min(2018).max(2030),
         yearRange: z.string().optional(),

@@ -1,0 +1,269 @@
+---
+/**
+ * Header.astro — Sticky nav with logo, anchor links, and locale switcher.
+ *
+ * Background transitions from transparent to solid on scroll via a tiny inline script.
+ * No library or framework required — requestAnimationFrame throttle on scrollY.
+ *
+ * Props:
+ *   locale     — 'es' | 'en'
+ *   alternates — { es: string; en: string } — for LocaleSwitcher
+ */
+import type { Locale } from '../i18n/index';
+import { t } from '../i18n/index';
+import Logo from './Logo.astro';
+import LocaleSwitcher from './LocaleSwitcher.astro';
+
+interface Props {
+  locale: Locale;
+  alternates: { es: string; en: string };
+}
+
+const { locale, alternates } = Astro.props;
+
+const base = locale === 'es' ? '' : '/en';
+---
+
+<header class="site-header" id="site-header">
+  <div class="header-inner">
+    <!-- Brand -->
+    <a
+      href={locale === 'es' ? '/' : '/en/'}
+      class="header-brand"
+      aria-label={t(locale, 'a11y.logoLabel')}
+    >
+      <Logo size={32} ariaLabel="JNVR" />
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="header-nav" aria-label="Primary">
+      <a href={`${base}/#projects`}>{t(locale, 'nav.projects')}</a>
+      <a href={`${base}/#experience`}>{t(locale, 'nav.experience')}</a>
+      <a href={`${base}/#contact`}>{t(locale, 'nav.contact')}</a>
+      <LocaleSwitcher currentLocale={locale} alternates={alternates} />
+    </nav>
+
+    <!-- Mobile hamburger -->
+    <button
+      class="hamburger"
+      id="hamburger-btn"
+      aria-label={t(locale, 'a11y.openMenu')}
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" hidden>
+    <nav aria-label="Mobile navigation">
+      <a href={`${base}/#projects`} class="mobile-link">{t(locale, 'nav.projects')}</a>
+      <a href={`${base}/#experience`} class="mobile-link">{t(locale, 'nav.experience')}</a>
+      <a href={`${base}/#contact`} class="mobile-link">{t(locale, 'nav.contact')}</a>
+      <LocaleSwitcher currentLocale={locale} alternates={alternates} />
+    </nav>
+    <button
+      class="mobile-close"
+      id="mobile-close-btn"
+      aria-label={t(locale, 'a11y.closeMenu')}
+    >
+      ✕
+    </button>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: transparent;
+    transition: background-color 200ms ease, box-shadow 200ms ease;
+  }
+
+  .site-header.scrolled {
+    background: var(--surface);
+    box-shadow: 0 1px 0 var(--border);
+  }
+
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--space-3) var(--space-4);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .header-brand {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .header-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+  }
+
+  .header-nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 150ms;
+  }
+
+  .header-nav a:hover {
+    color: var(--text);
+  }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--space-2);
+    color: var(--text);
+  }
+
+  .hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: currentColor;
+    border-radius: 2px;
+    transition: transform 200ms, opacity 200ms;
+  }
+
+  .hamburger.open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .hamburger.open span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .mobile-menu {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: var(--space-4);
+    gap: var(--space-4);
+  }
+
+  .mobile-menu[hidden] {
+    display: none;
+  }
+
+  .mobile-link {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 1.125rem;
+    font-weight: 500;
+    padding: var(--space-2) 0;
+  }
+
+  .mobile-close {
+    align-self: flex-end;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 1.25rem;
+    padding: var(--space-2);
+  }
+
+  @media (max-width: 768px) {
+    .header-nav {
+      display: none;
+    }
+
+    .hamburger {
+      display: flex;
+    }
+  }
+</style>
+
+<script>
+  // Scroll → transparent to solid transition
+  const header = document.getElementById('site-header');
+  let ticking = false;
+
+  function updateHeader() {
+    if (header) {
+      if (window.scrollY > 0) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    }
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(updateHeader);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  // Mobile menu
+  const hamburger = document.getElementById('hamburger-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const closeBtn = document.getElementById('mobile-close-btn');
+
+  function openMenu() {
+    if (mobileMenu && hamburger) {
+      mobileMenu.hidden = false;
+      hamburger.classList.add('open');
+      hamburger.setAttribute('aria-expanded', 'true');
+      hamburger.setAttribute('aria-label', hamburger.getAttribute('data-close-label') ?? 'Close menu');
+      closeBtn?.focus();
+    }
+  }
+
+  function closeMenu() {
+    if (mobileMenu && hamburger) {
+      mobileMenu.hidden = true;
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  hamburger?.addEventListener('click', () => {
+    if (mobileMenu?.hidden) {
+      openMenu();
+    } else {
+      closeMenu();
+    }
+  });
+
+  closeBtn?.addEventListener('click', closeMenu);
+
+  // Close on ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileMenu && !mobileMenu.hidden) {
+      closeMenu();
+      hamburger?.focus();
+    }
+  });
+
+  // Close on mobile link click
+  mobileMenu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', closeMenu);
+  });
+</script>

@@ -1,0 +1,63 @@
+---
+/**
+ * Logo.astro — JNVR animated SVG logo.
+ *
+ * The original Angular header used a text "JNVR" mark (not the SVG).
+ * The SVG from logo-jnvr2.svg is a static Illustrator export with no built-in animation.
+ * This component adds a CSS fade-in entrance animation and respects prefers-reduced-motion.
+ *
+ * Props:
+ *   size      — Height in px (default: 40)
+ *   ariaLabel — Accessible label (default: 'JNVR')
+ */
+interface Props {
+  size?: number;
+  ariaLabel?: string;
+}
+
+const { size = 40, ariaLabel = 'JNVR' } = Astro.props;
+---
+
+<span class="logo-wrapper" role="img" aria-label={ariaLabel}>
+  <img
+    src="/logo-jnvr.svg"
+    alt={ariaLabel}
+    width={size * 2.15}
+    height={size}
+    class="logo-img"
+    loading="eager"
+    decoding="async"
+  />
+</span>
+
+<style>
+  .logo-wrapper {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .logo-img {
+    height: var(--logo-size, 40px);
+    width: auto;
+    animation: logo-fade-in 600ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes logo-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .logo-img {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>

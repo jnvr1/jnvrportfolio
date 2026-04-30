@@ -1,0 +1,249 @@
+---
+/**
+ * ProjectLayout.astro — Wrapper layout for /projects/[slug] pages.
+ *
+ * Props:
+ *   entry  — CollectionEntry<'projects'>
+ *   locale — 'es' | 'en'
+ */
+import type { CollectionEntry } from 'astro:content';
+import type { Locale } from '../i18n/index';
+import BaseLayout from './BaseLayout.astro';
+import { t } from '../i18n/index';
+
+interface Props {
+  entry: CollectionEntry<'projects'>;
+  locale: Locale;
+}
+
+const { entry, locale } = Astro.props;
+const { title, summary, client, year, yearRange, stack, links, placeholder } = entry.data;
+// In Astro 5, slug is stripped from entry.data and used as entry.id
+const slug = entry.id;
+
+const siteUrl = 'https://jnvr-portafolio.web.app';
+const canonical =
+  locale === 'es'
+    ? `${siteUrl}/projects/${slug}`
+    : `${siteUrl}/en/projects/${slug}`;
+
+const alternates = {
+  es: `${siteUrl}/projects/${slug}`,
+  en: `${siteUrl}/en/projects/${slug}`,
+};
+
+const pageTitle = `${title} — JNVR`;
+const yearDisplay = yearRange ?? String(year);
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={summary}
+  locale={locale}
+  canonical={canonical}
+  alternates={alternates}
+>
+  <main id="main-content">
+    <article class="project-detail">
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb" aria-label="breadcrumb">
+        <a href={locale === 'es' ? '/' : '/en/'}>JNVR</a>
+        <span aria-hidden="true"> / </span>
+        <a href={locale === 'es' ? '/#projects' : '/en/#projects'}>
+          {t(locale, 'nav.projects')}
+        </a>
+        <span aria-hidden="true"> / </span>
+        <span aria-current="page">{title}</span>
+      </nav>
+
+      <!-- Cover placeholder or image -->
+      {placeholder && (
+        <div
+          class="cover-placeholder"
+          role="img"
+          aria-label={`${title} — ${t(locale, 'projects.placeholderAlt')}`}
+        >
+          <span class="cover-placeholder__initials">
+            {title
+              .split(' ')
+              .slice(0, 2)
+              .map((w: string) => w[0])
+              .join('')
+              .toUpperCase()}
+          </span>
+        </div>
+      )}
+
+      <!-- Project header -->
+      <header class="project-header">
+        <h1>{title}</h1>
+        <dl class="project-meta">
+          <div>
+            <dt>Client</dt>
+            <dd>{client}</dd>
+          </div>
+          <div>
+            <dt>{locale === 'es' ? 'Año' : 'Year'}</dt>
+            <dd>{yearDisplay}</dd>
+          </div>
+          <div>
+            <dt>Stack</dt>
+            <dd class="stack-list">
+              {stack.map((tech: string) => (
+                <span class="stack-chip" aria-label={`${t(locale, 'projects.stackLabel')}: ${tech}`}>
+                  {tech}
+                </span>
+              ))}
+            </dd>
+          </div>
+        </dl>
+
+        {links && (
+          <div class="project-links">
+            {links.live && (
+              <a href={links.live} class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                {t(locale, 'cta.viewProject')}
+              </a>
+            )}
+            {links.repo && (
+              <a href={links.repo} class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+                {t(locale, 'cta.viewCode')}
+              </a>
+            )}
+          </div>
+        )}
+      </header>
+
+      <!-- Markdown body -->
+      <div class="prose">
+        <slot />
+      </div>
+
+      <!-- Back link -->
+      <footer class="project-footer">
+        <a href={locale === 'es' ? '/#projects' : '/en/#projects'} class="back-link">
+          ← {t(locale, 'cta.backToProjects')}
+        </a>
+      </footer>
+    </article>
+  </main>
+</BaseLayout>
+
+<style>
+  .project-detail {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--space-8) var(--space-4);
+  }
+
+  .breadcrumb {
+    font-size: 0.875rem;
+    color: var(--muted);
+    margin-bottom: var(--space-6);
+  }
+
+  .breadcrumb a {
+    color: var(--muted);
+    text-decoration: none;
+  }
+
+  .breadcrumb a:hover {
+    color: var(--text);
+  }
+
+  .cover-placeholder {
+    width: 100%;
+    height: 320px;
+    background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-8);
+  }
+
+  .cover-placeholder__initials {
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--accent);
+    opacity: 0.4;
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  .project-header {
+    margin-bottom: var(--space-8);
+  }
+
+  .project-header h1 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: var(--space-4);
+    color: var(--text);
+  }
+
+  .project-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+  }
+
+  .project-meta dt {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: var(--space-1);
+  }
+
+  .project-meta dd {
+    color: var(--text);
+    font-size: 0.9rem;
+  }
+
+  .stack-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+  }
+
+  .stack-chip {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    background: var(--surface-2);
+    color: var(--accent);
+    padding: 2px var(--space-2);
+    border-radius: 4px;
+  }
+
+  .project-links {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    margin-top: var(--space-4);
+  }
+
+  .prose {
+    color: var(--text);
+    line-height: 1.75;
+  }
+
+  .project-footer {
+    margin-top: var(--space-12);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--border);
+  }
+
+  .back-link {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 200ms;
+  }
+
+  .back-link:hover {
+    color: var(--text);
+  }
+</style>

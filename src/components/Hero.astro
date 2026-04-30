@@ -1,0 +1,129 @@
+---
+/**
+ * Hero.astro — Above-the-fold section.
+ *
+ * Renders: name, role, FletesBadge, JNVR Logo, and two CTAs.
+ * Text from i18n strings. Logo animation is CSS-only, no JS.
+ *
+ * Props:
+ *   locale — 'es' | 'en'
+ */
+import type { Locale } from '../i18n/index';
+import { t } from '../i18n/index';
+import Logo from './Logo.astro';
+import FletesBadge from './FletesBadge.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const base = locale === 'es' ? '' : '/en';
+---
+
+<section id="hero" class="hero" aria-labelledby="hero-heading">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <FletesBadge locale={locale} />
+
+      <h1 id="hero-heading" class="hero-name">
+        Juan Nicolás Viramontes
+        <span class="hero-role">{t(locale, 'hero.role')}</span>
+      </h1>
+
+      <p class="hero-tagline">{t(locale, 'hero.tagline')}</p>
+
+      <div class="hero-ctas">
+        <a href={`${base}/#projects`} class="btn btn-primary">
+          {t(locale, 'cta.projects')}
+        </a>
+        <a href={`${base}/#contact`} class="btn btn-secondary">
+          {t(locale, 'cta.contact')}
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-logo" aria-hidden="true">
+      <Logo size={80} ariaLabel="JNVR" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    padding: var(--space-16) var(--space-4) var(--space-12);
+  }
+
+  .hero-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-12);
+  }
+
+  .hero-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    max-width: 640px;
+  }
+
+  .hero-name {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+
+  .hero-role {
+    display: block;
+    font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+    font-weight: 400;
+    color: var(--muted);
+    letter-spacing: -0.01em;
+    margin-top: var(--space-2);
+  }
+
+  .hero-tagline {
+    font-size: clamp(1rem, 2vw, 1.125rem);
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 480px;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    margin-top: var(--space-2);
+  }
+
+  .hero-logo {
+    flex-shrink: 0;
+    opacity: 0.15;
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      padding-top: var(--space-12);
+      min-height: auto;
+    }
+
+    .hero-inner {
+      flex-direction: column-reverse;
+      gap: var(--space-8);
+    }
+
+    .hero-logo {
+      align-self: center;
+    }
+  }
+</style>

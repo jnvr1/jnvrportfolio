@@ -1,0 +1,201 @@
+---
+/**
+ * ExperienceCard.astro — Single experience entry in the timeline.
+ *
+ * Featured entries (Fletes México, featured:true) have visual emphasis.
+ *
+ * Props:
+ *   entry  — CollectionEntry<'experience'>
+ *   locale — 'es' | 'en'
+ */
+import type { CollectionEntry } from 'astro:content';
+import type { Locale } from '../i18n/index';
+import { t } from '../i18n/index';
+import StackChip from './StackChip.astro';
+
+interface Props {
+  entry: CollectionEntry<'experience'>;
+  locale: Locale;
+}
+
+const { entry, locale } = Astro.props;
+const { company, role, startYear, endYear, current, featured, location, summary, highlights, stack } =
+  entry.data;
+
+const endDisplay = current ? t(locale, 'experience.present') : String(endYear ?? '');
+const dateRange = `${startYear}–${endDisplay}`;
+---
+
+<li class:list={['experience-card', { 'experience-card--featured': featured }]}>
+  <!-- Timeline dot -->
+  <span class="timeline-dot" aria-hidden="true"></span>
+
+  <div class="experience-card__body">
+    <header class="experience-card__header">
+      <div class="experience-card__company-row">
+        <span class="experience-card__company">{company}</span>
+        {location && (
+          <span class="experience-card__location" aria-label={`Location: ${location}`}>
+            {location}
+          </span>
+        )}
+      </div>
+      <p class="experience-card__role">{role}</p>
+      <time
+        class="experience-card__period"
+        datetime={`${startYear}/${endYear ?? 'present'}`}
+        aria-label={`${startYear} to ${endDisplay}`}
+      >
+        {dateRange}
+      </time>
+    </header>
+
+    <p class="experience-card__summary">{summary}</p>
+
+    {highlights && highlights.length > 0 && (
+      <ul class="experience-card__highlights">
+        {highlights.map((h: string) => (
+          <li>{h}</li>
+        ))}
+      </ul>
+    )}
+
+    {stack && stack.length > 0 && (
+      <div class="experience-card__stack">
+        {stack.map((tech: string) => (
+          <StackChip tech={tech} locale={locale} />
+        ))}
+      </div>
+    )}
+  </div>
+</li>
+
+<style>
+  .experience-card {
+    position: relative;
+    display: flex;
+    gap: var(--space-5);
+    padding-bottom: var(--space-8);
+    padding-left: var(--space-4);
+    list-style: none;
+  }
+
+  .experience-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .experience-card:last-child::before {
+    display: none;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -4px;
+    top: 6px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--muted);
+    border: 2px solid var(--bg);
+    flex-shrink: 0;
+  }
+
+  .experience-card--featured .timeline-dot {
+    background: var(--accent);
+    width: 11px;
+    height: 11px;
+    left: -5px;
+  }
+
+  .experience-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .experience-card__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .experience-card__company-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+  }
+
+  .experience-card__company {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .experience-card--featured .experience-card__company {
+    color: var(--accent);
+  }
+
+  .experience-card__location {
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+
+  .experience-card__role {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--text);
+    margin: 0;
+    opacity: 0.85;
+  }
+
+  .experience-card__period {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .experience-card__summary {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .experience-card__highlights {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .experience-card__highlights li {
+    font-size: 0.875rem;
+    color: var(--muted);
+    padding-left: var(--space-3);
+    position: relative;
+  }
+
+  .experience-card__highlights li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    opacity: 0.5;
+  }
+
+  .experience-card__stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    margin-top: var(--space-1);
+  }
+</style>

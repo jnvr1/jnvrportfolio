@@ -17,7 +17,10 @@ export const LOCALES = ['es', 'en'] as const;
 export const projectsSchema = z
   .object({
     title: z.string().min(3).max(80),
-    slug: z.string().regex(/^[a-z0-9-]+$/),
+    // NOTE: Astro 5 strips 'slug' from frontmatter before Zod validation for type:'content'
+    // collections (it uses the slug value as the entry id instead). Mark as optional here
+    // so the schema doesn't fail when Astro omits it. Use entry.id in components.
+    slug: z.string().regex(/^[a-z0-9-]+$/).optional(),
     client: z.enum(CLIENTS),
     year: z.number().int().min(2018).max(2030),
     yearRange: z.string().optional(),

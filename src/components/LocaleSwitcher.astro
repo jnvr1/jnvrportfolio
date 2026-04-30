@@ -1,0 +1,73 @@
+---
+/**
+ * LocaleSwitcher.astro — Toggle between ES and EN.
+ *
+ * Renders two <a> tags pointing at the alternate URL.
+ * No client-side JS required — just HTML links.
+ *
+ * Props:
+ *   currentLocale — 'es' | 'en'
+ *   alternates    — { es: string; en: string } — full URLs for each locale
+ */
+import type { Locale } from '../i18n/index';
+import { t } from '../i18n/index';
+
+interface Props {
+  currentLocale: Locale;
+  alternates: { es: string; en: string };
+}
+
+const { currentLocale, alternates } = Astro.props;
+---
+
+<nav class="locale-switcher" aria-label={t(currentLocale, 'a11y.localeSwitcherLabel')}>
+  <a
+    href={alternates.es}
+    lang="es"
+    aria-current={currentLocale === 'es' ? 'page' : undefined}
+    class:list={['locale-link', { 'locale-link--active': currentLocale === 'es' }]}
+  >
+    ES
+  </a>
+  <span class="locale-divider" aria-hidden="true">|</span>
+  <a
+    href={alternates.en}
+    lang="en"
+    aria-current={currentLocale === 'en' ? 'page' : undefined}
+    class:list={['locale-link', { 'locale-link--active': currentLocale === 'en' }]}
+  >
+    EN
+  </a>
+</nav>
+
+<style>
+  .locale-switcher {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 0.875rem;
+    font-family: var(--font-mono);
+    letter-spacing: 0.05em;
+  }
+
+  .locale-link {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 150ms;
+    padding: 2px 0;
+  }
+
+  .locale-link:hover,
+  .locale-link--active {
+    color: var(--text);
+  }
+
+  .locale-link--active {
+    font-weight: 600;
+  }
+
+  .locale-divider {
+    color: var(--border);
+    user-select: none;
+  }
+</style>
