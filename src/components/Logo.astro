@@ -2,27 +2,23 @@
 /**
  * Logo.astro — JNVR brand mark (square faceted icon, no wordmark).
  *
- * Inlined SVG (via readFileSync) so Hero.astro can target individual
- * <path> elements with CSS for the blueprint draw-in entrance animation.
+ * Inlined SVG (via Vite's ?raw import) so the inner <path> elements are
+ * targetable by global CSS for the blueprint draw-in entrance animation.
+ * Vite watches the file and hot-reloads the dev server when it changes.
  *
  * Props:
- *   size      — CSS width value (default: 480px). Height scales automatically
- *               via the SVG's natural aspect ratio (viewBox: -175 -20 1429 1010,
- *               ratio ≈ 1.41). At 480px width the visible mark is ~339px tall.
+ *   size      — CSS width value (default: 560px). Height scales automatically
+ *               via the SVG's natural viewBox (0 0 1600 1600).
  *   ariaLabel — Accessible label (default: 'JNVR')
  */
-import { readFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
+import logoSvg from '../assets/logo-mark.svg?raw';
 
 interface Props {
   size?: number;
   ariaLabel?: string;
 }
 
-const { size = 480, ariaLabel = 'JNVR' } = Astro.props;
-
-const svgPath = fileURLToPath(new URL('../../public/logo-mark.svg', import.meta.url));
-const logoSvg = readFileSync(svgPath, 'utf-8');
+const { size = 560, ariaLabel = 'JNVR' } = Astro.props;
 ---
 
 <span
