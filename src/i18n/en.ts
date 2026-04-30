@@ -70,7 +70,7 @@ export const enStrings: Strings = {
   meta: {
     siteTitle: 'JNVR — Full-Stack Developer',
     siteDescription:
-      'Portfolio of Juan Nicolás Viramontes — full-stack developer specialized in Flutter, React, and modern backends.',
+      'Portfolio of Jonathan Noé Viramontes — full-stack developer specialized in Flutter, React, and modern backends.',
     projectsTitle: 'Projects',
     experienceTitle: 'Experience',
     contactTitle: 'Contact',

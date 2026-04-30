@@ -40,7 +40,7 @@ test.describe('Component render contracts (dev preview)', () => {
   test('Hero renders h1 with name text', async ({ page }) => {
     const h1 = page.locator('#test-hero h1#hero-heading');
     await expect(h1).toBeVisible();
-    await expect(h1).toContainText('Juan Nicolás Viramontes');
+    await expect(h1).toContainText('Jonathan Noé Viramontes');
   });
 
   test('Hero has #hero section with aria-labelledby', async ({ page }) => {
@@ -224,7 +224,7 @@ test.describe('Component render contracts (dev preview)', () => {
   test('Footer renders copyright text', async ({ page }) => {
     const footer = page.locator('#test-footer footer');
     const copy = footer.locator('.footer-copy');
-    await expect(copy).toContainText('Juan Nicolás Viramontes');
+    await expect(copy).toContainText('Jonathan Noé Viramontes');
   });
 });
 

@@ -68,7 +68,7 @@ export const esStrings = {
   meta: {
     siteTitle: 'JNVR — Desarrollador Full-Stack',
     siteDescription:
-      'Portafolio de Juan Nicolás Viramontes — desarrollador full-stack especializado en Flutter, React y backend moderno.',
+      'Portafolio de Jonathan Noé Viramontes — desarrollador full-stack especializado en Flutter, React y backend moderno.',
     projectsTitle: 'Proyectos',
     experienceTitle: 'Experiencia',
     contactTitle: 'Contacto',
