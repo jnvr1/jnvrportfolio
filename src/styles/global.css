@@ -23,16 +23,97 @@ body {
   font-size: var(--text-body);
   font-weight: var(--weight-regular);
   line-height: var(--leading-normal);
-  background-color: var(--bg);
-  background-image:
-    repeating-linear-gradient(
-      135deg,
-      transparent,
-      transparent 120px,
-      rgba(115, 160, 190, 0.008) 120px,
-      rgba(115, 160, 190, 0.008) 121px
-    );
   color: var(--text);
+  /* Faceted backdrop: static SVG layer over base color */
+  background-color: var(--bg);
+  background-image: url('/backdrop-facets.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  /* Stacking context so content sits above pseudo-element orbs */
+  position: relative;
+}
+
+/* Mobile: fixed-attachment causes jank on iOS Safari */
+@media (max-width: 768px) {
+  body {
+    background-attachment: scroll;
+  }
+}
+
+/* ── Atmospheric Orbs (Option 3 complement) ──────────────────────────────── */
+/*
+ * Two large blurred radial-gradient orbs drift slowly behind all content.
+ * They use brand/accent colors at low opacity so the SVG facets remain the
+ * dominant visual layer. Transform-only animation = GPU composited, no
+ * reflow/repaint during animation.
+ *
+ * Stacking: body::before/::after at z-index: 0 sit visually between the
+ * body's SVG background (painted as part of body itself) and the page
+ * content (which gets z-index: 1 via the content wrapper).
+ *
+ * Note: reset.css already suppresses animation-duration globally under
+ * prefers-reduced-motion: reduce — the explicit rule below makes intent clear.
+ */
+
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  width: 60vw;
+  height: 60vw;
+  max-width: 800px;
+  max-height: 800px;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.12;
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
+}
+
+body::before {
+  background: radial-gradient(circle, var(--brand), transparent 70%);
+  top: -20vh;
+  left: -10vw;
+  animation: orb-drift-1 65s ease-in-out infinite alternate;
+}
+
+body::after {
+  background: radial-gradient(circle, var(--accent), transparent 70%);
+  bottom: -20vh;
+  right: -10vw;
+  animation: orb-drift-2 55s ease-in-out infinite alternate;
+}
+
+@keyframes orb-drift-1 {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(15vw, 10vh) scale(1.15); }
+}
+
+@keyframes orb-drift-2 {
+  from { transform: translate(0, 0) scale(1.05); }
+  to   { transform: translate(-12vw, -8vh) scale(1); }
+}
+
+/* Disable orb motion for users who prefer reduced motion.
+   reset.css sets animation-duration: 0.01ms globally, but we also
+   set animation: none explicitly here for clarity. */
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  body::after {
+    animation: none;
+  }
+}
+
+/* Low-end mobile: disable the expensive blur on very small viewports */
+@media (max-width: 480px) {
+  body::before,
+  body::after {
+    filter: none;
+    opacity: 0.06;
+  }
 }
 
 /* ── Headings ────────────────────────────────────────────────────────────── */
