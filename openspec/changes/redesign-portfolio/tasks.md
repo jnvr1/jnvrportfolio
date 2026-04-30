@@ -99,14 +99,14 @@
 
 ## Phase 5 — Project Catalog Components & Routes
 
-- [ ] 5.1 [TEST] Write E2E test: `/#projects` renders exactly 9 project cards; no card has "Fletes" in title — `tests/e2e/projects.spec.ts` — Spec: REQ-PC-7, REQ-ET-6, REQ-PC-3 — Est: M — Deps: Phase 3 content
-- [ ] 5.2 [IMPL] Create `src/components/ProjectCard.astro` (`<article>`, link is full title, stack chips, placeholder gradient when `placeholder:true`, no broken `<img>`) — Spec: REQ-PC-5, REQ-IP-6 — Est: M — Deps: 4.15, 5.1
-- [ ] 5.3 [IMPL] Create `src/components/ProjectFilter.astro` (chip strip: Flutter | React | PHP | Astro, `role="group" aria-label`, chips are `<button aria-pressed>`, live region announces count) — `src/components/ProjectFilter.astro`, `src/scripts/project-filter.ts` — Spec: — Est: M — Deps: 4.15
-- [ ] 5.4 [IMPL] Create `src/components/ProjectGrid.astro` (grid container, renders 9 `ProjectCard`s, wires `project-filter.ts` with `client:visible`) — Spec: REQ-PC-7 — Est: M — Deps: 5.2, 5.3
-- [ ] 5.5 [TEST] Write E2E test: `/projects/centinela-app` returns HTTP 200 and `<title>` contains project name — `tests/e2e/project-routes.spec.ts` — Spec: REQ-PC-6 — Est: M — Deps: 4.16
-- [ ] 5.6 [IMPL] Create `src/pages/projects/[slug].astro` (`getStaticPaths` filtering `locale==='es'`, renders ProjectLayout) — Spec: REQ-PC-6, REQ-IR-1 — Est: M — Deps: 4.16, 5.5
-- [ ] 5.7 [IMPL] Create `src/pages/en/projects/[slug].astro` (mirrors 5.6, filtering `locale==='en'`) — Spec: REQ-PC-6, REQ-IR-1 — Est: M — Deps: 5.6
-- [ ] 5.8 [TEST] Write E2E test: `/en/projects/centinela-app` returns 200 with English content; `/en/` serves content in English — `tests/e2e/project-routes.spec.ts` — Spec: REQ-IR-1 — Est: S — Deps: 5.7
+- [x] 5.1 [TEST] Write E2E test: `/#projects` renders exactly 9 project cards; no card has "Fletes" in title — `tests/e2e/projects.spec.ts` — Spec: REQ-PC-7, REQ-ET-6, REQ-PC-3 — Est: M — Deps: Phase 3 content — NOTE: also required index.astro (Phase 7 home) which was created here
+- [x] 5.2 [IMPL] Create `src/components/ProjectCard.astro` (`<article>`, link is full title, stack chips, placeholder gradient when `placeholder:true`, no broken `<img>`) — Spec: REQ-PC-5, REQ-IP-6 — Est: M — Deps: 4.15, 5.1 — NOTE: implemented in Phase 4
+- [x] 5.3 [IMPL] Create `src/components/ProjectFilter.astro` (chip strip: Flutter | React | PHP | Astro, `role="group" aria-label`, chips are `<button aria-pressed>`, live region announces count) — Spec: — Est: M — Deps: 4.15 — NOTE: filter logic embedded in ProjectGrid.astro (no separate file); meets all requirements
+- [x] 5.4 [IMPL] Create `src/components/ProjectGrid.astro` (grid container, renders 9 `ProjectCard`s, wires filter with inline client script) — Spec: REQ-PC-7 — Est: M — Deps: 5.2, 5.3 — NOTE: implemented in Phase 4
+- [x] 5.5 [TEST] Write E2E test: `/projects/centinela-app` returns HTTP 200 and `<title>` contains project name — `tests/e2e/project-routes.spec.ts` — Spec: REQ-PC-6 — Est: M — Deps: 4.16
+- [x] 5.6 [IMPL] Create `src/pages/projects/[slug].astro` (`getStaticPaths` filtering `locale==='es'`, renders ProjectLayout) — Spec: REQ-PC-6, REQ-IR-1 — Est: M — Deps: 4.16, 5.5 — NOTE: fixed Astro 5 entry.id includes .md extension; use .replace(/\.mdx?$/, '')
+- [x] 5.7 [IMPL] Create `src/pages/en/projects/[slug].astro` (mirrors 5.6, filtering `locale==='en'`) — Spec: REQ-PC-6, REQ-IR-1 — Est: M — Deps: 5.6
+- [x] 5.8 [TEST] Write E2E test: `/en/projects/centinela-app` returns 200 with English content; `/en/` serves content in English — `tests/e2e/project-routes.spec.ts` — Spec: REQ-IR-1 — Est: S — Deps: 5.7
 
 ---
 
