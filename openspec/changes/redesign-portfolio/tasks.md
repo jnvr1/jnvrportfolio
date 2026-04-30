@@ -70,9 +70,9 @@
 - [x] 3.15 [CONTENT] Create `src/content/projects/es/femn.md` + EN counterpart — title MUST contain "FEMN", NO "Vida Saludable" anywhere — Spec: REQ-PC-3, REQ-PC-4, REQ-IR-6 — Est: S — Deps: 3.3
 - [x] 3.16 [CONTENT] Create `src/content/experience/es/fletes-mexico.md` (`current:true`, `featured:true`) + EN counterpart — Spec: REQ-ET-1, REQ-ET-2, REQ-ET-3, REQ-ET-4 — Est: S — Deps: 3.3
 - [x] 3.17 [CONTENT] Create experience ES + EN files: `teotech.md`, `museo-rodadora.md`, `ia-center.md`, `bloomotion.md` — Spec: REQ-ET-2 — Est: M — Deps: 3.3
-- [ ] 3.18 [IMPL] Create `src/i18n/es.ts`, `src/i18n/en.ts`, `src/i18n/index.ts` (`t(locale, key)` helper) for all UI strings (nav, CTAs, form labels, status messages) — `src/i18n/` — Spec: REQ-CF-9, REQ-IR-4 — Est: M — Deps: 1.4
-- [ ] 3.19 [IMPL] Create `src/utils/sortProjects.ts` and `src/utils/formatters.ts` — Spec: — Est: S — Deps: 1.4
-- [ ] 3.20 [TEST] Write unit tests for `sortProjects` and `formatters` — `tests/unit/sortProjects.test.ts`, `tests/unit/formatters.test.ts` — Spec: — Est: S — Deps: 3.19
+- [x] 3.18 [IMPL] Create `src/i18n/es.ts`, `src/i18n/en.ts`, `src/i18n/index.ts` (`t(locale, key)` helper) for all UI strings (nav, CTAs, form labels, status messages) — `src/i18n/` — Spec: REQ-CF-9, REQ-IR-4 — Est: M — Deps: 1.4
+- [x] 3.19 [IMPL] Create `src/utils/sortProjects.ts` and `src/utils/formatters.ts` — Spec: — Est: S — Deps: 1.4
+- [x] 3.20 [TEST] Write unit tests for `sortProjects` and `formatters` — `tests/unit/sortProjects.test.ts`, `tests/unit/formatters.test.ts` — Spec: — Est: S — Deps: 3.19
 
 ---
 
