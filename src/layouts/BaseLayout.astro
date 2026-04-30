@@ -106,7 +106,12 @@ const {
       {locale === 'es' ? 'Ir al contenido principal' : 'Skip to main content'}
     </a>
 
-    <slot />
+    <!-- Content wrapper: z-index 1 places all page content above the
+         atmospheric orbs (body::before/::after at z-index 0) while
+         the SVG faceted backdrop stays as the body's background layer. -->
+    <div class="page-content">
+      <slot />
+    </div>
 
     <!-- No-op Service Worker registration (evicts Angular SW) -->
     <script>
@@ -116,6 +121,12 @@ const {
 </html>
 
 <style>
+  /* Elevates all page content above the atmospheric orb pseudo-elements */
+  .page-content {
+    position: relative;
+    z-index: 1;
+  }
+
   .skip-link {
     position: absolute;
     left: -10000px;
