@@ -93,22 +93,31 @@ const initials = title
 <style>
   .project-card {
     background: var(--surface);
-    border: 1px solid var(--border);
+    border: var(--border-width) solid var(--border);
     border-radius: 8px;
-    overflow: hidden;
+    overflow: visible;
     display: flex;
     flex-direction: column;
-    transition: border-color 200ms, box-shadow 200ms;
+    transition:
+      border-color var(--duration-base) var(--ease-standard),
+      border-width var(--duration-base) var(--ease-standard),
+      box-shadow var(--duration-base) var(--ease-standard),
+      transform var(--card-hover-duration) var(--ease-standard);
+    clip-path: polygon(0 0, calc(100% - var(--clip-facet)) 0, 100% var(--clip-facet), 100% 100%, 0 100%);
   }
 
   .project-card:hover {
-    border-color: color-mix(in srgb, var(--accent) 40%, transparent);
-    box-shadow: 0 4px 24px color-mix(in srgb, var(--bg) 50%, transparent);
+    border-color: var(--brand);
+    border-width: var(--border-width-strong);
+    box-shadow: 0 4px 24px color-mix(in srgb, var(--brand) 12%, transparent);
+    transform: var(--card-hover-transform);
   }
 
   .card-cover-link {
     display: block;
     text-decoration: none;
+    overflow: hidden;
+    border-radius: 8px 8px 0 0;
   }
 
   .card-placeholder {

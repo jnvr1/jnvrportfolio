@@ -117,6 +117,23 @@ const dateRange = `${startYear}–${endDisplay}`;
     display: flex;
     flex-direction: column;
     gap: var(--space-2);
+    background: var(--surface);
+    border: var(--border-width) solid var(--border);
+    border-radius: 8px;
+    padding: var(--space-4);
+    clip-path: polygon(0 0, calc(100% - var(--clip-facet)) 0, 100% var(--clip-facet), 100% 100%, 0 100%);
+    transition:
+      border-color var(--duration-base) var(--ease-standard),
+      border-width var(--duration-base) var(--ease-standard),
+      box-shadow var(--duration-base) var(--ease-standard),
+      transform var(--card-hover-duration) var(--ease-standard);
+  }
+
+  .experience-card:hover .experience-card__body {
+    border-color: var(--brand);
+    border-width: var(--border-width-strong);
+    box-shadow: 0 4px 24px color-mix(in srgb, var(--brand) 12%, transparent);
+    transform: var(--card-hover-transform);
   }
 
   .experience-card__header {
