@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /_dev/
+
+Sitemap: https://jnvr-portafolio.web.app/sitemap-index.xml
