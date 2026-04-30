@@ -18,9 +18,9 @@ interface Props {
 
 const { entry, locale } = Astro.props;
 const { title, summary, client, year, yearRange, stack, links, placeholder } = entry.data;
-// In Astro 5, entry.id is path-based: "es/centinela-app" or "en/centinela-app".
-// Strip the locale prefix to get the route slug: "centinela-app".
-const slug = entry.id.replace(/^(es|en)\//, '');
+// In Astro 5, entry.id is path-based with extension: "es/centinela-app.md".
+// Strip the locale prefix and .md extension to get the route slug: "centinela-app".
+const slug = entry.id.replace(/^(es|en)\//, '').replace(/\.mdx?$/, '');
 
 const siteUrl = 'https://jnvr-portafolio.web.app';
 const canonical =
