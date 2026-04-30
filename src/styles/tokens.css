@@ -123,6 +123,18 @@
   --container-max: 1200px;
   --container-padding: var(--space-4);
 
+  /* ── Alias tokens (shorthand used in components) ────────────────────────── */
+  /* These map component-facing short names to the canonical token names above. */
+
+  /* --muted: the muted/secondary text color */
+  --muted: var(--text-muted);
+
+  /* --surface-2: elevated surface (cards, tooltips) */
+  --surface-2: var(--surface-elevated);
+
+  /* --font-display: heading font (used in logo and covers) */
+  --font-display: var(--font-heading);
+
   /* ── Breakpoints (informational — use in media queries as px values) ─────── */
   /* sm: 480px | md: 768px | lg: 1024px | xl: 1280px                          */
   /* Custom media queries are not yet standard; use raw px in @media for now. */
