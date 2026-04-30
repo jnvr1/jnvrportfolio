@@ -11,6 +11,7 @@
  *   ogImage     — Optional OG image URL (default: /og-default.png)
  */
 import type { Locale } from '../i18n/index';
+import SEO from '../components/SEO.astro';
 
 interface Props {
   title: string;
@@ -29,9 +30,6 @@ const {
   alternates,
   ogImage = '/og-default.png',
 } = Astro.props;
-
-const siteUrl = 'https://jnvr-portafolio.web.app';
-const ogImageAbsolute = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
 ---
 
 <!doctype html>
@@ -41,29 +39,15 @@ const ogImageAbsolute = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogIm
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="dark" />
 
-    <!-- Primary meta -->
-    <title>{title}</title>
-    <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
-
-    <!-- hreflang for bilingual SEO -->
-    <link rel="alternate" hreflang="es" href={alternates.es} />
-    <link rel="alternate" hreflang="en" href={alternates.en} />
-    <link rel="alternate" hreflang="x-default" href={alternates.es} />
-
-    <!-- Open Graph -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonical} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImageAbsolute} />
-    <meta property="og:locale" content={locale === 'es' ? 'es_MX' : 'en_US'} />
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImageAbsolute} />
+    <!-- SEO: title, description, canonical, hreflang, og, twitter -->
+    <SEO
+      title={title}
+      description={description}
+      locale={locale}
+      canonical={canonical}
+      alternates={alternates}
+      ogImage={ogImage}
+    />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/logo-jnvr.svg" />

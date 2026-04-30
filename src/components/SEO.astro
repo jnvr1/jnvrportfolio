@@ -1,0 +1,63 @@
+---
+/**
+ * SEO.astro — Meta, Open Graph, Twitter Card, and hreflang tags.
+ *
+ * Used inside BaseLayout <head>. Extracted as a standalone component
+ * so individual pages can override SEO props easily.
+ *
+ * Props:
+ *   title       — Page title (full, e.g. "JNVR — Projects")
+ *   description — Meta description (<= 160 chars recommended)
+ *   locale      — 'es' | 'en'
+ *   canonical   — Canonical URL (full absolute URL)
+ *   alternates  — { es: string; en: string } — hreflang alternate URLs
+ *   ogImage     — OG image URL (absolute or /-relative)
+ */
+import type { Locale } from '../i18n/index';
+
+interface Props {
+  title: string;
+  description: string;
+  locale: Locale;
+  canonical: string;
+  alternates: { es: string; en: string };
+  ogImage?: string;
+}
+
+const {
+  title,
+  description,
+  locale,
+  canonical,
+  alternates,
+  ogImage = '/og-default.png',
+} = Astro.props;
+
+const siteUrl = 'https://jnvr-portafolio.web.app';
+const ogImageAbsolute = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
+const ogLocale = locale === 'es' ? 'es_MX' : 'en_US';
+---
+
+<!-- Primary meta -->
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+<!-- hreflang for bilingual SEO (REQ-IR-2) -->
+<link rel="alternate" hreflang="es" href={alternates.es} />
+<link rel="alternate" hreflang="en" href={alternates.en} />
+<link rel="alternate" hreflang="x-default" href={alternates.es} />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonical} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImageAbsolute} />
+<meta property="og:locale" content={ogLocale} />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageAbsolute} />
