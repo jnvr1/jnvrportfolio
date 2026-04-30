@@ -398,22 +398,36 @@ section {
 
 @supports (animation-timeline: view()) {
   .section-backdrop {
-    animation: backdrop-parallax linear;
-    animation-timeline: view();
+    animation: backdrop-parallax linear, backdrop-fade linear;
+    animation-timeline: view(), view();
     animation-range: entry 0% exit 100%;
-    will-change: transform;
+    will-change: transform, opacity;
   }
 
   @keyframes backdrop-parallax {
     from { transform: translateY(0); }
     to   { transform: translateY(-30px); }
   }
+
+  @keyframes backdrop-fade {
+    0%   { opacity: 0.4; }
+    20%  { opacity: 1; }
+    80%  { opacity: 1; }
+    100% { opacity: 0.4; }
+  }
 }
 
-/* Respect user motion preference — disable parallax entirely */
+/* Respect user motion preference — disable ALL backdrop and facet motion */
 @media (prefers-reduced-motion: reduce) {
   .section-backdrop {
     animation: none !important;
     will-change: auto;
+  }
+
+  /* Disable drifting facets in both backdrop components */
+  .hero-backdrop .facet,
+  .section-backdrop .facet,
+  .hero-logo-wrap {
+    animation: none !important;
   }
 }
