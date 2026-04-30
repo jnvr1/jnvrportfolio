@@ -788,6 +788,66 @@ section {
   animation-delay: -7s;
 }
 
+/* ── Logo Blueprint Path Animation ──────────────────────────────────────── */
+/*
+ * Three-phase entrance for the inlined logo SVG paths:
+ *
+ *   Phase A (0s → 1.2s): stroke draws in  — blueprint lines reveal silhouette
+ *   Phase B (0.7s → 1.5s): fill fades in  — colors appear through the strokes
+ *   Phase C (1.3s → 1.9s): stroke fades out — logo settles to clean filled state
+ *
+ * After 1.9s the wrapper-level breathing animation takes over.
+ * Wrapper entrance is 1.4s (scale+blur), path animation is 1.9s — they
+ * overlap by design: wrapper scales up while paths simultaneously draw in.
+ *
+ * Structure: 204 <path> elements are DIRECT children of <svg> (no <g> wrapper),
+ * so nth-child staggering works correctly. Groups of 10 paths share a delay
+ * bucket, cycling through 10 offsets (0ms → 90ms in 10ms steps) for a
+ * natural sequential-reveal feel across 204 paths.
+ *
+ * stroke-dasharray: 2000 is intentionally generous — short paths resolve to 0
+ * before long paths, which creates the organic "drawing" feel.
+ *
+ * Delay triple: (draw-start, fill-start, stroke-fade-start) per nth-child group.
+ */
+
+.logo-wrapper > svg path {
+  stroke: #73a0be;
+  stroke-width: 1;
+  stroke-opacity: 0.85;
+  stroke-dasharray: 2000;
+  stroke-dashoffset: 2000;
+  fill-opacity: 0;
+  animation:
+    logo-path-draw  1.2s ease-out both,
+    logo-path-fill  0.8s ease-out 0.7s both,
+    logo-path-stroke-fade 0.5s ease-out 1.3s both;
+}
+
+/* Stagger: 10 buckets × 10ms step = 100ms spread across every 10 paths */
+.logo-wrapper > svg path:nth-child(10n+1)  { animation-delay: 0.00s, 0.70s, 1.30s; }
+.logo-wrapper > svg path:nth-child(10n+2)  { animation-delay: 0.01s, 0.71s, 1.31s; }
+.logo-wrapper > svg path:nth-child(10n+3)  { animation-delay: 0.02s, 0.72s, 1.32s; }
+.logo-wrapper > svg path:nth-child(10n+4)  { animation-delay: 0.03s, 0.73s, 1.33s; }
+.logo-wrapper > svg path:nth-child(10n+5)  { animation-delay: 0.04s, 0.74s, 1.34s; }
+.logo-wrapper > svg path:nth-child(10n+6)  { animation-delay: 0.05s, 0.75s, 1.35s; }
+.logo-wrapper > svg path:nth-child(10n+7)  { animation-delay: 0.06s, 0.76s, 1.36s; }
+.logo-wrapper > svg path:nth-child(10n+8)  { animation-delay: 0.07s, 0.77s, 1.37s; }
+.logo-wrapper > svg path:nth-child(10n+9)  { animation-delay: 0.08s, 0.78s, 1.38s; }
+.logo-wrapper > svg path:nth-child(10n+10) { animation-delay: 0.09s, 0.79s, 1.39s; }
+
+@keyframes logo-path-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes logo-path-fill {
+  to { fill-opacity: 1; }
+}
+
+@keyframes logo-path-stroke-fade {
+  to { stroke-opacity: 0; }
+}
+
 /* Respect user motion preference — disable ALL backdrop and facet motion */
 @media (prefers-reduced-motion: reduce) {
   .section-backdrop {
@@ -821,6 +881,14 @@ section {
   .hero-backdrop .facet polygon {
     stroke-dashoffset: 0 !important;
     stroke-dasharray: none !important;
+  }
+
+  /* Logo path animation: skip entrance — show logo fully rendered immediately */
+  .logo-wrapper > svg path {
+    animation: none !important;
+    fill-opacity: 1 !important;
+    stroke: none !important;
+    stroke-dashoffset: 0 !important;
   }
 }
 
