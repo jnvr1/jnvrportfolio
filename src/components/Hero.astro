@@ -23,6 +23,10 @@ const base = locale === 'es' ? '' : '/en';
 
 <section id="hero" class="hero" aria-labelledby="hero-heading">
   <div class="hero-inner">
+    <div class="hero-logo-wrap" aria-hidden="true">
+      <Logo size={240} ariaLabel="JNVR" />
+    </div>
+
     <div class="hero-content">
       <FletesBadge locale={locale} />
 
@@ -42,10 +46,6 @@ const base = locale === 'es' ? '' : '/en';
         </a>
       </div>
     </div>
-
-    <div class="hero-logo" aria-hidden="true">
-      <Logo size={80} ariaLabel="JNVR" />
-    </div>
   </div>
 </section>
 
@@ -55,6 +55,14 @@ const base = locale === 'es' ? '' : '/en';
     display: flex;
     align-items: center;
     padding: var(--space-16) var(--space-4) var(--space-12);
+    background-image:
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 80px,
+        rgba(115, 160, 190, 0.02) 80px,
+        rgba(115, 160, 190, 0.02) 81px
+      );
   }
 
   .hero-inner {
@@ -62,21 +70,29 @@ const base = locale === 'es' ? '' : '/en';
     margin: 0 auto;
     width: 100%;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    gap: var(--space-12);
+    gap: var(--space-8);
+  }
+
+  .hero-logo-wrap {
+    display: flex;
+    justify-content: center;
+    filter: drop-shadow(0 0 32px rgba(115, 160, 190, 0.22));
   }
 
   .hero-content {
-    flex: 1;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    text-align: center;
     gap: var(--space-5);
-    max-width: 640px;
+    max-width: 720px;
   }
 
   .hero-name {
-    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-family: var(--font-heading);
+    font-size: var(--text-h1);
     font-weight: 700;
     line-height: 1.05;
     color: var(--text);
@@ -87,28 +103,24 @@ const base = locale === 'es' ? '' : '/en';
     display: block;
     font-size: clamp(1.125rem, 2.5vw, 1.5rem);
     font-weight: 400;
-    color: var(--muted);
+    color: var(--text-muted);
     letter-spacing: -0.01em;
     margin-top: var(--space-2);
   }
 
   .hero-tagline {
     font-size: clamp(1rem, 2vw, 1.125rem);
-    color: var(--muted);
+    color: var(--text-muted);
     line-height: 1.6;
-    max-width: 480px;
+    max-width: 520px;
   }
 
   .hero-ctas {
     display: flex;
     gap: var(--space-3);
     flex-wrap: wrap;
+    justify-content: center;
     margin-top: var(--space-2);
-  }
-
-  .hero-logo {
-    flex-shrink: 0;
-    opacity: 0.15;
   }
 
   @media (max-width: 768px) {
@@ -117,13 +129,9 @@ const base = locale === 'es' ? '' : '/en';
       min-height: auto;
     }
 
-    .hero-inner {
-      flex-direction: column-reverse;
-      gap: var(--space-8);
-    }
-
-    .hero-logo {
-      align-self: center;
+    .hero-logo-wrap :global(svg) {
+      width: 160px;
+      height: auto;
     }
   }
 </style>
