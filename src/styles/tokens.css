@@ -1,5 +1,5 @@
 /*
- * tokens.css — Design Tokens (dark-only, Minimalist Editorial)
+ * tokens.css — Design Tokens (dark-only, Logo-driven editorial — JNVR navy + faceted geometry)
  *
  * Single source of truth for all visual values. No hardcoded hex values
  * should appear in any component stylesheet — always reference these tokens
@@ -11,21 +11,21 @@
 :root {
   /* ── Color Palette (11 required tokens — spec REQ-TS-2) ─────────────────── */
 
-  --bg: #0D1117;
-  --surface: #161B22;
-  --surface-elevated: #1C2333;
-  --border: #30363D;
-  --text: #F0F6FF;
-  --text-muted: #8B949E;
-  --brand: #6BA3C3;
-  --brand-strong: #4A8FB0;
-  --accent: #8BB8D0;
+  --bg: #0A1929;
+  --surface: #0F293F;
+  --surface-elevated: #1A3A5C;
+  --border: #1F4060;
+  --text: #FFFFFF;
+  --text-muted: #A7A6A8;
+  --brand: #73A0BE;
+  --brand-strong: #4A7A98;
+  --accent: #A8C9DD;
   --success: #3FB950;
   --danger: #F85149;
 
   /* ── Typography (font families — spec REQ-TS-4) ─────────────────────────── */
 
-  --font-heading: 'Space Grotesk Variable', 'Space Grotesk', system-ui, sans-serif;
+  --font-heading: 'Bricolage Grotesque Variable', 'Bricolage Grotesque', system-ui, sans-serif;
   --font-body: 'Inter Variable', 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', 'Fira Code', monospace;
 
@@ -84,6 +84,10 @@
 
   --border-width: 1px;
   --border-width-strong: 2px;
+
+  /* ── Faceted geometry (logo-derived angular corner cut) ─────────────────── */
+
+  --clip-facet: 16px;
 
   /* ── Focus ring ──────────────────────────────────────────────────────────── */
 
