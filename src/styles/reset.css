@@ -1,0 +1,154 @@
+/*
+ * reset.css — Modern CSS Reset (Andy Bell-style)
+ *
+ * Box-sizing, margins, focus handling, media defaults, form inheritance.
+ * No hardcoded color values — all colors via tokens.
+ *
+ * Spec: REQ-TS-7 (no hardcoded hex in stylesheets)
+ */
+
+/* ── Box Sizing ──────────────────────────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ── Reset Margins & Padding ─────────────────────────────────────────────── */
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Root & Body ─────────────────────────────────────────────────────────── */
+
+html {
+  /* Smooth scroll — disabled for users who prefer no motion (see below) */
+  scroll-behavior: smooth;
+  /* Prevent font size adjustment on orientation change (mobile Safari) */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* Normalize tab size for code blocks */
+  tab-size: 4;
+}
+
+/* Prevent smooth scroll for reduced motion users */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  /* Minimum height prevents content shorter than viewport from having gaps */
+  min-height: 100vh;
+  /* Improved text rendering */
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeSpeed;
+  line-height: 1.6;
+}
+
+/* ── Headings ────────────────────────────────────────────────────────────── */
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: var(--leading-tight, 1.2);
+}
+
+/* ── Lists ───────────────────────────────────────────────────────────────── */
+
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+}
+
+/* ── Links ───────────────────────────────────────────────────────────────── */
+
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* ── Media Defaults ──────────────────────────────────────────────────────── */
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* ── Form Elements ───────────────────────────────────────────────────────── */
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* ── Text Overflow ───────────────────────────────────────────────────────── */
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/* ── Paragraphs ──────────────────────────────────────────────────────────── */
+
+p {
+  text-wrap: pretty;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+/* ── Focus Visible ───────────────────────────────────────────────────────── */
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring, 0 0 0 3px currentColor);
+  border-radius: var(--radius-sm, 4px);
+}
+
+/* ── Hidden Elements ─────────────────────────────────────────────────────── */
+
+[hidden] {
+  display: none !important;
+}
+
+/* ── Skip to Content ─────────────────────────────────────────────────────── */
+
+.skip-to-content {
+  position: absolute;
+  top: var(--space-2, 8px);
+  left: var(--space-2, 8px);
+  padding: var(--space-2, 8px) var(--space-4, 16px);
+  border-radius: var(--radius-md, 8px);
+  z-index: var(--z-toast, 500);
+  transform: translateY(-200%);
+  transition: transform 200ms;
+}
+
+.skip-to-content:focus {
+  transform: translateY(0);
+}

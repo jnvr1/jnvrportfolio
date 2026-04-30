@@ -1,0 +1,129 @@
+/*
+ * tokens.css — Design Tokens (dark-only, Minimalist Editorial)
+ *
+ * Single source of truth for all visual values. No hardcoded hex values
+ * should appear in any component stylesheet — always reference these tokens
+ * via var(--token-name).
+ *
+ * Spec: REQ-TS-1, REQ-TS-2, REQ-TS-3
+ */
+
+:root {
+  /* ── Color Palette (11 required tokens — spec REQ-TS-2) ─────────────────── */
+
+  --bg: #0D1117;
+  --surface: #161B22;
+  --surface-elevated: #1C2333;
+  --border: #30363D;
+  --text: #F0F6FF;
+  --text-muted: #8B949E;
+  --brand: #6BA3C3;
+  --brand-strong: #4A8FB0;
+  --accent: #8BB8D0;
+  --success: #3FB950;
+  --danger: #F85149;
+
+  /* ── Typography (font families — spec REQ-TS-4) ─────────────────────────── */
+
+  --font-heading: 'Space Grotesk Variable', 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter Variable', 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* ── Type Scale (spec REQ-TS-5) ─────────────────────────────────────────── */
+  /* Mobile-first fluid values using clamp(min, preferred, max) */
+  /* H1 hero: 48px (mobile) / 72px (desktop) */
+
+  --text-h1: clamp(3rem, 5vw + 1rem, 4.5rem);
+  /* H2 section: 32px (mobile) / 48px (desktop) */
+  --text-h2: clamp(2rem, 3vw + 0.75rem, 3rem);
+  /* H3 card: 20px (mobile) / 24px (desktop) */
+  --text-h3: clamp(1.25rem, 1.5vw + 0.5rem, 1.5rem);
+  /* Body: 16px (mobile) / 18px (desktop) */
+  --text-body: clamp(1rem, 0.25vw + 0.875rem, 1.125rem);
+  /* Caption: 13px (mobile) / 14px (desktop) */
+  --text-caption: clamp(0.8125rem, 0.1vw + 0.75rem, 0.875rem);
+
+  /* Font weights */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* Line heights */
+  --leading-tight: 1.2;
+  --leading-snug: 1.35;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.75;
+
+  /* ── Spacing Scale (4px base — spec REQ-PS: 4px scale) ──────────────────── */
+
+  --space-0: 0px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* ── Border Radius ───────────────────────────────────────────────────────── */
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* ── Border ──────────────────────────────────────────────────────────────── */
+
+  --border-width: 1px;
+  --border-width-strong: 2px;
+
+  /* ── Focus ring ──────────────────────────────────────────────────────────── */
+
+  --focus-ring: 0 0 0 3px var(--brand);
+  --focus-ring-offset: 2px;
+
+  /* ── Motion (spec REQ-PS-8, REQ-PS-5) ───────────────────────────────────── */
+
+  --duration-fast: 150ms;
+  --duration-base: 200ms;
+  --duration-slow: 300ms;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Card hover lift (spec REQ-TS-6) */
+  --card-hover-transform: translateY(-2px);
+  --card-hover-duration: var(--duration-fast);
+
+  /* Scroll reveal (spec REQ-PS-8) */
+  --reveal-translate: translateY(12px);
+  --reveal-duration: var(--duration-base);
+  --reveal-ease: var(--ease-out-expo);
+
+  /* ── Z-index scale ───────────────────────────────────────────────────────── */
+
+  --z-below: -1;
+  --z-base: 0;
+  --z-raised: 10;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+
+  /* ── Layout ──────────────────────────────────────────────────────────────── */
+
+  --container-max: 1200px;
+  --container-padding: var(--space-4);
+
+  /* ── Breakpoints (informational — use in media queries as px values) ─────── */
+  /* sm: 480px | md: 768px | lg: 1024px | xl: 1280px                          */
+  /* Custom media queries are not yet standard; use raw px in @media for now. */
+}

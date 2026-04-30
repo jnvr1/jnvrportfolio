@@ -1,0 +1,238 @@
+/*
+ * global.css — Base typography, layout utilities, and motion defaults
+ *
+ * Import order: reset → fonts → tokens → this file
+ *
+ * Spec: REQ-TS-5 (type scale), REQ-PS-8 (scroll reveal motion defaults),
+ *       REQ-PS-9 (container 1200px), REQ-TS-7 (no hardcoded hex)
+ */
+
+@import './reset.css';
+@import './fonts.css';
+@import './tokens.css';
+
+/* ── Base ────────────────────────────────────────────────────────────────── */
+
+html {
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-normal);
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+/* ── Headings ────────────────────────────────────────────────────────────── */
+
+h1 {
+  font-family: var(--font-heading);
+  font-size: var(--text-h1);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  color: var(--text);
+}
+
+h2 {
+  font-family: var(--font-heading);
+  font-size: var(--text-h2);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+  color: var(--text);
+}
+
+h3 {
+  font-family: var(--font-heading);
+  font-size: var(--text-h3);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-snug);
+  color: var(--text);
+}
+
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-snug);
+  color: var(--text);
+}
+
+/* ── Body Copy ───────────────────────────────────────────────────────────── */
+
+p {
+  color: var(--text);
+  line-height: var(--leading-normal);
+}
+
+/* ── Links ───────────────────────────────────────────────────────────────── */
+
+a {
+  color: var(--brand);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+a:hover {
+  color: var(--brand-strong);
+  text-decoration-color: var(--brand-strong);
+}
+
+/* ── Code & Pre ──────────────────────────────────────────────────────────── */
+
+code,
+kbd,
+samp {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  font-weight: var(--weight-medium);
+  background-color: var(--surface-elevated);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.1em 0.4em;
+}
+
+pre {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  background-color: var(--surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  overflow-x: auto;
+}
+
+pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* ── Selection ───────────────────────────────────────────────────────────── */
+
+::selection {
+  background-color: var(--brand);
+  color: var(--bg);
+}
+
+/* ── Horizontal Rule ─────────────────────────────────────────────────────── */
+
+hr {
+  border: none;
+  border-top: var(--border-width) solid var(--border);
+  margin-block: var(--space-8);
+}
+
+/* ── Container ───────────────────────────────────────────────────────────── */
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+@media (min-width: 480px) {
+  .container {
+    padding-inline: var(--space-6);
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-inline: var(--space-8);
+  }
+}
+
+/* ── Sections ────────────────────────────────────────────────────────────── */
+
+section {
+  padding-block: var(--space-16);
+}
+
+@media (min-width: 768px) {
+  section {
+    padding-block: var(--space-24);
+  }
+}
+
+/* ── Utility Classes ─────────────────────────────────────────────────────── */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.text-brand {
+  color: var(--brand);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* ── Scroll Reveal Base State (spec REQ-PS-8) ────────────────────────────── */
+/*
+ * Elements wrapped in <ScrollReveal> start hidden and transition to visible
+ * when they enter the viewport. The IntersectionObserver in scroll-reveal.ts
+ * toggles the [data-revealed] attribute.
+ *
+ * prefers-reduced-motion: reduce is handled in reset.css (suppresses
+ * animation-duration/transition-duration globally) AND in the IS script
+ * (which skips IntersectionObserver and applies final state immediately).
+ */
+
+[data-reveal] {
+  opacity: 0;
+  transform: var(--reveal-translate);
+  transition:
+    opacity var(--reveal-duration) var(--reveal-ease),
+    transform var(--reveal-duration) var(--reveal-ease);
+}
+
+[data-reveal][data-revealed] {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Card Hover Lift (spec REQ-TS-6) ─────────────────────────────────────── */
+
+[data-card-hover] {
+  transition: transform var(--card-hover-duration) var(--ease-standard);
+}
+
+[data-card-hover]:hover {
+  transform: var(--card-hover-transform);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-card-hover]:hover {
+    transform: none;
+  }
+}
+
+/* ── Focus Ring Utility ──────────────────────────────────────────────────── */
+
+.focus-ring:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius-sm);
+}
