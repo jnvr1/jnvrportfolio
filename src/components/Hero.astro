@@ -26,7 +26,7 @@ const base = locale === 'es' ? '' : '/en';
   <HeroBackdrop />
   <div class="hero-inner">
     <div class="hero-logo-wrap" aria-hidden="true">
-      <Logo size={240} ariaLabel="JNVR" />
+      <Logo size={320} ariaLabel="JNVR" />
     </div>
 
     <div class="hero-content">
@@ -81,12 +81,59 @@ const base = locale === 'es' ? '' : '/en';
   .hero-logo-wrap {
     display: flex;
     justify-content: center;
-    animation: logo-breathing 8s ease-in-out infinite;
+    position: relative;
+    /*
+     * Chained animations:
+     *   1. logo-entrance (0s → 1.4s): reveal from dispersed state + glow burst
+     *   2. logo-breathing (8s loop, starts at 1.4s): settles into ambient glow
+     * `both` fill-mode keeps the entrance end-state applied before breathing starts.
+     */
+    animation:
+      logo-entrance 1.4s cubic-bezier(0.16, 1, 0.3, 1) both,
+      logo-breathing 8s ease-in-out infinite 1.4s;
+    will-change: transform, filter, opacity;
+  }
+
+  @keyframes logo-entrance {
+    0% {
+      opacity: 0;
+      transform: scale(0.85) rotate(-3deg);
+      filter: drop-shadow(0 0 16px rgba(115, 160, 190, 0.3)) blur(12px);
+    }
+    60% {
+      opacity: 1;
+      filter: drop-shadow(0 0 60px rgba(115, 160, 190, 0.36)) blur(0px);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+      filter: drop-shadow(0 0 32px rgba(115, 160, 190, 0.22)) blur(0px);
+    }
   }
 
   @keyframes logo-breathing {
     0%, 100% { filter: drop-shadow(0 0 24px rgba(115, 160, 190, 0.18)); }
     50%       { filter: drop-shadow(0 0 40px rgba(115, 160, 190, 0.28)); }
+  }
+
+  /* Radial halo burst — expands from center at peak glow (~0.7s) then fades */
+  .hero-logo-wrap::before {
+    content: '';
+    position: absolute;
+    inset: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(115, 160, 190, 0.18), transparent 60%);
+    animation: logo-halo 1.4s ease-out both;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  @keyframes logo-halo {
+    0%   { width: 0;     height: 0;     opacity: 0; transform: translate(-50%, -50%); }
+    40%  { opacity: 1; }
+    100% { width: 600px; height: 600px; opacity: 0; transform: translate(-50%, -50%); }
   }
 
   .hero-content {
@@ -136,10 +183,6 @@ const base = locale === 'es' ? '' : '/en';
       padding-top: var(--space-12);
       min-height: auto;
     }
-
-    .hero-logo-wrap :global(svg) {
-      width: 160px;
-      height: auto;
-    }
+    /* Logo mobile sizing is handled in Logo.astro (220px at ≤768px) */
   }
 </style>
