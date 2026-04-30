@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <!-- Base fill: deepest navy -->
+  <rect width="1920" height="1080" fill="#0A1929"/>
+  <!-- Top-left corner facet: echoes the N/J diagonal cut (30° slope) -->
+  <polygon points="0,0 640,0 420,180 0,260" fill="#0F293F" opacity="0.65"/>
+  <!-- Top-right slab: echoes the V's downward diagonal -->
+  <polygon points="1100,0 1920,0 1920,320 1340,120" fill="#1A3A5C" opacity="0.45"/>
+  <!-- Right-edge mid facet: angular cut like the R letterform -->
+  <polygon points="1500,380 1920,300 1920,680 1600,720" fill="#0F293F" opacity="0.50"/>
+  <!-- Bottom-left corner mass: heavy anchor like the base of J -->
+  <polygon points="0,720 480,660 560,900 280,1080 0,1080" fill="#0F293F" opacity="0.60"/>
+  <!-- Bottom-right corner facet: mirrors logo shadow stack -->
+  <polygon points="1060,820 1920,700 1920,1080 980,1080" fill="#1A3A5C" opacity="0.40"/>
+  <!-- Center-bottom wedge: low-opacity so text above reads clean -->
+  <polygon points="580,900 1020,860 1100,1080 520,1080" fill="#0F293F" opacity="0.30"/>
+  <!-- Single brand-blue highlight shard: top-left, very low opacity -->
+  <polygon points="0,140 280,60 360,200 80,280" fill="#73A0BE" opacity="0.06"/>
+</svg>
