@@ -384,7 +384,7 @@ section {
 /*
  * CSS scroll-driven animation for per-section backdrops.
  * Supported: Chrome/Edge 115+, partial Safari 18+, Firefox 110+ (with flag).
- * Fallback: no parallax (static). No JS added.
+ * Fallback: time-based drift (defined per component). No JS added.
  *
  * The .section-backdrop class is on the backdrop's outer div inside each
  * section (HeroBackdrop and SectionBackdrop components).
@@ -417,6 +417,244 @@ section {
   }
 }
 
+/* ── Per-Polygon Bloom Choreography (view() timeline) ────────────────────── */
+/*
+ * Each polygon in SectionBackdrop gets a distinct entrance/exit arc tied to
+ * its section's scroll progress through the viewport. Uses view() so each
+ * section's backdrop choreographs independently as it scrolls into view.
+ *
+ * SVG <g> elements only support `transform:` (not standalone `translate:` /
+ * `scale:` CSS properties), so bloom + parallax depth are combined in a single
+ * keyframe set per animation pattern.
+ *
+ * 4 reusable bloom patterns — distributed across facets so adjacent polygons
+ * never share entry direction. animation-range stagger ensures they don't all
+ * peak at the same scroll position.
+ *
+ * In supporting browsers the scroll-driven animation-name REPLACES the
+ * time-based drift (later animation-name declaration wins). Unsupporting
+ * browsers keep the time-based drift as fallback.
+ */
+
+@supports (animation-timeline: view()) {
+  /* ── Shared section facet setup ─────────────────────────────────────────── */
+  .section-backdrop--projects .facet,
+  .section-backdrop--experience .facet,
+  .section-backdrop--contact .facet {
+    animation-timeline: view();
+    animation-range: entry 0% exit 100%;
+    animation-fill-mode: both;
+    animation-timing-function: ease-in-out;
+    will-change: transform, opacity;
+  }
+
+  /* ── Projects variant: 6 facets ─────────────────────────────────────────── */
+  .section-backdrop--projects .facet-1 {
+    animation-name: facet-bloom-up;
+    animation-range: entry 0% exit 100%;
+  }
+  .section-backdrop--projects .facet-2 {
+    animation-name: facet-bloom-right;
+    animation-range: entry 5% exit 95%;
+  }
+  .section-backdrop--projects .facet-3 {
+    animation-name: facet-bloom-left;
+    animation-range: entry 10% exit 90%;
+  }
+  .section-backdrop--projects .facet-4 {
+    animation-name: facet-bloom-down;
+    animation-range: entry 5% exit 95%;
+  }
+  .section-backdrop--projects .facet-5 {
+    animation-name: facet-bloom-up;
+    animation-range: entry 15% exit 85%;
+  }
+  .section-backdrop--projects .facet-6 {
+    animation-name: facet-bloom-left;
+    animation-range: entry 10% exit 90%;
+  }
+
+  /* ── Experience variant: 7 facets ───────────────────────────────────────── */
+  .section-backdrop--experience .facet-1 {
+    animation-name: facet-bloom-right;
+    animation-range: entry 0% exit 100%;
+  }
+  .section-backdrop--experience .facet-2 {
+    animation-name: facet-bloom-left;
+    animation-range: entry 5% exit 95%;
+  }
+  .section-backdrop--experience .facet-3 {
+    animation-name: facet-bloom-up;
+    animation-range: entry 0% exit 100%;
+  }
+  .section-backdrop--experience .facet-4 {
+    animation-name: facet-bloom-down;
+    animation-range: entry 10% exit 90%;
+  }
+  .section-backdrop--experience .facet-5 {
+    animation-name: facet-bloom-up;
+    animation-range: entry 5% exit 95%;
+  }
+  .section-backdrop--experience .facet-6 {
+    animation-name: facet-bloom-right;
+    animation-range: entry 15% exit 85%;
+  }
+  .section-backdrop--experience .facet-7 {
+    animation-name: facet-bloom-left;
+    animation-range: entry 10% exit 90%;
+  }
+
+  /* ── Contact variant: 6 facets ──────────────────────────────────────────── */
+  .section-backdrop--contact .facet-1 {
+    animation-name: facet-bloom-right;
+    animation-range: entry 0% exit 100%;
+  }
+  .section-backdrop--contact .facet-2 {
+    animation-name: facet-bloom-left;
+    animation-range: entry 5% exit 95%;
+  }
+  .section-backdrop--contact .facet-3 {
+    animation-name: facet-bloom-up;
+    animation-range: entry 10% exit 90%;
+  }
+  .section-backdrop--contact .facet-4 {
+    animation-name: facet-bloom-down;
+    animation-range: entry 5% exit 95%;
+  }
+  .section-backdrop--contact .facet-5 {
+    animation-name: facet-bloom-left;
+    animation-range: entry 15% exit 85%;
+  }
+  .section-backdrop--contact .facet-6 {
+    animation-name: facet-bloom-right;
+    animation-range: entry 10% exit 90%;
+  }
+
+  /* ── Reusable bloom keyframe patterns ───────────────────────────────────── */
+  /*
+   * Each keyframe: enters offset + slightly small, settles at 50% (peak
+   * viewport visibility), exits past final position + slightly larger.
+   * Depth parallax is baked in: each pattern has a distinct vertical drift
+   * magnitude integrated into the transforms (near = ±30-40px, far = ±12px).
+   * Translate values are modest (≤40px) — cumulative effect across 6+ polygons
+   * creates the orchestration illusion.
+   */
+
+  @keyframes facet-bloom-up {
+    /*  Entry: rises from below; Exit: drifts upward, fades */
+    0%   { transform: translateY(36px)  scale(0.82); opacity: 0; }
+    20%  { opacity: 0.75; }
+    50%  { transform: translateY(0)     scale(1);    opacity: 1; }
+    80%  { opacity: 0.75; }
+    100% { transform: translateY(-18px) scale(1.04); opacity: 0; }
+  }
+
+  @keyframes facet-bloom-down {
+    /*  Entry: drops from above; Exit: drifts downward, fades */
+    0%   { transform: translateY(-36px) scale(0.82); opacity: 0; }
+    20%  { opacity: 0.75; }
+    50%  { transform: translateY(0)     scale(1);    opacity: 1; }
+    80%  { opacity: 0.75; }
+    100% { transform: translateY(18px)  scale(1.04); opacity: 0; }
+  }
+
+  @keyframes facet-bloom-left {
+    /*  Entry: slides from the left; Exit: drifts right, fades */
+    0%   { transform: translateX(-28px) scale(0.84); opacity: 0; }
+    20%  { opacity: 0.75; }
+    50%  { transform: translateX(0)     scale(1);    opacity: 1; }
+    80%  { opacity: 0.75; }
+    100% { transform: translateX(14px)  scale(1.04); opacity: 0; }
+  }
+
+  @keyframes facet-bloom-right {
+    /*  Entry: slides from the right; Exit: drifts left, fades */
+    0%   { transform: translateX(28px)  scale(0.84); opacity: 0; }
+    20%  { opacity: 0.75; }
+    50%  { transform: translateX(0)     scale(1);    opacity: 1; }
+    80%  { opacity: 0.75; }
+    100% { transform: translateX(-14px) scale(1.04); opacity: 0; }
+  }
+}
+
+/* ── Hero Cinematic Intro (scroll() timeline) ────────────────────────────── */
+/*
+ * The hero sits at the top of the page. view() fires immediately on load, so
+ * we use scroll() instead — polygons choreograph as the user scrolls the page.
+ *
+ * Effect: each polygon disperses outward to its own direction as the user
+ * scrolls down, making the hero "come apart" and reveal the sections below.
+ * The animation completes by the time the user has scrolled 55% of the page.
+ *
+ * SVG constraint: same as above — `transform:` only for SVG <g> elements.
+ */
+
+@supports (animation-timeline: scroll()) {
+  .hero-backdrop .facet {
+    animation-timeline: scroll();
+    animation-range: 0% 55%;
+    animation-fill-mode: both;
+    animation-timing-function: ease-in;
+    will-change: transform, opacity;
+  }
+
+  /* Each facet disperses to a distinct direction — radially outward */
+  .hero-backdrop .facet-1 {
+    /* Top-left wing → slides further up-left */
+    animation-name: hero-disperse-upleft;
+  }
+  .hero-backdrop .facet-2 {
+    /* Top-right wing → slides up-right */
+    animation-name: hero-disperse-upright;
+  }
+  .hero-backdrop .facet-3 {
+    /* Left-center shard → drifts left */
+    animation-name: hero-disperse-left;
+  }
+  .hero-backdrop .facet-4 {
+    /* Bottom-left anchor → sinks down-left */
+    animation-name: hero-disperse-downleft;
+  }
+  .hero-backdrop .facet-5 {
+    /* Bottom-right anchor → sinks down-right */
+    animation-name: hero-disperse-downright;
+  }
+  .hero-backdrop .facet-6 {
+    /* Center shimmer → fades in place (subtle scale) */
+    animation-name: hero-disperse-center;
+  }
+
+  @keyframes hero-disperse-upleft {
+    0%   { transform: translate(0, 0)      scale(1);    opacity: 1; }
+    100% { transform: translate(-24px, -32px) scale(0.78); opacity: 0; }
+  }
+
+  @keyframes hero-disperse-upright {
+    0%   { transform: translate(0, 0)     scale(1);    opacity: 1; }
+    100% { transform: translate(24px, -28px) scale(0.78); opacity: 0; }
+  }
+
+  @keyframes hero-disperse-left {
+    0%   { transform: translate(0, 0)   scale(1);    opacity: 1; }
+    100% { transform: translate(-30px, 0) scale(0.82); opacity: 0; }
+  }
+
+  @keyframes hero-disperse-downleft {
+    0%   { transform: translate(0, 0)      scale(1);    opacity: 1; }
+    100% { transform: translate(-20px, 30px) scale(0.80); opacity: 0; }
+  }
+
+  @keyframes hero-disperse-downright {
+    0%   { transform: translate(0, 0)     scale(1);    opacity: 1; }
+    100% { transform: translate(20px, 28px) scale(0.80); opacity: 0; }
+  }
+
+  @keyframes hero-disperse-center {
+    0%   { transform: scale(1);    opacity: 1; }
+    100% { transform: scale(0.88); opacity: 0; }
+  }
+}
+
 /* Respect user motion preference — disable ALL backdrop and facet motion */
 @media (prefers-reduced-motion: reduce) {
   .section-backdrop {
@@ -424,10 +662,11 @@ section {
     will-change: auto;
   }
 
-  /* Disable drifting facets in both backdrop components */
+  /* Disable ALL facet animations — time-based drift AND scroll-driven */
   .hero-backdrop .facet,
   .section-backdrop .facet,
   .hero-logo-wrap {
     animation: none !important;
+    will-change: auto;
   }
 }
