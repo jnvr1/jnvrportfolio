@@ -6,7 +6,7 @@ yearRange: "2022–2024"
 stack: ["Flutter", "Firebase", "Stripe", "MercadoPago"]
 summary: "Mobile SaaS for residential access control: visitor management, real-time chat, push notifications, and subscriptions."
 role: "Lead Mobile Developer & Architect"
-cover: ../../../assets/projects/centinela-app.webp
+cover: ../../../assets/projects/centinela-app-mobile.webp
 placeholder: false
 confidential: false
 locale: en

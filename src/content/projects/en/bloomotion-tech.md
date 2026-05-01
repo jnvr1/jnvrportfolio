@@ -6,7 +6,7 @@ yearRange: "2022–2024"
 stack: ["Flutter Web", "Google Fonts"]
 summary: "Corporate site for a logistics SaaS platform: animated sections, progressive metrics counters, integrations showcase."
 role: "Flutter Web Developer"
-cover: ../../../assets/projects/bloomotion-tech.webp
+cover: ../../../assets/projects/bloomotion-tech-mobile.webp
 placeholder: false
 confidential: false
 locale: en

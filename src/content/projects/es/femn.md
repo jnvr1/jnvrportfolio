@@ -6,7 +6,7 @@ yearRange: "2024–2025"
 stack: ["Flutter", "Firebase", "Riverpod", "go_router"]
 summary: "App offline-first para evaluadores de campo de ONG: encuestas socioeconómicas y fichas de inscripción con PDF."
 role: "Lead Mobile Developer"
-cover: ../../../assets/projects/femn.webp
+cover: ../../../assets/projects/femn-mobile.webp
 placeholder: false
 confidential: false
 locale: es

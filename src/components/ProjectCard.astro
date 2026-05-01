@@ -50,15 +50,17 @@ const initials = title
         <span class="card-placeholder__initials">{initials}</span>
       </div>
     ) : (
-      <Image
-        src={cover}
-        alt={`${title} — ${client}`}
-        class="card-cover"
-        widths={[400, 720, 960]}
-        sizes="(max-width: 480px) 90vw, (max-width: 1024px) 45vw, 320px"
-        loading="lazy"
-        decoding="async"
-      />
+      <div class="card-cover-wrap">
+        <Image
+          src={cover}
+          alt={`${title} — ${client}`}
+          class="card-cover"
+          widths={[400, 720, 960]}
+          sizes="(max-width: 480px) 90vw, (max-width: 1024px) 45vw, 320px"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
     )}
   </a>
 
@@ -125,9 +127,17 @@ const initials = title
     border-radius: 8px 8px 0 0;
   }
 
+  /* Wrapper enforces aspect ratio regardless of intrinsic image dimensions */
+  .card-cover-wrap {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: var(--surface-2);
+  }
+
   .card-cover {
     width: 100%;
-    aspect-ratio: 16 / 9;
+    height: 100%;
     object-fit: cover;
     object-position: top center;
     display: block;
