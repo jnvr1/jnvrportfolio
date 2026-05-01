@@ -40,3 +40,7 @@ yarn-error.log
 # Miscellaneous
 *.tmp
 *.tmp.*
+
+
+.angular/
+.angular-cache/
