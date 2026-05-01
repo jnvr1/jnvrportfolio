@@ -409,11 +409,12 @@ All components are `.astro` (zero runtime by default). Client behavior loaded vi
 - **Client**: `<script>` block that toggles a class on the parent `ProjectGrid` and hides cards via `[data-stack]` mismatch.
 - **A11y**: live region announces "showing N projects" on filter change.
 
-### `ExperienceTimeline.astro` + `ExperienceCard.astro`
-- **Purpose**: Vertical timeline of experience entries; Fletes is rendered with `featured: true` styling.
-- **Props (Card)**: `{ entry: CollectionEntry<'experience'> }`
-- **Client**: none; reveal-on-scroll handled by `ScrollReveal.astro` wrapper.
-- **A11y**: `<ol>` or `<ul>` with `<li>` per entry; date as `<time datetime>`.
+### `ExperienceList.astro` + `ExperienceCard.astro` (V2 — Faceted Stack)
+> **Note**: V1 implemented a timeline spine (vertical rail + alternating left/right cards). Rejected by user. V2 replaces it with the Faceted Stack layout — see Section 14 + ADR-8 for full design.
+- **Purpose**: Vertical stack of full-width horizontal bands, each band = `[year-mono-display][content]`. Featured Fletes band gets a 2px brand top edge + accent company color + inline 3-polygon facet cluster, no pulse/glow/scale.
+- **Props (Card)**: `{ entry: CollectionEntry<'experience'>; locale: 'es'|'en' }`
+- **Client**: none; entrance via CSS scroll-driven `animation-timeline: view()`.
+- **A11y**: `<ol>` with `<li>` per band; year range as `<time datetime>`; featured carries `aria-current="true"`.
 
 ### `ContactForm.astro`
 - **Purpose**: Formspree-backed contact form with honeypot + a11y errors.
@@ -993,5 +994,290 @@ CSS `background-image` accepts a stack of layered images, but a **single SVG wit
 - **Alternatives considered**:
   - Both with toggle (proposal rejected).
   - Auto via `prefers-color-scheme` (still doubles CSS, no toggle UI but every component must be tested in both).
+
+---
+
+## 14. Experience Section Redesign — V2 (replaces Timeline Spine)
+
+> **Status**: Proposed 2026-04-30. The currently implemented "Timeline Spine" (vertical rail + alternating left/right cards + diamond nodes + featured pulse — see `src/components/ExperienceList.astro`) was rejected by user feedback ("no me gusta"). This section proposes 3 radically different layouts and recommends one.
+
+### 14.1 Diagnostic — why the Timeline Spine likely fell flat
+
+Treat as caution signs for the new direction, not a post-mortem:
+
+| Caution | Evidence |
+|---------|----------|
+| Reads as "infographic", not editorial | The faceted backdrop, ProjectCard clip-path corner cuts, and Hero composition speak the language of a printed art-book. The spine + nodes look like a project-management tool. |
+| High-contrast solid brand-blue spine fights with the global animated orbs | The body has 2 brand-color orbs at 12% drifting behind everything; an opaque-ish brand-blue rail in front of them creates visual noise the rest of the portfolio carefully avoids. |
+| Alternating left/right cards break reading rhythm | Every other portfolio section flows top-to-bottom in a single column. The zig-zag forces the eye to track a non-linear path that the rest of the page never asks of it. |
+| Featured pulse competes with the orb breathing | Two slow-pulsing brand-color elements on screen at once = ambient chaos. |
+| Linear timeline doesn't *add* information beyond the year ranges already in the cards | The visual cost (rail + nodes + connectors + 3-column grid) buys nothing the typography already conveys. |
+| Generic — every dev portfolio has a timeline | Visitors have seen this before. The portfolio's faceted/atmospheric voice never feels generic anywhere else. |
+
+The new direction must: (1) flow top-to-bottom in a single visual axis, (2) keep all decorative elements at the same low opacity range as the rest of the portfolio (0.10-0.30), (3) use faceted polygon vocabulary not lines+nodes, (4) treat "featured" as a quiet weight increase, never a pulsing element, (5) feel inseparable from `ProjectCard` and `HeroBackdrop`.
+
+### 14.2 Three new directions
+
+#### Option A — "Faceted Stack" (editorial bands)
+
+- **Essence**: Each role is a full-width horizontal band, stacked vertically like sections of a printed magazine article. Year is a giant display number on the left; content fills the right. The featured role gets a denser inline facet cluster behind it.
+- **Layout sketch**:
+  ```
+  ┌────────────────────────────────────────────────────┐
+  │ 2023─                                              │
+  │ pres   FLETES MÉXICO   ·   Ciudad Juárez (remoto)  │
+  │  ▼     Software Developer                          │
+  │        FastAPI · PostgreSQL · Docker · Power BI    │
+  │        Microservicios, dashboards BI...            │
+  │        [hairline diagonal divider ───────╲────]    │
+  ├────────────────────────────────────────────────────┤
+  │ 2025─  TEOTECH         ·   México (remoto)         │
+  │ 2026   Full-stack Freelance                        │
+  │        React · FastAPI · PHP · MySQL · Docker      │
+  │        ...                                         │
+  ├────────────────────────────────────────────────────┤
+  │ 2021─  MUSEO RODADORA  ·   Ciudad Juárez           │
+  │ 2023   Coordinador de Sistemas                     │
+  │        ...                                         │
+  └────────────────────────────────────────────────────┘
+  ```
+- **Featured treatment**: same band, same height, +1 inline 3-polygon SVG cluster behind text (faint navy facets at 0.22 opacity), a 2px brand-color top edge replacing the divider, and the company name in `--accent` (warm light blue). NO pulse, NO glow, NO scale change. Visual weight comes from density, not loudness.
+- **Geometry vocabulary**: each band ends in a thin diagonal divider (echoes the V/N letter cuts) — a single SVG polyline at 0.20 opacity. The featured band's facet cluster reuses HeroBackdrop's polygon points at smaller scale.
+- **Motion**: scroll-driven entrance only — each band fades up + the year number wipes in from the left as the band enters view. Hover: row gains `border-left: 2px var(--brand)` + slight `padding-left` shift (8px). No idle motion, no pulses.
+- **Typography hierarchy**: year = `--font-mono` clamp(2rem, 4vw, 3rem) tabular numerals; company = Bricolage Grotesque 600 caps with letter-spacing 0.06em; role = Inter 500; summary/highlights = Inter 400 muted; stack = mono caption.
+- **Concrete CSS sketch**:
+  ```css
+  .xp-band {
+    display: grid;
+    grid-template-columns: clamp(7rem, 14vw, 11rem) 1fr;
+    gap: var(--space-6);
+    padding-block: var(--space-8);
+    border-block-end: 1px solid var(--border);
+    position: relative;
+  }
+  .xp-band:last-child { border-block-end: none; }
+  .xp-band__year {
+    font-family: var(--font-mono);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-variant-numeric: tabular-nums;
+    color: var(--text-muted);
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .xp-band--featured {
+    border-block-start: 2px solid var(--brand);
+    background:
+      linear-gradient(180deg,
+        color-mix(in srgb, var(--surface) 22%, transparent),
+        transparent 80%);
+  }
+  .xp-band--featured .xp-band__company { color: var(--accent); }
+  /* Diagonal divider at the END of the band (not full-width line) */
+  .xp-band::after {
+    content: ''; position: absolute;
+    right: 0; bottom: -1px;
+    width: clamp(120px, 18vw, 220px); height: 1px;
+    background: linear-gradient(90deg, transparent, var(--brand) 40%, transparent);
+    opacity: 0.20; transform: skewX(-22deg);
+  }
+  @supports (animation-timeline: view()) {
+    .xp-band { animation: xp-band-rise linear both;
+               animation-timeline: view();
+               animation-range: entry 10% cover 35%; }
+    @keyframes xp-band-rise {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: none; }
+    }
+  }
+  ```
+- **Tradeoffs**: less "spectacular" than B/C — a confident reader, not a showpiece. Sacrifices simultaneous visibility (one role at a time fills the eye) for clarity and editorial calm. Skim-friendly because the year column scans like a contents list.
+- **Performance**: 0 KB JS. ~700 B CSS, 0 KB SVG (the featured facet cluster reuses tokens; ~500 B inline SVG only on the featured band). Single composite layer per band. Zero idle paint cost.
+
+#### Option B — "Constellation Grid" (orbital polygons)
+
+- **Essence**: Roles render as faceted polygon "shards" arranged in a loose 12-column constellation grid. The featured Fletes shard is the largest, anchored center; past roles are smaller polygons orbiting it at varied positions and angles. Each shard's body is text on a `clip-path` polygon (not a rectangle).
+- **Layout sketch**:
+  ```
+                    ╱──────────╲
+                   ╱  TEOTECH   ╲
+                   ╲  2025-2026 ╱
+        ╱─────╲     ──────────╱       ╱─────╲
+        │ IA  │                       │BLOOM │
+        │ '21 │      ╱──────────╲    │'19-'21│
+        ╲─────╱     ╱   FLETES    ╲   ╲─────╱
+                   │   Software    │
+                   │    Dev        │
+                    ╲             ╱
+                     ╲───────────╱
+                  ╱──────────────╲
+                  ╲ MUSEO RODADORA╱
+                   ╲   '21-'23   ╱
+                    ─────────────
+  ```
+- **Featured treatment**: the Fletes shard is centered, ~1.5x scale of others, has the densest fill (`--surface-elevated`), a 2px brand border, and is the only shard with a stack chip row visible by default. Other shards show year + company + role only; hovering or tabbing onto them reveals the stack and summary inline (CSS-only via `:hover`/`:focus-within` with smooth transition — content rendered, just visually compressed).
+- **Geometry vocabulary**: each card is `clip-path: polygon(...)` with the same V-cut top-right corner already used in `ProjectCard.astro` (`clip-path: polygon(0 0, calc(100% - var(--clip-facet)) 0, 100% var(--clip-facet), 100% 100%, 0 100%)`), but with a *second* angular cut on the bottom-left for asymmetry. Each card gets a slightly different rotation angle (-2deg, +1.5deg, -1deg…) baked in CSS for each `:nth-child` so the constellation feels hand-placed not generated.
+- **Motion**: scroll-driven entrance — shards fade in with a small rotation-snap (each from its own random offset toward 0deg). Hover: shard rotation snaps to 0, border 1px → 2px brand, translateY(-2px), and reveals the hidden stack/summary block. No idle motion.
+- **Typography hierarchy**: company = Bricolage Grotesque 600 small caps; year = mono caption top-right inside the polygon; role = Inter 500 with reduced size.
+- **Concrete CSS sketch**:
+  ```css
+  .xp-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--space-4) var(--space-3);
+    align-items: start;
+  }
+  .xp-shard {
+    --tilt: -1deg;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: var(--space-4) var(--space-5);
+    /* dual-cut polygon: top-right + bottom-left */
+    clip-path: polygon(
+      0 0, calc(100% - 18px) 0, 100% 18px,
+      100% 100%, 18px 100%, 0 calc(100% - 18px)
+    );
+    transform: rotate(var(--tilt));
+    transition: transform var(--duration-base) var(--ease-out-expo),
+                border-color var(--duration-base);
+  }
+  .xp-shard:nth-child(2n)   { --tilt: 1.2deg;  }
+  .xp-shard:nth-child(3n+1) { --tilt: -1.6deg; }
+  .xp-shard:hover, .xp-shard:focus-within {
+    transform: rotate(0) translateY(-2px);
+    border-color: var(--brand); border-width: 2px;
+  }
+  /* Featured anchor */
+  .xp-shard--featured {
+    grid-column: 4 / span 6; grid-row: 2;
+    --tilt: 0deg;
+    border-color: var(--brand); border-width: 2px;
+    background: linear-gradient(180deg,
+      color-mix(in srgb, var(--surface) 80%, var(--accent) 20%),
+      var(--surface));
+  }
+  /* Smaller shards distributed around it */
+  .xp-shard:nth-child(1) { grid-column: 1 / span 4; grid-row: 1; }
+  .xp-shard:nth-child(3) { grid-column: 8 / span 5; grid-row: 1; }
+  .xp-shard:nth-child(4) { grid-column: 1 / span 4; grid-row: 3; }
+  .xp-shard:nth-child(5) { grid-column: 9 / span 4; grid-row: 3; }
+  .xp-shard:nth-child(6) { grid-column: 4 / span 6; grid-row: 4; }
+  /* Mobile collapses to single column, tilts removed */
+  @media (max-width: 768px) {
+    .xp-grid { display: flex; flex-direction: column; }
+    .xp-shard { --tilt: 0deg !important; grid-column: 1 / -1 !important; }
+  }
+  ```
+- **Tradeoffs**: highest aesthetic payoff but highest risk — "designed-for-the-portfolio" smell if not restrained. Hidden content on hover hurts mobile (collapse strategy: mobile shows everything, desktop hides until hover). Rotation must be subtle (≤2deg) or it tips into kitsch. Tilt + clip-path may interact awkwardly with browser focus rings — solved by drawing focus ring on inner content wrapper, not the clipped element.
+- **Performance**: 0 KB JS. ~1.1 KB CSS, 0 KB extra SVG. Each shard is a single composite layer with one transform. Low cost. Mobile performance: tilt + clip-path are cheap; CSS-only hover-reveal.
+
+#### Option C — "Layered Document" (paper stack)
+
+- **Essence**: Roles render as overlapping translucent panels — like flipping through papers on a desk. Featured Fletes is the top paper (front, slightly larger, fully visible); past roles peek behind in a diagonal cascade. Hovering or scrolling brings each underlying paper forward in a soft fan-out. Strong sense of "history" without a literal timeline.
+- **Layout sketch**:
+  ```
+  ┌──────────────── FLETES ─────────────────┐  ← featured, top paper
+  │ Software Developer · 2023─pres          │
+  │ FastAPI · PostgreSQL · Docker · Power BI │
+  │ Microservicios, dashboards BI...         │ ┐
+  └──────────────────────────────────────────┘ │ TEOTECH 2025-2026 ←
+       └─────────────────────────────────────┘ │ │ MUSEO 2021-23 ←
+            └────────────────────────────────┘ │ │ │ IA CENTER 2021 ←
+                 └──────────────────────────┘  │ │ │ │ BLOOM 2019-21
+                                                ┘ ┘ ┘ ┘
+  (each paper offset 12px right + 8px down — a corner of each visible)
+  ```
+- **Featured treatment**: top paper is the only one fully readable by default. It carries the full header, summary, highlights, and stack chips. Past papers show ONLY their tab (year + company + role) sticking out from under the front paper. Tabs are clickable / hoverable / focusable: hover or focus pulls that paper forward via a CSS `transform` (translateX(0) + z-index swap), revealing its content. Reading mode = stable; exploration mode = quiet animation.
+- **Geometry vocabulary**: each paper has the established ProjectCard corner-cut clip-path (top-right notched). Paper "tabs" are the visible exposed edges — each ~120px wide containing year + company in mono caption, with a thin brand-color top-edge accent (1px, 0.30 opacity). Stack of papers offsets 12px x / 8px y per layer.
+- **Motion**: scroll-driven entrance: papers fade in with a small `translateX` shuffle (each from its own offset toward final stacked position). Hover/focus on a tab: paper slides forward + becomes fully readable; previous front paper shrinks back into stack. CSS transitions only.
+- **Typography hierarchy**: top paper carries full hierarchy (Bricolage company, Inter role, Inter body, mono year, mono stack). Tabs use mono caption ONLY (year + company), no role.
+- **Concrete CSS sketch**:
+  ```css
+  .xp-stack {
+    position: relative;
+    min-height: clamp(420px, 60vh, 560px);
+    padding-inline-end: clamp(140px, 20vw, 220px); /* room for tabs */
+  }
+  .xp-paper {
+    position: absolute; inset: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: var(--space-6);
+    clip-path: polygon(0 0,
+      calc(100% - var(--clip-facet)) 0,
+      100% var(--clip-facet),
+      100% 100%, 0 100%);
+    transition: transform var(--duration-slow) var(--ease-out-expo),
+                opacity var(--duration-base);
+  }
+  /* Each paper offset further right + down. Highest data-order = deepest. */
+  .xp-paper[data-depth="0"] { transform: translate(0,    0);   z-index: 6; }
+  .xp-paper[data-depth="1"] { transform: translate(48px, 16px); z-index: 5; opacity: 0.96; }
+  .xp-paper[data-depth="2"] { transform: translate(96px, 32px); z-index: 4; opacity: 0.92; }
+  .xp-paper[data-depth="3"] { transform: translate(144px,48px); z-index: 3; opacity: 0.88; }
+  .xp-paper[data-depth="4"] { transform: translate(192px,64px); z-index: 2; opacity: 0.84; }
+  .xp-paper[data-depth="5"] { transform: translate(240px,80px); z-index: 1; opacity: 0.80; }
+  /* Tab — visible-only portion of underlying papers */
+  .xp-paper:not([data-depth="0"]) .xp-paper__body { visibility: hidden; }
+  .xp-paper__tab {
+    position: absolute; top: 0; right: 0;
+    padding: var(--space-2) var(--space-3);
+    border-block-start: 1px solid color-mix(in srgb, var(--brand) 30%, transparent);
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+    color: var(--text-muted);
+    /* Tab slides into view on hover/focus pulling paper forward */
+    cursor: pointer;
+  }
+  .xp-paper:has(.xp-paper__tab:hover),
+  .xp-paper:has(.xp-paper__tab:focus-visible) {
+    transform: translate(0, 0); z-index: 10; opacity: 1;
+  }
+  .xp-paper:has(.xp-paper__tab:hover) .xp-paper__body,
+  .xp-paper:has(.xp-paper__tab:focus-visible) .xp-paper__body { visibility: visible; }
+  /* Featured (front) gets brand top-edge */
+  .xp-paper--featured { border-block-start: 2px solid var(--brand); }
+  ```
+- **Tradeoffs**: most original / highest "wow"; also highest risk — relies on CSS `:has()` (Safari 15.4+, Chrome 105+, Firefox 121+) for the hover-pull-forward effect. Fallback for unsupporting browsers: use `:focus-within` only, or just show all papers inline in a stack column. Mobile constraint: stack collapses to vertical list (no 3D illusion). Accessibility: each tab is a real `<button>` in source, focusable order = featured → most recent → oldest, so keyboard users get a linear narrative.
+- **Performance**: 0 KB JS. ~900 B CSS, 0 KB SVG. Each paper is a composite layer (transform + opacity only). Hover transition runs once per interaction. Idle = zero paint cost.
+
+### 14.3 Recommendation: **Option A — Faceted Stack**
+
+Pick A. Here's why:
+
+1. **Editorial coherence wins**. The portfolio's character is "magazine spread, faceted, atmospheric, restrained". Option A IS that vocabulary applied to experience: a printed-article rhythm of bands separated by hairline diagonal dividers — dividers that echo the same V/N angular cuts the logo and HeroBackdrop already use. B is more spectacular but fights the restraint elsewhere on the page. C is most original but introduces interaction cost (`:has()` + reveal pattern) for content that should be skim-friendly.
+2. **Featured = density, not loudness**. The user's prior signals (rejecting the pulsing spine) reveal a sensibility that prefers quiet weight over animated emphasis. A's featured treatment is purely structural — a brand-color top edge + a single inline facet cluster — no pulse, no glow, no scale. That's exactly the language ProjectCard already speaks (border-color shift on hover, no animation).
+3. **Scannability by year**. The big mono year column on the left is itself a visual index — recruiters skim experience by date first. A turns that scan into the visual hierarchy. B/C bury the year inside polygon labels; A makes it the entry point.
+4. **Ships in one component**. A is the lowest-risk implementation: the existing `ExperienceCard.astro` becomes the band body content, `ExperienceList.astro` becomes a flat `<ol>` of bands. No new SVG asset, no `:has()` polyfill question, no tilted clip-path focus-ring edge cases. Bundle delta is ~700 B CSS, 0 JS, 0 new files.
+5. **Originality without spectacle**. The diagonal divider line, the giant tabular mono year, and the inline facet cluster on the featured band give A a fingerprint that "100 other portfolios" don't share — without resorting to gimmicks. The novelty is in restraint and typographic confidence.
+
+### 14.4 Implementation outline (if A is accepted)
+
+| File | Action | Description |
+|------|--------|-------------|
+| `src/components/ExperienceList.astro` | Rewrite | Drop 3-column timeline grid + spine pseudo-element + connector SVGs + node SVGs. Replace with simple `<ol class="xp-stack">` of bands. Keep sorting logic; keep `SectionBackdrop variant="experience"`. |
+| `src/components/ExperienceCard.astro` | Modify | Strip card chrome (border, clip-path, padding, body wrapper). Render flat: year column + content column. Featured variant adds brand top-edge + accent company color + inline facet cluster div. |
+| `src/styles/global.css` | Modify | Delete the timeline-spine + node-bloom + connector-draw + featured-pulse CSS blocks (lines ~903-972). Add new `xp-band-rise` keyframes (~30 lines). Keep reduced-motion fallbacks. |
+| `src/components/SectionBackdrop.astro` | (No change required) | The `experience` variant currently leans toward a left-rail composition; reconsider in a follow-up if it now feels redundant. Out of scope for this design. |
+
+Bundle delta: NET REDUCTION (~600 B CSS removed for spine/nodes/connectors/pulse, ~700 B added for bands = ~+100 B). Zero new JS. Zero new SVG assets.
+
+A11y notes: bands stay as semantic `<ol><li>` with `<time datetime>` for the year range, headings hierarchy preserved. Featured carries `aria-current="true"`. No reliance on `:has()` or other progressive selectors.
+
+### 14.5 ADR-8: Experience Section Layout V2 — Faceted Stack (replaces Timeline Spine)
+
+- **Status**: Proposed (awaiting user accept/reject)
+- **Context**: V1 implemented a timeline spine (vertical rail + alternating cards + diamond nodes + featured pulse). User rejected it ("no me gusta") without specifics. Diagnostic concludes the spine read as infographic, broke the portfolio's editorial restraint, and competed with the global animated orbs. The portfolio's voice is faceted-atmospheric-editorial — the experience section is the only place that diverged from it.
+- **Decision**: Adopt **Option A — Faceted Stack**: full-width horizontal bands stacked vertically, each band laid out as `[year-mono-display][content]`, separated by thin diagonal hairline dividers echoing the logo's letter cuts. Featured Fletes band gets a 2px brand top edge + accent company color + inline 3-polygon facet cluster behind text — no pulse, no glow, no scale change. Scroll-driven `xp-band-rise` entrance animation only.
+- **Consequences**:
+  - **Files modified**: `src/components/ExperienceList.astro` (rewrite to flat `<ol>` of bands), `src/components/ExperienceCard.astro` (strip card chrome, render as band content), `src/styles/global.css` (remove timeline-spine + node + connector + featured-pulse blocks, add band styles + entrance animation)
+  - **Files unchanged**: `src/components/SectionBackdrop.astro` (experience variant kept; revisit only if visually redundant), all content markdown, all i18n strings, all schemas, all tests
+  - **Bundle delta**: ~+100 B CSS net (deletes ~600 B spine code, adds ~700 B band code), 0 KB JS, 0 KB SVG assets
+  - **A11y**: same `<ol><li><time>` semantics; reduced-motion respects entrance animation suppression; featured uses `aria-current="true"` instead of pulsing
+  - **Performance**: each band = 1 composite layer; entrance animation is a single transform+opacity on view-timeline = GPU-composited; zero idle paint cost; no JS scroll listeners
+- **Alternatives considered**:
+  - **Option B — Constellation Grid**: too "designed", risks the portfolio reading as an art-piece rather than a craftsman's record; tilt + dual clip-path interacts awkwardly with focus rings; mobile collapse loses the entire concept
+  - **Option C — Layered Document**: most original but relies on `:has()` for the core interaction and introduces a hidden-content reveal pattern that hurts skim-readability; high-spectacle solution to a section that benefits from quiet
+  - **Keep Timeline Spine V1**: rejected by user; diagnostic confirms it diverges from the established voice
+- **Forward path**: If A ships and reads well, the same band rhythm could replace Footer link clusters (currently grid-of-tiles) for unified language. Out of scope here.
 
 ---
