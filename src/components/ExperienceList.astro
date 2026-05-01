@@ -1,9 +1,13 @@
 ---
 /**
- * ExperienceList.astro — Vertical timeline of experience entries.
+ * ExperienceList.astro — Vertical timeline spine of experience entries.
  *
- * Renders featured entries (Fletes México) first with visual emphasis.
- * Uses <ol> semantics — entries have a meaningful order.
+ * Layout: 3-column CSS Grid on desktop (1fr 80px 1fr: left | spine | right).
+ *         2-column CSS Grid on mobile  (60px 1fr: spine | cards).
+ *
+ * Cards alternate sides. Featured entries (current role) get a pulse glow.
+ * Timeline nodes are faceted SVG diamonds. Connector lines animate via
+ * scroll-driven (stroke-dashoffset) when supported.
  *
  * Props:
  *   entries — CollectionEntry<'experience'>[]
@@ -13,7 +17,6 @@ import type { CollectionEntry } from 'astro:content';
 import type { Locale } from '../i18n/index';
 import { t } from '../i18n/index';
 import ExperienceCard from './ExperienceCard.astro';
-import ScrollReveal from './ScrollReveal.astro';
 import SectionBackdrop from './SectionBackdrop.astro';
 
 interface Props {
@@ -23,47 +26,162 @@ interface Props {
 
 const { entries, locale } = Astro.props;
 
-// Sort: featured first, then by order field (ascending)
+// Sort: featured first, then reverse-chronological.
 const sorted = [...entries].sort((a, b) => {
   if (a.data.featured && !b.data.featured) return -1;
   if (!a.data.featured && b.data.featured) return 1;
+
+  const endA = a.data.current ? Number.POSITIVE_INFINITY : (a.data.endYear ?? a.data.startYear);
+  const endB = b.data.current ? Number.POSITIVE_INFINITY : (b.data.endYear ?? b.data.startYear);
+
+  if (endA !== endB) return endB - endA;
+
+  if (a.data.startYear !== b.data.startYear) {
+    return b.data.startYear - a.data.startYear;
+  }
+
   return (a.data.order ?? 0) - (b.data.order ?? 0);
 });
+
+/**
+ * Build the year label for the marker.
+ * Single year: "2021"
+ * Multi-year: "2022–2023"
+ * Current: "2023–pres"
+ */
+function yearLabel(entry: CollectionEntry<'experience'>, locale: Locale): string {
+  const { startYear, endYear, current } = entry.data;
+  if (current) {
+    const presText = t(locale, 'experience.present').slice(0, 4).toLowerCase();
+    return `${startYear}–${presText}`;
+  }
+  if (endYear && endYear !== startYear) {
+    return `${startYear}–${endYear}`;
+  }
+  return String(startYear);
+}
 ---
 
 <section id="experience" class="experience-section" aria-labelledby="experience-heading">
   <SectionBackdrop variant="experience" />
   <div class="experience-inner">
-    <ScrollReveal>
-      <h2 id="experience-heading">{t(locale, 'experience.title')}</h2>
-    </ScrollReveal>
+    <h2 id="experience-heading">{t(locale, 'experience.title')}</h2>
+    <p class="experience-intro">{t(locale, 'experience.intro')}</p>
 
-    <ol class="experience-timeline">
-      {sorted.map((entry, i) => (
-        <ScrollReveal delay={i * 80}>
-          <ExperienceCard entry={entry} locale={locale} />
-        </ScrollReveal>
-      ))}
+    <ol class="timeline" aria-label="Career timeline">
+      {sorted.map((entry, i) => {
+        // First entry (featured) → right, then alternates: right, left, right…
+        const side = i % 2 === 0 ? 'right' : 'left';
+        const isFeatured = Boolean(entry.data.featured);
+        const nodeSize = isFeatured ? 32 : 24;
+        const nodeHalf = nodeSize / 2;
+        const connectorLen = 40;
+        const label = yearLabel(entry, locale);
+
+        return (
+          <li
+            class="timeline-entry"
+            data-side={side}
+            data-featured={String(isFeatured)}
+          >
+            {/* Year marker — always floats near the spine */}
+            <span class="year-marker" aria-hidden="true">{label}</span>
+
+            {/* Diamond node on the spine */}
+            <svg
+              class:list={['timeline-node', { 'timeline-node--featured': isFeatured }]}
+              viewBox={`0 0 ${nodeSize} ${nodeSize}`}
+              width={nodeSize}
+              height={nodeSize}
+              aria-hidden="true"
+            >
+              <polygon
+                points={`${nodeHalf},2 ${nodeSize - 2},${nodeHalf} ${nodeHalf},${nodeSize - 2} 2,${nodeHalf}`}
+                fill="var(--surface)"
+                stroke="var(--brand)"
+                stroke-width="1.5"
+              />
+            </svg>
+
+            {/* Connector line from node to card edge */}
+            <svg
+              class="connector"
+              width={connectorLen}
+              height="2"
+              aria-hidden="true"
+            >
+              <line
+                x1="0"
+                y1="1"
+                x2={connectorLen}
+                y2="1"
+                stroke="var(--brand)"
+                stroke-width="1.5"
+                stroke-opacity="0.4"
+                stroke-dasharray={connectorLen}
+                stroke-dashoffset={connectorLen}
+              />
+            </svg>
+
+            {/* The card body */}
+            <ExperienceCard entry={entry} locale={locale} />
+          </li>
+        );
+      })}
     </ol>
   </div>
 </section>
 
 <style>
+  /* ── Section shell ───────────────────────────────────────────────────────── */
+
   .experience-section {
     padding: var(--space-16) var(--space-4);
-    background: var(--surface);
-    /* Position context for SectionBackdrop (position: absolute, inset: 0) */
+    background:
+      radial-gradient(circle at top left, color-mix(in srgb, var(--brand) 10%, transparent) 0%, transparent 34%),
+      radial-gradient(circle at bottom right, color-mix(in srgb, var(--accent) 8%, transparent) 0%, transparent 38%),
+      linear-gradient(180deg, color-mix(in srgb, var(--bg) 82%, var(--surface)) 0%, color-mix(in srgb, var(--bg) 92%, var(--surface)) 100%);
     position: relative;
     overflow: hidden;
   }
 
+  /* Atmospheric corner glows — kept from prior design */
+  .experience-section::before,
+  .experience-section::after {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.7;
+  }
+
+  .experience-section::before {
+    top: -120px;
+    right: -140px;
+    width: 420px;
+    height: 420px;
+    background: radial-gradient(circle, color-mix(in srgb, var(--brand) 12%, transparent) 0%, transparent 72%);
+    filter: blur(18px);
+  }
+
+  .experience-section::after {
+    bottom: -160px;
+    left: -180px;
+    width: 560px;
+    height: 260px;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 10%, transparent) 0%, transparent 70%);
+    transform: rotate(-8deg);
+    filter: blur(12px);
+  }
+
+  /* ── Inner container ─────────────────────────────────────────────────────── */
+
   .experience-inner {
-    max-width: 800px;
+    max-width: 960px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     gap: var(--space-8);
-    /* Elevate above SectionBackdrop */
     position: relative;
     z-index: 1;
   }
@@ -74,10 +192,218 @@ const sorted = [...entries].sort((a, b) => {
     color: var(--text);
   }
 
-  .experience-timeline {
+  .experience-intro {
+    max-width: 60ch;
+    margin: 0;
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  /* ── Timeline grid ───────────────────────────────────────────────────────── */
+
+  .timeline {
     list-style: none;
     padding: 0;
     margin: 0;
-    padding-left: var(--space-4);
+    /* Mobile: 2-column — spine lane (60px) + card lane (rest) */
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    /* Each row sized to content; rows are implicit */
+    position: relative;
+  }
+
+  /* Desktop: 3-column — left-cards | spine (80px) | right-cards */
+  @media (min-width: 769px) {
+    .timeline {
+      grid-template-columns: 1fr 80px 1fr;
+    }
+  }
+
+  /* ── Spine pseudo-element ────────────────────────────────────────────────── */
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    /* Mobile: left edge of spine column (at 60px mark, center = 30px) */
+    left: 30px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      var(--brand) 10%,
+      var(--brand) 90%,
+      transparent 100%
+    );
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  /* Desktop: centered in the spine column (column 2 = 1fr + 80px mid) */
+  @media (min-width: 769px) {
+    .timeline::before {
+      /* Center of the middle column: left = 50% of the outer width minus 40px (half of 80px) */
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+
+  /* ── Timeline entry ──────────────────────────────────────────────────────── */
+
+  .timeline-entry {
+    /* On mobile: span all 2 columns, use sub-grid or manual flow */
+    grid-column: 1 / -1;
+    /* Each entry is laid out internally */
+    display: grid;
+    /* Mobile: [spine-col] [card-col] */
+    grid-template-columns: 60px 1fr;
+    grid-template-rows: auto;
+    align-items: center;
+    gap: 0;
+    padding-block: var(--space-6);
+    position: relative;
+  }
+
+  @media (min-width: 769px) {
+    .timeline-entry {
+      /* Desktop: [left-card-col] [spine-col] [right-card-col] */
+      grid-template-columns: 1fr 80px 1fr;
+    }
+  }
+
+  /* ── Year marker ─────────────────────────────────────────────────────────── */
+
+  .year-marker {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    /* Mobile: sits in spine column, right-aligned */
+    grid-column: 1;
+    grid-row: 1;
+    text-align: right;
+    padding-right: var(--space-3);
+    /* Vertically centered with the node */
+    align-self: center;
+    /* Keep behind node visually */
+    z-index: 0;
+  }
+
+  @media (min-width: 769px) {
+    /* Desktop: always in the spine column (col 2), right-aligned so it sits left of the spine line */
+    .year-marker {
+      grid-column: 2;
+      grid-row: 1;
+      text-align: right;
+      padding-right: var(--space-2);
+      /* Place above the node row visually */
+      align-self: end;
+      padding-bottom: var(--space-1);
+    }
+  }
+
+  /* ── Timeline node ───────────────────────────────────────────────────────── */
+
+  .timeline-node {
+    /* Mobile: sits in the spine column, centered */
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: center;
+    align-self: center;
+    position: relative;
+    z-index: 2;
+    /* Fallback: always visible */
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  @media (min-width: 769px) {
+    .timeline-node {
+      grid-column: 2;
+      grid-row: 1;
+      justify-self: center;
+    }
+  }
+
+  .timeline-node--featured {
+    /* Pulse glow inherited from global CSS animation */
+    filter: drop-shadow(0 0 6px color-mix(in srgb, var(--brand) 60%, transparent));
+  }
+
+  /* ── Connector line ──────────────────────────────────────────────────────── */
+
+  .connector {
+    /* Mobile: hidden (no room for connector on 2-col layout) */
+    display: none;
+    /* Fallback: always visible */
+    overflow: visible;
+  }
+
+  @media (min-width: 769px) {
+    .connector {
+      display: block;
+      align-self: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Right-side entry: connector in spine col, card in right col */
+    .timeline-entry[data-side="right"] .connector {
+      grid-column: 2;
+      grid-row: 1;
+      justify-self: end;
+      /* Connector flows right from spine toward card */
+      transform: scaleX(1);
+    }
+
+    /* Left-side entry: connector in spine col, card in left col */
+    .timeline-entry[data-side="left"] .connector {
+      grid-column: 2;
+      grid-row: 1;
+      justify-self: start;
+      /* Connector flows left from spine toward card */
+      transform: scaleX(-1);
+    }
+  }
+
+  /* Fallback: show connector line fully visible (no dashoffset) */
+  .connector line {
+    stroke-dashoffset: 0;
+  }
+
+  /* ── Card placement ──────────────────────────────────────────────────────── */
+
+  /* Mobile: card always in the right column */
+  .timeline-entry .experience-card {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0; /* prevent overflow in grid */
+  }
+
+  @media (min-width: 769px) {
+    /* Desktop right-side card */
+    .timeline-entry[data-side="right"] .experience-card {
+      grid-column: 3;
+      grid-row: 1;
+    }
+
+    /* Desktop left-side card */
+    .timeline-entry[data-side="left"] .experience-card {
+      grid-column: 1;
+      grid-row: 1;
+    }
+  }
+
+  /* ── Featured pulse animation ────────────────────────────────────────────── */
+
+  .timeline-entry[data-featured="true"] .experience-card .experience-card__body {
+    animation: featured-pulse 4s ease-in-out infinite;
+  }
+
+  @keyframes featured-pulse {
+    0%, 100% { box-shadow: 0 0 24px rgba(115, 160, 190, 0.18); }
+    50%       { box-shadow: 0 0 36px rgba(115, 160, 190, 0.32); }
   }
 </style>
