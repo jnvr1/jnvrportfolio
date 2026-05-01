@@ -5,7 +5,8 @@ year: 2025
 stack: ["React", "FastAPI", "PostgreSQL", "Docker", "Capacitor"]
 summary: "Multi-tenant POS + CRM with React 19, FastAPI and Docker Compose, with Android and iOS wrappers via Capacitor."
 role: "Full-stack Lead Developer"
-placeholder: true
+cover: ../../../assets/projects/pos-la-brocha.webp
+placeholder: false
 confidential: false
 locale: en
 order: 4

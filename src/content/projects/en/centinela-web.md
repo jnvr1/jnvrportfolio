@@ -6,7 +6,8 @@ yearRange: "2024–2025"
 stack: ["Astro", "Tailwind CSS", "DecapCMS"]
 summary: "Static marketing site for the Centinela access control SaaS: SEO-first, automatic sitemap, OG tags, headless CMS."
 role: "Frontend Developer & DevOps"
-placeholder: true
+cover: ../../../assets/projects/centinela-web.webp
+placeholder: false
 confidential: false
 locale: en
 links:

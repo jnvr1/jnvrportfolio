@@ -6,7 +6,8 @@ yearRange: "2024–2025"
 stack: ["Flutter", "Firebase", "Riverpod", "go_router"]
 summary: "App móvil de gestión escolar con roles múltiples, seguimiento de objetivos y comunicación padre-maestro."
 role: "Lead Mobile Developer"
-placeholder: true
+cover: ../../../assets/projects/tita.webp
+placeholder: false
 confidential: false
 locale: es
 order: 8

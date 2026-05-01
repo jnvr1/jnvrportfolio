@@ -6,7 +6,8 @@ yearRange: "2023–2025"
 stack: ["PHP", "MySQL", "PHPMailer", "QR Code"]
 summary: "CRM de facturación CFDI 4.0, cotizaciones y repositorio de archivos con cuotas y alertas por correo."
 role: "Backend Developer"
-placeholder: true
+cover: ../../../assets/projects/brocha-facturacion.webp
+placeholder: false
 confidential: false
 locale: es
 order: 6

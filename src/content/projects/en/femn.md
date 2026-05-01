@@ -6,7 +6,8 @@ yearRange: "2024–2025"
 stack: ["Flutter", "Firebase", "Riverpod", "go_router"]
 summary: "Offline-first NGO field survey app for socioeconomic assessments and infant enrollment forms with on-device PDF generation."
 role: "Lead Mobile Developer"
-placeholder: true
+cover: ../../../assets/projects/femn.webp
+placeholder: false
 confidential: false
 locale: en
 order: 9

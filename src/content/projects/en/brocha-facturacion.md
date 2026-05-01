@@ -6,7 +6,8 @@ yearRange: "2023–2025"
 stack: ["PHP", "MySQL", "PHPMailer", "QR Code"]
 summary: "CFDI 4.0 invoicing module, quotation management, and user-scoped file repository with quotas and email alerts."
 role: "Backend Developer"
-placeholder: true
+cover: ../../../assets/projects/brocha-facturacion.webp
+placeholder: false
 confidential: false
 locale: en
 order: 6

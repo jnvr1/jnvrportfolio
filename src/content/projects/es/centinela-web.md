@@ -6,7 +6,8 @@ yearRange: "2024–2025"
 stack: ["Astro", "Tailwind CSS", "DecapCMS"]
 summary: "Landing page SSG para el SaaS de control de accesos Centinela: SEO, sitemap, OG tags y CMS headless."
 role: "Frontend Developer & DevOps"
-placeholder: true
+cover: ../../../assets/projects/centinela-web.webp
+placeholder: false
 confidential: false
 locale: es
 links:
