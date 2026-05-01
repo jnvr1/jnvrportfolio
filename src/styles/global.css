@@ -900,58 +900,10 @@ section {
   }
 }
 
-/* ── Layered Document Stack — Experience Section ─────────────────────────── */
+/* ── Faceted Stack — Experience Section (scroll-driven rise, component-scoped) ─ */
 /*
- * Cards share a single grid cell (grid-template-areas: "stack") in
- * ExperienceList.astro. nth-child transforms create the diagonal cascade.
- * Hover/focus lifts any card to z-index 11 via :has() parent selector.
- * Featured (index 0) is at the top of the stack with no offset.
+ * Band-level layout (xp-band, xp-band--featured) and the diagonal hairline
+ * divider (::after) are scoped to ExperienceList.astro.
+ * Band content grid (xp-band-content) is scoped to ExperienceCard.astro.
+ * No global overrides needed for the Faceted Stack layout.
  */
-
-/* Base card transform (fallback for cards beyond nth-child rules) */
-.xp-card {
-  transform: translate(0, 0) rotate(0deg) scale(0.96);
-}
-
-/* ── Diagonal stacking offsets ───────────────────────────────────────────── */
-
-.xp-card-wrap:nth-child(1) .xp-card { transform: translate(0,     0)    rotate(0deg)   scale(1.04); z-index: 10; }
-.xp-card-wrap:nth-child(2) .xp-card { transform: translate(24px,  18px) rotate(0.6deg) scale(0.98); z-index: 8;  }
-.xp-card-wrap:nth-child(3) .xp-card { transform: translate(48px,  36px) rotate(1.2deg) scale(0.96); z-index: 6;  }
-.xp-card-wrap:nth-child(4) .xp-card { transform: translate(72px,  54px) rotate(1.8deg) scale(0.94); z-index: 4;  }
-.xp-card-wrap:nth-child(5) .xp-card { transform: translate(96px,  72px) rotate(2.4deg) scale(0.92); z-index: 2;  }
-.xp-card-wrap:nth-child(6) .xp-card { transform: translate(120px, 90px) rotate(3.0deg) scale(0.90); z-index: 1;  }
-
-/* ── Hover / focus: lift card to front ───────────────────────────────────── */
-
-.xp-card:hover,
-.xp-card:focus-visible {
-  transform: translate(0, 0) rotate(0deg) scale(1.04) !important;
-  z-index: 11;
-  box-shadow: 0 8px 32px rgba(115, 160, 190, 0.28);
-}
-
-/* ── :has() parent-aware recede: other cards dim when one is active ──────── */
-
-.xp-stack:has(.xp-card:hover) .xp-card-wrap:not(:has(.xp-card:hover)) .xp-card,
-.xp-stack:has(.xp-card:focus-visible) .xp-card-wrap:not(:has(.xp-card:focus-visible)) .xp-card {
-  opacity: 0.55;
-}
-
-/* ── Mobile ≤768px: flat vertical — transforms reset by ExperienceList ───── */
-/* (The flex layout in ExperienceList.astro handles mobile; no transforms needed) */
-
-/* ── Reduced-motion: disable all stack transforms and transitions ─────────── */
-
-@media (prefers-reduced-motion: reduce) {
-  .xp-card {
-    transform: none !important;
-    transition: none !important;
-    opacity: 1 !important;
-  }
-
-  .xp-stack:has(.xp-card:hover) .xp-card-wrap:not(:has(.xp-card:hover)) .xp-card,
-  .xp-stack:has(.xp-card:focus-visible) .xp-card-wrap:not(:has(.xp-card:focus-visible)) .xp-card {
-    opacity: 1 !important;
-  }
-}
