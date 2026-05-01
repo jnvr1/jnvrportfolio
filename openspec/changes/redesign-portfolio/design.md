@@ -1263,21 +1263,21 @@ Bundle delta: NET REDUCTION (~600 B CSS removed for spine/nodes/connectors/pulse
 
 A11y notes: bands stay as semantic `<ol><li>` with `<time datetime>` for the year range, headings hierarchy preserved. Featured carries `aria-current="true"`. No reliance on `:has()` or other progressive selectors.
 
-### 14.5 ADR-8: Experience Section Layout V2 — Faceted Stack (replaces Timeline Spine)
+### 14.5 ADR-8: Experience Section Layout V2 — Layered Document (replaces Timeline Spine)
 
-- **Status**: Proposed (awaiting user accept/reject)
-- **Context**: V1 implemented a timeline spine (vertical rail + alternating cards + diamond nodes + featured pulse). User rejected it ("no me gusta") without specifics. Diagnostic concludes the spine read as infographic, broke the portfolio's editorial restraint, and competed with the global animated orbs. The portfolio's voice is faceted-atmospheric-editorial — the experience section is the only place that diverged from it.
-- **Decision**: Adopt **Option A — Faceted Stack**: full-width horizontal bands stacked vertically, each band laid out as `[year-mono-display][content]`, separated by thin diagonal hairline dividers echoing the logo's letter cuts. Featured Fletes band gets a 2px brand top edge + accent company color + inline 3-polygon facet cluster behind text — no pulse, no glow, no scale change. Scroll-driven `xp-band-rise` entrance animation only.
+- **Status**: Accepted — Option C implemented (supersedes Option A proposal)
+- **Context**: V1 implemented a timeline spine (vertical rail + alternating cards + diamond nodes + featured pulse). User rejected it ("no me gusta") without specifics. Diagnostic concludes the spine read as infographic, broke the portfolio's editorial restraint, and competed with the global animated orbs. The portfolio's voice is faceted-atmospheric-editorial — the experience section is the only place that diverged from it. Option A (Faceted Stack) was proposed but user explicitly chose Option C.
+- **Decision**: Adopt **Option C — Layered Document**: roles rendered as overlapping translucent glass panels cascaded diagonally. Featured Fletes is the top paper (z-index 10, scale 1.04, brand top-edge, soft glow). Past roles peek behind with progressive diagonal offsets (24px x / 18px y per layer, +0.6deg rotation, -0.02 scale). Hover/focus on any card lifts it to z-index 11 via CSS `:has()` parent selector; other cards recede to opacity 0.55. CSS-only, 0 KB JS.
 - **Consequences**:
-  - **Files modified**: `src/components/ExperienceList.astro` (rewrite to flat `<ol>` of bands), `src/components/ExperienceCard.astro` (strip card chrome, render as band content), `src/styles/global.css` (remove timeline-spine + node + connector + featured-pulse blocks, add band styles + entrance animation)
-  - **Files unchanged**: `src/components/SectionBackdrop.astro` (experience variant kept; revisit only if visually redundant), all content markdown, all i18n strings, all schemas, all tests
-  - **Bundle delta**: ~+100 B CSS net (deletes ~600 B spine code, adds ~700 B band code), 0 KB JS, 0 KB SVG assets
-  - **A11y**: same `<ol><li><time>` semantics; reduced-motion respects entrance animation suppression; featured uses `aria-current="true"` instead of pulsing
-  - **Performance**: each band = 1 composite layer; entrance animation is a single transform+opacity on view-timeline = GPU-composited; zero idle paint cost; no JS scroll listeners
+  - **Files modified**: `src/components/ExperienceList.astro` (rewrite: `<ol class="xp-stack">` with `grid-template-areas: "stack"`, all cards share one cell), `src/components/ExperienceCard.astro` (rewrite: glass panel with clip-path facets, year mono label, body truncation for past cards), `src/styles/global.css` (delete timeline-spine/node-bloom/connector-draw/featured-pulse blocks; add xp-stack grid, nth-child diagonal transforms, :has() recede, reduced-motion overrides)
+  - **Files unchanged**: `src/components/SectionBackdrop.astro`, all content markdown, all i18n strings, all schemas, all tests
+  - **Bundle delta**: NET REDUCTION (~600 B CSS removed for spine/nodes/connectors/pulse, ~800 B added for stack/transforms/recede = ~+200 B). Zero new JS. Zero new SVG assets.
+  - **A11y**: `<ol><li><article tabindex="0">` semantics; featured carries `aria-current="true"`; focus ring drawn as box-shadow (not clipped by clip-path); reduced-motion guard disables all transforms and makes the stack flat
+  - **Performance**: each card = 1 composite layer (transform + opacity only); hover transition is a single transform swap; zero idle paint cost; no JS scroll listeners
 - **Alternatives considered**:
-  - **Option B — Constellation Grid**: too "designed", risks the portfolio reading as an art-piece rather than a craftsman's record; tilt + dual clip-path interacts awkwardly with focus rings; mobile collapse loses the entire concept
-  - **Option C — Layered Document**: most original but relies on `:has()` for the core interaction and introduces a hidden-content reveal pattern that hurts skim-readability; high-spectacle solution to a section that benefits from quiet
+  - **Option A — Faceted Stack**: full-width horizontal bands with mono year column; recommended by initial diagnostic for editorial restraint but rejected by user in favor of Option C
+  - **Option B — Constellation Grid**: too "designed", tilt + dual clip-path interacts awkwardly with focus rings; mobile collapse loses the entire concept
   - **Keep Timeline Spine V1**: rejected by user; diagnostic confirms it diverges from the established voice
-- **Forward path**: If A ships and reads well, the same band rhythm could replace Footer link clusters (currently grid-of-tiles) for unified language. Out of scope here.
+- **Forward path**: The glass panel vocabulary (rgba surface + backdrop-filter + clip-path facets) established here could be applied to ProjectCard for a unified language. Out of scope for this change.
 
 ---
