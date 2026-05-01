@@ -899,3 +899,74 @@ section {
     opacity: 0.3;
   }
 }
+
+/* ── Timeline Spine — Scroll-Driven Choreography ─────────────────────────── */
+/*
+ * Nodes bloom in and connector lines draw in as entries scroll into view.
+ * Fallback (outside @supports): nodes are fully visible, connectors drawn.
+ * The fallback declarations below ensure static visibility in all browsers.
+ */
+
+/* Fallback: nodes always visible */
+.timeline-node {
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* Fallback: connector lines always drawn */
+.connector line {
+  stroke-dashoffset: 0;
+}
+
+/* ── Featured role pulse animation ───────────────────────────────────────── */
+
+@keyframes featured-pulse {
+  0%, 100% { box-shadow: 0 0 24px rgba(115, 160, 190, 0.18); }
+  50%       { box-shadow: 0 0 36px rgba(115, 160, 190, 0.32); }
+}
+
+/* ── Scroll-driven: node bloom on view ───────────────────────────────────── */
+
+@supports (animation-timeline: view()) {
+  @keyframes timeline-node-bloom {
+    0%   { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1);   opacity: 1; }
+  }
+
+  .timeline-node {
+    animation: timeline-node-bloom linear;
+    animation-timeline: view();
+    animation-range: entry 20% cover 50%;
+  }
+}
+
+/* ── Scroll-driven: connector draw-in on view ────────────────────────────── */
+
+@supports (animation-timeline: view()) {
+  @keyframes connector-draw {
+    to { stroke-dashoffset: 0; }
+  }
+
+  .connector line {
+    animation: connector-draw linear;
+    animation-timeline: view();
+    animation-range: entry 25% cover 55%;
+  }
+}
+
+/* ── Reduced-motion: disable all timeline animations ─────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .timeline-node,
+  .connector line {
+    animation: none !important;
+    transform: scale(1) !important;
+    opacity: 1 !important;
+    stroke-dashoffset: 0 !important;
+  }
+
+  .timeline-entry[data-featured="true"] .experience-card .experience-card__body,
+  .timeline-entry[data-featured="true"] .experience-card__body {
+    animation: none !important;
+  }
+}
