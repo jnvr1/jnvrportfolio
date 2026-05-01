@@ -900,10 +900,3 @@ section {
   }
 }
 
-/* ── Faceted Stack — Experience Section (scroll-driven rise, component-scoped) ─ */
-/*
- * Band-level layout (xp-band, xp-band--featured) and the diagonal hairline
- * divider (::after) are scoped to ExperienceList.astro.
- * Band content grid (xp-band-content) is scoped to ExperienceCard.astro.
- * No global overrides needed for the Faceted Stack layout.
- */
