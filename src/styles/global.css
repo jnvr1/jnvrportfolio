@@ -900,73 +900,58 @@ section {
   }
 }
 
-/* ── Timeline Spine — Scroll-Driven Choreography ─────────────────────────── */
+/* ── Layered Document Stack — Experience Section ─────────────────────────── */
 /*
- * Nodes bloom in and connector lines draw in as entries scroll into view.
- * Fallback (outside @supports): nodes are fully visible, connectors drawn.
- * The fallback declarations below ensure static visibility in all browsers.
+ * Cards share a single grid cell (grid-template-areas: "stack") in
+ * ExperienceList.astro. nth-child transforms create the diagonal cascade.
+ * Hover/focus lifts any card to z-index 11 via :has() parent selector.
+ * Featured (index 0) is at the top of the stack with no offset.
  */
 
-/* Fallback: nodes always visible */
-.timeline-node {
-  transform: scale(1);
-  opacity: 1;
+/* Base card transform (fallback for cards beyond nth-child rules) */
+.xp-card {
+  transform: translate(0, 0) rotate(0deg) scale(0.96);
 }
 
-/* Fallback: connector lines always drawn */
-.connector line {
-  stroke-dashoffset: 0;
+/* ── Diagonal stacking offsets ───────────────────────────────────────────── */
+
+.xp-card-wrap:nth-child(1) .xp-card { transform: translate(0,     0)    rotate(0deg)   scale(1.04); z-index: 10; }
+.xp-card-wrap:nth-child(2) .xp-card { transform: translate(24px,  18px) rotate(0.6deg) scale(0.98); z-index: 8;  }
+.xp-card-wrap:nth-child(3) .xp-card { transform: translate(48px,  36px) rotate(1.2deg) scale(0.96); z-index: 6;  }
+.xp-card-wrap:nth-child(4) .xp-card { transform: translate(72px,  54px) rotate(1.8deg) scale(0.94); z-index: 4;  }
+.xp-card-wrap:nth-child(5) .xp-card { transform: translate(96px,  72px) rotate(2.4deg) scale(0.92); z-index: 2;  }
+.xp-card-wrap:nth-child(6) .xp-card { transform: translate(120px, 90px) rotate(3.0deg) scale(0.90); z-index: 1;  }
+
+/* ── Hover / focus: lift card to front ───────────────────────────────────── */
+
+.xp-card:hover,
+.xp-card:focus-visible {
+  transform: translate(0, 0) rotate(0deg) scale(1.04) !important;
+  z-index: 11;
+  box-shadow: 0 8px 32px rgba(115, 160, 190, 0.28);
 }
 
-/* ── Featured role pulse animation ───────────────────────────────────────── */
+/* ── :has() parent-aware recede: other cards dim when one is active ──────── */
 
-@keyframes featured-pulse {
-  0%, 100% { box-shadow: 0 0 24px rgba(115, 160, 190, 0.18); }
-  50%       { box-shadow: 0 0 36px rgba(115, 160, 190, 0.32); }
+.xp-stack:has(.xp-card:hover) .xp-card-wrap:not(:has(.xp-card:hover)) .xp-card,
+.xp-stack:has(.xp-card:focus-visible) .xp-card-wrap:not(:has(.xp-card:focus-visible)) .xp-card {
+  opacity: 0.55;
 }
 
-/* ── Scroll-driven: node bloom on view ───────────────────────────────────── */
+/* ── Mobile ≤768px: flat vertical — transforms reset by ExperienceList ───── */
+/* (The flex layout in ExperienceList.astro handles mobile; no transforms needed) */
 
-@supports (animation-timeline: view()) {
-  @keyframes timeline-node-bloom {
-    0%   { transform: scale(0.5); opacity: 0; }
-    100% { transform: scale(1);   opacity: 1; }
-  }
-
-  .timeline-node {
-    animation: timeline-node-bloom linear;
-    animation-timeline: view();
-    animation-range: entry 20% cover 50%;
-  }
-}
-
-/* ── Scroll-driven: connector draw-in on view ────────────────────────────── */
-
-@supports (animation-timeline: view()) {
-  @keyframes connector-draw {
-    to { stroke-dashoffset: 0; }
-  }
-
-  .connector line {
-    animation: connector-draw linear;
-    animation-timeline: view();
-    animation-range: entry 25% cover 55%;
-  }
-}
-
-/* ── Reduced-motion: disable all timeline animations ─────────────────────── */
+/* ── Reduced-motion: disable all stack transforms and transitions ─────────── */
 
 @media (prefers-reduced-motion: reduce) {
-  .timeline-node,
-  .connector line {
-    animation: none !important;
-    transform: scale(1) !important;
+  .xp-card {
+    transform: none !important;
+    transition: none !important;
     opacity: 1 !important;
-    stroke-dashoffset: 0 !important;
   }
 
-  .timeline-entry[data-featured="true"] .experience-card .experience-card__body,
-  .timeline-entry[data-featured="true"] .experience-card__body {
-    animation: none !important;
+  .xp-stack:has(.xp-card:hover) .xp-card-wrap:not(:has(.xp-card:hover)) .xp-card,
+  .xp-stack:has(.xp-card:focus-visible) .xp-card-wrap:not(:has(.xp-card:focus-visible)) .xp-card {
+    opacity: 1 !important;
   }
 }
