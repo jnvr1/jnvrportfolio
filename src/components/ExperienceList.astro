@@ -1,13 +1,13 @@
 ---
 /**
- * ExperienceList.astro — Vertical timeline spine of experience entries.
+ * ExperienceList.astro — Layered Document stack of experience entries.
  *
- * Layout: 3-column CSS Grid on desktop (1fr 80px 1fr: left | spine | right).
- *         2-column CSS Grid on mobile  (60px 1fr: spine | cards).
+ * Layout: All cards share a single grid cell (grid-template-areas: "stack"),
+ *         offset diagonally via CSS transforms — the featured role at the top,
+ *         past roles cascaded behind it. Hover/focus lifts any card to the front.
  *
- * Cards alternate sides. Featured entries (current role) get a pulse glow.
- * Timeline nodes are faceted SVG diamonds. Connector lines animate via
- * scroll-driven (stroke-dashoffset) when supported.
+ * On mobile (≤768px) and reduced-motion: transforms are reset, cards stack
+ * vertically in normal flow.
  *
  * Props:
  *   entries — CollectionEntry<'experience'>[]
@@ -44,7 +44,7 @@ const sorted = [...entries].sort((a, b) => {
 });
 
 /**
- * Build the year label for the marker.
+ * Build the year label for the card.
  * Single year: "2021"
  * Multi-year: "2022–2023"
  * Current: "2023–pres"
@@ -68,63 +68,19 @@ function yearLabel(entry: CollectionEntry<'experience'>, locale: Locale): string
     <h2 id="experience-heading">{t(locale, 'experience.title')}</h2>
     <p class="experience-intro">{t(locale, 'experience.intro')}</p>
 
-    <ol class="timeline" aria-label="Career timeline">
-      {sorted.map((entry, i) => {
-        // First entry (featured) → right, then alternates: right, left, right…
-        const side = i % 2 === 0 ? 'right' : 'left';
+    <ol class="xp-stack" aria-label="Career timeline">
+      {sorted.map((entry, index) => {
         const isFeatured = Boolean(entry.data.featured);
-        const nodeSize = isFeatured ? 32 : 24;
-        const nodeHalf = nodeSize / 2;
-        const connectorLen = 40;
         const label = yearLabel(entry, locale);
-
         return (
-          <li
-            class="timeline-entry"
-            data-side={side}
-            data-featured={String(isFeatured)}
-          >
-            {/* Year marker — always floats near the spine */}
-            <span class="year-marker" aria-hidden="true">{label}</span>
-
-            {/* Diamond node on the spine */}
-            <svg
-              class:list={['timeline-node', { 'timeline-node--featured': isFeatured }]}
-              viewBox={`0 0 ${nodeSize} ${nodeSize}`}
-              width={nodeSize}
-              height={nodeSize}
-              aria-hidden="true"
-            >
-              <polygon
-                points={`${nodeHalf},2 ${nodeSize - 2},${nodeHalf} ${nodeHalf},${nodeSize - 2} 2,${nodeHalf}`}
-                fill="var(--surface)"
-                stroke="var(--brand)"
-                stroke-width="1.5"
-              />
-            </svg>
-
-            {/* Connector line from node to card edge */}
-            <svg
-              class="connector"
-              width={connectorLen}
-              height="2"
-              aria-hidden="true"
-            >
-              <line
-                x1="0"
-                y1="1"
-                x2={connectorLen}
-                y2="1"
-                stroke="var(--brand)"
-                stroke-width="1.5"
-                stroke-opacity="0.4"
-                stroke-dasharray={connectorLen}
-                stroke-dashoffset={connectorLen}
-              />
-            </svg>
-
-            {/* The card body */}
-            <ExperienceCard entry={entry} locale={locale} />
+          <li class="xp-card-wrap" data-index={index}>
+            <ExperienceCard
+              entry={entry}
+              locale={locale}
+              index={index}
+              isFeatured={isFeatured}
+              yearLabel={label}
+            />
           </li>
         );
       })}
@@ -145,7 +101,7 @@ function yearLabel(entry: CollectionEntry<'experience'>, locale: Locale): string
     overflow: hidden;
   }
 
-  /* Atmospheric corner glows — kept from prior design */
+  /* Atmospheric corner glows */
   .experience-section::before,
   .experience-section::after {
     content: '';
@@ -200,210 +156,42 @@ function yearLabel(entry: CollectionEntry<'experience'>, locale: Locale): string
     line-height: 1.7;
   }
 
-  /* ── Timeline grid ───────────────────────────────────────────────────────── */
+  /* ── Layered Document stack ──────────────────────────────────────────────── */
 
-  .timeline {
+  .xp-stack {
     list-style: none;
     padding: 0;
     margin: 0;
-    /* Mobile: 2-column — spine lane (60px) + card lane (rest) */
+    /* All cards share one grid cell — stacking context */
     display: grid;
-    grid-template-columns: 60px 1fr;
-    /* Each row sized to content; rows are implicit */
+    grid-template-areas: "stack";
+    /* Enough height so the diagonal cascade has room without overflow */
+    min-height: clamp(400px, 50vh, 520px);
+    /* Right padding makes room for the peeking edges of cards behind */
+    padding-inline-end: clamp(80px, 12vw, 140px);
+    padding-block-end: clamp(60px, 8vh, 100px);
     position: relative;
   }
 
-  /* Desktop: 3-column — left-cards | spine (80px) | right-cards */
-  @media (min-width: 769px) {
-    .timeline {
-      grid-template-columns: 1fr 80px 1fr;
-    }
+  .xp-card-wrap {
+    grid-area: stack;
   }
 
-  /* ── Spine pseudo-element ────────────────────────────────────────────────── */
+  /* ── Mobile: flatten to vertical stack ──────────────────────────────────── */
 
-  .timeline::before {
-    content: '';
-    position: absolute;
-    /* Mobile: left edge of spine column (at 60px mark, center = 30px) */
-    left: 30px;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: linear-gradient(
-      180deg,
-      transparent 0%,
-      var(--brand) 10%,
-      var(--brand) 90%,
-      transparent 100%
-    );
-    opacity: 0.3;
-    pointer-events: none;
-  }
-
-  /* Desktop: centered in the spine column (column 2 = 1fr + 80px mid) */
-  @media (min-width: 769px) {
-    .timeline::before {
-      /* Center of the middle column: left = 50% of the outer width minus 40px (half of 80px) */
-      left: 50%;
-      transform: translateX(-50%);
-    }
-  }
-
-  /* ── Timeline entry ──────────────────────────────────────────────────────── */
-
-  .timeline-entry {
-    /* On mobile: span all 2 columns, use sub-grid or manual flow */
-    grid-column: 1 / -1;
-    /* Each entry is laid out internally */
-    display: grid;
-    /* Mobile: [spine-col] [card-col] */
-    grid-template-columns: 60px 1fr;
-    grid-template-rows: auto;
-    align-items: center;
-    gap: 0;
-    padding-block: var(--space-6);
-    position: relative;
-  }
-
-  @media (min-width: 769px) {
-    .timeline-entry {
-      /* Desktop: [left-card-col] [spine-col] [right-card-col] */
-      grid-template-columns: 1fr 80px 1fr;
-    }
-  }
-
-  /* ── Year marker ─────────────────────────────────────────────────────────── */
-
-  .year-marker {
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
-    color: var(--text-muted);
-    white-space: nowrap;
-    /* Mobile: sits in spine column, right-aligned */
-    grid-column: 1;
-    grid-row: 1;
-    text-align: right;
-    padding-right: var(--space-3);
-    /* Vertically centered with the node */
-    align-self: center;
-    /* Keep behind node visually */
-    z-index: 0;
-  }
-
-  @media (min-width: 769px) {
-    /* Desktop: always in the spine column (col 2), right-aligned so it sits left of the spine line */
-    .year-marker {
-      grid-column: 2;
-      grid-row: 1;
-      text-align: right;
-      padding-right: var(--space-2);
-      /* Place above the node row visually */
-      align-self: end;
-      padding-bottom: var(--space-1);
-    }
-  }
-
-  /* ── Timeline node ───────────────────────────────────────────────────────── */
-
-  .timeline-node {
-    /* Mobile: sits in the spine column, centered */
-    grid-column: 1;
-    grid-row: 1;
-    justify-self: center;
-    align-self: center;
-    position: relative;
-    z-index: 2;
-    /* Fallback: always visible */
-    transform: scale(1);
-    opacity: 1;
-  }
-
-  @media (min-width: 769px) {
-    .timeline-node {
-      grid-column: 2;
-      grid-row: 1;
-      justify-self: center;
-    }
-  }
-
-  .timeline-node--featured {
-    /* Pulse glow inherited from global CSS animation */
-    filter: drop-shadow(0 0 6px color-mix(in srgb, var(--brand) 60%, transparent));
-  }
-
-  /* ── Connector line ──────────────────────────────────────────────────────── */
-
-  .connector {
-    /* Mobile: hidden (no room for connector on 2-col layout) */
-    display: none;
-    /* Fallback: always visible */
-    overflow: visible;
-  }
-
-  @media (min-width: 769px) {
-    .connector {
-      display: block;
-      align-self: center;
-      position: relative;
-      z-index: 1;
+  @media (max-width: 768px) {
+    .xp-stack {
+      grid-template-areas: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      min-height: auto;
+      padding-inline-end: 0;
+      padding-block-end: 0;
     }
 
-    /* Right-side entry: connector in spine col, card in right col */
-    .timeline-entry[data-side="right"] .connector {
-      grid-column: 2;
-      grid-row: 1;
-      justify-self: end;
-      /* Connector flows right from spine toward card */
-      transform: scaleX(1);
+    .xp-card-wrap {
+      grid-area: auto;
     }
-
-    /* Left-side entry: connector in spine col, card in left col */
-    .timeline-entry[data-side="left"] .connector {
-      grid-column: 2;
-      grid-row: 1;
-      justify-self: start;
-      /* Connector flows left from spine toward card */
-      transform: scaleX(-1);
-    }
-  }
-
-  /* Fallback: show connector line fully visible (no dashoffset) */
-  .connector line {
-    stroke-dashoffset: 0;
-  }
-
-  /* ── Card placement ──────────────────────────────────────────────────────── */
-
-  /* Mobile: card always in the right column */
-  .timeline-entry .experience-card {
-    grid-column: 2;
-    grid-row: 1;
-    min-width: 0; /* prevent overflow in grid */
-  }
-
-  @media (min-width: 769px) {
-    /* Desktop right-side card */
-    .timeline-entry[data-side="right"] .experience-card {
-      grid-column: 3;
-      grid-row: 1;
-    }
-
-    /* Desktop left-side card */
-    .timeline-entry[data-side="left"] .experience-card {
-      grid-column: 1;
-      grid-row: 1;
-    }
-  }
-
-  /* ── Featured pulse animation ────────────────────────────────────────────── */
-
-  .timeline-entry[data-featured="true"] .experience-card .experience-card__body {
-    animation: featured-pulse 4s ease-in-out infinite;
-  }
-
-  @keyframes featured-pulse {
-    0%, 100% { box-shadow: 0 0 24px rgba(115, 160, 190, 0.18); }
-    50%       { box-shadow: 0 0 36px rgba(115, 160, 190, 0.32); }
   }
 </style>
