@@ -122,7 +122,13 @@ const sampleExperience = {
     <div class="dev-section" id="test-experience-card">
       <div class="dev-label">ExperienceCard.astro (featured=true)</div>
       <ol style="list-style:none;padding:0;padding-left:1rem;">
-        <ExperienceCard entry={sampleExperience as any} locale="es" />
+        <ExperienceCard
+          entry={sampleExperience as any}
+          locale="es"
+          index={0}
+          isFeatured={true}
+          yearLabel="2023–pres"
+        />
       </ol>
     </div>
 
