@@ -1,13 +1,19 @@
 ---
 /**
- * ExperienceCard.astro — Single experience entry as a translucent layered panel.
+ * ExperienceCard.astro — Single experience entry as an editorial band row.
  *
- * Each card is a glass-morphism panel with faceted clip-path corners, positioned
- * in the shared stacking grid cell via nth-child transforms in global.css.
+ * Renders the INNER CONTENT of an xp-band <li> (the <li> itself lives in
+ * ExperienceList.astro and owns the band-level chrome: padding, divider, featured
+ * top edge). This component is responsible for:
  *
- * Featured card (Fletes, index 0): top of the stack, full content visible,
- * brand top-edge accent, subtle glow. Past cards: slightly offset, body
- * truncated to 3 lines until hover/focus reveals full content.
+ *   LEFT column  — large mono year anchor (tabular-nums, text-muted)
+ *   RIGHT column — role title, company, location, summary, highlights, stack chips
+ *
+ * Featured band (isFeatured=true): brand top-edge + accent company color +
+ * 3-polygon facet cluster SVG positioned top-right of the content area.
+ *
+ * All highlights are visible by default for ALL bands (no truncation, no hover gate).
+ * Summary paragraph is never truncated.
  *
  * Props:
  *   entry      — CollectionEntry<'experience'>
@@ -37,145 +43,176 @@ const dateRange = `${startYear}/${endYear ?? 'present'}`;
 ---
 
 <article
-  class:list={['xp-card', { 'xp-card--featured': isFeatured }]}
+  class:list={['xp-band-content', { 'xp-band-content--featured': isFeatured }]}
   data-index={index}
-  data-featured={isFeatured ? 'true' : 'false'}
   aria-current={isFeatured ? 'true' : undefined}
-  tabindex="0"
 >
-  {/* Year range — mono, top of card */}
-  <span class="xp-card__year" aria-hidden="true">{yearLabel}</span>
+  {/* LEFT: year column */}
+  <div class="xp-band__year-col" aria-hidden="true">
+    <span class="xp-band__year">{yearLabel}</span>
+  </div>
 
-  <header class="xp-card__header">
-    <h3 class="xp-card__role">{role}</h3>
-    <div class="xp-card__company-row">
-      <span class="xp-card__company">{company}</span>
-      {location && (
-        <span class="xp-card__location" aria-label={`Location: ${location}`}>
-          {location}
-        </span>
+  {/* RIGHT: content column */}
+  <div class="xp-band__content-col">
+    {/* Featured facet cluster — positioned top-right of content area */}
+    {isFeatured && (
+      <svg
+        class="featured-facets"
+        viewBox="0 0 80 60"
+        width="80"
+        height="60"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <polygon points="0,0 50,0 30,30 0,15" fill="var(--brand)" opacity="0.18" />
+        <polygon points="50,0 80,15 60,40 30,30" fill="var(--brand)" opacity="0.12" />
+        <polygon points="0,15 30,30 25,55 0,45" fill="var(--brand)" opacity="0.08" />
+      </svg>
+    )}
+
+    <header class="xp-band__header">
+      <div class="xp-band__company-row">
+        <span class="xp-band__company">{company}</span>
+        {location && (
+          <span class="xp-band__location" aria-label={`Location: ${location}`}>
+            {location}
+          </span>
+        )}
+      </div>
+
+      <h3 class="xp-band__role">{role}</h3>
+
+      {current && (
+        <span class="xp-band__badge">{currentRoleLabel}</span>
+      )}
+
+      {/* Hidden accessible time element — year is visually in the left column */}
+      <time
+        class="sr-only"
+        datetime={dateRange}
+        aria-label={yearLabel}
+      >
+        {yearLabel}
+      </time>
+    </header>
+
+    <div class="xp-band__body">
+      <p class="xp-band__summary">{summary}</p>
+
+      {highlights && highlights.length > 0 && (
+        <ul class="xp-band__highlights">
+          {highlights.map((h: string) => (
+            <li>{h}</li>
+          ))}
+        </ul>
       )}
     </div>
-    {current && (
-      <span class="xp-card__badge">{currentRoleLabel}</span>
-    )}
-    <time
-      class="xp-card__period sr-only"
-      datetime={dateRange}
-      aria-label={`${yearLabel}`}
-    >
-      {yearLabel}
-    </time>
-  </header>
 
-  <div class="xp-card__body">
-    <p class="xp-card__summary">{summary}</p>
-
-    {highlights && highlights.length > 0 && (
-      <ul class="xp-card__highlights">
-        {highlights.map((h: string) => (
-          <li>{h}</li>
+    {stack && stack.length > 0 && (
+      <ul class="stack-chips" aria-label="Tech stack">
+        {stack.map((tech: string) => (
+          <li class="stack-chip">
+            <svg viewBox="0 0 8 8" width="8" height="8" aria-hidden="true">
+              <polygon points="4,0 8,4 4,8 0,4" fill="var(--brand)" opacity="0.6" />
+            </svg>
+            <span>{tech}</span>
+          </li>
         ))}
       </ul>
     )}
   </div>
-
-  {stack && stack.length > 0 && (
-    <ul class="stack-chips" aria-label="Tech stack">
-      {stack.map((tech: string) => (
-        <li class="stack-chip">
-          <svg viewBox="0 0 8 8" width="8" height="8" aria-hidden="true">
-            <polygon points="4,0 8,4 4,8 0,4" fill="var(--brand)" opacity="0.6" />
-          </svg>
-          <span>{tech}</span>
-        </li>
-      ))}
-    </ul>
-  )}
 </article>
 
 <style>
-  /* ── Card panel — glass morphism translucent paper ───────────────────────── */
+  /* ── Band content: two-column grid ─────────────────────────────────────── */
 
-  .xp-card {
-    /* Translucent glass surface */
-    background-color: rgba(15, 41, 63, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+  .xp-band-content {
+    display: grid;
+    grid-template-columns: clamp(7rem, 14vw, 11rem) 1fr;
+    gap: var(--space-6);
+    align-items: start;
+  }
 
-    /* Faceted edges echoing logo letter cuts */
-    clip-path: polygon(
-      0 0,
-      calc(100% - 20px) 0,
-      100% 20px,
-      100% 100%,
-      20px 100%,
-      0 calc(100% - 20px)
-    );
+  /* ── Year column ─────────────────────────────────────────────────────────── */
 
-    /* Brand-tinted border */
-    border: 1px solid rgba(115, 160, 190, 0.15);
+  .xp-band__year-col {
+    display: flex;
+    justify-content: flex-end;
+    align-self: start;
+    padding-top: 0.15em; /* optical alignment with company row */
+  }
 
-    /* Generous internal spacing */
-    padding: var(--space-6);
+  .xp-band__year {
+    font-family: var(--font-mono);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-variant-numeric: tabular-nums;
+    font-weight: 400;
+    color: var(--text-muted);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    white-space: nowrap;
+  }
 
-    /* Consistent height across the stack */
-    min-height: clamp(280px, 30vh, 360px);
+  /* ── Content column ──────────────────────────────────────────────────────── */
 
-    /* Flex layout for content */
+  .xp-band__content-col {
+    position: relative; /* anchor for facet cluster */
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
-
-    /* Focus ring on inner content, not the clipped outer — use outline-offset */
-    outline: none;
-
-    /* Transition for hover/focus lift */
-    transition:
-      transform 400ms cubic-bezier(0.16, 1, 0.3, 1),
-      opacity 300ms var(--ease-standard),
-      box-shadow 300ms var(--ease-standard);
-
-    /* Cursor */
-    cursor: default;
   }
 
-  /* Focus ring drawn inside, not clipped by clip-path */
-  .xp-card:focus-visible {
-    box-shadow:
-      0 0 0 2px var(--bg),
-      0 0 0 4px var(--brand),
-      0 8px 32px rgba(115, 160, 190, 0.18);
-  }
+  /* ── Featured facet cluster ──────────────────────────────────────────────── */
 
-  /* ── Featured card: top of stack ─────────────────────────────────────────── */
-
-  .xp-card--featured {
-    border-top: 2px solid var(--brand);
-    box-shadow: 0 8px 32px rgba(115, 160, 190, 0.18);
-    /* Scale up slightly vs the base card transform */
-  }
-
-  /* ── Year range — mono, muted ────────────────────────────────────────────── */
-
-  .xp-card__year {
-    font-family: var(--font-mono);
-    font-size: var(--text-caption);
-    color: var(--text-muted);
-    letter-spacing: 0.04em;
+  .featured-facets {
+    position: absolute;
+    top: 0;
+    right: 0;
+    pointer-events: none;
     flex-shrink: 0;
   }
 
   /* ── Header ──────────────────────────────────────────────────────────────── */
 
-  .xp-card__header {
+  .xp-band__header {
     display: flex;
     flex-direction: column;
     gap: var(--space-1);
-    flex-shrink: 0;
+    /* Make sure header doesn't overlap the facet cluster on wide viewports */
+    padding-right: clamp(0px, 5vw, 96px);
   }
 
-  .xp-card__role {
+  .xp-band-content--featured .xp-band__header {
+    padding-right: 92px; /* reserve space for the 80px facet cluster + gap */
+  }
+
+  .xp-band__company-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+  }
+
+  .xp-band__company {
+    font-family: var(--font-heading);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+
+  /* Featured: company name in accent warm-light-blue */
+  .xp-band-content--featured .xp-band__company {
+    color: var(--accent);
+  }
+
+  .xp-band__location {
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+    opacity: 0.7;
+  }
+
+  .xp-band__role {
     font-family: var(--font-heading);
     font-size: clamp(1rem, 1.5vw + 0.5rem, 1.25rem);
     font-weight: 600;
@@ -184,30 +221,7 @@ const dateRange = `${startYear}/${endYear ?? 'present'}`;
     line-height: var(--leading-snug);
   }
 
-  .xp-card__company-row {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    flex-wrap: wrap;
-  }
-
-  .xp-card__company {
-    font-size: 0.9375rem;
-    font-weight: 500;
-    color: var(--muted);
-  }
-
-  .xp-card--featured .xp-card__company {
-    color: var(--accent);
-  }
-
-  .xp-card__location {
-    font-size: 0.8125rem;
-    color: var(--text-muted);
-    opacity: 0.7;
-  }
-
-  .xp-card__badge {
+  .xp-band__badge {
     align-self: flex-start;
     font-family: var(--font-mono);
     font-size: 0.6875rem;
@@ -220,75 +234,38 @@ const dateRange = `${startYear}/${endYear ?? 'present'}`;
     padding: 3px var(--space-2);
   }
 
-  .xp-card__period {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--muted);
-  }
+  /* ── Body ────────────────────────────────────────────────────────────────── */
 
-  /* ── Body — truncated for past roles, full for featured ──────────────────── */
-
-  .xp-card__body {
+  .xp-band__body {
     display: flex;
     flex-direction: column;
     gap: var(--space-2);
-    flex: 1;
-    min-height: 0;
-    overflow: hidden;
   }
 
-  .xp-card__summary {
+  .xp-band__summary {
     font-size: 0.875rem;
     color: var(--muted);
     line-height: 1.6;
     margin: 0;
-    /* Past cards: truncate to 3 lines */
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
   }
 
-  /* Featured: show full summary */
-  .xp-card--featured .xp-card__summary {
-    -webkit-line-clamp: unset;
-    overflow: visible;
-  }
-
-  /* Hover/focus: reveal full summary on past cards too */
-  .xp-card:hover .xp-card__summary,
-  .xp-card:focus-within .xp-card__summary {
-    -webkit-line-clamp: unset;
-    overflow: visible;
-  }
-
-  .xp-card__highlights {
+  .xp-band__highlights {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
     gap: var(--space-1);
-    /* Past cards: hide highlights until hover/focus */
   }
 
-  .xp-card:not(.xp-card--featured) .xp-card__highlights {
-    display: none;
-  }
-
-  .xp-card:not(.xp-card--featured):hover .xp-card__highlights,
-  .xp-card:not(.xp-card--featured):focus-within .xp-card__highlights {
-    display: flex;
-  }
-
-  .xp-card__highlights li {
+  .xp-band__highlights li {
     font-size: 0.875rem;
     color: var(--muted);
     padding-left: var(--space-3);
     position: relative;
   }
 
-  .xp-card__highlights li::before {
+  .xp-band__highlights li::before {
     content: '—';
     position: absolute;
     left: 0;
@@ -305,7 +282,6 @@ const dateRange = `${startYear}/${endYear ?? 'present'}`;
     list-style: none;
     padding: 0;
     margin: var(--space-1) 0 0;
-    flex-shrink: 0;
   }
 
   .stack-chip {
@@ -333,5 +309,38 @@ const dateRange = `${startYear}/${endYear ?? 'present'}`;
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border: 0;
+  }
+
+  /* ── Mobile: single-column flow ──────────────────────────────────────────── */
+
+  @media (max-width: 768px) {
+    .xp-band-content {
+      grid-template-columns: 1fr;
+    }
+
+    .xp-band__year-col {
+      justify-content: flex-start;
+      padding-top: 0;
+    }
+
+    .xp-band__year {
+      font-size: clamp(1.5rem, 6vw, 2rem);
+    }
+
+    .xp-band-content--featured .xp-band__header {
+      padding-right: 0;
+    }
+
+    .xp-band__header {
+      padding-right: 0;
+    }
+
+    .featured-facets {
+      /* On mobile, move facet cluster to top-right of content column
+         but reduce its visual dominance */
+      opacity: 0.6;
+      width: 56px;
+      height: 42px;
+    }
   }
 </style>
