@@ -120,15 +120,26 @@ const sampleExperience = {
 
     <!-- ExperienceCard test -->
     <div class="dev-section" id="test-experience-card">
-      <div class="dev-label">ExperienceCard.astro (featured=true)</div>
-      <ol style="list-style:none;padding:0;padding-left:1rem;">
-        <ExperienceCard
-          entry={sampleExperience as any}
-          locale="es"
-          index={0}
-          isFeatured={true}
-          yearLabel="2023–pres"
-        />
+      <div class="dev-label">ExperienceCard.astro — Faceted Stack band (featured=true)</div>
+      <ol class="xp-bands" style="list-style:none;padding:0;max-width:960px;margin:0 auto;">
+        <li class="xp-band xp-band--featured" style="position:relative;padding-block:2rem;border-top:2px solid var(--brand);">
+          <ExperienceCard
+            entry={sampleExperience as any}
+            locale="es"
+            index={0}
+            isFeatured={true}
+            yearLabel="2023–pres"
+          />
+        </li>
+        <li class="xp-band" style="position:relative;padding-block:2rem;">
+          <ExperienceCard
+            entry={sampleExperience as any}
+            locale="es"
+            index={1}
+            isFeatured={false}
+            yearLabel="2021–2023"
+          />
+        </li>
       </ol>
     </div>
 
