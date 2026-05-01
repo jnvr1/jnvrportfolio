@@ -1,6 +1,6 @@
 ---
 title: "Bloomotion Tech — Sitio Corporativo"
-client: Angel
+client: Bloomotion
 year: 2024
 yearRange: "2022–2024"
 stack: ["Flutter Web", "Google Fonts"]

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #0a1929;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #d7e6f2;
+    }
+
+    table {
+      border-collapse: collapse;
+    }
+
+    img {
+      border: 0;
+      outline: none;
+      text-decoration: none;
+      display: block;
+    }
+
+    .wrapper {
+      width: 100%;
+      background: linear-gradient(180deg, #0a1929 0%, #08131f 100%);
+      padding: 40px 16px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 640px;
+      margin: 0 auto;
+      background: #0f293f;
+      border: 1px solid #1a3a5c;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
+    }
+
+    .header {
+      background: linear-gradient(135deg, #0f293f 0%, #1a3a5c 100%);
+      padding: 28px 32px;
+      border-bottom: 1px solid rgba(168, 201, 221, 0.12);
+    }
+
+    .brand {
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #a8c9dd;
+      margin: 0 0 10px 0;
+      font-weight: 700;
+    }
+
+    .title {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.2;
+      color: #f4f8fb;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      margin: 10px 0 0 0;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #a7a6a8;
+    }
+
+    .content {
+      padding: 32px;
+    }
+
+    .panel {
+      background: #0a1929;
+      border: 1px solid #1a3a5c;
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .panel-row {
+      padding: 18px 20px;
+      border-bottom: 1px solid rgba(168, 201, 221, 0.08);
+    }
+
+    .panel-row:last-child {
+      border-bottom: 0;
+    }
+
+    .label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #73a0be;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    .value {
+      display: block;
+      font-size: 15px;
+      line-height: 1.6;
+      color: #f4f8fb;
+      word-break: break-word;
+    }
+
+    .muted {
+      color: #a7a6a8;
+    }
+
+    .message {
+      background: #0f293f;
+      border: 1px solid rgba(115, 160, 190, 0.2);
+      border-radius: 14px;
+      padding: 20px;
+      color: #d7e6f2;
+      font-size: 15px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .cta-wrap {
+      text-align: center;
+      padding-top: 8px;
+    }
+
+    .button {
+      display: inline-block;
+      background: linear-gradient(135deg, #73a0be 0%, #4f7f9d 100%);
+      color: #08131f !important;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 14px 24px;
+      border-radius: 999px;
+    }
+
+    .footer {
+      padding: 18px 32px 28px;
+      border-top: 1px solid rgba(168, 201, 221, 0.08);
+      color: #a7a6a8;
+      font-size: 12px;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(115,160,190,0.85) 50%, transparent 100%);
+      margin: 22px 0;
+    }
+
+    @media only screen and (max-width: 600px) {
+      .wrapper {
+        padding: 20px 10px;
+      }
+
+      .header,
+      .content,
+      .footer {
+        padding-left: 18px !important;
+        padding-right: 18px !important;
+      }
+
+      .title {
+        font-size: 20px;
+      }
+
+      .content {
+        padding-top: 24px;
+        padding-bottom: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <table role="presentation" width="100%" class="wrapper" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="640" class="container" cellpadding="0" cellspacing="0">
+          <tr>
+            <td class="header">
+              <p class="brand">JNVR Portfolio</p>
+              <h1 class="title">Nuevo mensaje de contacto</h1>
+              <p class="subtitle">
+                Recibiste un mensaje desde el portafolio. Respondé usando el correo del remitente.
+              </p>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="content">
+              <table role="presentation" width="100%" class="panel" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td class="panel-row">
+                    <span class="label">Nombre</span>
+                    <span class="value">{{name}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="panel-row">
+                    <span class="label">Correo</span>
+                    <span class="value">{{email}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="panel-row">
+                    <span class="label">Fecha</span>
+                    <span class="value muted">{{time}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="panel-row">
+                    <span class="label">Asunto</span>
+                    <span class="value">{{subject}}</span>
+                  </td>
+                </tr>
+              </table>
+
+              <div class="label">Mensaje</div>
+              <div class="message">{{message}}</div>
+
+              <div class="divider"></div>
+
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td align="center" class="cta-wrap">
+                    <a class="button" href="mailto:{{reply_to}}">Responder al mensaje</a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="footer">
+              Este mensaje fue generado automáticamente desde <strong>jnvrportfolio</strong>.<br />
+              El correo de respuesta está vinculado al remitente original.
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

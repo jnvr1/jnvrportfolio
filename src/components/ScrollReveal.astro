@@ -18,10 +18,11 @@ interface Props {
   class?: string;
 }
 
-const { delay = 0, class: className } = Astro.props;
+const { delay = 0, class: className, ...rest } = Astro.props;
 ---
 
 <div
+  {...rest}
   class:list={['scroll-reveal', className]}
   data-scroll-reveal
   style={delay ? `--reveal-delay: ${delay}ms` : undefined}

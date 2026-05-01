@@ -43,6 +43,7 @@ export const enStrings: Strings = {
   },
   projects: {
     title: 'Projects',
+    intro: 'Selected systems I designed, built, and shipped to production.',
     filterLabel: 'Filter by technology',
     showingCount: (n: number) => `Showing ${n} project${n === 1 ? '' : 's'}`,
     placeholderAlt: 'Screenshot not available',
@@ -51,6 +52,8 @@ export const enStrings: Strings = {
   experience: {
     title: 'Experience',
     present: 'Present',
+    intro: 'Roles, responsibilities, and impact that show how my path grew across product, backend, support, and technical leadership.',
+    currentRole: 'Current role',
   },
   contact: {
     title: 'Contact',

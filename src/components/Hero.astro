@@ -3,7 +3,7 @@
  * Hero.astro — Above-the-fold section.
  *
  * Renders: name, role, FletesBadge, JNVR Logo, and two CTAs.
- * Text from i18n strings. Logo animation is CSS-only, no JS.
+ * Text from i18n strings. Logo motion is CSS-only, no JS.
  *
  * Props:
  *   locale — 'es' | 'en'
@@ -26,7 +26,7 @@ const base = locale === 'es' ? '' : '/en';
   <HeroBackdrop />
   <div class="hero-inner">
     <div class="hero-logo-wrap">
-      <Logo size={560} ariaLabel="JNVR" />
+      <Logo size={560} ariaLabel="JNVR" animated />
     </div>
 
     <div class="hero-content">
@@ -53,10 +53,10 @@ const base = locale === 'es' ? '' : '/en';
 
 <style>
   .hero {
-    min-height: 80vh;
+    min-height: 74vh;
     display: flex;
     align-items: center;
-    padding: var(--space-16) var(--space-4) var(--space-12);
+    padding: var(--space-12) var(--space-4) var(--space-8);
     /* Position context for HeroBackdrop (absolute, inset: 0).
        Overflow hidden keeps the facet polygons clipped to the hero bounds.
        The global SVG facets + orbs on body remain visible through the
@@ -72,7 +72,7 @@ const base = locale === 'es' ? '' : '/en';
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--space-8);
+    gap: var(--space-6);
     /* Elevate above HeroBackdrop (z-index: 0) */
     position: relative;
     z-index: 1;
@@ -82,58 +82,6 @@ const base = locale === 'es' ? '' : '/en';
     display: flex;
     justify-content: center;
     position: relative;
-    /*
-     * Chained animations:
-     *   1. logo-entrance (0s → 1.4s): reveal from dispersed state + glow burst
-     *   2. logo-breathing (8s loop, starts at 1.4s): settles into ambient glow
-     * `both` fill-mode keeps the entrance end-state applied before breathing starts.
-     */
-    animation:
-      logo-entrance 1.4s cubic-bezier(0.16, 1, 0.3, 1) both,
-      logo-breathing 8s ease-in-out infinite 1.4s;
-    will-change: transform, filter, opacity;
-  }
-
-  @keyframes logo-entrance {
-    0% {
-      opacity: 0;
-      transform: scale(0.85) rotate(-3deg);
-      filter: drop-shadow(0 0 16px rgba(115, 160, 190, 0.3)) blur(12px);
-    }
-    60% {
-      opacity: 1;
-      filter: drop-shadow(0 0 60px rgba(115, 160, 190, 0.36)) blur(0px);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1) rotate(0deg);
-      filter: drop-shadow(0 0 32px rgba(115, 160, 190, 0.22)) blur(0px);
-    }
-  }
-
-  @keyframes logo-breathing {
-    0%, 100% { filter: drop-shadow(0 0 24px rgba(115, 160, 190, 0.18)); }
-    50%       { filter: drop-shadow(0 0 40px rgba(115, 160, 190, 0.28)); }
-  }
-
-  /* Radial halo burst — expands from center at peak glow (~0.7s) then fades */
-  .hero-logo-wrap::before {
-    content: '';
-    position: absolute;
-    inset: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(115, 160, 190, 0.18), transparent 60%);
-    animation: logo-halo 1.4s ease-out both;
-    pointer-events: none;
-    z-index: -1;
-  }
-
-  @keyframes logo-halo {
-    0%   { width: 0;     height: 0;     opacity: 0; transform: translate(-50%, -50%); }
-    40%  { opacity: 1; }
-    100% { width: 600px; height: 600px; opacity: 0; transform: translate(-50%, -50%); }
   }
 
   .hero-content {
@@ -141,7 +89,7 @@ const base = locale === 'es' ? '' : '/en';
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: var(--space-5);
+    gap: var(--space-4);
     max-width: 720px;
   }
 
@@ -180,9 +128,33 @@ const base = locale === 'es' ? '' : '/en';
 
   @media (max-width: 768px) {
     .hero {
-      padding-top: var(--space-12);
+      padding-top: var(--space-10);
       min-height: auto;
     }
     /* Logo mobile sizing is handled in Logo.astro (300px at ≤768px, 260px at ≤480px) */
+  }
+
+  @media (max-width: 480px) {
+    .hero {
+      padding: var(--space-8) var(--space-4) var(--space-6);
+    }
+
+    .hero-logo-wrap {
+      max-width: 260px;
+    }
+
+    .hero-content {
+      gap: var(--space-3);
+    }
+
+    .hero-ctas {
+      width: 100%;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .hero-ctas .btn {
+      width: 100%;
+    }
   }
 </style>

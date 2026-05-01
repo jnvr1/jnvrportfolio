@@ -41,6 +41,7 @@ export const esStrings = {
   },
   projects: {
     title: 'Proyectos',
+    intro: 'Algunos sistemas que diseñé, construí y llevé a producción.',
     filterLabel: 'Filtrar por tecnología',
     showingCount: (n: number) => `Mostrando ${n} proyecto${n === 1 ? '' : 's'}`,
     placeholderAlt: 'Captura no disponible',
@@ -49,6 +50,8 @@ export const esStrings = {
   experience: {
     title: 'Experiencia',
     present: 'Presente',
+    intro: 'Roles, responsabilidades e impacto que muestran cómo fui creciendo entre producto, backend, soporte y liderazgo técnico.',
+    currentRole: 'Rol actual',
   },
   contact: {
     title: 'Contacto',

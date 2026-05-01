@@ -45,11 +45,14 @@ const base = locale === 'es' ? '' : '/en';
 
     <!-- Mobile hamburger -->
     <button
+      type="button"
       class="hamburger"
       id="hamburger-btn"
       aria-label={t(locale, 'a11y.openMenu')}
       aria-expanded="false"
       aria-controls="mobile-menu"
+      data-open-label={t(locale, 'a11y.openMenu')}
+      data-close-label={t(locale, 'a11y.closeMenu')}
     >
       <span></span>
       <span></span>
@@ -58,20 +61,52 @@ const base = locale === 'es' ? '' : '/en';
   </div>
 
   <!-- Mobile menu -->
-  <div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" hidden>
-    <nav aria-label="Mobile navigation">
-      <a href={`${base}/#projects`} class="mobile-link">{t(locale, 'nav.projects')}</a>
-      <a href={`${base}/#experience`} class="mobile-link">{t(locale, 'nav.experience')}</a>
-      <a href={`${base}/#contact`} class="mobile-link">{t(locale, 'nav.contact')}</a>
-      <LocaleSwitcher currentLocale={locale} alternates={alternates} />
-    </nav>
+  <div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-hidden="true">
     <button
-      class="mobile-close"
-      id="mobile-close-btn"
+      type="button"
+      class="mobile-backdrop"
+      id="mobile-backdrop"
       aria-label={t(locale, 'a11y.closeMenu')}
+      tabindex="-1"
     >
-      ✕
+      <span class="visually-hidden">{t(locale, 'a11y.closeMenu')}</span>
     </button>
+    <div class="mobile-panel">
+      <div class="mobile-panel__header">
+        <span class="mobile-panel__brand" aria-hidden="true">
+          <Logo size={28} ariaLabel="JNVR" />
+        </span>
+        <button
+          type="button"
+          class="mobile-close"
+          id="mobile-close-btn"
+          aria-label={t(locale, 'a11y.closeMenu')}
+        >
+          ✕
+        </button>
+      </div>
+
+      <nav aria-label="Mobile navigation" class="mobile-nav">
+        <a href={`${base}/#projects`} class="mobile-link" style="--stagger: 1">
+          {t(locale, 'nav.projects')}
+        </a>
+        <a href={`${base}/#experience`} class="mobile-link" style="--stagger: 2">
+          {t(locale, 'nav.experience')}
+        </a>
+        <a href={`${base}/#contact`} class="mobile-link" style="--stagger: 3">
+          {t(locale, 'nav.contact')}
+        </a>
+      </nav>
+
+      <div class="mobile-panel__footer">
+        <a href={`${base}/#contact`} class="btn btn-primary mobile-cta" style="--stagger: 4">
+          {t(locale, 'cta.contact')}
+        </a>
+        <div class="mobile-locale" style="--stagger: 5">
+          <LocaleSwitcher currentLocale={locale} alternates={alternates} />
+        </div>
+      </div>
+    </div>
   </div>
 </header>
 
@@ -156,35 +191,209 @@ const base = locale === 'es' ? '' : '/en';
     transform: translateY(-7px) rotate(-45deg);
   }
 
+  /* ── Mobile menu (faceted slide) ─────────────────────────────────────────── */
+
   .mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 250;
     display: flex;
-    flex-direction: column;
-    background: var(--surface);
-    border-top: 1px solid var(--border);
-    padding: var(--space-4);
-    gap: var(--space-4);
+    justify-content: flex-end;
+    pointer-events: none;
+    /* When closed, snap visibility off AFTER the slide-out finishes */
+    visibility: hidden;
+    transition: visibility 0s linear 280ms;
   }
 
-  .mobile-menu[hidden] {
-    display: none;
+  .mobile-menu.is-open {
+    pointer-events: auto;
+    visibility: visible;
+    transition: visibility 0s linear 0s;
+  }
+
+  .mobile-backdrop {
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, var(--bg) 56%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 240ms var(--ease-out-expo);
+  }
+
+  .mobile-menu.is-open .mobile-backdrop {
+    opacity: 1;
+  }
+
+  .mobile-panel {
+    position: relative;
+    z-index: 1;
+    width: min(88vw, 340px);
+    height: 100%;
+    background: linear-gradient(
+      180deg,
+      var(--surface) 0%,
+      color-mix(in srgb, var(--surface) 92%, var(--brand-strong) 8%) 100%
+    );
+    border-left: 1px solid color-mix(in srgb, var(--brand) 24%, var(--border));
+    padding: var(--space-5) var(--space-5) var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    box-shadow: -16px 0 48px color-mix(in srgb, var(--bg) 76%, transparent);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    /* Faceted corner cut on the top-left edge — echoes the project cards */
+    clip-path: polygon(
+      var(--clip-facet) 0,
+      100% 0,
+      100% 100%,
+      0 100%,
+      0 var(--clip-facet)
+    );
+    transform: translateX(100%);
+    transition: transform 320ms var(--ease-out-expo);
+  }
+
+  .mobile-menu.is-open .mobile-panel {
+    transform: translateX(0);
+  }
+
+  .mobile-panel__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid color-mix(in srgb, var(--brand) 18%, transparent);
+  }
+
+  .mobile-panel__brand {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    flex: 1;
   }
 
   .mobile-link {
+    min-height: 52px;
+    display: flex;
+    align-items: center;
+    padding: var(--space-2) var(--space-3);
     color: var(--text);
     text-decoration: none;
-    font-size: 1.125rem;
-    font-weight: 500;
-    padding: var(--space-2) 0;
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+    border-left: 2px solid transparent;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    transition:
+      color 180ms var(--ease-standard),
+      border-color 180ms var(--ease-standard),
+      background-color 180ms var(--ease-standard),
+      transform 280ms var(--ease-out-expo),
+      opacity 280ms var(--ease-out-expo);
+    /* Stagger entry: hidden until panel opens, then fade + slide in by index */
+    opacity: 0;
+    transform: translateX(16px);
+    transition-delay: 0ms;
+  }
+
+  .mobile-link:hover,
+  .mobile-link:active,
+  .mobile-link:focus-visible {
+    color: var(--accent);
+    border-left-color: var(--brand);
+    background: color-mix(in srgb, var(--brand) 8%, transparent);
+    outline: none;
+  }
+
+  .mobile-cta {
+    width: 100%;
+    justify-content: center;
+    opacity: 0;
+    transform: translateX(16px);
+    transition:
+      background-color 180ms var(--ease-standard),
+      border-color 180ms var(--ease-standard),
+      color 180ms var(--ease-standard),
+      transform 280ms var(--ease-out-expo),
+      opacity 280ms var(--ease-out-expo);
+  }
+
+  .mobile-locale {
+    display: flex;
+    justify-content: center;
+    padding-top: var(--space-3);
+    opacity: 0;
+    transform: translateX(16px);
+    transition:
+      transform 280ms var(--ease-out-expo),
+      opacity 280ms var(--ease-out-expo);
+  }
+
+  /* Stagger reveal: each item lands with a small delay after the panel arrives */
+  .mobile-menu.is-open .mobile-link,
+  .mobile-menu.is-open .mobile-cta,
+  .mobile-menu.is-open .mobile-locale {
+    opacity: 1;
+    transform: translateX(0);
+    transition-delay: calc(120ms + var(--stagger, 0) * 50ms);
+  }
+
+  .mobile-panel__footer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding-top: var(--space-4);
+    border-top: 1px solid color-mix(in srgb, var(--brand) 18%, transparent);
   }
 
   .mobile-close {
-    align-self: flex-end;
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
     background: none;
-    border: none;
+    border: 1px solid transparent;
     cursor: pointer;
     color: var(--muted);
-    font-size: 1.25rem;
+    font-size: 1.125rem;
     padding: var(--space-2);
+    transition:
+      color 150ms var(--ease-standard),
+      border-color 150ms var(--ease-standard);
+  }
+
+  .mobile-close:hover,
+  .mobile-close:focus-visible {
+    color: var(--accent);
+    border-color: color-mix(in srgb, var(--brand) 30%, transparent);
+    outline: none;
+  }
+
+  /* Respect reduced motion: skip slide + stagger, fade only */
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-panel,
+    .mobile-link,
+    .mobile-cta,
+    .mobile-locale,
+    .mobile-backdrop {
+      transition-duration: 120ms;
+      transition-delay: 0s !important;
+    }
   }
 
   @media (max-width: 768px) {
@@ -194,6 +403,12 @@ const base = locale === 'es' ? '' : '/en';
 
     .hamburger {
       display: flex;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .mobile-menu {
+      display: none !important;
     }
   }
 </style>
@@ -224,41 +439,69 @@ const base = locale === 'es' ? '' : '/en';
   // Mobile menu
   const hamburger = document.getElementById('hamburger-btn');
   const mobileMenu = document.getElementById('mobile-menu');
+  const mobileBackdrop = document.getElementById('mobile-backdrop');
   const closeBtn = document.getElementById('mobile-close-btn');
+  let scrollY = 0;
+
+  function isOpen() {
+    return Boolean(mobileMenu?.classList.contains('is-open'));
+  }
 
   function openMenu() {
     if (mobileMenu && hamburger) {
-      mobileMenu.hidden = false;
+      scrollY = window.scrollY;
+      mobileMenu.classList.add('is-open');
+      mobileMenu.setAttribute('aria-hidden', 'false');
       hamburger.classList.add('open');
       hamburger.setAttribute('aria-expanded', 'true');
       hamburger.setAttribute('aria-label', hamburger.getAttribute('data-close-label') ?? 'Close menu');
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+      document.body.classList.add('menu-open');
       closeBtn?.focus();
     }
   }
 
   function closeMenu() {
     if (mobileMenu && hamburger) {
-      mobileMenu.hidden = true;
+      mobileMenu.classList.remove('is-open');
+      mobileMenu.setAttribute('aria-hidden', 'true');
       hamburger.classList.remove('open');
       hamburger.setAttribute('aria-expanded', 'false');
+      hamburger.setAttribute('aria-label', hamburger.getAttribute('data-open-label') ?? 'Open menu');
+      document.body.classList.remove('menu-open');
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      window.scrollTo(0, scrollY);
     }
   }
 
   hamburger?.addEventListener('click', () => {
-    if (mobileMenu?.hidden) {
-      openMenu();
-    } else {
+    if (isOpen()) {
       closeMenu();
+    } else {
+      openMenu();
     }
   });
 
   closeBtn?.addEventListener('click', closeMenu);
+  mobileBackdrop?.addEventListener('click', closeMenu);
 
   // Close on ESC
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && mobileMenu && !mobileMenu.hidden) {
+    if (e.key === 'Escape' && isOpen()) {
       closeMenu();
       hamburger?.focus();
+    }
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768 && isOpen()) {
+      closeMenu();
     }
   });
 

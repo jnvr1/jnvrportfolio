@@ -1,16 +1,15 @@
 ---
 company: "Fletes México"
-role: "Arquitecto de Software Senior"
-startYear: 2024
+role: "Desarrollador de Software"
+startYear: 2023
 current: true
 featured: true
-location: "México (remoto)"
-summary: "Diseño y liderazgo técnico de la plataforma de logística de Fletes México: microservicios FastAPI, integraciones BI y arquitectura de escala."
+location: "Ciudad Juárez, México (remoto)"
+summary: "Desarrollo de software de la plataforma logística de Fletes México: microservicios FastAPI, herramientas personalizadas y tableros BI."
 highlights:
-  - "Diseño e implementación de arquitectura de microservicios con FastAPI y PostgreSQL"
-  - "Reducción de tiempos de conciliación de carga en 65% mediante automatización de flujos"
-  - "Dashboards de Business Intelligence para operaciones diarias y toma de decisiones"
-  - "Liderazgo técnico del equipo de desarrollo backend"
+  - "Diseñé e implementé más de 10 microservicios backend utilizando FastAPI, mejorando la escalabilidad"
+  - "Incrementé la eficiencia operativa en un 25% mediante herramientas de software personalizadas"
+  - "Creé tableros en Power BI para ofrecer información accionable a los principales interesados"
 stack: ["FastAPI", "PostgreSQL", "Python", "Docker", "Power BI"]
 locale: es
 order: 1

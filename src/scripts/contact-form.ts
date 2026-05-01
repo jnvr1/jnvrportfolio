@@ -45,7 +45,7 @@ export function validateContactForm(fields: {
 /**
  * Send the contact form via EmailJS REST API.
  *
- * @param params - Template params: from_name, reply_to, subject, message
+ * @param params - Template params: name, from_name, email, reply_to, time, subject, message
  * @param fetchFn - Injectable fetch function (default: global fetch). Used for testing.
  */
 export async function submitContactForm(
@@ -63,8 +63,11 @@ export async function submitContactForm(
         template_id: templateId,
         user_id: publicKey,
         template_params: {
+          name: params.name,
           from_name: params.from_name,
+          email: params.email,
           reply_to: params.reply_to,
+          time: params.time,
           subject: params.subject,
           message: params.message,
         },

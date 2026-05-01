@@ -1,8 +1,8 @@
 ---
 company: "Teotech"
 role: "Freelance Full-stack Developer"
-startYear: 2022
-endYear: 2025
+startYear: 2025
+endYear: 2026
 current: false
 featured: false
 location: "Mexico (remote)"

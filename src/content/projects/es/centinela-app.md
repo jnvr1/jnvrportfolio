@@ -1,6 +1,6 @@
 ---
 title: "Centinela — Sistema de Control de Accesos"
-client: Angel
+client: Centinela
 year: 2024
 yearRange: "2022–2024"
 stack: ["Flutter", "Firebase", "Stripe", "MercadoPago"]

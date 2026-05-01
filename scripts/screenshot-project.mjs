@@ -42,7 +42,28 @@ async function snap({ name, viewport }) {
     console.warn(`    ⚠ networkidle timeout, falling back to load: ${err.message}`);
     await page.goto(url, { waitUntil: 'load', timeout: 15000 });
   }
-  await page.waitForTimeout(1500); // let fonts and animations settle
+  // Detect Flutter app and wait for the engine to mount + paint
+  const isFlutter = await page.evaluate(() => {
+    return Boolean(
+      document.querySelector('flt-glass-pane') ||
+        document.querySelector('flutter-view') ||
+        document.querySelector('script[src*="flutter"]') ||
+        document.querySelector('script[src*="main.dart.js"]')
+    );
+  });
+  if (isFlutter) {
+    console.log('    detected Flutter — waiting for engine to render');
+    try {
+      await page.waitForSelector('flt-glass-pane, flutter-view', { timeout: 20000 });
+    } catch {
+      /* fall through to fixed wait */
+    }
+    // Flutter splash → app transition can take a few seconds even after the
+    // glass-pane is in the DOM. Wait until pixels settle (no rAF for ~1s).
+    await page.waitForTimeout(6000);
+  } else {
+    await page.waitForTimeout(1500);
+  }
   const pngPath = join(outDir, `${slug}${name === 'mobile' ? '-mobile' : ''}.png`);
   await page.screenshot({ path: pngPath, fullPage: false });
   // Optimize to WebP

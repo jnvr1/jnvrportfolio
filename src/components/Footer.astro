@@ -37,13 +37,6 @@ const year = new Date().getFullYear();
       >
         <img src="/icons/linkedin.svg" alt="LinkedIn" width="20" height="20" />
       </a>
-      <a
-        href="mailto:jviramontes@fletes-mexico.com"
-        aria-label="Email"
-        class="social-link"
-      >
-        <img src="/icons/mail.svg" alt="Email" width="20" height="20" />
-      </a>
     </div>
 
     <p class="footer-copy">
@@ -77,6 +70,8 @@ const year = new Date().getFullYear();
     display: flex;
     gap: var(--space-4);
     align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .social-link {
@@ -84,6 +79,10 @@ const year = new Date().getFullYear();
     transition: color 150ms, opacity 150ms;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    border-radius: var(--radius-md);
     opacity: 0.6;
   }
 
@@ -101,5 +100,16 @@ const year = new Date().getFullYear();
     font-size: 0.8125rem;
     color: var(--muted);
     margin: 0;
+  }
+
+  @media (max-width: 480px) {
+    .site-footer {
+      padding-inline: var(--space-4);
+      padding-block: var(--space-6);
+    }
+
+    .footer-inner {
+      gap: var(--space-2);
+    }
   }
 </style>

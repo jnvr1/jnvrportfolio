@@ -1,0 +1,1470 @@
+<!DOCTYPE html><html lang="es" data-astro-cid-37fxchfa> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="dark"><!-- SEO: title, description, canonical, hreflang, og, twitter --><!-- Primary meta --><title>JNVR — Desarrollador Full-Stack</title><meta name="description" content="Portafolio de Jonathan Noé Viramontes — desarrollador full-stack especializado en Flutter, React y backend moderno."><link rel="canonical" href="https://jnvr-portafolio.web.app/"><!-- hreflang for bilingual SEO (REQ-IR-2) --><link rel="alternate" hreflang="es" href="https://jnvr-portafolio.web.app/"><link rel="alternate" hreflang="en" href="https://jnvr-portafolio.web.app/en/"><link rel="alternate" hreflang="x-default" href="https://jnvr-portafolio.web.app/"><!-- Open Graph --><meta property="og:type" content="website"><meta property="og:url" content="https://jnvr-portafolio.web.app/"><meta property="og:title" content="JNVR — Desarrollador Full-Stack"><meta property="og:description" content="Portafolio de Jonathan Noé Viramontes — desarrollador full-stack especializado en Flutter, React y backend moderno."><meta property="og:image" content="https://jnvr-portafolio.web.app/og-default.png"><meta property="og:locale" content="es_MX"><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="JNVR — Desarrollador Full-Stack"><meta name="twitter:description" content="Portafolio de Jonathan Noé Viramontes — desarrollador full-stack especializado en Flutter, React y backend moderno."><meta name="twitter:image" content="https://jnvr-portafolio.web.app/og-default.png"><!-- Favicon: use the square brand mark (recognizable at 16×16, no text) --><link rel="icon" type="image/svg+xml" href="/logo-mark.svg"><!-- Font preload: Inter (primary UI font) --><link rel="preload" as="font" type="font/woff2" crossorigin="anonymous" href="/fonts/inter/inter-latin-wght-normal.woff2"><!-- Structured data: Person + WebSite --><script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "https://jnvr-portafolio.web.app/#person",
+            "name": "Jonathan Noé Viramontes",
+            "url": "https://jnvr-portafolio.web.app",
+            "jobTitle": "Full-Stack Developer",
+            "sameAs": [
+              "https://github.com/jnvr1",
+              "https://linkedin.com/in/jnvr"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://jnvr-portafolio.web.app/#website",
+            "url": "https://jnvr-portafolio.web.app",
+            "name": "JNVR — Desarrollador Full-Stack",
+            "author": { "@id": "https://jnvr-portafolio.web.app/#person" }
+          }
+        ]
+      }
+    </script><!-- Styles --><!-- Named slot for page-specific head tags --><style data-vite-dev-id="D:/Portafolio/jnvrportfolio/src/layouts/BaseLayout.astro?astro&#38;type=style&#38;index=0&#38;lang.css">.page-content[data-astro-cid-37fxchfa]{position:relative;z-index:1}.skip-link[data-astro-cid-37fxchfa]{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;background:var(--accent);color:var(--bg);padding:var(--space-2) var(--space-4);font-weight:600;z-index:9999;border-radius:0 0 4px 0;text-decoration:none}.skip-link[data-astro-cid-37fxchfa]:focus{position:fixed;left:0;top:0;width:auto;height:auto;overflow:visible}</style>
+<style data-vite-dev-id="D:/Portafolio/jnvrportfolio/src/layouts/BaseLayout.astro?astro&#38;type=style&#38;index=1&#38;lang.css">/*
+ * tokens.css — Design Tokens (dark-only, Logo-driven editorial — JNVR navy + faceted geometry)
+ *
+ * Single source of truth for all visual values. No hardcoded hex values
+ * should appear in any component stylesheet — always reference these tokens
+ * via var(--token-name).
+ *
+ * Spec: REQ-TS-1, REQ-TS-2, REQ-TS-3
+ */
+
+:root {
+  /* ── Color Palette (11 required tokens — spec REQ-TS-2) ─────────────────── */
+
+  --bg: #0A1929;
+  --surface: #0F293F;
+  --surface-elevated: #1A3A5C;
+  --border: #1F4060;
+  --text: #FFFFFF;
+  --text-muted: #A7A6A8;
+  --brand: #73A0BE;
+  --brand-strong: #4A7A98;
+  --accent: #A8C9DD;
+  --success: #3FB950;
+  --danger: #F85149;
+
+  /* ── Typography (font families — spec REQ-TS-4) ─────────────────────────── */
+
+  --font-heading: 'Bricolage Grotesque Variable', 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-body: 'Inter Variable', 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* ── Type Scale (spec REQ-TS-5) ─────────────────────────────────────────── */
+  /* Mobile-first fluid values using clamp(min, preferred, max) */
+  /* H1 hero: 48px (mobile) / 72px (desktop) */
+
+  --text-h1: clamp(3rem, 5vw + 1rem, 4.5rem);
+  /* H2 section: 32px (mobile) / 48px (desktop) */
+  --text-h2: clamp(2rem, 3vw + 0.75rem, 3rem);
+  /* H3 card: 20px (mobile) / 24px (desktop) */
+  --text-h3: clamp(1.25rem, 1.5vw + 0.5rem, 1.5rem);
+  /* Body: 16px (mobile) / 18px (desktop) */
+  --text-body: clamp(1rem, 0.25vw + 0.875rem, 1.125rem);
+  /* Caption: 13px (mobile) / 14px (desktop) */
+  --text-caption: clamp(0.8125rem, 0.1vw + 0.75rem, 0.875rem);
+
+  /* Font weights */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* Line heights */
+  --leading-tight: 1.2;
+  --leading-snug: 1.35;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.75;
+
+  /* ── Spacing Scale (4px base — spec REQ-PS: 4px scale) ──────────────────── */
+
+  --space-0: 0px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* ── Border Radius ───────────────────────────────────────────────────────── */
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* ── Border ──────────────────────────────────────────────────────────────── */
+
+  --border-width: 1px;
+  --border-width-strong: 2px;
+
+  /* ── Faceted geometry (logo-derived angular corner cut) ─────────────────── */
+
+  --clip-facet: 16px;
+
+  /* ── Focus ring ──────────────────────────────────────────────────────────── */
+
+  --focus-ring: 0 0 0 3px var(--brand);
+  --focus-ring-offset: 2px;
+
+  /* ── Motion (spec REQ-PS-8, REQ-PS-5) ───────────────────────────────────── */
+
+  --duration-fast: 150ms;
+  --duration-base: 200ms;
+  --duration-slow: 300ms;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Card hover lift (spec REQ-TS-6) */
+  --card-hover-transform: translateY(-2px);
+  --card-hover-duration: var(--duration-fast);
+
+  /* Scroll reveal (spec REQ-PS-8) */
+  --reveal-translate: translateY(12px);
+  --reveal-duration: var(--duration-base);
+  --reveal-ease: var(--ease-out-expo);
+
+  /* ── Z-index scale ───────────────────────────────────────────────────────── */
+
+  --z-below: -1;
+  --z-base: 0;
+  --z-raised: 10;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+
+  /* ── Layout ──────────────────────────────────────────────────────────────── */
+
+  --container-max: 1200px;
+  --container-padding: var(--space-4);
+
+  /* ── Alias tokens (shorthand used in components) ────────────────────────── */
+  /* These map component-facing short names to the canonical token names above. */
+
+  /* --muted: the muted/secondary text color */
+  --muted: var(--text-muted);
+
+  /* --surface-2: elevated surface (cards, tooltips) */
+  --surface-2: var(--surface-elevated);
+
+  /* --font-display: heading font (used in logo and covers) */
+  --font-display: var(--font-heading);
+
+  /* ── Breakpoints (informational — use in media queries as px values) ─────── */
+  /* sm: 480px | md: 768px | lg: 1024px | xl: 1280px                          */
+  /* Custom media queries are not yet standard; use raw px in @media for now. */
+}
+
+/*
+ * reset.css — Modern CSS Reset (Andy Bell-style)
+ *
+ * Box-sizing, margins, focus handling, media defaults, form inheritance.
+ * No hardcoded color values — all colors via tokens.
+ *
+ * Spec: REQ-TS-7 (no hardcoded hex in stylesheets)
+ */
+
+/* ── Box Sizing ──────────────────────────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ── Reset Margins & Padding ─────────────────────────────────────────────── */
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Root & Body ─────────────────────────────────────────────────────────── */
+
+html {
+  /* Smooth scroll — disabled for users who prefer no motion (see below) */
+  scroll-behavior: smooth;
+  /* Prevent font size adjustment on orientation change (mobile Safari) */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* Normalize tab size for code blocks */
+  tab-size: 4;
+}
+
+/* Prevent smooth scroll for reduced motion users */
+
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  /* Minimum height prevents content shorter than viewport from having gaps */
+  min-height: 100vh;
+  /* Improved text rendering */
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeSpeed;
+  line-height: 1.6;
+}
+
+/* ── Headings ────────────────────────────────────────────────────────────── */
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: var(--leading-tight, 1.2);
+}
+
+/* ── Lists ───────────────────────────────────────────────────────────────── */
+
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+}
+
+/* ── Links ───────────────────────────────────────────────────────────────── */
+
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* ── Media Defaults ──────────────────────────────────────────────────────── */
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* ── Form Elements ───────────────────────────────────────────────────────── */
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* ── Text Overflow ───────────────────────────────────────────────────────── */
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/* ── Paragraphs ──────────────────────────────────────────────────────────── */
+
+p {
+  text-wrap: pretty;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+/* ── Focus Visible ───────────────────────────────────────────────────────── */
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring, 0 0 0 3px currentColor);
+  border-radius: var(--radius-sm, 4px);
+}
+
+/* ── Hidden Elements ─────────────────────────────────────────────────────── */
+
+[hidden] {
+  display: none !important;
+}
+
+/* ── Skip to Content ─────────────────────────────────────────────────────── */
+
+.skip-to-content {
+  position: absolute;
+  top: var(--space-2, 8px);
+  left: var(--space-2, 8px);
+  padding: var(--space-2, 8px) var(--space-4, 16px);
+  border-radius: var(--radius-md, 8px);
+  z-index: var(--z-toast, 500);
+  transform: translateY(-200%);
+  transition: transform 200ms;
+}
+
+.skip-to-content:focus {
+  transform: translateY(0);
+}
+
+/*
+ * fonts.css — Self-hosted variable font declarations
+ *
+ * Sources: @fontsource-variable/inter, @fontsource-variable/bricolage-grotesque,
+ *          @fontsource-variable/jetbrains-mono
+ *
+ * All fonts use font-display: swap. Fallback metrics (size-adjust,
+ * ascent-override, descent-override, line-gap-override) are tuned to reduce
+ * Cumulative Layout Shift when swapping from system fonts.
+ *
+ * Spec: REQ-TS-4 — no Google Fonts CDN calls at runtime.
+ * Risk mitigation: design.md §11 risk 4 (font CLS).
+ */
+
+/* ── Inter (body + UI) ───────────────────────────────────────────────────── */
+
+@font-face {
+  font-family: 'Inter Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('/node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2')
+    format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191,
+    U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  /* Fallback metrics for system-ui → Inter swap (reduces CLS) */
+  size-adjust: 100%;
+  ascent-override: 90%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Inter Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('/node_modules/@fontsource-variable/inter/files/inter-latin-ext-wght-normal.woff2')
+    format('woff2-variations');
+  /* Latin extended — covers Spanish diacritics (á, é, í, ó, ú, ñ, ü) */
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  size-adjust: 100%;
+  ascent-override: 90%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+}
+
+/* ── Bricolage Grotesque (headings) ──────────────────────────────────────── */
+
+@font-face {
+  font-family: 'Bricolage Grotesque Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url('/node_modules/@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wght-normal.woff2')
+    format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191,
+    U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  /* Bricolage Grotesque is wide/tall — adjust to prevent reflow on heading swap */
+  size-adjust: 95%;
+  ascent-override: 95%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Bricolage Grotesque Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url('/node_modules/@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-ext-wght-normal.woff2')
+    format('woff2-variations');
+  /* Latin extended — covers Spanish diacritics (á, é, í, ó, ú, ñ, ü) */
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  size-adjust: 95%;
+  ascent-override: 95%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+}
+
+/* ── JetBrains Mono (code, stack chips) ─────────────────────────────────── */
+
+@font-face {
+  font-family: 'JetBrains Mono Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 800;
+  src: url('/node_modules/@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2')
+    format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191,
+    U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  /* Monospace metrics — Courier New is the typical fallback */
+  size-adjust: 115%;
+  ascent-override: 85%;
+  descent-override: 20%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 800;
+  src: url('/node_modules/@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-ext-wght-normal.woff2')
+    format('woff2-variations');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  size-adjust: 115%;
+  ascent-override: 85%;
+  descent-override: 20%;
+  line-gap-override: 0%;
+}
+
+/*
+ * global.css — Base typography, layout utilities, and motion defaults
+ *
+ * Import order: reset → fonts → tokens → this file
+ *
+ * Spec: REQ-TS-5 (type scale), REQ-PS-8 (scroll reveal motion defaults),
+ *       REQ-PS-9 (container 1200px), REQ-TS-7 (no hardcoded hex)
+ */
+
+/* ── Base ────────────────────────────────────────────────────────────────── */
+
+html {
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-normal);
+  color: var(--text);
+  /* Faceted backdrop: static SVG layer over base color */
+  background-color: var(--bg);
+  background-image: url('/backdrop-facets.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  /* Stacking context so content sits above pseudo-element orbs */
+  position: relative;
+}
+
+/* Mobile: fixed-attachment causes jank on iOS Safari */
+
+@media (max-width: 768px) {
+  body {
+    background-attachment: scroll;
+  }
+}
+
+/* ── Atmospheric Orbs (Option 3 complement) ──────────────────────────────── */
+
+/*
+ * Two large blurred radial-gradient orbs drift slowly behind all content.
+ * They use brand/accent colors at low opacity so the SVG facets remain the
+ * dominant visual layer. Transform-only animation = GPU composited, no
+ * reflow/repaint during animation.
+ *
+ * Stacking: body::before/::after at z-index: 0 sit visually between the
+ * body's SVG background (painted as part of body itself) and the page
+ * content (which gets z-index: 1 via the content wrapper).
+ *
+ * Note: reset.css already suppresses animation-duration globally under
+ * prefers-reduced-motion: reduce — the explicit rule below makes intent clear.
+ */
+
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  width: 60vw;
+  height: 60vw;
+  max-width: 800px;
+  max-height: 800px;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.12;
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
+}
+
+body::before {
+  background: radial-gradient(circle, var(--brand), transparent 70%);
+  top: -20vh;
+  left: -10vw;
+  animation: orb-drift-1 65s ease-in-out infinite alternate;
+}
+
+body::after {
+  background: radial-gradient(circle, var(--accent), transparent 70%);
+  bottom: -20vh;
+  right: -10vw;
+  animation: orb-drift-2 55s ease-in-out infinite alternate;
+}
+
+@keyframes orb-drift-1 {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(15vw, 10vh) scale(1.15); }
+}
+
+@keyframes orb-drift-2 {
+  from { transform: translate(0, 0) scale(1.05); }
+  to   { transform: translate(-12vw, -8vh) scale(1); }
+}
+
+/* Disable orb motion for users who prefer reduced motion.
+   reset.css sets animation-duration: 0.01ms globally, but we also
+   set animation: none explicitly here for clarity. */
+
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  body::after {
+    animation: none;
+  }
+}
+
+/* Low-end mobile: disable the expensive blur on very small viewports */
+
+@media (max-width: 480px) {
+  body::before,
+  body::after {
+    filter: none;
+    opacity: 0.06;
+  }
+}
+
+/* ── Headings ────────────────────────────────────────────────────────────── */
+
+h1 {
+  font-family: var(--font-heading);
+  font-size: var(--text-h1);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  color: var(--text);
+}
+
+h2 {
+  font-family: var(--font-heading);
+  font-size: var(--text-h2);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+  color: var(--text);
+}
+
+h3 {
+  font-family: var(--font-heading);
+  font-size: var(--text-h3);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-snug);
+  color: var(--text);
+}
+
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-snug);
+  color: var(--text);
+}
+
+/* ── Body Copy ───────────────────────────────────────────────────────────── */
+
+p {
+  color: var(--text);
+  line-height: var(--leading-normal);
+}
+
+/* ── Links ───────────────────────────────────────────────────────────────── */
+
+a {
+  color: var(--brand);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+a:hover {
+  color: var(--brand-strong);
+  text-decoration-color: var(--brand-strong);
+}
+
+/* ── Code & Pre ──────────────────────────────────────────────────────────── */
+
+code,
+kbd,
+samp {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  font-weight: var(--weight-medium);
+  background-color: var(--surface-elevated);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.1em 0.4em;
+}
+
+pre {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  background-color: var(--surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  overflow-x: auto;
+}
+
+pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* ── Selection ───────────────────────────────────────────────────────────── */
+
+::selection {
+  background-color: var(--brand);
+  color: var(--bg);
+}
+
+/* ── Horizontal Rule ─────────────────────────────────────────────────────── */
+
+hr {
+  border: none;
+  border-top: var(--border-width) solid var(--border);
+  margin-block: var(--space-8);
+}
+
+/* ── Container ───────────────────────────────────────────────────────────── */
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+@media (min-width: 480px) {
+  .container {
+    padding-inline: var(--space-6);
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-inline: var(--space-8);
+  }
+}
+
+/* ── Sections ────────────────────────────────────────────────────────────── */
+
+section {
+  padding-block: var(--space-16);
+}
+
+@media (min-width: 768px) {
+  section {
+    padding-block: var(--space-24);
+  }
+}
+
+/* Hash navigation: keep section titles below the sticky header.
+   Header inner height is ~56px (logo 32 + padding 24); 80px gives breathing room. */
+
+section[id] {
+  scroll-margin-top: 80px;
+}
+
+/* ── Utility Classes ─────────────────────────────────────────────────────── */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.text-brand {
+  color: var(--brand);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* ── Scroll Reveal Base State (spec REQ-PS-8) ────────────────────────────── */
+
+/*
+ * Elements wrapped in <ScrollReveal> start hidden and transition to visible
+ * when they enter the viewport. The IntersectionObserver in scroll-reveal.ts
+ * toggles the [data-revealed] attribute.
+ *
+ * prefers-reduced-motion: reduce is handled in reset.css (suppresses
+ * animation-duration/transition-duration globally) AND in the IS script
+ * (which skips IntersectionObserver and applies final state immediately).
+ */
+
+[data-reveal] {
+  opacity: 0;
+  transform: var(--reveal-translate);
+  transition:
+    opacity var(--reveal-duration) var(--reveal-ease),
+    transform var(--reveal-duration) var(--reveal-ease);
+}
+
+[data-reveal][data-revealed] {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Card Hover Lift (spec REQ-TS-6) ─────────────────────────────────────── */
+
+[data-card-hover] {
+  transition: transform var(--card-hover-duration) var(--ease-standard);
+}
+
+[data-card-hover]:hover {
+  transform: var(--card-hover-transform);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-card-hover]:hover {
+    transform: none;
+  }
+}
+
+/* ── Button Utilities ────────────────────────────────────────────────────── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: var(--weight-medium);
+  line-height: 1;
+  text-decoration: none;
+  border: var(--border-width) solid transparent;
+  cursor: pointer;
+  transition:
+    background-color var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard),
+    color var(--duration-fast) var(--ease-standard),
+    box-shadow var(--duration-fast) var(--ease-standard);
+  white-space: nowrap;
+}
+
+.btn:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.btn-primary {
+  background-color: var(--brand);
+  color: var(--bg);
+  border-color: var(--brand);
+}
+
+.btn-primary:hover {
+  background-color: var(--brand-strong);
+  border-color: var(--brand-strong);
+  color: var(--bg);
+  text-decoration: none;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.btn-secondary:hover {
+  border-color: var(--brand);
+  color: var(--brand);
+  text-decoration: none;
+}
+
+/* ── Focus Ring Utility ──────────────────────────────────────────────────── */
+
+.focus-ring:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius-sm);
+}
+
+/* ── Section Backdrop Parallax (Option 4 Full Composition) ───────────────── */
+
+/*
+ * CSS scroll-driven animation for per-section backdrops.
+ * Supported: Chrome/Edge 115+, partial Safari 18+, Firefox 110+ (with flag).
+ * Fallback: time-based drift (defined per component). No JS added.
+ *
+ * The .section-backdrop class is on the backdrop's outer div inside each
+ * section (HeroBackdrop and SectionBackdrop components).
+ *
+ * Motion: each backdrop translates -30px as the section scrolls through view.
+ * This is a subtle depth cue — the backdrop moves slower than the content,
+ * creating a sense of the atmosphere being "behind" the section.
+ *
+ * Transforms only → GPU composited, no reflow/repaint during scroll.
+ */
+
+@supports (animation-timeline: view()) {
+  .section-backdrop {
+    animation: backdrop-parallax linear, backdrop-fade linear;
+    animation-timeline: view(), view();
+    animation-range: entry 0% exit 100%;
+    will-change: transform, opacity;
+  }
+
+  @keyframes backdrop-parallax {
+    from { transform: translateY(0); }
+    to   { transform: translateY(-30px); }
+  }
+
+  @keyframes backdrop-fade {
+    0%   { opacity: 0.4; }
+    20%  { opacity: 1; }
+    80%  { opacity: 1; }
+    100% { opacity: 0.4; }
+  }
+}
+
+/* ── Per-Polygon Bloom Choreography (view() timeline) ────────────────────── */
+
+/*
+ * Each polygon in SectionBackdrop gets a distinct entrance/exit arc tied to
+ * its section's scroll progress through the viewport. Uses view() so each
+ * section's backdrop choreographs independently as it scrolls into view.
+ *
+ * SVG <g> elements only support `transform:` (not standalone `translate:` /
+ * `scale:` CSS properties), so bloom + parallax depth are combined in a single
+ * keyframe set per animation pattern.
+ *
+ * 4 reusable bloom patterns — distributed across facets so adjacent polygons
+ * never share entry direction. animation-range stagger ensures they don't all
+ * peak at the same scroll position.
+ *
+ * In supporting browsers the scroll-driven animation-name REPLACES the
+ * time-based drift (later animation-name declaration wins). Unsupporting
+ * browsers keep the time-based drift as fallback.
+ */
+
+@supports (animation-timeline: view()) {
+  /* ── Shared section facet setup ─────────────────────────────────────────── */
+  .section-backdrop--projects .facet,
+  .section-backdrop--experience .facet,
+  .section-backdrop--contact .facet {
+    animation-timeline: view();
+    animation-range: entry 0% exit 100%;
+    animation-fill-mode: both;
+    animation-timing-function: ease-in-out;
+    will-change: transform, opacity;
+  }
+
+  /* ── Projects variant: 6 facets ─────────────────────────────────────────── */
+  .section-backdrop--projects .facet-1 {
+    animation-name: facet-bloom-up;
+    animation-range: entry 0% exit 100%;
+  }
+  .section-backdrop--projects .facet-2 {
+    animation-name: facet-bloom-right;
+    animation-range: entry 5% exit 95%;
+  }
+  .section-backdrop--projects .facet-3 {
+    animation-name: facet-bloom-left;
+    animation-range: entry 10% exit 90%;
+  }
+  .section-backdrop--projects .facet-4 {
+    animation-name: facet-bloom-down;
+    animation-range: entry 5% exit 95%;
+  }
+  .section-backdrop--projects .facet-5 {
+    animation-name: facet-bloom-up;
+    animation-range: entry 15% exit 85%;
+  }
+  .section-backdrop--projects .facet-6 {
+    animation-name: facet-bloom-left;
+    animation-range: entry 10% exit 90%;
+  }
+
+  /* ── Experience variant: 7 facets ───────────────────────────────────────── */
+  .section-backdrop--experience .facet-1 {
+    animation-name: facet-bloom-right;
+    animation-range: entry 0% exit 100%;
+  }
+  .section-backdrop--experience .facet-2 {
+    animation-name: facet-bloom-left;
+    animation-range: entry 5% exit 95%;
+  }
+  .section-backdrop--experience .facet-3 {
+    animation-name: facet-bloom-up;
+    animation-range: entry 0% exit 100%;
+  }
+  .section-backdrop--experience .facet-4 {
+    animation-name: facet-bloom-down;
+    animation-range: entry 10% exit 90%;
+  }
+  .section-backdrop--experience .facet-5 {
+    animation-name: facet-bloom-up;
+    animation-range: entry 5% exit 95%;
+  }
+  .section-backdrop--experience .facet-6 {
+    animation-name: facet-bloom-right;
+    animation-range: entry 15% exit 85%;
+  }
+  .section-backdrop--experience .facet-7 {
+    animation-name: facet-bloom-left;
+    animation-range: entry 10% exit 90%;
+  }
+
+  /* ── Contact variant: 6 facets ──────────────────────────────────────────── */
+  .section-backdrop--contact .facet-1 {
+    animation-name: facet-bloom-right;
+    animation-range: entry 0% exit 100%;
+  }
+  .section-backdrop--contact .facet-2 {
+    animation-name: facet-bloom-left;
+    animation-range: entry 5% exit 95%;
+  }
+  .section-backdrop--contact .facet-3 {
+    animation-name: facet-bloom-up;
+    animation-range: entry 10% exit 90%;
+  }
+  .section-backdrop--contact .facet-4 {
+    animation-name: facet-bloom-down;
+    animation-range: entry 5% exit 95%;
+  }
+  .section-backdrop--contact .facet-5 {
+    animation-name: facet-bloom-left;
+    animation-range: entry 15% exit 85%;
+  }
+  .section-backdrop--contact .facet-6 {
+    animation-name: facet-bloom-right;
+    animation-range: entry 10% exit 90%;
+  }
+
+  /* ── Reusable bloom keyframe patterns ───────────────────────────────────── */
+  /*
+   * Each keyframe: enters offset + slightly small, settles at 50% (peak
+   * viewport visibility), exits past final position + slightly larger.
+   * Depth parallax is baked in: each pattern has a distinct vertical drift
+   * magnitude integrated into the transforms (near = ±30-40px, far = ±12px).
+   * Translate values are modest (≤40px) — cumulative effect across 6+ polygons
+   * creates the orchestration illusion.
+   */
+
+  @keyframes facet-bloom-up {
+    /*  Entry: rises from below + slight CCW twist; Exit: drifts upward + CW, fades */
+    0%   { transform: translateY(36px)  scale(0.82) rotate(-3deg); opacity: 0; }
+    20%  { opacity: 0.75; }
+    50%  { transform: translateY(0)     scale(1)    rotate(0deg);  opacity: 1; }
+    80%  { opacity: 0.75; }
+    100% { transform: translateY(-18px) scale(1.04) rotate(2deg);  opacity: 0; }
+  }
+
+  @keyframes facet-bloom-down {
+    /*  Entry: drops from above + slight CW twist; Exit: drifts downward + CCW, fades */
+    0%   { transform: translateY(-36px) scale(0.82) rotate(4deg);  opacity: 0; }
+    20%  { opacity: 0.75; }
+    50%  { transform: translateY(0)     scale(1)    rotate(0deg);  opacity: 1; }
+    80%  { opacity: 0.75; }
+    100% { transform: translateY(18px)  scale(1.04) rotate(-3deg); opacity: 0; }
+  }
+
+  @keyframes facet-bloom-left {
+    /*  Entry: slides from the left + CW twist; Exit: drifts right + CCW, fades */
+    0%   { transform: translateX(-28px) scale(0.84) rotate(3deg);  opacity: 0; }
+    20%  { opacity: 0.75; }
+    50%  { transform: translateX(0)     scale(1)    rotate(0deg);  opacity: 1; }
+    80%  { opacity: 0.75; }
+    100% { transform: translateX(14px)  scale(1.04) rotate(-2deg); opacity: 0; }
+  }
+
+  @keyframes facet-bloom-right {
+    /*  Entry: slides from the right + CCW twist; Exit: drifts left + CW, fades */
+    0%   { transform: translateX(28px)  scale(0.84) rotate(-4deg); opacity: 0; }
+    20%  { opacity: 0.75; }
+    50%  { transform: translateX(0)     scale(1)    rotate(0deg);  opacity: 1; }
+    80%  { opacity: 0.75; }
+    100% { transform: translateX(-14px) scale(1.04) rotate(3deg);  opacity: 0; }
+  }
+}
+
+/* ── Hero Cinematic Intro (scroll() timeline) ────────────────────────────── */
+
+/*
+ * The hero sits at the top of the page. view() fires immediately on load, so
+ * we use scroll() instead — polygons choreograph as the user scrolls the page.
+ *
+ * Effect: each polygon disperses outward to its own direction as the user
+ * scrolls down, making the hero "come apart" and reveal the sections below.
+ * The animation completes by the time the user has scrolled 55% of the page.
+ *
+ * SVG constraint: same as above — `transform:` only for SVG <g> elements.
+ */
+
+@supports (animation-timeline: scroll()) {
+  .hero-backdrop .facet {
+    animation-timeline: scroll();
+    animation-range: 0% 55%;
+    animation-fill-mode: both;
+    animation-timing-function: ease-in;
+    will-change: transform, opacity;
+  }
+
+  /* Each facet disperses to a distinct direction — radially outward */
+  .hero-backdrop .facet-1 {
+    /* Top-left wing → slides further up-left */
+    animation-name: hero-disperse-upleft;
+  }
+  .hero-backdrop .facet-2 {
+    /* Top-right wing → slides up-right */
+    animation-name: hero-disperse-upright;
+  }
+  .hero-backdrop .facet-3 {
+    /* Left-center shard → drifts left */
+    animation-name: hero-disperse-left;
+  }
+  .hero-backdrop .facet-4 {
+    /* Bottom-left anchor → sinks down-left */
+    animation-name: hero-disperse-downleft;
+  }
+  .hero-backdrop .facet-5 {
+    /* Bottom-right anchor → sinks down-right */
+    animation-name: hero-disperse-downright;
+  }
+  .hero-backdrop .facet-6 {
+    /* Center shimmer → fades in place (subtle scale) */
+    animation-name: hero-disperse-center;
+  }
+
+  @keyframes hero-disperse-upleft {
+    /* top-left wing rotates CW as it flies away */
+    0%   { transform: translate(0, 0)         scale(1)    rotate(0deg);  opacity: 1; }
+    100% { transform: translate(-24px, -32px) scale(0.78) rotate(6deg);  opacity: 0; }
+  }
+
+  @keyframes hero-disperse-upright {
+    /* top-right wing rotates CCW as it peels off */
+    0%   { transform: translate(0, 0)        scale(1)    rotate(0deg);  opacity: 1; }
+    100% { transform: translate(24px, -28px) scale(0.78) rotate(-8deg); opacity: 0; }
+  }
+
+  @keyframes hero-disperse-left {
+    /* left shard tilts CW as it slides out */
+    0%   { transform: translate(0, 0)   scale(1)    rotate(0deg); opacity: 1; }
+    100% { transform: translate(-30px, 0) scale(0.82) rotate(5deg); opacity: 0; }
+  }
+
+  @keyframes hero-disperse-downleft {
+    /* bottom-left anchor rotates CCW as it sinks */
+    0%   { transform: translate(0, 0)       scale(1)    rotate(0deg);   opacity: 1; }
+    100% { transform: translate(-20px, 30px) scale(0.80) rotate(-6deg);  opacity: 0; }
+  }
+
+  @keyframes hero-disperse-downright {
+    /* bottom-right anchor rotates CW as it sinks */
+    0%   { transform: translate(0, 0)      scale(1)    rotate(0deg);  opacity: 1; }
+    100% { transform: translate(20px, 28px) scale(0.80) rotate(7deg);  opacity: 0; }
+  }
+
+  @keyframes hero-disperse-center {
+    /* center shimmer spins slightly as it dissolves */
+    0%   { transform: scale(1)    rotate(0deg);  opacity: 1; }
+    100% { transform: scale(0.88) rotate(-4deg); opacity: 0; }
+  }
+}
+
+/* ── Stroke Draw-In (scroll-driven blueprint sketch) ────────────────────── */
+
+/*
+ * Fallback (non-supporting browsers): strokes are always visible — just static.
+ * The @supports block overrides to animate only when scroll-driven animations
+ * are available. stroke-dashoffset:0 outside means: always shown by default.
+ */
+
+.section-backdrop .facet polygon,
+.section-backdrop .facet rect {
+  stroke-dashoffset: 0;
+}
+
+.hero-backdrop .facet polygon {
+  stroke-dashoffset: 0;
+}
+
+@supports (animation-timeline: view()) {
+  @keyframes facet-stroke-draw {
+    from { stroke-dashoffset: 1200; }
+    to   { stroke-dashoffset: 0; }
+  }
+
+  .section-backdrop .facet polygon,
+  .section-backdrop .facet rect {
+    stroke-dasharray: 1200;
+    stroke-dashoffset: 1200;
+    animation: facet-stroke-draw linear;
+    animation-timeline: view();
+    animation-range: entry 0% cover 50%;
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  @keyframes facet-stroke-draw-hero {
+    from { stroke-dashoffset: 1200; }
+    to   { stroke-dashoffset: 0; }
+  }
+
+  .hero-backdrop .facet polygon {
+    stroke-dasharray: 1200;
+    stroke-dashoffset: 1200;
+    animation: facet-stroke-draw-hero linear;
+    animation-timeline: scroll();
+    animation-range: 0% 30%;
+  }
+}
+
+/* ── Floating Particles ──────────────────────────────────────────────────── */
+
+/*
+ * Small SVG diamond rects that drift on independent time-based loops.
+ * Transform-only → GPU composited. will-change: transform applied only here.
+ * Different durations and delays make each particle feel independent.
+ */
+
+@keyframes particle-drift-a {
+  from { transform: translate(0, 0)     rotate(45deg); }
+  to   { transform: translate(-18px, 28px) rotate(225deg); }
+}
+
+@keyframes particle-drift-b {
+  from { transform: translate(0, 0)    rotate(45deg); }
+  to   { transform: translate(22px, -16px) rotate(225deg); }
+}
+
+@keyframes particle-drift-c {
+  from { transform: translate(0, 0)    rotate(45deg); }
+  to   { transform: translate(-12px, -24px) rotate(225deg); }
+}
+
+@keyframes particle-drift-hero {
+  /* Ascending sparks: float upward and slightly sideways */
+  from { transform: translate(0, 0)    rotate(45deg); opacity: 0.4; }
+  to   { transform: translate(8px, -32px) rotate(225deg); opacity: 0.1; }
+}
+
+/* Section particles */
+
+.section-backdrop .particle {
+  will-change: transform;
+}
+
+.section-backdrop .particle-1 {
+  animation: particle-drift-a 25s ease-in-out infinite alternate;
+  animation-delay: -3s;
+}
+
+.section-backdrop .particle-2 {
+  animation: particle-drift-b 18s ease-in-out infinite alternate;
+  animation-delay: -8s;
+}
+
+.section-backdrop .particle-3 {
+  animation: particle-drift-c 22s ease-in-out infinite alternate;
+  animation-delay: -13s;
+}
+
+.section-backdrop .particle-4 {
+  animation: particle-drift-a 28s ease-in-out infinite alternate;
+  animation-delay: -5s;
+}
+
+.section-backdrop .particle-5 {
+  animation: particle-drift-b 16s ease-in-out infinite alternate;
+  animation-delay: -10s;
+}
+
+/* Hero particles — ascending sparks */
+
+.hero-backdrop .particle {
+  will-change: transform;
+}
+
+.hero-backdrop .particle-1 {
+  animation: particle-drift-hero 20s ease-in-out infinite alternate;
+  animation-delay: -4s;
+}
+
+.hero-backdrop .particle-2 {
+  animation: particle-drift-hero 26s ease-in-out infinite alternate;
+  animation-delay: -9s;
+}
+
+.hero-backdrop .particle-3 {
+  animation: particle-drift-hero 17s ease-in-out infinite alternate;
+  animation-delay: -2s;
+}
+
+.hero-backdrop .particle-4 {
+  animation: particle-drift-hero 23s ease-in-out infinite alternate;
+  animation-delay: -14s;
+}
+
+.hero-backdrop .particle-5 {
+  animation: particle-drift-hero 19s ease-in-out infinite alternate;
+  animation-delay: -7s;
+}
+
+/* ── Logo Blueprint Path Animation ──────────────────────────────────────── */
+
+/*
+ * Three-phase entrance for the inlined logo SVG paths:
+ *
+ *   Phase A (0s → 1.2s): stroke draws in  — blueprint lines reveal silhouette
+ *   Phase B (0.7s → 1.5s): fill fades in  — colors appear through the strokes
+ *   Phase C (1.3s → 1.9s): stroke fades out — logo settles to clean filled state
+ *
+ * After 1.9s the wrapper-level breathing animation takes over.
+ * Wrapper entrance is 1.4s (scale+blur), path animation is 1.9s — they
+ * overlap by design: wrapper scales up while paths simultaneously draw in.
+ *
+ * Structure: 204 <path> elements are DIRECT children of <svg> (no <g> wrapper),
+ * so nth-child staggering works correctly. Groups of 10 paths share a delay
+ * bucket, cycling through 10 offsets (0ms → 90ms in 10ms steps) for a
+ * natural sequential-reveal feel across 204 paths.
+ *
+ * stroke-dasharray: 2000 is intentionally generous — short paths resolve to 0
+ * before long paths, which creates the organic "drawing" feel.
+ *
+ * Delay triple: (draw-start, fill-start, stroke-fade-start) per nth-child group.
+ */
+
+/* Logo always visible by default; strokes overlay as a blueprint effect that draws in then fades.
+   If the stroke animation fails to apply for any reason, the logo still renders normally. */
+
+.logo-wrapper > svg path {
+  stroke: #73a0be;
+  stroke-width: 1;
+  stroke-opacity: 0;
+  stroke-dasharray: 2000;
+  stroke-dashoffset: 2000;
+  animation:
+    logo-path-draw  1.2s ease-out both,
+    logo-path-stroke-fade 0.5s ease-out 1.3s both;
+}
+
+/* Stagger via nth-of-type so <defs> and other non-path siblings don't shift the index.
+   Each bucket: (draw-start, stroke-fade-start) */
+
+.logo-wrapper > svg path:nth-of-type(10n+1)  { animation-delay: 0.00s, 1.30s; }
+
+.logo-wrapper > svg path:nth-of-type(10n+2)  { animation-delay: 0.04s, 1.34s; }
+
+.logo-wrapper > svg path:nth-of-type(10n+3)  { animation-delay: 0.08s, 1.38s; }
+
+.logo-wrapper > svg path:nth-of-type(10n+4)  { animation-delay: 0.12s, 1.42s; }
+
+.logo-wrapper > svg path:nth-of-type(10n+5)  { animation-delay: 0.16s, 1.46s; }
+
+.logo-wrapper > svg path:nth-of-type(10n+6)  { animation-delay: 0.20s, 1.50s; }
+
+.logo-wrapper > svg path:nth-of-type(10n+7)  { animation-delay: 0.24s, 1.54s; }
+
+.logo-wrapper > svg path:nth-of-type(10n+8)  { animation-delay: 0.28s, 1.58s; }
+
+.logo-wrapper > svg path:nth-of-type(10n+9)  { animation-delay: 0.32s, 1.62s; }
+
+.logo-wrapper > svg path:nth-of-type(10n+10) { animation-delay: 0.36s, 1.66s; }
+
+@keyframes logo-path-draw {
+  from { stroke-opacity: 0.85; stroke-dashoffset: 2000; }
+  to   { stroke-opacity: 0.85; stroke-dashoffset: 0; }
+}
+
+@keyframes logo-path-stroke-fade {
+  from { stroke-opacity: 0.85; }
+  to   { stroke-opacity: 0; }
+}
+
+/* Respect user motion preference — disable ALL backdrop and facet motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .section-backdrop {
+    animation: none !important;
+    will-change: auto;
+  }
+
+  /* Disable ALL facet animations — time-based drift AND scroll-driven */
+  .hero-backdrop .facet,
+  .section-backdrop .facet,
+  .hero-logo-wrap {
+    animation: none !important;
+    will-change: auto;
+  }
+
+  /* Disable logo entrance + halo burst; logo appears static at full opacity */
+  .hero-logo-wrap::before {
+    animation: none !important;
+    display: none;
+  }
+
+  /* Disable particle drift — particles remain at static positions */
+  .section-backdrop .particle,
+  .hero-backdrop .particle {
+    animation: none !important;
+  }
+
+  /* Stroke-draw: show strokes static (already default via non-@supports rule) */
+  .section-backdrop .facet polygon,
+  .section-backdrop .facet rect,
+  .hero-backdrop .facet polygon {
+    stroke-dashoffset: 0 !important;
+    stroke-dasharray: none !important;
+  }
+
+  /* Logo path animation: skip entrance — show logo fully rendered immediately */
+  .logo-wrapper > svg path {
+    animation: none !important;
+    stroke: none !important;
+    stroke-dashoffset: 0 !important;
+    stroke-opacity: 0 !important;
+  }
+}
+
+/* Mobile ≤480px: disable particle drift, reduce opacity slightly */
+
+@media (max-width: 480px) {
+  .section-backdrop .particle,
+  .hero-backdrop .particle {
+    animation: none;
+    opacity: 0.3;
+  }
+}</style>
+<style data-vite-dev-id="D:/Portafolio/jnvrportfolio/src/components/Logo.astro?astro&#38;type=style&#38;index=0&#38;lang.css">.logo-wrapper[data-astro-cid-tvrurpns]{display:inline-flex;align-items:center;justify-content:center}.logo-wrapper[data-astro-cid-tvrurpns]>img[data-astro-cid-tvrurpns]{width:var(--logo-size, 560px);height:auto;display:block}@media (max-width: 768px){.logo-wrapper[data-astro-cid-tvrurpns]>img[data-astro-cid-tvrurpns]{width:var(--logo-size-md, var(--logo-size, 560px))}}@media (max-width: 480px){.logo-wrapper[data-astro-cid-tvrurpns]>img[data-astro-cid-tvrurpns]{width:var(--logo-size-sm, var(--logo-size-md, var(--logo-size, 560px)))}}</style>
+<style data-vite-dev-id="D:/Portafolio/jnvrportfolio/src/components/LocaleSwitcher.astro?astro&#38;type=style&#38;index=0&#38;lang.css">.locale-switcher[data-astro-cid-xunylqyc]{display:inline-flex;align-items:center;gap:var(--space-2);font-size:0.875rem;font-family:var(--font-mono);letter-spacing:0.05em}.locale-link[data-astro-cid-xunylqyc]{min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;color:var(--muted);text-decoration:none;transition:color 150ms;border-radius:var(--radius-sm);padding:0 var(--space-2)}.locale-link[data-astro-cid-xunylqyc]:hover,.locale-link--active[data-astro-cid-xunylqyc]{color:var(--text)}.locale-link--active[data-astro-cid-xunylqyc]{font-weight:600}.locale-divider[data-astro-cid-xunylqyc]{color:var(--border);user-select:none}</style>
+<style data-vite-dev-id="D:/Portafolio/jnvrportfolio/src/components/Header.astro?astro&#38;type=style&#38;index=0&#38;lang.css">.site-header[data-astro-cid-3ef6ksr2]{position:sticky;top:0;z-index:100;background:transparent;transition:background-color 200ms ease,box-shadow 200ms ease}.site-header[data-astro-cid-3ef6ksr2].scrolled{background:var(--surface);box-shadow:0 1px 0 var(--border)}.header-inner[data-astro-cid-3ef6ksr2]{max-width:1200px;margin:0 auto;padding:var(--space-3) var(--space-4);display:flex;align-items:center;justify-content:space-between;gap:var(--space-4)}.header-brand[data-astro-cid-3ef6ksr2]{display:inline-flex;align-items:center;text-decoration:none;flex-shrink:0}.header-nav[data-astro-cid-3ef6ksr2]{display:flex;align-items:center;gap:var(--space-6)}.header-nav[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2]{color:var(--muted);text-decoration:none;font-size:0.9rem;font-weight:500;transition:color 150ms}.header-nav[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2]:hover{color:var(--text)}.hamburger[data-astro-cid-3ef6ksr2]{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:var(--space-2);color:var(--text)}.hamburger[data-astro-cid-3ef6ksr2] span[data-astro-cid-3ef6ksr2]{display:block;width:22px;height:2px;background:currentColor;border-radius:2px;transition:transform 200ms,opacity 200ms}.hamburger[data-astro-cid-3ef6ksr2].open span[data-astro-cid-3ef6ksr2]:nth-child(1){transform:translateY(7px) rotate(45deg)}.hamburger[data-astro-cid-3ef6ksr2].open span[data-astro-cid-3ef6ksr2]:nth-child(2){opacity:0}.hamburger[data-astro-cid-3ef6ksr2].open span[data-astro-cid-3ef6ksr2]:nth-child(3){transform:translateY(-7px) rotate(-45deg)}.mobile-menu[data-astro-cid-3ef6ksr2]{position:fixed;inset:0;z-index:250;display:flex;justify-content:flex-end;background:color-mix(in srgb,var(--bg) 48%,transparent);backdrop-filter:blur(10px)}.mobile-backdrop[data-astro-cid-3ef6ksr2]{position:absolute;inset:0;background:transparent;border:0;padding:0;cursor:pointer}.mobile-panel[data-astro-cid-3ef6ksr2]{position:relative;z-index:1;width:min(92vw,360px);height:100%;background:var(--surface);border-left:1px solid var(--border);padding:var(--space-4);display:flex;flex-direction:column;gap:var(--space-6);box-shadow:-12px 0 32px color-mix(in srgb,var(--bg) 70%,transparent);overflow-y:auto;-webkit-overflow-scrolling:touch}.mobile-panel__header[data-astro-cid-3ef6ksr2]{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3)}.mobile-panel__title[data-astro-cid-3ef6ksr2]{font-size:0.875rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em}.mobile-nav[data-astro-cid-3ef6ksr2]{display:flex;flex-direction:column;gap:var(--space-2)}.mobile-menu[data-astro-cid-3ef6ksr2][hidden]{display:none}.mobile-link[data-astro-cid-3ef6ksr2]{min-height:44px;display:flex;align-items:center;border-radius:var(--radius-md);padding:0 var(--space-3);color:var(--text);text-decoration:none;font-size:1.125rem;font-weight:500}.mobile-close[data-astro-cid-3ef6ksr2]{min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;border-radius:var(--radius-md);align-self:flex-end;background:none;border:none;cursor:pointer;color:var(--muted);font-size:1.25rem;padding:var(--space-2)}@media (max-width: 768px){.header-nav[data-astro-cid-3ef6ksr2]{display:none}.hamburger[data-astro-cid-3ef6ksr2]{display:flex}}@media (min-width: 769px){.mobile-menu[data-astro-cid-3ef6ksr2]{display:none!important}}</style>
+<style data-vite-dev-id="D:/Portafolio/jnvrportfolio/src/components/FletesBadge.astro?astro&#38;type=style&#38;index=0&#38;lang.css">.fletes-badge[data-astro-cid-ojjulksp]{display:inline-flex;align-items:center;gap:var(--space-2);padding:var(--space-1) var(--space-3);background:color-mix(in srgb,var(--accent) 10%,transparent);border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);border-radius:100px;font-size:0.8125rem;font-weight:500;color:var(--accent);letter-spacing:0.01em}.fletes-badge__dot[data-astro-cid-ojjulksp]{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;animation:pulse-dot 2s ease-in-out infinite}@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.8)}}@media (prefers-reduced-motion: reduce){.fletes-badge__dot[data-astro-cid-ojjulksp]{animation:none}}</style>
+<style data-vite-dev-id="D:/Portafolio/jnvrportfolio/src/components/HeroBackdrop.astro?astro&#38;type=style&#38;index=0&#38;lang.css">.hero-backdrop[data-astro-cid-ccimryqm]{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}.hero-backdrop__svg[data-astro-cid-ccimryqm]{width:100%;height:100%;display:block}.hero-backdrop[data-astro-cid-ccimryqm] .facet[data-astro-cid-ccimryqm]{transform-origin:center;will-change:transform;animation:hero-facet-drift 18s ease-in-out infinite alternate}.hero-backdrop[data-astro-cid-ccimryqm] .facet-1[data-astro-cid-ccimryqm]{animation-duration:22s;animation-delay:-2s}.hero-backdrop[data-astro-cid-ccimryqm] .facet-2[data-astro-cid-ccimryqm]{animation-duration:16s;animation-delay:-7s}.hero-backdrop[data-astro-cid-ccimryqm] .facet-3[data-astro-cid-ccimryqm]{animation-duration:20s;animation-delay:-12s}.hero-backdrop[data-astro-cid-ccimryqm] .facet-4[data-astro-cid-ccimryqm]{animation-duration:14s;animation-delay:-4s}.hero-backdrop[data-astro-cid-ccimryqm] .facet-5[data-astro-cid-ccimryqm]{animation-duration:19s;animation-delay:-9s}.hero-backdrop[data-astro-cid-ccimryqm] .facet-6[data-astro-cid-ccimryqm]{animation-duration:17s;animation-delay:-14s}@keyframes hero-facet-drift{from{transform:translate(0,0) scale(1)}to{transform:translate(6px,-4px) scale(1.03)}}@media (max-width: 480px){.hero-backdrop__svg[data-astro-cid-ccimryqm]{opacity:0.6}.hero-backdrop[data-astro-cid-ccimryqm] .facet[data-astro-cid-ccimryqm]{animation:none}}</style>
+<style data-vite-dev-id="D:/Portafolio/jnvrportfolio/src/components/Hero.astro?astro&#38;type=style&#38;index=0&#38;lang.css">.hero[data-astro-cid-bbe6dxrz]{min-height:74vh;display:flex;align-items:center;padding:var(--space-12) var(--space-4) var(--space-8);position:relative;overflow:hidden}.hero-inner[data-astro-cid-bbe6dxrz]{max-width:1200px;margin:0 auto;width:100%;display:flex;flex-direction:column;align-items:center;gap:var(--space-6);position:relative;z-index:1}.hero-logo-wrap[data-astro-cid-bbe6dxrz]{display:flex;justify-content:center;position:relative}.hero-content[data-astro-cid-bbe6dxrz]{display:flex;flex-direction:column;align-items:center;text-align:center;gap:var(--space-4);max-width:720px}.hero-name[data-astro-cid-bbe6dxrz]{font-family:var(--font-heading);font-size:var(--text-h1);font-weight:700;line-height:1.05;color:var(--text);letter-spacing:-0.02em}.hero-role[data-astro-cid-bbe6dxrz]{display:block;font-size:clamp(1.125rem,2.5vw,1.5rem);font-weight:400;color:var(--text-muted);letter-spacing:-0.01em;margin-top:var(--space-2)}.hero-tagline[data-astro-cid-bbe6dxrz]{font-size:clamp(1rem,2vw,1.125rem);color:var(--text-muted);line-height:1.6;max-width:520px}.hero-ctas[data-astro-cid-bbe6dxrz]{display:flex;gap:var(--space-3);flex-wrap:wrap;justify-content:center;margin-top:var(--space-2)}@media (max-width: 768px){.hero[data-astro-cid-bbe6dxrz]{padding-top:var(--space-10);min-height:auto}}@media (max-width: 480px){.hero[data-astro-cid-bbe6dxrz]{padding:var(--space-8) var(--space-4) var(--space-6)}.hero-logo-wrap[data-astro-cid-bbe6dxrz]{max-width:260px}.hero-content[data-astro-cid-bbe6dxrz]{gap:var(--space-3)}.hero-ctas[data-astro-cid-bbe6dxrz]{width:100%;flex-direction:column;align-items:stretch}.hero-ctas[data-astro-cid-bbe6dxrz] .btn[data-astro-cid-bbe6dxrz]{width:100%}}</style>
+<style data-vite-dev-id="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro?astro&#38;type=style&#38;index=0&#38;lang.css">.stack-chip[data-astro-cid-wegl6smt]{display:inline-block;font-family:var(--font-mono);font-size:0.6875rem;font-weight:500;line-height:1;background:var(--surface-2);color:var(--accent);padding:3px var(--space-2);border-radius:4px;border:1px solid color-mix(in srgb,var(--accent) 20%,transparent);letter-spacing:0.02em;white-space:nowrap}</style>
+<style data-vite-dev-id="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro?astro&#38;type=style&#38;index=0&#38;lang.css">.project-card[data-astro-cid-mspuyifq]{background:var(--surface);border:var(--border-width) solid var(--border);border-radius:8px;overflow:visible;display:flex;flex-direction:column;transition:border-color var(--duration-base) var(--ease-standard),border-width var(--duration-base) var(--ease-standard),box-shadow var(--duration-base) var(--ease-standard),transform var(--card-hover-duration) var(--ease-standard),opacity var(--duration-base) var(--ease-standard);clip-path:polygon(0 0,calc(100% - var(--clip-facet)) 0,100% var(--clip-facet),100% 100%,0 100%)}.project-card[data-astro-cid-mspuyifq]:hover{border-color:var(--brand);border-width:var(--border-width-strong);box-shadow:0 4px 24px color-mix(in srgb,var(--brand) 12%,transparent);transform:var(--card-hover-transform)}@media (hover: none),(pointer: coarse){.project-card[data-astro-cid-mspuyifq]:hover{border-color:var(--border);border-width:var(--border-width);box-shadow:none;transform:none}}.card-cover-link[data-astro-cid-mspuyifq]{display:block;text-decoration:none;overflow:hidden;border-radius:8px 8px 0 0}.card-cover-wrap[data-astro-cid-mspuyifq]{width:100%;aspect-ratio:16 / 10;overflow:hidden;background:var(--surface-2)}.card-cover[data-astro-cid-mspuyifq]{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}.card-placeholder[data-astro-cid-mspuyifq]{width:100%;aspect-ratio:16 / 9;background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 8%,var(--surface)) 0%,color-mix(in srgb,var(--accent) 4%,var(--surface-2)) 100%);display:flex;align-items:center;justify-content:center}.card-placeholder__initials[data-astro-cid-mspuyifq]{font-size:2.5rem;font-weight:700;color:var(--accent);opacity:0.25;font-family:var(--font-display);letter-spacing:-0.02em;user-select:none}.card-body[data-astro-cid-mspuyifq]{padding:var(--space-4);display:flex;flex-direction:column;gap:var(--space-2);flex:1}.card-meta[data-astro-cid-mspuyifq]{display:flex;align-items:center;gap:var(--space-2);font-size:0.75rem;color:var(--muted)}.card-client[data-astro-cid-mspuyifq]{font-weight:500}.card-year[data-astro-cid-mspuyifq]{margin-left:auto}.card-confidential[data-astro-cid-mspuyifq]{display:inline-flex;align-items:center;gap:4px;font-size:0.6875rem;background:color-mix(in srgb,var(--warning, #F0883E) 15%,transparent);color:var(--warning, #F0883E);border:1px solid color-mix(in srgb,var(--warning, #F0883E) 30%,transparent);padding:2px var(--space-2);border-radius:4px}.card-confidential[data-astro-cid-mspuyifq]::before{content:"🔒";font-style:normal}.card-title[data-astro-cid-mspuyifq]{font-size:1rem;font-weight:600;line-height:1.3;margin:0}.card-title[data-astro-cid-mspuyifq] a[data-astro-cid-mspuyifq]{color:var(--text);text-decoration:none;transition:color 150ms}.card-title[data-astro-cid-mspuyifq] a[data-astro-cid-mspuyifq]:hover{color:var(--accent)}.card-summary[data-astro-cid-mspuyifq]{font-size:0.875rem;color:var(--muted);line-height:1.5;margin:0;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.card-stack[data-astro-cid-mspuyifq]{display:flex;flex-wrap:wrap;gap:var(--space-1);margin-top:var(--space-1)}.card-stack-more[data-astro-cid-mspuyifq]{font-family:var(--font-mono);font-size:0.6875rem;color:var(--muted);padding:3px var(--space-2)}@media (max-width: 480px){.card-body[data-astro-cid-mspuyifq]{padding:var(--space-3)}.card-cover-wrap[data-astro-cid-mspuyifq]{aspect-ratio:16 / 9}.card-placeholder[data-astro-cid-mspuyifq]{aspect-ratio:16 / 9}.card-meta[data-astro-cid-mspuyifq]{gap:var(--space-1);flex-wrap:wrap;align-items:flex-start}.card-year[data-astro-cid-mspuyifq]{margin-left:0}.card-summary[data-astro-cid-mspuyifq]{-webkit-line-clamp:2}}</style>
+<style data-vite-dev-id="D:/Portafolio/jnvrportfolio/src/components/ScrollReveal.astro?astro&#38;type=style&#38;index=0&#38;lang.css">.scroll-reveal[data-astro-cid-gkxl7tdg]{opacity:0;transform:translateY(12px);transition:opacity 200ms cubic-bezier(0.16,1,0.3,1) var(--reveal-delay, 0ms),transform 200ms cubic-bezier(0.16,1,0.3,1) var(--reveal-delay, 0ms)}.scroll-reveal[data-astro-cid-gkxl7tdg][data-revealed]{opacity:1;transform:translateY(0)}@media (prefers-reduced-motion: reduce){.scroll-reveal[data-astro-cid-gkxl7tdg]{opacity:1;transform:none;transition:none}}</style>
+<style data-vite-dev-id="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro?astro&#38;type=style&#38;index=0&#38;lang.css">.section-backdrop[data-astro-cid-pa5ui2la]{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}.section-backdrop__svg[data-astro-cid-pa5ui2la]{width:100%;height:100%;display:block}.section-backdrop[data-astro-cid-pa5ui2la] .facet[data-astro-cid-pa5ui2la]{transform-origin:center;will-change:transform}.section-backdrop--projects[data-astro-cid-pa5ui2la] .facet[data-astro-cid-pa5ui2la]{animation:projects-facet-drift 18s ease-in-out infinite alternate}.section-backdrop--projects[data-astro-cid-pa5ui2la] .facet-1[data-astro-cid-pa5ui2la]{animation-duration:21s;animation-delay:-3s}.section-backdrop--projects[data-astro-cid-pa5ui2la] .facet-2[data-astro-cid-pa5ui2la]{animation-duration:15s;animation-delay:-8s}.section-backdrop--projects[data-astro-cid-pa5ui2la] .facet-3[data-astro-cid-pa5ui2la]{animation-duration:19s;animation-delay:-13s}.section-backdrop--projects[data-astro-cid-pa5ui2la] .facet-4[data-astro-cid-pa5ui2la]{animation-duration:23s;animation-delay:-5s}.section-backdrop--projects[data-astro-cid-pa5ui2la] .facet-5[data-astro-cid-pa5ui2la]{animation-duration:17s;animation-delay:-10s}.section-backdrop--projects[data-astro-cid-pa5ui2la] .facet-6[data-astro-cid-pa5ui2la]{animation-duration:20s;animation-delay:-1s}@keyframes projects-facet-drift{from{transform:translate(0,0) scale(1)}to{transform:translate(2px,-7px) scale(1.02)}}.section-backdrop--experience[data-astro-cid-pa5ui2la] .facet[data-astro-cid-pa5ui2la]{animation:experience-facet-drift 18s ease-in-out infinite alternate}.section-backdrop--experience[data-astro-cid-pa5ui2la] .facet-1[data-astro-cid-pa5ui2la]{animation-duration:24s;animation-delay:-6s}.section-backdrop--experience[data-astro-cid-pa5ui2la] .facet-2[data-astro-cid-pa5ui2la]{animation-duration:18s;animation-delay:-11s}.section-backdrop--experience[data-astro-cid-pa5ui2la] .facet-3[data-astro-cid-pa5ui2la]{animation-duration:22s;animation-delay:-2s}.section-backdrop--experience[data-astro-cid-pa5ui2la] .facet-4[data-astro-cid-pa5ui2la]{animation-duration:16s;animation-delay:-15s}.section-backdrop--experience[data-astro-cid-pa5ui2la] .facet-5[data-astro-cid-pa5ui2la]{animation-duration:20s;animation-delay:-7s}.section-backdrop--experience[data-astro-cid-pa5ui2la] .facet-6[data-astro-cid-pa5ui2la]{animation-duration:14s;animation-delay:-9s}.section-backdrop--experience[data-astro-cid-pa5ui2la] .facet-7[data-astro-cid-pa5ui2la]{animation-duration:19s;animation-delay:-4s}@keyframes experience-facet-drift{from{transform:translate(0,0) scale(1)}to{transform:translate(-6px,3px) scale(1.02)}}.section-backdrop--contact[data-astro-cid-pa5ui2la] .facet[data-astro-cid-pa5ui2la]{animation:contact-facet-drift 18s cubic-bezier(0.45,0.05,0.55,0.95) infinite alternate}.section-backdrop--contact[data-astro-cid-pa5ui2la] .facet-1[data-astro-cid-pa5ui2la]{animation-duration:20s;animation-delay:-4s}.section-backdrop--contact[data-astro-cid-pa5ui2la] .facet-2[data-astro-cid-pa5ui2la]{animation-duration:16s;animation-delay:-9s}.section-backdrop--contact[data-astro-cid-pa5ui2la] .facet-3[data-astro-cid-pa5ui2la]{animation-duration:22s;animation-delay:-14s}.section-backdrop--contact[data-astro-cid-pa5ui2la] .facet-4[data-astro-cid-pa5ui2la]{animation-duration:18s;animation-delay:-2s}.section-backdrop--contact[data-astro-cid-pa5ui2la] .facet-5[data-astro-cid-pa5ui2la]{animation-duration:15s;animation-delay:-7s}.section-backdrop--contact[data-astro-cid-pa5ui2la] .facet-6[data-astro-cid-pa5ui2la]{animation-duration:21s;animation-delay:-11s}@keyframes contact-facet-drift{from{transform:translate(0,0) scale(1)}to{transform:translate(0,0) scale(0.97)}}@media (max-width: 480px){.section-backdrop__svg[data-astro-cid-pa5ui2la]{opacity:0.5}.section-backdrop[data-astro-cid-pa5ui2la] .facet[data-astro-cid-pa5ui2la]{animation:none}}</style>
+<style data-vite-dev-id="D:/Portafolio/jnvrportfolio/src/components/ProjectGrid.astro?astro&#38;type=style&#38;index=0&#38;lang.css">.projects-section[data-astro-cid-2wkm2a2e]{padding:var(--space-16) var(--space-4);position:relative;overflow:hidden}.projects-inner[data-astro-cid-2wkm2a2e]{max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:var(--space-6);position:relative;z-index:1}.projects-inner[data-astro-cid-2wkm2a2e] h2[data-astro-cid-2wkm2a2e]{font-size:clamp(1.5rem,3vw,2rem);font-weight:700;color:var(--text)}.projects-intro[data-astro-cid-2wkm2a2e]{max-width:56ch;margin:0;color:var(--muted);font-size:1rem;line-height:1.65}.filter-group[data-astro-cid-2wkm2a2e]{display:flex;flex-wrap:wrap;gap:var(--space-2)}.filter-chip[data-astro-cid-2wkm2a2e]{font-family:var(--font-mono);font-size:0.8125rem;padding:var(--space-1) var(--space-3);min-height:44px;background:var(--surface);border:1px solid var(--border);border-radius:100px;color:var(--muted);cursor:pointer;transition:background-color 150ms,border-color 150ms,color 150ms;touch-action:manipulation}.filter-chip[data-astro-cid-2wkm2a2e]:hover,.filter-chip--active[data-astro-cid-2wkm2a2e],.filter-chip[data-astro-cid-2wkm2a2e][aria-pressed=true]{background:color-mix(in srgb,var(--accent) 10%,var(--surface));border-color:color-mix(in srgb,var(--accent) 40%,transparent);color:var(--accent)}.filter-count[data-astro-cid-2wkm2a2e]{font-size:0.8125rem;color:var(--muted);margin:0}.projects-grid[data-astro-cid-2wkm2a2e]>.project-grid-item[data-astro-cid-2wkm2a2e]{display:block;will-change:transform,opacity;transform-origin:top left}.projects-grid[data-astro-cid-2wkm2a2e]>.project-grid-item[data-astro-cid-2wkm2a2e][hidden]{display:none!important}.projects-grid[data-astro-cid-2wkm2a2e]{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:var(--space-5)}@media (max-width: 480px){.projects-section[data-astro-cid-2wkm2a2e]{padding:var(--space-12) var(--space-4)}.filter-group[data-astro-cid-2wkm2a2e]{flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin-inline:calc(var(--space-4) * -1);padding-inline:var(--space-4);padding-bottom:var(--space-1);-webkit-mask-image:linear-gradient(to right,black calc(100% - 32px),transparent 100%);mask-image:linear-gradient(to right,black calc(100% - 32px),transparent 100%)}.filter-group[data-astro-cid-2wkm2a2e]::-webkit-scrollbar{display:none}.filter-chip[data-astro-cid-2wkm2a2e]{flex:0 0 auto;white-space:nowrap}.projects-grid[data-astro-cid-2wkm2a2e]{grid-template-columns:1fr;gap:var(--space-4)}}</style>
+<style data-vite-dev-id="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro?astro&#38;type=style&#38;index=0&#38;lang.css">.experience-card[data-astro-cid-llabjfk5]{position:relative;display:flex;gap:var(--space-5);padding-bottom:var(--space-8);padding-left:var(--space-4);list-style:none}.experience-card[data-astro-cid-llabjfk5]::before{content:"";position:absolute;left:0;top:8px;bottom:0;width:1px;background:var(--border)}.experience-card[data-astro-cid-llabjfk5]:last-child::before{display:none}.timeline-dot[data-astro-cid-llabjfk5]{position:absolute;left:-4px;top:6px;width:9px;height:9px;border-radius:50%;background:var(--muted);border:2px solid var(--bg);flex-shrink:0}.experience-card--featured[data-astro-cid-llabjfk5] .timeline-dot[data-astro-cid-llabjfk5]{background:var(--accent);width:11px;height:11px;left:-5px}.experience-card__body[data-astro-cid-llabjfk5]{display:flex;flex-direction:column;gap:var(--space-2);background:var(--surface);border:var(--border-width) solid var(--border);border-radius:8px;padding:var(--space-4);clip-path:polygon(0 0,calc(100% - var(--clip-facet)) 0,100% var(--clip-facet),100% 100%,0 100%);transition:border-color var(--duration-base) var(--ease-standard),border-width var(--duration-base) var(--ease-standard),box-shadow var(--duration-base) var(--ease-standard),transform var(--card-hover-duration) var(--ease-standard)}.experience-card[data-astro-cid-llabjfk5]:hover .experience-card__body[data-astro-cid-llabjfk5]{border-color:var(--brand);border-width:var(--border-width-strong);box-shadow:0 4px 24px color-mix(in srgb,var(--brand) 12%,transparent);transform:var(--card-hover-transform)}.experience-card__header[data-astro-cid-llabjfk5]{display:flex;flex-direction:column;gap:var(--space-1)}.experience-card__company-row[data-astro-cid-llabjfk5]{display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap}.experience-card__company[data-astro-cid-llabjfk5]{font-size:1rem;font-weight:600;color:var(--text)}.experience-card--featured[data-astro-cid-llabjfk5] .experience-card__company[data-astro-cid-llabjfk5]{color:var(--accent)}.experience-card__location[data-astro-cid-llabjfk5]{font-size:0.8125rem;color:var(--muted)}.experience-card__role[data-astro-cid-llabjfk5]{font-size:0.9375rem;font-weight:500;color:var(--text);margin:0;opacity:0.85}.experience-card__period[data-astro-cid-llabjfk5]{font-family:var(--font-mono);font-size:0.75rem;color:var(--muted)}.experience-card__summary[data-astro-cid-llabjfk5]{font-size:0.875rem;color:var(--muted);line-height:1.6;margin:0}.experience-card__highlights[data-astro-cid-llabjfk5]{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:var(--space-1)}.experience-card__highlights[data-astro-cid-llabjfk5] li[data-astro-cid-llabjfk5]{font-size:0.875rem;color:var(--muted);padding-left:var(--space-3);position:relative}.experience-card__highlights[data-astro-cid-llabjfk5] li[data-astro-cid-llabjfk5]::before{content:"—";position:absolute;left:0;color:var(--accent);opacity:0.5}.experience-card__stack[data-astro-cid-llabjfk5]{display:flex;flex-wrap:wrap;gap:var(--space-1);margin-top:var(--space-1)}@media (max-width: 480px){.experience-card[data-astro-cid-llabjfk5]{gap:var(--space-3);padding-left:var(--space-3);padding-bottom:var(--space-6)}.experience-card__body[data-astro-cid-llabjfk5]{padding:var(--space-3)}.experience-card__company-row[data-astro-cid-llabjfk5]{gap:var(--space-1)}}</style>
+<style data-vite-dev-id="D:/Portafolio/jnvrportfolio/src/components/ExperienceList.astro?astro&#38;type=style&#38;index=0&#38;lang.css">.experience-section[data-astro-cid-2osycvzt]{padding:var(--space-16) var(--space-4);background:var(--surface);position:relative;overflow:hidden}.experience-inner[data-astro-cid-2osycvzt]{max-width:800px;margin:0 auto;display:flex;flex-direction:column;gap:var(--space-8);position:relative;z-index:1}.experience-inner[data-astro-cid-2osycvzt] h2[data-astro-cid-2osycvzt]{font-size:clamp(1.5rem,3vw,2rem);font-weight:700;color:var(--text)}.experience-timeline[data-astro-cid-2osycvzt]{list-style:none;padding:0;margin:0;padding-left:var(--space-4)}</style>
+<style data-vite-dev-id="D:/Portafolio/jnvrportfolio/src/components/ContactForm.astro?astro&#38;type=style&#38;index=0&#38;lang.css">.contact-section[data-astro-cid-svshx33u]{padding:var(--space-16) var(--space-4);position:relative;overflow:hidden}.contact-inner[data-astro-cid-svshx33u]{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:var(--space-8);position:relative;z-index:1}.contact-inner[data-astro-cid-svshx33u] h2[data-astro-cid-svshx33u]{font-size:clamp(1.5rem,3vw,2rem);font-weight:700;color:var(--text);margin-bottom:var(--space-2)}.contact-subtitle[data-astro-cid-svshx33u]{color:var(--muted);font-size:1rem;margin:0}.contact-form[data-astro-cid-svshx33u]{display:flex;flex-direction:column;gap:var(--space-4)}.contact-form__honeypot[data-astro-cid-svshx33u]{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}.form-field[data-astro-cid-svshx33u]{display:flex;flex-direction:column;gap:var(--space-1)}.form-label[data-astro-cid-svshx33u]{font-size:0.875rem;font-weight:500;color:var(--text);display:flex;align-items:center;gap:var(--space-1)}.form-required[data-astro-cid-svshx33u]{color:var(--danger)}.form-input[data-astro-cid-svshx33u]{background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--font-body);font-size:1rem;padding:var(--space-3) var(--space-3);transition:border-color 150ms,box-shadow 150ms;width:100%;box-sizing:border-box;min-height:44px;touch-action:manipulation}.form-input[data-astro-cid-svshx33u]::placeholder{color:var(--muted);opacity:0.6}.form-input[data-astro-cid-svshx33u]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%,transparent)}.form-input[data-astro-cid-svshx33u][aria-invalid=true]{border-color:var(--danger);box-shadow:0 0 0 3px color-mix(in srgb,var(--danger) 15%,transparent)}.form-textarea[data-astro-cid-svshx33u]{resize:vertical;min-height:120px}.form-error[data-astro-cid-svshx33u]{font-size:0.8125rem;color:var(--danger);min-height:1.25em}.form-submit[data-astro-cid-svshx33u]{align-self:flex-start;min-width:160px;min-height:44px}.form-submit[data-astro-cid-svshx33u][aria-busy=true]{opacity:0.7;cursor:not-allowed;pointer-events:none}.form-status[data-astro-cid-svshx33u]{font-size:0.9375rem;padding:var(--space-3);border-radius:6px;min-height:2em;transition:opacity 200ms}.form-status[data-astro-cid-svshx33u]:empty{padding:0}.form-status--success[data-astro-cid-svshx33u]{background:color-mix(in srgb,var(--accent) 10%,transparent);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}.form-status--error[data-astro-cid-svshx33u]{background:color-mix(in srgb,var(--danger) 10%,transparent);color:var(--danger);border:1px solid color-mix(in srgb,var(--danger) 30%,transparent)}@media (max-width: 480px){.contact-section[data-astro-cid-svshx33u]{padding:var(--space-12) var(--space-4)}.form-submit[data-astro-cid-svshx33u]{width:100%;align-self:stretch}}</style>
+<style data-vite-dev-id="D:/Portafolio/jnvrportfolio/src/components/Footer.astro?astro&#38;type=style&#38;index=0&#38;lang.css">.site-footer[data-astro-cid-sz7xmlte]{border-top:1px solid var(--border);padding:var(--space-8) var(--space-4);margin-top:var(--space-16)}.footer-inner[data-astro-cid-sz7xmlte]{max-width:1200px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:var(--space-3);text-align:center}.footer-social[data-astro-cid-sz7xmlte]{display:flex;gap:var(--space-4);align-items:center;flex-wrap:wrap;justify-content:center}.social-link[data-astro-cid-sz7xmlte]{color:var(--muted);transition:color 150ms,opacity 150ms;display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;border-radius:var(--radius-md);opacity:0.6}.social-link[data-astro-cid-sz7xmlte]:hover{opacity:1}.social-link[data-astro-cid-sz7xmlte] img[data-astro-cid-sz7xmlte]{filter:brightness(0) invert(1);opacity:inherit}.footer-copy[data-astro-cid-sz7xmlte],.footer-made[data-astro-cid-sz7xmlte]{font-size:0.8125rem;color:var(--muted);margin:0}@media (max-width: 480px){.site-footer[data-astro-cid-sz7xmlte]{padding-inline:var(--space-4);padding-block:var(--space-6)}.footer-inner[data-astro-cid-sz7xmlte]{gap:var(--space-2)}}</style><script type="module" src="/@vite/client"></script>
+<script type="module" src="/@fs/D:/Portafolio/jnvrportfolio/node_modules/astro/dist/runtime/client/dev-toolbar/entrypoint.js?v=1cbd8143"></script>
+<script>window.__astro_dev_toolbar__ = {"root":"D:\\Portafolio\\jnvrportfolio\\","version":"5.18.1","debugInfo":"Astro                    v5.18.1\nNode                     v20.11.1\nSystem                   Windows (x64)\nPackage Manager          npm\nOutput                   static\nAdapter                  none\nIntegrations             @astrojs/sitemap\n                         bilingual-parity"}</script>
+<script type="module" src="/src/layouts/BaseLayout.astro?astro&type=style&index=0&lang.css"></script>
+<script type="module" src="/src/layouts/BaseLayout.astro?astro&type=style&index=1&lang.css"></script>
+<script type="module" src="/src/components/Logo.astro?astro&type=style&index=0&lang.css"></script>
+<script type="module" src="/src/components/LocaleSwitcher.astro?astro&type=style&index=0&lang.css"></script>
+<script type="module" src="/src/components/Header.astro?astro&type=style&index=0&lang.css"></script>
+<script type="module" src="/src/components/FletesBadge.astro?astro&type=style&index=0&lang.css"></script>
+<script type="module" src="/src/components/HeroBackdrop.astro?astro&type=style&index=0&lang.css"></script>
+<script type="module" src="/src/components/Hero.astro?astro&type=style&index=0&lang.css"></script>
+<script type="module" src="/src/components/StackChip.astro?astro&type=style&index=0&lang.css"></script>
+<script type="module" src="/src/components/ProjectCard.astro?astro&type=style&index=0&lang.css"></script>
+<script type="module" src="/src/components/ScrollReveal.astro?astro&type=style&index=0&lang.css"></script>
+<script type="module" src="/src/components/SectionBackdrop.astro?astro&type=style&index=0&lang.css"></script>
+<script type="module" src="/src/components/ProjectGrid.astro?astro&type=style&index=0&lang.css"></script>
+<script type="module" src="/src/components/ExperienceCard.astro?astro&type=style&index=0&lang.css"></script>
+<script type="module" src="/src/components/ExperienceList.astro?astro&type=style&index=0&lang.css"></script>
+<script type="module" src="/src/components/ContactForm.astro?astro&type=style&index=0&lang.css"></script>
+<script type="module" src="/src/components/Footer.astro?astro&type=style&index=0&lang.css"></script></head> <body data-astro-cid-37fxchfa data-astro-source-file="D:/Portafolio/jnvrportfolio/src/layouts/BaseLayout.astro" data-astro-source-loc="103:9"> <!-- Skip to content link (a11y) --> <a class="skip-link" href="#main-content" data-astro-cid-37fxchfa data-astro-source-file="D:/Portafolio/jnvrportfolio/src/layouts/BaseLayout.astro" data-astro-source-loc="105:47"> Ir al contenido principal </a> <!-- Content wrapper: z-index 1 places all page content above the
+         atmospheric orbs (body::before/::after at z-index 0) while
+         the SVG faceted backdrop stays as the body's background layer. --> <div class="page-content" data-astro-cid-37fxchfa data-astro-source-file="D:/Portafolio/jnvrportfolio/src/layouts/BaseLayout.astro" data-astro-source-loc="112:31">  <header class="site-header" id="site-header" data-astro-cid-3ef6ksr2 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Header.astro" data-astro-source-loc="27:46"> <div class="header-inner" data-astro-cid-3ef6ksr2 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Header.astro" data-astro-source-loc="28:29"> <!-- Brand --> <a href="/" class="header-brand" aria-label="JNVR — inicio" data-astro-cid-3ef6ksr2 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Header.astro" data-astro-source-loc="34:6"> <span class="logo-wrapper" style="--logo-size: 32px; --logo-size-md: 29px; --logo-size-sm: 24px" data-astro-cid-tvrurpns data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Logo.astro" data-astro-source-loc="31:2"> <img src="/logo-mark.svg" alt="JNVR" width="32" height="32" decoding="async" fetchpriority="high" data-astro-cid-tvrurpns data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Logo.astro" data-astro-source-loc="32:4"> </span>  </a> <!-- Desktop nav --> <nav class="header-nav" aria-label="Primary" data-astro-cid-3ef6ksr2 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Header.astro" data-astro-source-loc="39:50"> <a href="/#projects" data-astro-cid-3ef6ksr2 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Header.astro" data-astro-source-loc="40:37">Proyectos</a> <a href="/#experience" data-astro-cid-3ef6ksr2 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Header.astro" data-astro-source-loc="41:39">Experiencia</a> <a href="/#contact" data-astro-cid-3ef6ksr2 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Header.astro" data-astro-source-loc="42:36">Contacto</a> <nav class="locale-switcher" aria-label="Cambiar idioma" data-astro-cid-xunylqyc data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/LocaleSwitcher.astro" data-astro-source-loc="32:88"> <a href="/" lang="es" aria-current="page" class="locale-link locale-link--active" data-astro-cid-xunylqyc data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/LocaleSwitcher.astro" data-astro-source-loc="38:4">
+ES
+</a> <span class="locale-divider" aria-hidden="true" data-astro-cid-xunylqyc data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/LocaleSwitcher.astro" data-astro-source-loc="41:51">|</span> <a href="/en/" lang="en" class="locale-link" data-astro-cid-xunylqyc data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/LocaleSwitcher.astro" data-astro-source-loc="47:4">
+EN
+</a> </nav>  </nav> <!-- Mobile hamburger --> <button type="button" class="hamburger" id="hamburger-btn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu" data-open-label="Abrir menú" data-close-label="Cerrar menú" data-astro-cid-3ef6ksr2 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Header.astro" data-astro-source-loc="56:6"> <span data-astro-cid-3ef6ksr2 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Header.astro" data-astro-source-loc="57:8"></span> <span data-astro-cid-3ef6ksr2 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Header.astro" data-astro-source-loc="58:8"></span> <span data-astro-cid-3ef6ksr2 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Header.astro" data-astro-source-loc="59:8"></span> </button> </div> <!-- Mobile menu --> <div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" hidden data-astro-cid-3ef6ksr2 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Header.astro" data-astro-source-loc="64:84"> <button type="button" class="mobile-backdrop" id="mobile-backdrop" aria-label="Cerrar menú" data-astro-cid-3ef6ksr2 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Header.astro" data-astro-source-loc="70:6"> <span class="visually-hidden" data-astro-cid-3ef6ksr2 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Header.astro" data-astro-source-loc="71:37">Cerrar menú</span> </button> <div class="mobile-panel" data-astro-cid-3ef6ksr2 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Header.astro" data-astro-source-loc="73:31"> <div class="mobile-panel__header" data-astro-cid-3ef6ksr2 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Header.astro" data-astro-source-loc="74:41"> <span class="mobile-panel__title" data-astro-cid-3ef6ksr2 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Header.astro" data-astro-source-loc="75:43">Menú</span> <button type="button" class="mobile-close" id="mobile-close-btn" aria-label="Cerrar menú" data-astro-cid-3ef6ksr2 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Header.astro" data-astro-source-loc="81:10">
+✕
+</button> </div> <nav aria-label="Mobile navigation" class="mobile-nav" data-astro-cid-3ef6ksr2 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Header.astro" data-astro-source-loc="86:62"> <a href="/#projects" class="mobile-link" data-astro-cid-3ef6ksr2 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Header.astro" data-astro-source-loc="87:59">Proyectos</a> <a href="/#experience" class="mobile-link" data-astro-cid-3ef6ksr2 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Header.astro" data-astro-source-loc="88:61">Experiencia</a> <a href="/#contact" class="mobile-link" data-astro-cid-3ef6ksr2 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Header.astro" data-astro-source-loc="89:58">Contacto</a> <nav class="locale-switcher" aria-label="Cambiar idioma" data-astro-cid-xunylqyc data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/LocaleSwitcher.astro" data-astro-source-loc="32:88"> <a href="/" lang="es" aria-current="page" class="locale-link locale-link--active" data-astro-cid-xunylqyc data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/LocaleSwitcher.astro" data-astro-source-loc="38:4">
+ES
+</a> <span class="locale-divider" aria-hidden="true" data-astro-cid-xunylqyc data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/LocaleSwitcher.astro" data-astro-source-loc="41:51">|</span> <a href="/en/" lang="en" class="locale-link" data-astro-cid-xunylqyc data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/LocaleSwitcher.astro" data-astro-source-loc="47:4">
+EN
+</a> </nav>  </nav> </div> </div> </header>  <script type="module" src="/src/components/Header.astro?astro&type=script&index=0&lang.ts"></script> <main id="main-content" data-astro-source-file="D:/Portafolio/jnvrportfolio/src/pages/index.astro" data-astro-source-loc="56:27"> <section id="hero" class="hero" aria-labelledby="hero-heading" data-astro-cid-bbe6dxrz data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Hero.astro" data-astro-source-loc="25:64"> <div class="hero-backdrop section-backdrop" aria-hidden="true" data-astro-cid-ccimryqm data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/HeroBackdrop.astro" data-astro-source-loc="20:64"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false" class="hero-backdrop__svg" data-astro-cid-ccimryqm data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/HeroBackdrop.astro" data-astro-source-loc="28:4"> <!--
+      5 facets arranged to frame the center (logo position) without covering it.
+      Colors sourced directly from the logo's st0/st1/st3 class fills.
+      All at low opacity so the body-level facets + orbs remain visible through.
+
+      Logo color reference:
+        st0 = #73A0BE (brand blue — dominant logo shape)
+        st1 = #0F293F (deep navy — logo shadow/depth)
+        st3 = #A7A6A8 (warm gray — logo dot accent)
+        surface-elevated = #1A3A5C
+    --> <!-- Top-left wing: large diagonal cut echoing the N/J letter diagonal --> <g class="facet facet-1" data-astro-cid-ccimryqm data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/HeroBackdrop.astro" data-astro-source-loc="42:30"> <polygon points="0,0 420,0 280,180 0,240" fill="#0F293F" opacity="0.55" stroke="#73A0BE" stroke-opacity="0.14" stroke-width="0.8" data-astro-cid-ccimryqm data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/HeroBackdrop.astro" data-astro-source-loc="43:8"></polygon> </g> <!-- Top-right wing: mirrors the V letterform wedge from the logo --> <g class="facet facet-2" data-astro-cid-ccimryqm data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/HeroBackdrop.astro" data-astro-source-loc="54:30"> <polygon points="780,0 1200,0 1200,200 960,120" fill="#1A3A5C" opacity="0.45" stroke="#73A0BE" stroke-opacity="0.12" stroke-width="0.9" data-astro-cid-ccimryqm data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/HeroBackdrop.astro" data-astro-source-loc="55:8"></polygon> </g> <!-- Left-center shard: brand-blue highlight at very low opacity --> <!-- Echoes the st0 diagonal cut in the N letterform --> <g class="facet facet-3" data-astro-cid-ccimryqm data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/HeroBackdrop.astro" data-astro-source-loc="67:30"> <polygon points="0,180 200,120 260,300 40,340" fill="#73A0BE" opacity="0.06" stroke="#73A0BE" stroke-opacity="0.18" stroke-width="0.7" data-astro-cid-ccimryqm data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/HeroBackdrop.astro" data-astro-source-loc="68:8"></polygon> </g> <!-- Bottom-left anchor: heavy base mass like the J's foot --> <g class="facet facet-4" data-astro-cid-ccimryqm data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/HeroBackdrop.astro" data-astro-source-loc="79:30"> <polygon points="0,480 360,420 440,600 180,700 0,700" fill="#0F293F" opacity="0.50" stroke="#73A0BE" stroke-opacity="0.13" stroke-width="1.0" data-astro-cid-ccimryqm data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/HeroBackdrop.astro" data-astro-source-loc="80:8"></polygon> </g> <!-- Bottom-right anchor: mirrors logo's lower-right shadow stack --> <g class="facet facet-5" data-astro-cid-ccimryqm data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/HeroBackdrop.astro" data-astro-source-loc="91:30"> <polygon points="760,520 1200,440 1200,700 700,700" fill="#1A3A5C" opacity="0.40" stroke="#73A0BE" stroke-opacity="0.11" stroke-width="0.8" data-astro-cid-ccimryqm data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/HeroBackdrop.astro" data-astro-source-loc="92:8"></polygon> </g> <!-- Center subtle warm-gray shimmer: echoes logo's st3 dot (#A7A6A8) --> <!-- Very low opacity — just a whisper of warmth behind the logo --> <g class="facet facet-6" data-astro-cid-ccimryqm data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/HeroBackdrop.astro" data-astro-source-loc="104:30"> <polygon points="480,60 720,40 760,160 500,180" fill="#A7A6A8" opacity="0.03" stroke="#A7A6A8" stroke-opacity="0.16" stroke-width="0.6" data-astro-cid-ccimryqm data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/HeroBackdrop.astro" data-astro-source-loc="105:8"></polygon> </g> <!--
+      Floating particles — ascending sparks distributed around (not over) the logo.
+      Diamonds = <rect> rotated 45°. CSS handles drift via particle-drift-hero keyframe.
+      Positioned in corner regions so they clear the center logo zone.
+    --> <g class="particles" aria-hidden="true" data-astro-cid-ccimryqm data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/HeroBackdrop.astro" data-astro-source-loc="120:45"> <!-- Top-left region --> <rect class="particle particle-1" x="140" y="90" width="5" height="5" fill="#73A0BE" opacity="0.40" transform="rotate(45 142.5 92.5)" data-astro-cid-ccimryqm data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/HeroBackdrop.astro" data-astro-source-loc="122:8"></rect> <!-- Top-right region --> <rect class="particle particle-2" x="980" y="60" width="4" height="4" fill="#A8C9DD" opacity="0.30" transform="rotate(45 982 62)" data-astro-cid-ccimryqm data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/HeroBackdrop.astro" data-astro-source-loc="124:8"></rect> <!-- Left-mid region --> <rect class="particle particle-3" x="60" y="380" width="3" height="3" fill="#73A0BE" opacity="0.35" transform="rotate(45 61.5 381.5)" data-astro-cid-ccimryqm data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/HeroBackdrop.astro" data-astro-source-loc="126:8"></rect> <!-- Bottom-right region --> <rect class="particle particle-4" x="1060" y="580" width="6" height="6" fill="#A8C9DD" opacity="0.25" transform="rotate(45 1063 583)" data-astro-cid-ccimryqm data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/HeroBackdrop.astro" data-astro-source-loc="128:8"></rect> <!-- Right-upper region --> <rect class="particle particle-5" x="1100" y="200" width="4" height="4" fill="#73A0BE" opacity="0.32" transform="rotate(45 1102 202)" data-astro-cid-ccimryqm data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/HeroBackdrop.astro" data-astro-source-loc="130:8"></rect> </g> </svg> </div>  <div class="hero-inner" data-astro-cid-bbe6dxrz data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Hero.astro" data-astro-source-loc="27:27"> <div class="hero-logo-wrap" data-astro-cid-bbe6dxrz data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Hero.astro" data-astro-source-loc="28:33"> <span class="logo-wrapper" style="--logo-size: 560px; --logo-size-md: 241px; --logo-size-sm: 213px" data-astro-cid-tvrurpns data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Logo.astro" data-astro-source-loc="31:2"> <img src="/logo-mark-optimized.svg" alt="JNVR" width="560" height="560" decoding="async" fetchpriority="high" data-astro-cid-tvrurpns data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Logo.astro" data-astro-source-loc="32:4"> </span>  </div> <div class="hero-content" data-astro-cid-bbe6dxrz data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Hero.astro" data-astro-source-loc="32:31"> <span class="fletes-badge" data-astro-cid-ojjulksp data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/FletesBadge.astro" data-astro-source-loc="20:28"> <span class="fletes-badge__dot" aria-hidden="true" data-astro-cid-ojjulksp data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/FletesBadge.astro" data-astro-source-loc="21:4"></span> Actualmente en Fletes México </span>  <h1 id="hero-heading" class="hero-name" data-astro-cid-bbe6dxrz data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Hero.astro" data-astro-source-loc="35:47">
+Jonathan Noé Viramontes
+<span class="hero-role" data-astro-cid-bbe6dxrz data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Hero.astro" data-astro-source-loc="37:33">Desarrollador Full-Stack</span> </h1> <p class="hero-tagline" data-astro-cid-bbe6dxrz data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Hero.astro" data-astro-source-loc="40:31">Construyo software que funciona.</p> <div class="hero-ctas" data-astro-cid-bbe6dxrz data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Hero.astro" data-astro-source-loc="42:30"> <a href="/#projects" class="btn btn-primary" data-astro-cid-bbe6dxrz data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Hero.astro" data-astro-source-loc="43:63"> Ver proyectos </a> <a href="/#contact" class="btn btn-secondary" data-astro-cid-bbe6dxrz data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Hero.astro" data-astro-source-loc="46:64"> Contáctame </a> </div> </div> </div> </section>  <section id="projects" class="projects-section" aria-labelledby="projects-heading" data-locale="es" data-active-filter="all" data-astro-cid-2wkm2a2e data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectGrid.astro" data-astro-source-loc="37:2"> <div class="section-backdrop section-backdrop--projects" aria-hidden="true" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="31:81"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false" class="section-backdrop__svg" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="40:6"> <!--
+        Projects: scattered small facet diamonds/squares — echo the card grid rhythm.
+        10 shapes total, deep navy palette, very low opacity.
+        Distributed across the viewport so each grid column has visual company.
+        Logo color: st1 = #0F293F (deep navy), surface-elevated = #1A3A5C
+      --> <!-- Column 1 region — top cluster --> <g class="facet facet-1" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="49:32"> <polygon points="60,40 120,20 150,80 90,100" fill="#1A3A5C" opacity="0.35" stroke="#73A0BE" stroke-opacity="0.13" stroke-width="0.8" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="50:10"></polygon> <polygon points="40,160 80,140 100,200 60,220" fill="#0F293F" opacity="0.40" stroke="#73A0BE" stroke-opacity="0.11" stroke-width="0.7" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="51:10"></polygon> </g> <!-- Column 2 region — mid-upper --> <g class="facet facet-2" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="55:32"> <polygon points="380,80 440,60 460,130 400,150" fill="#1A3A5C" opacity="0.30" stroke="#73A0BE" stroke-opacity="0.12" stroke-width="0.8" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="56:10"></polygon> <polygon points="340,300 380,280 400,350 360,370" fill="#0F293F" opacity="0.25" stroke="#73A0BE" stroke-opacity="0.10" stroke-width="0.7" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="57:10"></polygon> </g> <!-- Column 3 region (center) — staggered lower --> <g class="facet facet-3" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="61:32"> <polygon points="620,120 680,100 700,170 640,190" fill="#1A3A5C" opacity="0.28" stroke="#73A0BE" stroke-opacity="0.14" stroke-width="0.9" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="62:10"></polygon> <polygon points="580,420 640,400 660,460 600,480" fill="#0F293F" opacity="0.22" stroke="#73A0BE" stroke-opacity="0.11" stroke-width="0.7" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="63:10"></polygon> </g> <!-- Column 4 region — mid upper --> <g class="facet facet-4" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="67:32"> <polygon points="860,60 920,40 940,110 880,130" fill="#1A3A5C" opacity="0.32" stroke="#73A0BE" stroke-opacity="0.13" stroke-width="0.8" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="68:10"></polygon> <polygon points="820,320 870,295 895,360 845,385" fill="#0F293F" opacity="0.30" stroke="#73A0BE" stroke-opacity="0.12" stroke-width="0.8" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="69:10"></polygon> </g> <!-- Column 5 region — right edge --> <g class="facet facet-5" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="73:32"> <polygon points="1080,100 1140,80 1160,150 1100,170" fill="#1A3A5C" opacity="0.35" stroke="#73A0BE" stroke-opacity="0.14" stroke-width="0.9" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="74:10"></polygon> <polygon points="1060,380 1120,360 1140,420 1080,440" fill="#0F293F" opacity="0.28" stroke="#73A0BE" stroke-opacity="0.11" stroke-width="0.7" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="75:10"></polygon> </g> <!-- Brand-blue micro-shards: very subtle warmth across the grid --> <g class="facet facet-6" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="79:32"> <polygon points="200,220 240,200 255,245 215,265" fill="#73A0BE" opacity="0.04" stroke="#73A0BE" stroke-opacity="0.16" stroke-width="0.6" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="80:10"></polygon> <polygon points="750,190 790,170 805,215 765,235" fill="#73A0BE" opacity="0.04" stroke="#73A0BE" stroke-opacity="0.16" stroke-width="0.6" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="81:10"></polygon> <polygon points="1000,270 1040,250 1055,295 1015,315" fill="#73A0BE" opacity="0.04" stroke="#73A0BE" stroke-opacity="0.16" stroke-width="0.6" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="82:10"></polygon> </g> <!-- Floating particles — small diamonds drifting independently --> <g class="particles" aria-hidden="true" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="86:47"> <rect class="particle particle-1" x="300" y="50" width="4" height="4" fill="#73A0BE" opacity="0.40" transform="rotate(45 302 52)" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="87:10"></rect> <rect class="particle particle-2" x="700" y="480" width="3" height="3" fill="#A8C9DD" opacity="0.32" transform="rotate(45 701.5 481.5)" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="88:10"></rect> <rect class="particle particle-3" x="1050" y="150" width="5" height="5" fill="#73A0BE" opacity="0.28" transform="rotate(45 1052.5 152.5)" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="89:10"></rect> <rect class="particle particle-4" x="490" y="300" width="3" height="3" fill="#A8C9DD" opacity="0.35" transform="rotate(45 491.5 301.5)" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="90:10"></rect> <rect class="particle particle-5" x="180" y="430" width="4" height="4" fill="#73A0BE" opacity="0.25" transform="rotate(45 182 432)" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="91:10"></rect> </g> </svg>   </div>  <div class="projects-inner" data-astro-cid-2wkm2a2e data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectGrid.astro" data-astro-source-loc="39:31"> <div data-astro-cid-2wkm2a2e="true" class="scroll-reveal" data-scroll-reveal data-astro-cid-gkxl7tdg data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ScrollReveal.astro" data-astro-source-loc="29:2">  <h2 id="projects-heading" data-astro-cid-2wkm2a2e data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectGrid.astro" data-astro-source-loc="41:33">Proyectos</h2>  </div>  <script type="module" src="/src/components/ScrollReveal.astro?astro&type=script&index=0&lang.ts"></script> <div data-astro-cid-2wkm2a2e="true" class="scroll-reveal" data-scroll-reveal style="--reveal-delay: 80ms" data-astro-cid-gkxl7tdg data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ScrollReveal.astro" data-astro-source-loc="29:2">  <p class="projects-intro" data-astro-cid-2wkm2a2e data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectGrid.astro" data-astro-source-loc="45:33">Algunos sistemas que diseñé, construí y llevé a producción.</p>  </div>   <!-- Filter chips --> <div class="filter-group" role="group" aria-label="Filtrar por tecnología" id="project-filter-group" data-astro-cid-2wkm2a2e data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectGrid.astro" data-astro-source-loc="54:6"> <button type="button" class="filter-chip filter-chip--all filter-chip--active" data-filter="all" aria-pressed="true" data-astro-cid-2wkm2a2e data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectGrid.astro" data-astro-source-loc="60:8">
+All
+</button> <button type="button" class="filter-chip" data-filter="Flutter" aria-pressed="false" data-astro-cid-2wkm2a2e data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectGrid.astro" data-astro-source-loc="69:10"> Flutter </button><button type="button" class="filter-chip" data-filter="React" aria-pressed="false" data-astro-cid-2wkm2a2e data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectGrid.astro" data-astro-source-loc="69:10"> React </button><button type="button" class="filter-chip" data-filter="PHP" aria-pressed="false" data-astro-cid-2wkm2a2e data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectGrid.astro" data-astro-source-loc="69:10"> PHP </button><button type="button" class="filter-chip" data-filter="Astro" aria-pressed="false" data-astro-cid-2wkm2a2e data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectGrid.astro" data-astro-source-loc="69:10"> Astro </button> </div> <!-- Live region for filter count --> <p class="filter-count" role="status" aria-live="polite" id="filter-count" data-astro-cid-2wkm2a2e data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectGrid.astro" data-astro-source-loc="76:80"> 9 proyectos </p> <!-- Grid --> <div class="projects-grid" id="projects-grid" aria-label="Proyectos" data-astro-cid-2wkm2a2e data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectGrid.astro" data-astro-source-loc="85:6"> <div data-stack="Flutter Firebase Stripe MercadoPago" data-astro-cid-2wkm2a2e="true" class="scroll-reveal project-grid-item" data-scroll-reveal data-astro-cid-gkxl7tdg data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ScrollReveal.astro" data-astro-source-loc="29:2">  <article class="project-card" data-stack="Flutter,Firebase,Stripe,MercadoPago" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="45:2"> <!-- Cover area --> <a href="/projects/centinela-app" class="card-cover-link" tabindex="-1" aria-hidden="true" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="47:75"> <div class="card-cover-wrap" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="53:36"> <img src="/_image?href=%2F%40fs%2FD%3A%2FPortafolio%2Fjnvrportfolio%2Fsrc%2Fassets%2Fprojects%2Fcentinela-app-mobile.webp%3ForigWidth%3D1242%26origHeight%3D2208%26origFormat%3Dwebp&#38;w=1242&#38;h=2208&#38;f=webp" srcset="/_image?href=%2F%40fs%2FD%3A%2FPortafolio%2Fjnvrportfolio%2Fsrc%2Fassets%2Fprojects%2Fcentinela-app-mobile.webp%3ForigWidth%3D1242%26origHeight%3D2208%26origFormat%3Dwebp&#38;w=400&#38;h=711&#38;f=webp 400w, /_image?href=%2F%40fs%2FD%3A%2FPortafolio%2Fjnvrportfolio%2Fsrc%2Fassets%2Fprojects%2Fcentinela-app-mobile.webp%3ForigWidth%3D1242%26origHeight%3D2208%26origFormat%3Dwebp&#38;w=720&#38;h=1280&#38;f=webp 720w, /_image?href=%2F%40fs%2FD%3A%2FPortafolio%2Fjnvrportfolio%2Fsrc%2Fassets%2Fprojects%2Fcentinela-app-mobile.webp%3ForigWidth%3D1242%26origHeight%3D2208%26origFormat%3Dwebp&#38;w=960&#38;h=1707&#38;f=webp 960w" data-image-component="true" alt="Centinela — Sistema de Control de Accesos — Angel" sizes="(max-width: 480px) 90vw, (max-width: 1024px) 45vw, 320px" loading="lazy" decoding="async" data-astro-cid-mspuyifq="true" fetchpriority="auto" width="1242" height="2208" class="card-cover" data-astro-source-file="D:/Portafolio/jnvrportfolio/node_modules/astro/components/Image.astro" data-astro-source-loc="51:2"> </div> </a> <div class="card-body" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="67:26"> <!-- Client + year row --> <div class="card-meta" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="69:28"> <span class="card-client" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="70:33">Angel</span> <span class="card-year" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="71:31">2022–2024</span>  </div> <!-- Title (the link) --> <h3 class="card-title" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="80:28"> <a href="/projects/centinela-app" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="81:22">Centinela — Sistema de Control de Accesos</a> </h3> <!-- Summary --> <p class="card-summary" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="85:29">SaaS móvil de control de accesos residencial: visitantes, chat, notificaciones push y suscripciones.</p> <!-- Stack chips --> <div class="card-stack" aria-label="Stack: Flutter, Firebase, Stripe, MercadoPago" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="88:101"> <span class="stack-chip" aria-label="Stack: Flutter" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> Flutter </span> <span class="stack-chip" aria-label="Stack: Firebase" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> Firebase </span> <span class="stack-chip" aria-label="Stack: Stripe" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> Stripe </span> <span class="stack-chip" aria-label="Stack: MercadoPago" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> MercadoPago </span>   </div> </div> </article>   </div>  <div data-stack="Astro Tailwind CSS DecapCMS" data-astro-cid-2wkm2a2e="true" class="scroll-reveal project-grid-item" data-scroll-reveal style="--reveal-delay: 60ms" data-astro-cid-gkxl7tdg data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ScrollReveal.astro" data-astro-source-loc="29:2">  <article class="project-card" data-stack="Astro,Tailwind CSS,DecapCMS" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="45:2"> <!-- Cover area --> <a href="/projects/centinela-web" class="card-cover-link" tabindex="-1" aria-hidden="true" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="47:75"> <div class="card-cover-wrap" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="53:36"> <img src="/_image?href=%2F%40fs%2FD%3A%2FPortafolio%2Fjnvrportfolio%2Fsrc%2Fassets%2Fprojects%2Fcentinela-web.webp%3ForigWidth%3D2880%26origHeight%3D1800%26origFormat%3Dwebp&#38;w=2880&#38;h=1800&#38;f=webp" srcset="/_image?href=%2F%40fs%2FD%3A%2FPortafolio%2Fjnvrportfolio%2Fsrc%2Fassets%2Fprojects%2Fcentinela-web.webp%3ForigWidth%3D2880%26origHeight%3D1800%26origFormat%3Dwebp&#38;w=400&#38;h=250&#38;f=webp 400w, /_image?href=%2F%40fs%2FD%3A%2FPortafolio%2Fjnvrportfolio%2Fsrc%2Fassets%2Fprojects%2Fcentinela-web.webp%3ForigWidth%3D2880%26origHeight%3D1800%26origFormat%3Dwebp&#38;w=720&#38;h=450&#38;f=webp 720w, /_image?href=%2F%40fs%2FD%3A%2FPortafolio%2Fjnvrportfolio%2Fsrc%2Fassets%2Fprojects%2Fcentinela-web.webp%3ForigWidth%3D2880%26origHeight%3D1800%26origFormat%3Dwebp&#38;w=960&#38;h=600&#38;f=webp 960w" data-image-component="true" alt="Centinela — Sitio Web de Marketing — Angel" sizes="(max-width: 480px) 90vw, (max-width: 1024px) 45vw, 320px" loading="lazy" decoding="async" data-astro-cid-mspuyifq="true" fetchpriority="auto" width="2880" height="1800" class="card-cover" data-astro-source-file="D:/Portafolio/jnvrportfolio/node_modules/astro/components/Image.astro" data-astro-source-loc="51:2"> </div> </a> <div class="card-body" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="67:26"> <!-- Client + year row --> <div class="card-meta" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="69:28"> <span class="card-client" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="70:33">Angel</span> <span class="card-year" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="71:31">2024–2025</span>  </div> <!-- Title (the link) --> <h3 class="card-title" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="80:28"> <a href="/projects/centinela-web" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="81:22">Centinela — Sitio Web de Marketing</a> </h3> <!-- Summary --> <p class="card-summary" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="85:29">Landing page SSG para el SaaS de control de accesos Centinela: SEO, sitemap, OG tags y CMS headless.</p> <!-- Stack chips --> <div class="card-stack" aria-label="Stack: Astro, Tailwind CSS, DecapCMS" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="88:101"> <span class="stack-chip" aria-label="Stack: Astro" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> Astro </span> <span class="stack-chip" aria-label="Stack: Tailwind CSS" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> Tailwind CSS </span> <span class="stack-chip" aria-label="Stack: DecapCMS" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> DecapCMS </span>   </div> </div> </article>   </div>  <div data-stack="Flutter Web Google Fonts" data-astro-cid-2wkm2a2e="true" class="scroll-reveal project-grid-item" data-scroll-reveal style="--reveal-delay: 120ms" data-astro-cid-gkxl7tdg data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ScrollReveal.astro" data-astro-source-loc="29:2">  <article class="project-card" data-stack="Flutter Web,Google Fonts" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="45:2"> <!-- Cover area --> <a href="/projects/bloomotion-tech" class="card-cover-link" tabindex="-1" aria-hidden="true" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="47:75"> <div class="card-cover-wrap" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="53:36"> <img src="/_image?href=%2F%40fs%2FD%3A%2FPortafolio%2Fjnvrportfolio%2Fsrc%2Fassets%2Fprojects%2Fbloomotion-tech-mobile.webp%3ForigWidth%3D780%26origHeight%3D1688%26origFormat%3Dwebp&#38;w=780&#38;h=1688&#38;f=webp" srcset="/_image?href=%2F%40fs%2FD%3A%2FPortafolio%2Fjnvrportfolio%2Fsrc%2Fassets%2Fprojects%2Fbloomotion-tech-mobile.webp%3ForigWidth%3D780%26origHeight%3D1688%26origFormat%3Dwebp&#38;w=400&#38;h=866&#38;f=webp 400w, /_image?href=%2F%40fs%2FD%3A%2FPortafolio%2Fjnvrportfolio%2Fsrc%2Fassets%2Fprojects%2Fbloomotion-tech-mobile.webp%3ForigWidth%3D780%26origHeight%3D1688%26origFormat%3Dwebp&#38;w=720&#38;h=1558&#38;f=webp 720w, /_image?href=%2F%40fs%2FD%3A%2FPortafolio%2Fjnvrportfolio%2Fsrc%2Fassets%2Fprojects%2Fbloomotion-tech-mobile.webp%3ForigWidth%3D780%26origHeight%3D1688%26origFormat%3Dwebp&#38;w=780&#38;h=1688&#38;f=webp 780w" data-image-component="true" alt="Bloomotion Tech — Sitio Corporativo — Angel" sizes="(max-width: 480px) 90vw, (max-width: 1024px) 45vw, 320px" loading="lazy" decoding="async" data-astro-cid-mspuyifq="true" fetchpriority="auto" width="780" height="1688" class="card-cover" data-astro-source-file="D:/Portafolio/jnvrportfolio/node_modules/astro/components/Image.astro" data-astro-source-loc="51:2"> </div> </a> <div class="card-body" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="67:26"> <!-- Client + year row --> <div class="card-meta" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="69:28"> <span class="card-client" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="70:33">Angel</span> <span class="card-year" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="71:31">2022–2024</span>  </div> <!-- Title (the link) --> <h3 class="card-title" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="80:28"> <a href="/projects/bloomotion-tech" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="81:22">Bloomotion Tech — Sitio Corporativo</a> </h3> <!-- Summary --> <p class="card-summary" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="85:29">Sitio corporativo para plataforma logística: secciones animadas, métricas, integraciones y contacto.</p> <!-- Stack chips --> <div class="card-stack" aria-label="Stack: Flutter Web, Google Fonts" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="88:101"> <span class="stack-chip" aria-label="Stack: Flutter Web" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> Flutter Web </span> <span class="stack-chip" aria-label="Stack: Google Fonts" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> Google Fonts </span>   </div> </div> </article>   </div>  <div data-stack="React FastAPI PostgreSQL Docker Capacitor" data-astro-cid-2wkm2a2e="true" class="scroll-reveal project-grid-item" data-scroll-reveal style="--reveal-delay: 180ms" data-astro-cid-gkxl7tdg data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ScrollReveal.astro" data-astro-source-loc="29:2">  <article class="project-card" data-stack="React,FastAPI,PostgreSQL,Docker,Capacitor" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="45:2"> <!-- Cover area --> <a href="/projects/pos-la-brocha" class="card-cover-link" tabindex="-1" aria-hidden="true" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="47:75"> <div class="card-cover-wrap" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="53:36"> <img src="/_image?href=%2F%40fs%2FD%3A%2FPortafolio%2Fjnvrportfolio%2Fsrc%2Fassets%2Fprojects%2Fpos-la-brocha.webp%3ForigWidth%3D2880%26origHeight%3D1800%26origFormat%3Dwebp&#38;w=2880&#38;h=1800&#38;f=webp" srcset="/_image?href=%2F%40fs%2FD%3A%2FPortafolio%2Fjnvrportfolio%2Fsrc%2Fassets%2Fprojects%2Fpos-la-brocha.webp%3ForigWidth%3D2880%26origHeight%3D1800%26origFormat%3Dwebp&#38;w=400&#38;h=250&#38;f=webp 400w, /_image?href=%2F%40fs%2FD%3A%2FPortafolio%2Fjnvrportfolio%2Fsrc%2Fassets%2Fprojects%2Fpos-la-brocha.webp%3ForigWidth%3D2880%26origHeight%3D1800%26origFormat%3Dwebp&#38;w=720&#38;h=450&#38;f=webp 720w, /_image?href=%2F%40fs%2FD%3A%2FPortafolio%2Fjnvrportfolio%2Fsrc%2Fassets%2Fprojects%2Fpos-la-brocha.webp%3ForigWidth%3D2880%26origHeight%3D1800%26origFormat%3Dwebp&#38;w=960&#38;h=600&#38;f=webp 960w" data-image-component="true" alt="POS Multi-Negocio — Sistema La Brocha — Teotech" sizes="(max-width: 480px) 90vw, (max-width: 1024px) 45vw, 320px" loading="lazy" decoding="async" data-astro-cid-mspuyifq="true" fetchpriority="auto" width="2880" height="1800" class="card-cover" data-astro-source-file="D:/Portafolio/jnvrportfolio/node_modules/astro/components/Image.astro" data-astro-source-loc="51:2"> </div> </a> <div class="card-body" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="67:26"> <!-- Client + year row --> <div class="card-meta" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="69:28"> <span class="card-client" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="70:33">Teotech</span> <span class="card-year" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="71:31">2025</span>  </div> <!-- Title (the link) --> <h3 class="card-title" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="80:28"> <a href="/projects/pos-la-brocha" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="81:22">POS Multi-Negocio — Sistema La Brocha</a> </h3> <!-- Summary --> <p class="card-summary" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="85:29">POS + CRM multi-tenant con React 19, FastAPI y Docker Compose para ferretería con wrappers Android e iOS.</p> <!-- Stack chips --> <div class="card-stack" aria-label="Stack: React, FastAPI, PostgreSQL, Docker, Capacitor" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="88:101"> <span class="stack-chip" aria-label="Stack: React" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> React </span> <span class="stack-chip" aria-label="Stack: FastAPI" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> FastAPI </span> <span class="stack-chip" aria-label="Stack: PostgreSQL" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> PostgreSQL </span> <span class="stack-chip" aria-label="Stack: Docker" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> Docker </span>  <span class="card-stack-more" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="93:39">+1</span> </div> </div> </article>   </div>  <div data-stack="PHP MySQL JavaScript dompdf" data-astro-cid-2wkm2a2e="true" class="scroll-reveal project-grid-item" data-scroll-reveal style="--reveal-delay: 240ms" data-astro-cid-gkxl7tdg data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ScrollReveal.astro" data-astro-source-loc="29:2">  <article class="project-card" data-stack="PHP,MySQL,JavaScript,dompdf" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="45:2"> <!-- Cover area --> <a href="/projects/teotech-suite" class="card-cover-link" tabindex="-1" aria-hidden="true" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="47:75"> <div class="card-placeholder" role="presentation" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="49:57"> <span class="card-placeholder__initials" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="50:50">TC</span> </div> </a> <div class="card-body" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="67:26"> <!-- Client + year row --> <div class="card-meta" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="69:28"> <span class="card-client" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="70:33">Teotech</span> <span class="card-year" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="71:31">2022–2025</span> <span class="card-confidential" aria-label="Confidential project" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="73:75">
+Confidential
+</span> </div> <!-- Title (the link) --> <h3 class="card-title" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="80:28"> <a href="/projects/teotech-suite" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="81:22">Teotech CRM — Suite de Facturación y Repositorio</a> </h3> <!-- Summary --> <p class="card-summary" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="85:29">Suite CRM + CFDI 4.0 + repositorio de archivos con PWA, control de cuotas y alertas de vigencia.</p> <!-- Stack chips --> <div class="card-stack" aria-label="Stack: PHP, MySQL, JavaScript, dompdf" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="88:101"> <span class="stack-chip" aria-label="Stack: PHP" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> PHP </span> <span class="stack-chip" aria-label="Stack: MySQL" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> MySQL </span> <span class="stack-chip" aria-label="Stack: JavaScript" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> JavaScript </span> <span class="stack-chip" aria-label="Stack: dompdf" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> dompdf </span>   </div> </div> </article>   </div>  <div data-stack="PHP MySQL PHPMailer QR Code" data-astro-cid-2wkm2a2e="true" class="scroll-reveal project-grid-item" data-scroll-reveal style="--reveal-delay: 300ms" data-astro-cid-gkxl7tdg data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ScrollReveal.astro" data-astro-source-loc="29:2">  <article class="project-card" data-stack="PHP,MySQL,PHPMailer,QR Code" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="45:2"> <!-- Cover area --> <a href="/projects/brocha-facturacion" class="card-cover-link" tabindex="-1" aria-hidden="true" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="47:75"> <div class="card-cover-wrap" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="53:36"> <img src="/_image?href=%2F%40fs%2FD%3A%2FPortafolio%2Fjnvrportfolio%2Fsrc%2Fassets%2Fprojects%2Fbrocha-facturacion.webp%3ForigWidth%3D2880%26origHeight%3D1800%26origFormat%3Dwebp&#38;w=2880&#38;h=1800&#38;f=webp" srcset="/_image?href=%2F%40fs%2FD%3A%2FPortafolio%2Fjnvrportfolio%2Fsrc%2Fassets%2Fprojects%2Fbrocha-facturacion.webp%3ForigWidth%3D2880%26origHeight%3D1800%26origFormat%3Dwebp&#38;w=400&#38;h=250&#38;f=webp 400w, /_image?href=%2F%40fs%2FD%3A%2FPortafolio%2Fjnvrportfolio%2Fsrc%2Fassets%2Fprojects%2Fbrocha-facturacion.webp%3ForigWidth%3D2880%26origHeight%3D1800%26origFormat%3Dwebp&#38;w=720&#38;h=450&#38;f=webp 720w, /_image?href=%2F%40fs%2FD%3A%2FPortafolio%2Fjnvrportfolio%2Fsrc%2Fassets%2Fprojects%2Fbrocha-facturacion.webp%3ForigWidth%3D2880%26origHeight%3D1800%26origFormat%3Dwebp&#38;w=960&#38;h=600&#38;f=webp 960w" data-image-component="true" alt="Teotech CRM — Facturación y Archivos (Brocha) — Teotech" sizes="(max-width: 480px) 90vw, (max-width: 1024px) 45vw, 320px" loading="lazy" decoding="async" data-astro-cid-mspuyifq="true" fetchpriority="auto" width="2880" height="1800" class="card-cover" data-astro-source-file="D:/Portafolio/jnvrportfolio/node_modules/astro/components/Image.astro" data-astro-source-loc="51:2"> </div> </a> <div class="card-body" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="67:26"> <!-- Client + year row --> <div class="card-meta" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="69:28"> <span class="card-client" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="70:33">Teotech</span> <span class="card-year" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="71:31">2023–2025</span>  </div> <!-- Title (the link) --> <h3 class="card-title" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="80:28"> <a href="/projects/brocha-facturacion" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="81:22">Teotech CRM — Facturación y Archivos (Brocha)</a> </h3> <!-- Summary --> <p class="card-summary" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="85:29">CRM de facturación CFDI 4.0, cotizaciones y repositorio de archivos con cuotas y alertas por correo.</p> <!-- Stack chips --> <div class="card-stack" aria-label="Stack: PHP, MySQL, PHPMailer, QR Code" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="88:101"> <span class="stack-chip" aria-label="Stack: PHP" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> PHP </span> <span class="stack-chip" aria-label="Stack: MySQL" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> MySQL </span> <span class="stack-chip" aria-label="Stack: PHPMailer" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> PHPMailer </span> <span class="stack-chip" aria-label="Stack: QR Code" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> QR Code </span>   </div> </div> </article>   </div>  <div data-stack="PHP MySQL JavaScript Font Awesome" data-astro-cid-2wkm2a2e="true" class="scroll-reveal project-grid-item" data-scroll-reveal style="--reveal-delay: 360ms" data-astro-cid-gkxl7tdg data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ScrollReveal.astro" data-astro-source-loc="29:2">  <article class="project-card" data-stack="PHP,MySQL,JavaScript,Font Awesome" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="45:2"> <!-- Cover area --> <a href="/projects/crm-pedidos" class="card-cover-link" tabindex="-1" aria-hidden="true" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="47:75"> <div class="card-placeholder" role="presentation" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="49:57"> <span class="card-placeholder__initials" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="50:50">CD</span> </div> </a> <div class="card-body" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="67:26"> <!-- Client + year row --> <div class="card-meta" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="69:28"> <span class="card-client" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="70:33">Teotech</span> <span class="card-year" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="71:31">2023–2025</span> <span class="card-confidential" aria-label="Confidential project" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="73:75">
+Confidential
+</span> </div> <!-- Title (the link) --> <h3 class="card-title" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="80:28"> <a href="/projects/crm-pedidos" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="81:22">CRM de Pedidos — Sistema de Gestión para Institución Educativa</a> </h3> <!-- Summary --> <p class="card-summary" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="85:29">CRM web interno con roles, gestión de pedidos, ajustes de cantidad y dashboard por nivel de usuario.</p> <!-- Stack chips --> <div class="card-stack" aria-label="Stack: PHP, MySQL, JavaScript, Font Awesome" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="88:101"> <span class="stack-chip" aria-label="Stack: PHP" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> PHP </span> <span class="stack-chip" aria-label="Stack: MySQL" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> MySQL </span> <span class="stack-chip" aria-label="Stack: JavaScript" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> JavaScript </span> <span class="stack-chip" aria-label="Stack: Font Awesome" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> Font Awesome </span>   </div> </div> </article>   </div>  <div data-stack="Flutter Firebase Riverpod go_router" data-astro-cid-2wkm2a2e="true" class="scroll-reveal project-grid-item" data-scroll-reveal style="--reveal-delay: 420ms" data-astro-cid-gkxl7tdg data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ScrollReveal.astro" data-astro-source-loc="29:2">  <article class="project-card" data-stack="Flutter,Firebase,Riverpod,go_router" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="45:2"> <!-- Cover area --> <a href="/projects/tita" class="card-cover-link" tabindex="-1" aria-hidden="true" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="47:75"> <div class="card-cover-wrap" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="53:36"> <img src="/_image?href=%2F%40fs%2FD%3A%2FPortafolio%2Fjnvrportfolio%2Fsrc%2Fassets%2Fprojects%2Ftita-mobile.webp%3ForigWidth%3D780%26origHeight%3D1688%26origFormat%3Dwebp&#38;w=780&#38;h=1688&#38;f=webp" srcset="/_image?href=%2F%40fs%2FD%3A%2FPortafolio%2Fjnvrportfolio%2Fsrc%2Fassets%2Fprojects%2Ftita-mobile.webp%3ForigWidth%3D780%26origHeight%3D1688%26origFormat%3Dwebp&#38;w=400&#38;h=866&#38;f=webp 400w, /_image?href=%2F%40fs%2FD%3A%2FPortafolio%2Fjnvrportfolio%2Fsrc%2Fassets%2Fprojects%2Ftita-mobile.webp%3ForigWidth%3D780%26origHeight%3D1688%26origFormat%3Dwebp&#38;w=720&#38;h=1558&#38;f=webp 720w, /_image?href=%2F%40fs%2FD%3A%2FPortafolio%2Fjnvrportfolio%2Fsrc%2Fassets%2Fprojects%2Ftita-mobile.webp%3ForigWidth%3D780%26origHeight%3D1688%26origFormat%3Dwebp&#38;w=780&#38;h=1688&#38;f=webp 780w" data-image-component="true" alt="Tita — Sistema de Gestión Escolar — FEMN" sizes="(max-width: 480px) 90vw, (max-width: 1024px) 45vw, 320px" loading="lazy" decoding="async" data-astro-cid-mspuyifq="true" fetchpriority="auto" width="780" height="1688" class="card-cover" data-astro-source-file="D:/Portafolio/jnvrportfolio/node_modules/astro/components/Image.astro" data-astro-source-loc="51:2"> </div> </a> <div class="card-body" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="67:26"> <!-- Client + year row --> <div class="card-meta" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="69:28"> <span class="card-client" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="70:33">FEMN</span> <span class="card-year" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="71:31">2024–2025</span>  </div> <!-- Title (the link) --> <h3 class="card-title" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="80:28"> <a href="/projects/tita" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="81:22">Tita — Sistema de Gestión Escolar</a> </h3> <!-- Summary --> <p class="card-summary" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="85:29">App móvil de gestión escolar con roles múltiples, seguimiento de objetivos y comunicación padre-maestro.</p> <!-- Stack chips --> <div class="card-stack" aria-label="Stack: Flutter, Firebase, Riverpod, go_router" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="88:101"> <span class="stack-chip" aria-label="Stack: Flutter" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> Flutter </span> <span class="stack-chip" aria-label="Stack: Firebase" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> Firebase </span> <span class="stack-chip" aria-label="Stack: Riverpod" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> Riverpod </span> <span class="stack-chip" aria-label="Stack: go_router" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> go_router </span>   </div> </div> </article>   </div>  <div data-stack="Flutter Firebase Riverpod go_router" data-astro-cid-2wkm2a2e="true" class="scroll-reveal project-grid-item" data-scroll-reveal style="--reveal-delay: 480ms" data-astro-cid-gkxl7tdg data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ScrollReveal.astro" data-astro-source-loc="29:2">  <article class="project-card" data-stack="Flutter,Firebase,Riverpod,go_router" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="45:2"> <!-- Cover area --> <a href="/projects/femn" class="card-cover-link" tabindex="-1" aria-hidden="true" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="47:75"> <div class="card-cover-wrap" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="53:36"> <img src="/_image?href=%2F%40fs%2FD%3A%2FPortafolio%2Fjnvrportfolio%2Fsrc%2Fassets%2Fprojects%2Ffemn-mobile.webp%3ForigWidth%3D780%26origHeight%3D1688%26origFormat%3Dwebp&#38;w=780&#38;h=1688&#38;f=webp" srcset="/_image?href=%2F%40fs%2FD%3A%2FPortafolio%2Fjnvrportfolio%2Fsrc%2Fassets%2Fprojects%2Ffemn-mobile.webp%3ForigWidth%3D780%26origHeight%3D1688%26origFormat%3Dwebp&#38;w=400&#38;h=866&#38;f=webp 400w, /_image?href=%2F%40fs%2FD%3A%2FPortafolio%2Fjnvrportfolio%2Fsrc%2Fassets%2Fprojects%2Ffemn-mobile.webp%3ForigWidth%3D780%26origHeight%3D1688%26origFormat%3Dwebp&#38;w=720&#38;h=1558&#38;f=webp 720w, /_image?href=%2F%40fs%2FD%3A%2FPortafolio%2Fjnvrportfolio%2Fsrc%2Fassets%2Fprojects%2Ffemn-mobile.webp%3ForigWidth%3D780%26origHeight%3D1688%26origFormat%3Dwebp&#38;w=780&#38;h=1688&#38;f=webp 780w" data-image-component="true" alt="FEMN — Encuestas Socioeconómicas — FEMN" sizes="(max-width: 480px) 90vw, (max-width: 1024px) 45vw, 320px" loading="lazy" decoding="async" data-astro-cid-mspuyifq="true" fetchpriority="auto" width="780" height="1688" class="card-cover" data-astro-source-file="D:/Portafolio/jnvrportfolio/node_modules/astro/components/Image.astro" data-astro-source-loc="51:2"> </div> </a> <div class="card-body" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="67:26"> <!-- Client + year row --> <div class="card-meta" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="69:28"> <span class="card-client" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="70:33">FEMN</span> <span class="card-year" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="71:31">2024–2025</span>  </div> <!-- Title (the link) --> <h3 class="card-title" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="80:28"> <a href="/projects/femn" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="81:22">FEMN — Encuestas Socioeconómicas</a> </h3> <!-- Summary --> <p class="card-summary" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="85:29">App offline-first para evaluadores de campo de ONG: encuestas socioeconómicas y fichas de inscripción con PDF.</p> <!-- Stack chips --> <div class="card-stack" aria-label="Stack: Flutter, Firebase, Riverpod, go_router" data-astro-cid-mspuyifq data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ProjectCard.astro" data-astro-source-loc="88:101"> <span class="stack-chip" aria-label="Stack: Flutter" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> Flutter </span> <span class="stack-chip" aria-label="Stack: Firebase" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> Firebase </span> <span class="stack-chip" aria-label="Stack: Riverpod" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> Riverpod </span> <span class="stack-chip" aria-label="Stack: go_router" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> go_router </span>   </div> </div> </article>   </div>   </div> </div> </section>  <script type="module" src="/src/components/ProjectGrid.astro?astro&type=script&index=0&lang.ts"></script> <section id="experience" class="experience-section" aria-labelledby="experience-heading" data-astro-cid-2osycvzt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceList.astro" data-astro-source-loc="34:90"> <div class="section-backdrop section-backdrop--experience" aria-hidden="true" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="31:81">  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false" class="section-backdrop__svg" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="104:6"> <!--
+        Experience: vertical accent strips on left/right + diagonal facets
+        leaning leftward to reinforce the top-to-bottom timeline reading direction.
+        Left strip is stronger (timeline rail side), right is echoing/mirroring.
+      --> <!-- Left accent strip: vertical band, deep navy, timeline rail suggestion --> <g class="facet facet-1" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="112:32"> <rect x="0" y="0" width="80" height="700" fill="#0F293F" opacity="0.50" stroke="#73A0BE" stroke-opacity="0.12" stroke-width="0.8" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="113:10"></rect> <!-- Left strip fade — tapers to nothing by ~180px --> <polygon points="80,0 180,0 180,700 80,700" fill="#0F293F" opacity="0.15" stroke="#73A0BE" stroke-opacity="0.10" stroke-width="0.6" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="115:10"></polygon> </g> <!-- Right accent strip: mirror, lighter --> <g class="facet facet-2" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="119:32"> <rect x="1120" y="0" width="80" height="700" fill="#0F293F" opacity="0.35" stroke="#73A0BE" stroke-opacity="0.11" stroke-width="0.8" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="120:10"></rect> </g> <!-- Top anchor facet: diagonal cut leaning leftward --> <g class="facet facet-3" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="124:32"> <polygon points="0,0 320,0 200,140 0,180" fill="#1A3A5C" opacity="0.40" stroke="#73A0BE" stroke-opacity="0.14" stroke-width="0.9" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="125:10"></polygon> </g> <!-- Mid-left diagonal facet: reinforces the leftward timeline lean --> <g class="facet facet-4" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="129:32"> <polygon points="0,260 160,220 200,380 0,420" fill="#0F293F" opacity="0.35" stroke="#73A0BE" stroke-opacity="0.13" stroke-width="0.8" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="130:10"></polygon> </g> <!-- Bottom anchor facet: heavy base, mirrors logo's J foot --> <g class="facet facet-5" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="134:32"> <polygon points="0,560 280,500 320,620 120,700 0,700" fill="#1A3A5C" opacity="0.40" stroke="#73A0BE" stroke-opacity="0.14" stroke-width="1.0" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="135:10"></polygon> </g> <!-- Right side mid echo: subtle, doesn't compete with timeline content --> <g class="facet facet-6" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="139:32"> <polygon points="1000,180 1200,120 1200,320 1060,280" fill="#0F293F" opacity="0.25" stroke="#73A0BE" stroke-opacity="0.11" stroke-width="0.8" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="140:10"></polygon> <polygon points="960,500 1200,460 1200,700 940,700" fill="#1A3A5C" opacity="0.22" stroke="#73A0BE" stroke-opacity="0.10" stroke-width="0.7" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="141:10"></polygon> </g> <!-- Brand-blue accent shard: single highlight on the rail side --> <g class="facet facet-7" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="145:32"> <polygon points="0,100 100,70 120,140 20,170" fill="#73A0BE" opacity="0.05" stroke="#73A0BE" stroke-opacity="0.18" stroke-width="0.6" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="146:10"></polygon> </g> <!-- Floating particles — drifting alongside the timeline --> <g class="particles" aria-hidden="true" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="150:47"> <rect class="particle particle-1" x="250" y="80" width="4" height="4" fill="#73A0BE" opacity="0.38" transform="rotate(45 252 82)" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="151:10"></rect> <rect class="particle particle-2" x="900" y="200" width="3" height="3" fill="#A8C9DD" opacity="0.30" transform="rotate(45 901.5 201.5)" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="152:10"></rect> <rect class="particle particle-3" x="600" y="560" width="5" height="5" fill="#73A0BE" opacity="0.26" transform="rotate(45 602.5 562.5)" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="153:10"></rect> <rect class="particle particle-4" x="400" y="340" width="3" height="3" fill="#A8C9DD" opacity="0.34" transform="rotate(45 401.5 341.5)" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="154:10"></rect> <rect class="particle particle-5" x="1050" y="430" width="4" height="4" fill="#73A0BE" opacity="0.22" transform="rotate(45 1052 432)" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="155:10"></rect> </g> </svg>  </div>  <div class="experience-inner" data-astro-cid-2osycvzt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceList.astro" data-astro-source-loc="36:33"> <div data-astro-cid-2osycvzt="true" class="scroll-reveal" data-scroll-reveal data-astro-cid-gkxl7tdg data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ScrollReveal.astro" data-astro-source-loc="29:2">  <h2 id="experience-heading" data-astro-cid-2osycvzt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceList.astro" data-astro-source-loc="38:35">Experiencia</h2>  </div>   <ol class="experience-timeline" data-astro-cid-2osycvzt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceList.astro" data-astro-source-loc="41:37"> <div data-astro-cid-2osycvzt="true" class="scroll-reveal" data-scroll-reveal data-astro-cid-gkxl7tdg data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ScrollReveal.astro" data-astro-source-loc="29:2">  <li class="experience-card experience-card--featured" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="29:81"> <!-- Timeline dot --> <span class="timeline-dot" aria-hidden="true" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="31:4"></span> <div class="experience-card__body" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="33:38"> <header class="experience-card__header" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="34:45"> <div class="experience-card__company-row" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="35:49"> <span class="experience-card__company" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="36:48">Fletes México</span> <span class="experience-card__location" aria-label="Location: Ciudad Juárez, México (remoto)" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="38:88"> Ciudad Juárez, México (remoto) </span> </div> <p class="experience-card__role" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="43:40">Desarrollador de Software</p> <time class="experience-card__period" datetime="2023/present" aria-label="2023 to Presente" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="48:8"> 2023–Presente </time> </header> <p class="experience-card__summary" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="53:41">Desarrollo de software de la plataforma logística de Fletes México: microservicios FastAPI, herramientas personalizadas y tableros BI.</p> <ul class="experience-card__highlights" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="56:47"> <li data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="58:15">Diseñé e implementé más de 10 microservicios backend utilizando FastAPI, mejorando la escalabilidad</li><li data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="58:15">Incrementé la eficiencia operativa en un 25% mediante herramientas de software personalizadas</li><li data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="58:15">Creé tableros en Power BI para ofrecer información accionable a los principales interesados</li> </ul> <div class="experience-card__stack" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="64:43"> <span class="stack-chip" aria-label="Stack: FastAPI" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> FastAPI </span> <span class="stack-chip" aria-label="Stack: PostgreSQL" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> PostgreSQL </span> <span class="stack-chip" aria-label="Stack: Python" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> Python </span> <span class="stack-chip" aria-label="Stack: Docker" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> Docker </span> <span class="stack-chip" aria-label="Stack: Power BI" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> Power BI </span>  </div> </div> </li>   </div>  <div data-astro-cid-2osycvzt="true" class="scroll-reveal" data-scroll-reveal style="--reveal-delay: 80ms" data-astro-cid-gkxl7tdg data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ScrollReveal.astro" data-astro-source-loc="29:2">  <li class="experience-card" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="29:81"> <!-- Timeline dot --> <span class="timeline-dot" aria-hidden="true" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="31:4"></span> <div class="experience-card__body" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="33:38"> <header class="experience-card__header" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="34:45"> <div class="experience-card__company-row" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="35:49"> <span class="experience-card__company" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="36:48">Teotech</span> <span class="experience-card__location" aria-label="Location: México (remoto)" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="38:88"> México (remoto) </span> </div> <p class="experience-card__role" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="43:40">Desarrollador Full-stack Freelance</p> <time class="experience-card__period" datetime="2025/2026" aria-label="2025 to 2026" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="48:8"> 2025–2026 </time> </header> <p class="experience-card__summary" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="53:41">Desarrollo freelance para múltiples proyectos de Teotech: POS, CRM, facturación CFDI 4.0 y sistemas de gestión interna.</p> <ul class="experience-card__highlights" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="56:47"> <li data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="58:15">POS multi-tenant con React 19 + FastAPI + Docker para La Brocha</li><li data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="58:15">Suite CRM + CFDI 4.0 + repositorio de archivos en PHP</li><li data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="58:15">Sistema de gestión de pedidos con roles y dashboard para institución privada</li> </ul> <div class="experience-card__stack" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="64:43"> <span class="stack-chip" aria-label="Stack: React" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> React </span> <span class="stack-chip" aria-label="Stack: FastAPI" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> FastAPI </span> <span class="stack-chip" aria-label="Stack: PHP" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> PHP </span> <span class="stack-chip" aria-label="Stack: MySQL" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> MySQL </span> <span class="stack-chip" aria-label="Stack: Docker" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> Docker </span> <span class="stack-chip" aria-label="Stack: Flutter" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> Flutter </span>  </div> </div> </li>   </div>  <div data-astro-cid-2osycvzt="true" class="scroll-reveal" data-scroll-reveal style="--reveal-delay: 160ms" data-astro-cid-gkxl7tdg data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ScrollReveal.astro" data-astro-source-loc="29:2">  <li class="experience-card" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="29:81"> <!-- Timeline dot --> <span class="timeline-dot" aria-hidden="true" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="31:4"></span> <div class="experience-card__body" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="33:38"> <header class="experience-card__header" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="34:45"> <div class="experience-card__company-row" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="35:49"> <span class="experience-card__company" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="36:48">Museo La Rodadora</span> <span class="experience-card__location" aria-label="Location: Ciudad Juárez, Chihuahua, México" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="38:88"> Ciudad Juárez, Chihuahua, México </span> </div> <p class="experience-card__role" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="43:40">Practicante</p> <time class="experience-card__period" datetime="2020/2020" aria-label="2020 to 2020" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="48:8"> 2020–2020 </time> </header> <p class="experience-card__summary" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="53:41">Desarrollo de herramientas interactivas y sistemas personalizados para el museo.</p> <ul class="experience-card__highlights" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="56:47"> <li data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="58:15">Creé un sistema interactivo de lotería para mejorar la participación de visitantes</li><li data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="58:15">Desarrollé un sistema personalizado para la gestión de eventos del museo</li> </ul> <div class="experience-card__stack" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="64:43"> <span class="stack-chip" aria-label="Stack: JavaScript" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> JavaScript </span> <span class="stack-chip" aria-label="Stack: PHP" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> PHP </span> <span class="stack-chip" aria-label="Stack: MySQL" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> MySQL </span>  </div> </div> </li>   </div>  <div data-astro-cid-2osycvzt="true" class="scroll-reveal" data-scroll-reveal style="--reveal-delay: 240ms" data-astro-cid-gkxl7tdg data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ScrollReveal.astro" data-astro-source-loc="29:2">  <li class="experience-card" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="29:81"> <!-- Timeline dot --> <span class="timeline-dot" aria-hidden="true" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="31:4"></span> <div class="experience-card__body" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="33:38"> <header class="experience-card__header" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="34:45"> <div class="experience-card__company-row" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="35:49"> <span class="experience-card__company" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="36:48">Museo La Rodadora</span> <span class="experience-card__location" aria-label="Location: Ciudad Juárez, Chihuahua, México" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="38:88"> Ciudad Juárez, Chihuahua, México </span> </div> <p class="experience-card__role" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="43:40">Coordinador de Sistemas</p> <time class="experience-card__period" datetime="2021/2023" aria-label="2021 to 2023" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="48:8"> 2021–2023 </time> </header> <p class="experience-card__summary" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="53:41">Coordinación de sistemas internos y soporte técnico para el museo interactivo Museo La Rodadora.</p> <ul class="experience-card__highlights" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="56:47"> <li data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="58:15">Desarrollo de software interactivo que incrementó la participación de los visitantes en 15%</li><li data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="58:15">Mejora de la confiabilidad de la red en 30% mediante actualizaciones de sistemas de TI</li><li data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="58:15">Soporte técnico mensual a más de 40 usuarios</li> </ul> <div class="experience-card__stack" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="64:43"> <span class="stack-chip" aria-label="Stack: JavaScript" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> JavaScript </span> <span class="stack-chip" aria-label="Stack: PHP" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> PHP </span> <span class="stack-chip" aria-label="Stack: MySQL" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> MySQL </span>  </div> </div> </li>   </div>  <div data-astro-cid-2osycvzt="true" class="scroll-reveal" data-scroll-reveal style="--reveal-delay: 320ms" data-astro-cid-gkxl7tdg data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ScrollReveal.astro" data-astro-source-loc="29:2">  <li class="experience-card" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="29:81"> <!-- Timeline dot --> <span class="timeline-dot" aria-hidden="true" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="31:4"></span> <div class="experience-card__body" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="33:38"> <header class="experience-card__header" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="34:45"> <div class="experience-card__company-row" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="35:49"> <span class="experience-card__company" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="36:48">IA Center</span> <span class="experience-card__location" aria-label="Location: México" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="38:88"> México </span> </div> <p class="experience-card__role" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="43:40">Instructor de Python</p> <time class="experience-card__period" datetime="2021/2021" aria-label="2021 to 2021" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="48:8"> 2021–2021 </time> </header> <p class="experience-card__summary" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="53:41">Capacitación en programación Python para estudiantes de IA Center.</p> <ul class="experience-card__highlights" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="56:47"> <li data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="58:15">Impartí cursos de programación en Python a más de 40 estudiantes</li><li data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="58:15">Logré un índice de éxito del 90%</li> </ul> <div class="experience-card__stack" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="64:43"> <span class="stack-chip" aria-label="Stack: Python" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> Python </span>  </div> </div> </li>   </div>  <div data-astro-cid-2osycvzt="true" class="scroll-reveal" data-scroll-reveal style="--reveal-delay: 400ms" data-astro-cid-gkxl7tdg data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ScrollReveal.astro" data-astro-source-loc="29:2">  <li class="experience-card" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="29:81"> <!-- Timeline dot --> <span class="timeline-dot" aria-hidden="true" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="31:4"></span> <div class="experience-card__body" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="33:38"> <header class="experience-card__header" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="34:45"> <div class="experience-card__company-row" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="35:49"> <span class="experience-card__company" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="36:48">Bloomotion</span> <span class="experience-card__location" aria-label="Location: México (remoto)" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="38:88"> México (remoto) </span> </div> <p class="experience-card__role" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="43:40">Desarrollador de Software</p> <time class="experience-card__period" datetime="2019/2021" aria-label="2019 to 2021" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="48:8"> 2019–2021 </time> </header> <p class="experience-card__summary" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="53:41">Desarrollo de una aplicación móvil publicada en Play Store e integraciones logísticas para Bloomotion.</p> <ul class="experience-card__highlights" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="56:47"> <li data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="58:15">Desarrollé una aplicación móvil publicada en la Play Store</li><li data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="58:15">Integré sistemas logísticos con Penske Logistics y assistcargo</li> </ul> <div class="experience-card__stack" data-astro-cid-llabjfk5 data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ExperienceCard.astro" data-astro-source-loc="64:43"> <span class="stack-chip" aria-label="Stack: Ionic-Angular" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> Ionic-Angular </span> <span class="stack-chip" aria-label="Stack: FastAPI" data-astro-cid-wegl6smt data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/StackChip.astro" data-astro-source-loc="25:2"> FastAPI </span>  </div> </div> </li>   </div>   </ol> </div> </section>  <section id="contact" class="contact-section" aria-labelledby="contact-heading" data-astro-cid-svshx33u data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ContactForm.astro" data-astro-source-loc="29:81"> <div class="section-backdrop section-backdrop--contact" aria-hidden="true" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="31:81">   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false" class="section-backdrop__svg" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="168:6"> <!--
+        Contact: convergent focus — radiating shimmer from edges toward the center
+        where the form lives. Echoes the logo's st3 dot (warm gray) and
+        brand-blue (#73A0BE) as a soft spotlight.
+
+        Approach: 4 "lens flare" polygons pointing inward from each corner,
+        plus a radial gradient overlay circle at center for the spotlight effect.
+        Thin radiating lines modeled as very thin wedge polygons.
+      --> <!-- Top-left convergent shard --> <g class="facet facet-1" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="180:32"> <polygon points="0,0 280,0 420,200 0,320" fill="#0F293F" opacity="0.40" stroke="#73A0BE" stroke-opacity="0.14" stroke-width="0.9" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="181:10"></polygon> </g> <!-- Top-right convergent shard --> <g class="facet facet-2" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="184:32"> <polygon points="920,0 1200,0 1200,280 780,200" fill="#0F293F" opacity="0.35" stroke="#73A0BE" stroke-opacity="0.12" stroke-width="0.9" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="185:10"></polygon> </g> <!-- Bottom-left convergent shard --> <g class="facet facet-3" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="189:32"> <polygon points="0,380 320,280 480,500 160,600 0,600" fill="#1A3A5C" opacity="0.35" stroke="#73A0BE" stroke-opacity="0.13" stroke-width="1.0" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="190:10"></polygon> </g> <!-- Bottom-right convergent shard --> <g class="facet facet-4" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="193:32"> <polygon points="720,280 1200,340 1200,600 760,600" fill="#1A3A5C" opacity="0.30" stroke="#73A0BE" stroke-opacity="0.11" stroke-width="0.9" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="194:10"></polygon> </g> <!-- Radiating thin wedges — converge toward center (600, 300) --> <g class="facet facet-5" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="198:32"> <!-- Top wedge (thin) --> <polygon points="540,0 660,0 620,220 580,220" fill="#73A0BE" opacity="0.04" stroke="#73A0BE" stroke-opacity="0.15" stroke-width="0.6" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="200:10"></polygon> <!-- Left wedge (thin) --> <polygon points="0,260 220,280 220,320 0,340" fill="#73A0BE" opacity="0.04" stroke="#73A0BE" stroke-opacity="0.15" stroke-width="0.6" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="202:10"></polygon> <!-- Right wedge (thin) --> <polygon points="980,280 1200,260 1200,340 980,320" fill="#73A0BE" opacity="0.04" stroke="#73A0BE" stroke-opacity="0.15" stroke-width="0.6" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="204:10"></polygon> <!-- Bottom wedge (thin) --> <polygon points="560,380 640,380 620,600 580,600" fill="#73A0BE" opacity="0.04" stroke="#73A0BE" stroke-opacity="0.15" stroke-width="0.6" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="206:10"></polygon> </g> <!-- Warm-gray center shimmer: echoes logo st3 dot (#A7A6A8) --> <!-- Modeled as a softly offset polygon cluster at form position --> <g class="facet facet-6" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="211:32"> <polygon points="440,140 760,140 800,260 400,260" fill="#A7A6A8" opacity="0.025" stroke="#A7A6A8" stroke-opacity="0.13" stroke-width="0.7" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="212:10"></polygon> <polygon points="460,240 740,240 780,380 420,380" fill="#A7A6A8" opacity="0.02" stroke="#A7A6A8" stroke-opacity="0.11" stroke-width="0.6" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="213:10"></polygon> </g> <!-- Floating particles — converging toward the contact form center --> <g class="particles" aria-hidden="true" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="217:47"> <rect class="particle particle-1" x="120" y="100" width="4" height="4" fill="#73A0BE" opacity="0.38" transform="rotate(45 122 102)" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="218:10"></rect> <rect class="particle particle-2" x="1020" y="80" width="5" height="5" fill="#A8C9DD" opacity="0.28" transform="rotate(45 1022.5 82.5)" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="219:10"></rect> <rect class="particle particle-3" x="200" y="480" width="3" height="3" fill="#73A0BE" opacity="0.32" transform="rotate(45 201.5 481.5)" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="220:10"></rect> <rect class="particle particle-4" x="950" y="450" width="4" height="4" fill="#A8C9DD" opacity="0.30" transform="rotate(45 952 452)" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="221:10"></rect> <rect class="particle particle-5" x="580" y="50" width="3" height="3" fill="#73A0BE" opacity="0.36" transform="rotate(45 581.5 51.5)" data-astro-cid-pa5ui2la data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/SectionBackdrop.astro" data-astro-source-loc="222:10"></rect> </g> </svg> </div>  <div class="contact-inner" data-astro-cid-svshx33u data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ContactForm.astro" data-astro-source-loc="31:30"> <div data-astro-cid-svshx33u="true" class="scroll-reveal" data-scroll-reveal data-astro-cid-gkxl7tdg data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ScrollReveal.astro" data-astro-source-loc="29:2">  <h2 id="contact-heading" data-astro-cid-svshx33u data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ContactForm.astro" data-astro-source-loc="33:32">Contacto</h2> <p class="contact-subtitle" data-astro-cid-svshx33u data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ContactForm.astro" data-astro-source-loc="34:35">¿Tienes un proyecto en mente? Escríbeme.</p>  </div>   <div data-astro-cid-svshx33u="true" class="scroll-reveal" data-scroll-reveal style="--reveal-delay: 100ms" data-astro-cid-gkxl7tdg data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ScrollReveal.astro" data-astro-source-loc="29:2">  <form id="contact-form" class="contact-form" novalidate data-locale="es" data-astro-cid-svshx33u data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ContactForm.astro" data-astro-source-loc="43:8"> <!-- Honeypot (hidden from real users, bots fill it in) --> <input type="text" name="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" class="contact-form__honeypot" data-astro-cid-svshx33u data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ContactForm.astro" data-astro-source-loc="45:10"> <!-- Name --> <div class="form-field" data-astro-cid-svshx33u data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ContactForm.astro" data-astro-source-loc="55:33"> <label for="contact-name" class="form-label" data-astro-cid-svshx33u data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ContactForm.astro" data-astro-source-loc="56:56"> Nombre <span class="form-required" aria-hidden="true" data-astro-cid-svshx33u data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ContactForm.astro" data-astro-source-loc="58:60">*</span> </label> <input type="text" id="contact-name" name="name" class="form-input" placeholder="Tu nombre" autocomplete="name" aria-required="true" aria-invalid="false" aria-describedby="contact-name-error" data-astro-cid-svshx33u data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ContactForm.astro" data-astro-source-loc="60:12"> <span id="contact-name-error" class="form-error" data-error="name" role="alert" aria-live="polite" data-astro-cid-svshx33u data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ContactForm.astro" data-astro-source-loc="71:12"></span> </div> <!-- Email --> <div class="form-field" data-astro-cid-svshx33u data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ContactForm.astro" data-astro-source-loc="81:33"> <label for="contact-email" class="form-label" data-astro-cid-svshx33u data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ContactForm.astro" data-astro-source-loc="82:57"> Correo electrónico <span class="form-required" aria-hidden="true" data-astro-cid-svshx33u data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ContactForm.astro" data-astro-source-loc="84:60">*</span> </label> <input type="email" id="contact-email" name="email" class="form-input" placeholder="tu@correo.com" autocomplete="email" aria-required="true" aria-invalid="false" aria-describedby="contact-email-error" data-astro-cid-svshx33u data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ContactForm.astro" data-astro-source-loc="86:12"> <span id="contact-email-error" class="form-error" data-error="email" role="alert" aria-live="polite" data-astro-cid-svshx33u data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ContactForm.astro" data-astro-source-loc="97:12"></span> </div> <!-- Message --> <div class="form-field" data-astro-cid-svshx33u data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ContactForm.astro" data-astro-source-loc="107:33"> <label for="contact-message" class="form-label" data-astro-cid-svshx33u data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ContactForm.astro" data-astro-source-loc="108:59"> Mensaje <span class="form-required" aria-hidden="true" data-astro-cid-svshx33u data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ContactForm.astro" data-astro-source-loc="110:60">*</span> </label> <textarea id="contact-message" name="message" class="form-input form-textarea" placeholder="¿En qué puedo ayudarte?" rows="5" aria-required="true" aria-invalid="false" aria-describedby="contact-message-error" data-astro-cid-svshx33u data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ContactForm.astro" data-astro-source-loc="112:12"></textarea> <span id="contact-message-error" class="form-error" data-error="message" role="alert" aria-live="polite" data-astro-cid-svshx33u data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ContactForm.astro" data-astro-source-loc="122:12"></span> </div> <!-- Submit --> <button type="submit" class="btn btn-primary form-submit" id="contact-submit" data-astro-cid-svshx33u data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ContactForm.astro" data-astro-source-loc="136:10"> Enviar mensaje </button> <!-- Status message (success / error) --> <div id="contact-status" class="form-status" role="status" aria-live="polite" aria-atomic="true" tabindex="-1" data-astro-cid-svshx33u data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/ContactForm.astro" data-astro-source-loc="141:10"></div> </form>  </div>   </div> </section>  <script type="module" src="/src/components/ContactForm.astro?astro&type=script&index=0&lang.ts"></script> </main> <footer class="site-footer" data-astro-cid-sz7xmlte data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Footer.astro" data-astro-source-loc="19:29"> <div class="footer-inner" data-astro-cid-sz7xmlte data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Footer.astro" data-astro-source-loc="20:29"> <div class="footer-social" data-astro-cid-sz7xmlte data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Footer.astro" data-astro-source-loc="21:32"> <a href="https://github.com/jnvr1" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="social-link" data-astro-cid-sz7xmlte data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Footer.astro" data-astro-source-loc="28:8"> <img src="/icons/github.svg" alt="GitHub" width="20" height="20" data-astro-cid-sz7xmlte data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Footer.astro" data-astro-source-loc="29:10"> </a> <a href="https://linkedin.com/in/jnvr" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="social-link" data-astro-cid-sz7xmlte data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Footer.astro" data-astro-source-loc="37:8"> <img src="/icons/linkedin.svg" alt="LinkedIn" width="20" height="20" data-astro-cid-sz7xmlte data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Footer.astro" data-astro-source-loc="38:10"> </a> </div> <p class="footer-copy" data-astro-cid-sz7xmlte data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Footer.astro" data-astro-source-loc="42:28">
+&copy; 2026 Jonathan Noé Viramontes &mdash; Todos los derechos reservados </p> <p class="footer-made" data-astro-cid-sz7xmlte data-astro-source-file="D:/Portafolio/jnvrportfolio/src/components/Footer.astro" data-astro-source-loc="46:28"> Hecho con Astro 5 &amp; TypeScript
+</p> </div> </footer>   </div> <!-- No-op Service Worker registration (evicts Angular SW) --> <script type="module" src="/src/layouts/BaseLayout.astro?astro&type=script&index=0&lang.ts"></script> </body> </html> 

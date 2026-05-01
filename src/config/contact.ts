@@ -11,10 +11,15 @@ export const emailJsConfig = {
 
 /**
  * Template parameters expected by the EmailJS template.
+ * `email` mirrors the user's typed address so the template can render it in
+ * the body, Reply-To, or any other field you configure in the EmailJS dashboard.
  */
 export interface EmailParams {
+  name: string;
   from_name: string;
+  email: string;
   reply_to: string;
+  time: string;
   subject: string;
   message: string;
 }

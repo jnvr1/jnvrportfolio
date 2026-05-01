@@ -14,7 +14,7 @@ describe('projectsSchema', () => {
   const validProject = {
     title: 'Centinela App',
     slug: 'centinela-app',
-    client: 'Angel',
+    client: 'Centinela',
     year: 2024,
     stack: ['Flutter', 'Firebase'],
     summary: 'Control de accesos residencial con Flutter y Firebase.',

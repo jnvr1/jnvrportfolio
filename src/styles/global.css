@@ -252,6 +252,12 @@ section {
   }
 }
 
+/* Hash navigation: keep section titles below the sticky header.
+   Header inner height is ~56px (logo 32 + padding 24); 80px gives breathing room. */
+section[id] {
+  scroll-margin-top: 80px;
+}
+
 /* ── Utility Classes ─────────────────────────────────────────────────────── */
 
 .visually-hidden {

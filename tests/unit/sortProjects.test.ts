@@ -76,38 +76,39 @@ describe('sortProjects — year-desc', () => {
 
 // ---------------------------------------------------------------------------
 // Strategy: client
-// The canonical client order from design.md CLIENTS enum: Angel, Teotech, FEMN, Personal
+// The canonical client order from design.md CLIENTS enum: Bloomotion, Centinela, Teotech, FEMN, Personal
 // ---------------------------------------------------------------------------
 describe('sortProjects — client', () => {
-  it('groups by client in canonical order: Angel, Teotech, FEMN, Personal', () => {
+  it('groups by client in canonical order: Bloomotion, Centinela, Teotech, FEMN, Personal', () => {
     const input = [
       makeProject({ slug: 'personal-1', client: 'Personal' }),
       makeProject({ slug: 'femn-1', client: 'FEMN' }),
-      makeProject({ slug: 'angel-1', client: 'Angel' }),
+      makeProject({ slug: 'bloomotion-1', client: 'Bloomotion' }),
+      makeProject({ slug: 'centinela-1', client: 'Centinela' }),
       makeProject({ slug: 'teotech-1', client: 'Teotech' }),
     ];
     const result = sortProjects(input, 'client');
-    expect(result.map((p) => p.client)).toEqual(['Angel', 'Teotech', 'FEMN', 'Personal']);
+    expect(result.map((p) => p.client)).toEqual(['Bloomotion', 'Centinela', 'Teotech', 'FEMN', 'Personal']);
   });
 
   it('groups multiple projects of same client together', () => {
     const input = [
       makeProject({ slug: 'p1', client: 'Personal' }),
-      makeProject({ slug: 'a1', client: 'Angel' }),
+      makeProject({ slug: 'a1', client: 'Bloomotion' }),
       makeProject({ slug: 'p2', client: 'Personal' }),
-      makeProject({ slug: 'a2', client: 'Angel' }),
+      makeProject({ slug: 'a2', client: 'Bloomotion' }),
     ];
     const result = sortProjects(input, 'client');
     const clients = result.map((p) => p.client);
-    // Angel group comes first, then Personal
-    expect(clients.slice(0, 2)).toEqual(['Angel', 'Angel']);
+    // Bloomotion group comes first, then Personal
+    expect(clients.slice(0, 2)).toEqual(['Bloomotion', 'Bloomotion']);
     expect(clients.slice(2, 4)).toEqual(['Personal', 'Personal']);
   });
 
   it('is stable within each client group — preserves input order', () => {
     const input = [
-      makeProject({ slug: 'a1', client: 'Angel' }),
-      makeProject({ slug: 'a2', client: 'Angel' }),
+      makeProject({ slug: 'a1', client: 'Bloomotion' }),
+      makeProject({ slug: 'a2', client: 'Bloomotion' }),
     ];
     const result = sortProjects(input, 'client');
     expect(result.map((p) => p.slug)).toEqual(['a1', 'a2']);

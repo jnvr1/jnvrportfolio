@@ -9,7 +9,7 @@
  *
  * Strategies:
  *   'year-desc'      — newest first (stable: equal-year items keep input order)
- *   'client'         — grouped by client in canonical order: Angel, Teotech, FEMN, Personal
+ *   'client'         — grouped by client in canonical order: Centinela, Teotech, FEMN, Personal
  *   'featured-first' — featured:true entries first, then year-desc within each tier (default)
  */
 
@@ -18,7 +18,7 @@
 // ---------------------------------------------------------------------------
 
 /** Canonical client sort order per design.md CLIENTS enum. */
-const CLIENT_ORDER = ['Angel', 'Teotech', 'FEMN', 'Personal'] as const;
+const CLIENT_ORDER = ['Bloomotion','Centinela', 'Teotech', 'FEMN', 'Personal'] as const;
 type Client = (typeof CLIENT_ORDER)[number];
 
 /** Minimal shape required for sorting — a subset of ProjectEntry from schemas.ts. */

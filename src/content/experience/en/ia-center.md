@@ -1,17 +1,24 @@
 ---
 company: "IA Center"
-role: "Software Developer"
-startYear: 2022
-endYear: 2023
+role: "Python Instructor"
+startYear: 2021
+endYear: 2021
 current: false
 featured: false
 location: "Mexico"
-summary: "Software development at IA Center, a technology solutions and AI training company."
-stack: ["Python", "JavaScript", "FastAPI"]
+summary: "Python programming training for IA Center students."
+highlights:
+  - "Taught Python programming courses to more than 40 students"
+  - "Achieved a 90% success rate"
+stack: ["Python"]
 locale: en
-order: 4
+order: 5
 ---
 
 ## Context
 
-I collaborated with IA Center on software development projects. The work included web application and backend development with Python and FastAPI in the context of applied technology projects.
+I taught Python programming courses at IA Center, focusing on programming fundamentals and practical guidance throughout the learning process.
+
+## Impact
+
+The training enabled more than 40 students to progress through the course with a 90% success rate.

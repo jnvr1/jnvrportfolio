@@ -1,6 +1,6 @@
 ---
 title: "Centinela — Sitio Web de Marketing"
-client: Angel
+client: Centinela
 year: 2025
 yearRange: "2024–2025"
 stack: ["Astro", "Tailwind CSS", "DecapCMS"]

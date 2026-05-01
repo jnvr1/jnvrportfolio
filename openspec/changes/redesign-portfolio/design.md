@@ -93,7 +93,7 @@ No 3rd-party i18n library. Translation strings for UI chrome (nav labels, CTAs, 
 ```ts
 import { z, defineCollection } from 'astro:content';
 
-const CLIENTS = ['Angel', 'Teotech', 'FEMN', 'Personal'] as const;
+const CLIENTS = ['Bloomotion','Centinela', 'Teotech', 'FEMN', 'Personal'] as const;
 const LOCALES = ['es', 'en'] as const;
 
 const projects = defineCollection({

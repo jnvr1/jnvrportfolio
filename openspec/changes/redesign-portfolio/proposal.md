@@ -47,9 +47,9 @@ Order: by recency × narrative weight. All 9 are framed by client (Angel / Teote
 
 | # | Slug | Client | Name | Stack | One-liner | Priority | Confidentiality |
 |---|------|--------|------|-------|-----------|----------|-----------------|
-| 1 | `centinela-app` | Angel | Centinela — Control de Accesos | Flutter · Firebase · Stripe | App SaaS para fraccionamientos: códigos QR de visitas, chat residentes, push notifications | P0 | Public — has marketing site |
-| 2 | `centinela-web` | Angel | Centinela — Sitio Web | Astro · Tailwind · DecapCMS | Sitio público SSG del producto Centinela con CMS y SEO | P0 | Public |
-| 3 | `bloomotion-tech` | Angel | Bloomotion Tech | Flutter Web · Google Fonts | Sitio corporativo con animated counters y reveal-on-scroll. Migrado desde landing estática (bloom v1) | P1 | Public |
+| 1 | `centinela-app` | Centinela | Centinela — Control de Accesos | Flutter · Firebase · Stripe | App SaaS para fraccionamientos: códigos QR de visitas, chat residentes, push notifications | P0 | Public — has marketing site |
+| 2 | `centinela-web` | Centinela | Centinela — Sitio Web | Astro · Tailwind · DecapCMS | Sitio público SSG del producto Centinela con CMS y SEO | P0 | Public |
+| 3 | `bloomotion-tech` | Blooomotion | Bloomotion Tech | Flutter Web · Google Fonts | Sitio corporativo con animated counters y reveal-on-scroll. Migrado desde landing estática (bloom v1) | P1 | Public |
 | 4 | `pos-la-brocha` | Teotech | POS La Brocha (Multi-Negocio) | React 19 · TS · Vite · FastAPI · Postgres · Docker · Capacitor | POS + CRM multi-tenant con backend FastAPI dockerizado y wrappers móvil/escritorio | P0 | Sanitized screenshots |
 | 5 | `teotech-suite` | Teotech | Teotech CRM Suite (CFDI 4.0) | PHP 8 · MySQL · PWA · Composer | Suite completa: facturación CFDI 4.0, repositorio con cuotas, integración SAT timbrado | P0 | Sanitized — NO real CFDI |
 | 6 | `brocha-facturacion` | Teotech | Teotech Facturación | PHP 8 · MySQL · PHPMailer · QR · dompdf | Módulo de facturación CFDI con cotizaciones y notificaciones WhatsApp | P1 | Sanitized |

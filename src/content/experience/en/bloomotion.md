@@ -1,19 +1,24 @@
 ---
 company: "Bloomotion"
-role: "Freelance Developer (Client: Angel)"
-startYear: 2022
-endYear: 2024
+role: "Software Developer"
+startYear: 2019
+endYear: 2021
 current: false
 featured: false
 location: "Mexico (remote)"
-summary: "Freelance projects for the Bloomotion logistics platform ecosystem: static landing page and Flutter Web corporate site."
-stack: ["Flutter Web", "HTML", "Firebase Hosting"]
+summary: "Mobile app development published on the Play Store and logistics integrations for Bloomotion."
+highlights:
+  - "Developed a mobile app published on the Play Store"
+  - "Integrated logistics systems with Penske Logistics and assistcargo"
+stack: ["Ionic-Angular", "FastAPI"]
 locale: en
-order: 5
+order: 6
 ---
 
 ## Context
 
-I collaborated with client Angel on projects related to the Bloomotion logistics platform. The work included developing an initial static landing page and later a full corporate website in Flutter Web with animated sections deployed on Firebase Hosting.
+I collaborated on projects related to the Bloomotion logistics platform. The work included a mobile application published on the Play Store and the integration of external systems to streamline logistics workflows.
 
-Individual projects are documented in the projects section of this portfolio under the slug `bloomotion-tech`.
+## Impact
+
+The logistics integrations helped improve operational coordination, and the mobile app delivered a production-ready solution for end users.

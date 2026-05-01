@@ -6,8 +6,8 @@
  * No client-side JS required — just HTML links.
  *
  * Props:
- *   currentLocale — 'es' | 'en'
- *   alternates    — { es: string; en: string } — full URLs for each locale
+  *   currentLocale — 'es' | 'en'
+ *   alternates    — { es: string; en: string } — absolute URLs or paths for each locale
  */
 import type { Locale } from '../i18n/index';
 import { t } from '../i18n/index';
@@ -18,11 +18,20 @@ interface Props {
 }
 
 const { currentLocale, alternates } = Astro.props;
+
+function toPath(href: string): string {
+  try {
+    const url = new URL(href, 'http://local.dev');
+    return `${url.pathname}${url.search}${url.hash}`;
+  } catch {
+    return href;
+  }
+}
 ---
 
 <nav class="locale-switcher" aria-label={t(currentLocale, 'a11y.localeSwitcherLabel')}>
   <a
-    href={alternates.es}
+    href={toPath(alternates.es)}
     lang="es"
     aria-current={currentLocale === 'es' ? 'page' : undefined}
     class:list={['locale-link', { 'locale-link--active': currentLocale === 'es' }]}
@@ -31,7 +40,7 @@ const { currentLocale, alternates } = Astro.props;
   </a>
   <span class="locale-divider" aria-hidden="true">|</span>
   <a
-    href={alternates.en}
+    href={toPath(alternates.en)}
     lang="en"
     aria-current={currentLocale === 'en' ? 'page' : undefined}
     class:list={['locale-link', { 'locale-link--active': currentLocale === 'en' }]}
@@ -51,10 +60,16 @@ const { currentLocale, alternates } = Astro.props;
   }
 
   .locale-link {
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     color: var(--muted);
     text-decoration: none;
     transition: color 150ms;
-    padding: 2px 0;
+    border-radius: var(--radius-sm);
+    padding: 0 var(--space-2);
   }
 
   .locale-link:hover,

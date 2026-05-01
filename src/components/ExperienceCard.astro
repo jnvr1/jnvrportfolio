@@ -215,4 +215,20 @@ const dateRange = `${startYear}–${endDisplay}`;
     gap: var(--space-1);
     margin-top: var(--space-1);
   }
+
+  @media (max-width: 480px) {
+    .experience-card {
+      gap: var(--space-3);
+      padding-left: var(--space-3);
+      padding-bottom: var(--space-6);
+    }
+
+    .experience-card__body {
+      padding: var(--space-3);
+    }
+
+    .experience-card__company-row {
+      gap: var(--space-1);
+    }
+  }
 </style>

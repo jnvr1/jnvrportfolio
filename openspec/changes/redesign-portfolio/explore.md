@@ -61,7 +61,7 @@ Estimated total gzip: **~250–350KB** for initial JS. A comparable Astro site s
 
 ## External Project Catalog
 
-### Angel Client Projects
+### Centinela / Bloomotion Client Projects
 
 #### 1. access_control (`D:/Angel/access_control/`)
 - **Project name**: Centinela — Sistema de Control de Accesos
@@ -206,10 +206,10 @@ Estimated total gzip: **~250–350KB** for initial JS. A comparable Astro site s
 
 | # | Project | Client | Stack | Type | Status | Year |
 |---|---------|--------|-------|------|--------|------|
-| 1 | Centinela Access Control | Angel | Flutter + Firebase | Mobile SaaS | Active | 2022–2024 |
-| 2 | Bloomotion Landing | Angel | Static HTML | Landing page | Archived | 2022 |
-| 3 | Bloomotion Tech Website | Angel | Flutter Web | Corporate site | Active | 2023–2024 |
-| 4 | Centinela Webpage | Angel | Astro + Tailwind | Marketing SSG | Active | 2024–2025 |
+| 1 | Centinela Access Control | Centinela | Flutter + Firebase | Mobile SaaS | Active | 2022–2024 |
+| 2 | Bloomotion Landing | Bloomotion | Static HTML | Landing page | Archived | 2022 |
+| 3 | Bloomotion Tech Website | Bloomotion | Flutter Web | Corporate site | Active | 2023–2024 |
+| 4 | Centinela Webpage | Centinela | Astro + Tailwind | Marketing SSG | Active | 2024–2025 |
 | 5 | POS La Brocha | Hilario/Teotech | React + FastAPI + Docker | POS + CRM | Active | 2025 |
 | 6 | Teotech Facturación (Brocha) | Teotech | PHP + MySQL | CRM + CFDI | Active | 2023–2025 |
 | 7 | CRM Pedidos (Villa Educare) | Teotech | PHP + MySQL | School CRM | Active | 2023–2025 |

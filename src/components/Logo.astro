@@ -2,29 +2,35 @@
 /**
  * Logo.astro — JNVR brand mark (square faceted icon, no wordmark).
  *
- * Uses a plain <img> tag for maximum compatibility. Per-path animations
- * via inlined SVG were attempted but the inline approach failed to render
- * reliably across Astro dev server / readFileSync / ?raw paths. Wrapper-level
- * animations (entrance, breathing, halo) still work via .hero-logo-wrap.
+ * Uses a plain <img> tag for maximum compatibility.
  *
  * Props:
  *   size      — CSS width value (default: 560px). Height scales automatically.
  *   ariaLabel — Accessible label (default: 'JNVR')
+ *   animated  — Use the motion-enabled SVG variant (default: false)
  */
 interface Props {
   size?: number;
   ariaLabel?: string;
+  animated?: boolean;
 }
 
-const { size = 560, ariaLabel = 'JNVR' } = Astro.props;
+const { size = 560, ariaLabel = 'JNVR', animated = false } = Astro.props;
+const src = animated ? '/logo-mark-optimized.svg' : '/logo-mark.svg';
+const mobileSize = animated
+  ? Math.min(280, Math.max(220, Math.round(size * 0.43)))
+  : Math.min(32, Math.max(24, Math.round(size * 0.9)));
+const compactSize = animated
+  ? Math.min(240, Math.max(180, Math.round(size * 0.38)))
+  : Math.min(28, Math.max(22, Math.round(size * 0.75)));
 ---
 
 <span
   class="logo-wrapper"
-  style={`--logo-size: ${size}px`}
+  style={`--logo-size: ${size}px; --logo-size-md: ${mobileSize}px; --logo-size-sm: ${compactSize}px`}
 >
   <img
-    src="/logo-mark.svg"
+    src={src}
     alt={ariaLabel}
     width={size}
     height={size}
@@ -48,13 +54,13 @@ const { size = 560, ariaLabel = 'JNVR' } = Astro.props;
 
   @media (max-width: 768px) {
     .logo-wrapper > img {
-      width: 360px;
+      width: var(--logo-size-md, var(--logo-size, 560px));
     }
   }
 
   @media (max-width: 480px) {
     .logo-wrapper > img {
-      width: 280px;
+      width: var(--logo-size-sm, var(--logo-size-md, var(--logo-size, 560px)));
     }
   }
 </style>

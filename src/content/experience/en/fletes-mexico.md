@@ -1,16 +1,15 @@
 ---
 company: "Fletes México"
-role: "Senior Software Architect"
-startYear: 2024
+role: "Software Developer"
+startYear: 2023
 current: true
 featured: true
-location: "Mexico (remote)"
-summary: "Technical architecture leadership for Fletes México's logistics platform: FastAPI microservices, BI integrations, and scale-ready design."
+location: "Ciudad Juárez, Mexico (remote)"
+summary: "Software development for Fletes México's logistics platform: backend microservices, custom tools, and BI dashboards."
 highlights:
-  - "Designed and implemented microservices architecture with FastAPI and PostgreSQL"
-  - "Reduced cargo reconciliation time by 65% through workflow automation"
-  - "Built Business Intelligence dashboards for real-time operational decision-making"
-  - "Technical lead for the backend development team"
+  - "Designed and implemented more than 10 backend microservices using FastAPI, improving scalability"
+  - "Increased operational efficiency by 25% through custom software tools"
+  - "Created Power BI dashboards to provide actionable information to key stakeholders"
 stack: ["FastAPI", "PostgreSQL", "Python", "Docker", "Power BI"]
 locale: en
 order: 1

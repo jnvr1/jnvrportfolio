@@ -120,6 +120,15 @@ const initials = title
     transform: var(--card-hover-transform);
   }
 
+  @media (hover: none), (pointer: coarse) {
+    .project-card:hover {
+      border-color: var(--border);
+      border-width: var(--border-width);
+      box-shadow: none;
+      transform: none;
+    }
+  }
+
   .card-cover-link {
     display: block;
     text-decoration: none;
@@ -248,5 +257,33 @@ const initials = title
     font-size: 0.6875rem;
     color: var(--muted);
     padding: 3px var(--space-2);
+  }
+
+  @media (max-width: 480px) {
+    .card-body {
+      padding: var(--space-3);
+    }
+
+    .card-cover-wrap {
+      aspect-ratio: 16 / 9;
+    }
+
+    .card-placeholder {
+      aspect-ratio: 16 / 9;
+    }
+
+    .card-meta {
+      gap: var(--space-1);
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+
+    .card-year {
+      margin-left: 0;
+    }
+
+    .card-summary {
+      -webkit-line-clamp: 2;
+    }
   }
 </style>

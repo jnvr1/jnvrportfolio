@@ -9,6 +9,11 @@
 import type { CollectionEntry } from 'astro:content';
 import type { Locale } from '../i18n/index';
 import BaseLayout from './BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SectionBackdrop from '../components/SectionBackdrop.astro';
+import ScrollReveal from '../components/ScrollReveal.astro';
+import StackChip from '../components/StackChip.astro';
 import { t } from '../i18n/index';
 
 interface Props {
@@ -17,7 +22,7 @@ interface Props {
 }
 
 const { entry, locale } = Astro.props;
-const { title, summary, client, year, yearRange, stack, links, placeholder } = entry.data;
+const { title, summary, client, year, yearRange, stack, links } = entry.data;
 // In Astro 5, entry.id is path-based with extension: "es/centinela-app.md".
 // Strip the locale prefix and .md extension to get the route slug: "centinela-app".
 const slug = entry.id.replace(/^(es|en)\//, '').replace(/\.mdx?$/, '');
@@ -44,97 +49,130 @@ const yearDisplay = yearRange ?? String(year);
   canonical={canonical}
   alternates={alternates}
 >
-  <main id="main-content">
+  <Header locale={locale} alternates={alternates} />
+
+  <main id="main-content" class="project-main">
+    <SectionBackdrop variant="projects" />
     <article class="project-detail">
-      <!-- Breadcrumb -->
-      <nav class="breadcrumb" aria-label="breadcrumb">
-        <a href={locale === 'es' ? '/' : '/en/'}>JNVR</a>
-        <span aria-hidden="true"> / </span>
-        <a href={locale === 'es' ? '/#projects' : '/en/#projects'}>
-          {t(locale, 'nav.projects')}
-        </a>
-        <span aria-hidden="true"> / </span>
-        <span aria-current="page">{title}</span>
-      </nav>
+      <!-- Breadcrumb (current page is the <h1> below — no need to repeat the title) -->
+      <ScrollReveal>
+        <nav class="breadcrumb" aria-label="breadcrumb">
+          <a href={locale === 'es' ? '/' : '/en/'}>JNVR</a>
+          <span aria-hidden="true"> / </span>
+          <a href={locale === 'es' ? '/#projects' : '/en/#projects'} aria-current="page">
+            {t(locale, 'nav.projects')}
+          </a>
+        </nav>
+      </ScrollReveal>
 
-      <!-- Cover placeholder or image -->
-      {placeholder && (
-        <div
-          class="cover-placeholder"
-          role="img"
-          aria-label={`${title} — ${t(locale, 'projects.placeholderAlt')}`}
-        >
-          <span class="cover-placeholder__initials">
-            {title
-              .split(' ')
-              .slice(0, 2)
-              .map((w: string) => w[0])
-              .join('')
-              .toUpperCase()}
-          </span>
-        </div>
-      )}
+      <!-- Project header: faceted card, mirrors the project grid card vocabulary -->
+      <ScrollReveal delay={60}>
+        <header class="project-header">
+          <h1>{title}</h1>
+          <p class="project-summary">{summary}</p>
+          <dl class="project-meta">
+            <div>
+              <dt>{locale === 'es' ? 'Cliente' : 'Client'}</dt>
+              <dd>{client}</dd>
+            </div>
+            <div>
+              <dt>{locale === 'es' ? 'Año' : 'Year'}</dt>
+              <dd>{yearDisplay}</dd>
+            </div>
+            <div>
+              <dt>Stack</dt>
+              <dd class="stack-list">
+                {stack.map((tech: string) => (
+                  <StackChip tech={tech} locale={locale} />
+                ))}
+              </dd>
+            </div>
+          </dl>
 
-      <!-- Project header -->
-      <header class="project-header">
-        <h1>{title}</h1>
-        <dl class="project-meta">
-          <div>
-            <dt>Client</dt>
-            <dd>{client}</dd>
-          </div>
-          <div>
-            <dt>{locale === 'es' ? 'Año' : 'Year'}</dt>
-            <dd>{yearDisplay}</dd>
-          </div>
-          <div>
-            <dt>Stack</dt>
-            <dd class="stack-list">
-              {stack.map((tech: string) => (
-                <span class="stack-chip" aria-label={`${t(locale, 'projects.stackLabel')}: ${tech}`}>
-                  {tech}
-                </span>
-              ))}
-            </dd>
-          </div>
-        </dl>
-
-        {links && (
-          <div class="project-links">
-            {links.live && (
-              <a href={links.live} class="btn btn-primary" target="_blank" rel="noopener noreferrer">
-                {t(locale, 'cta.viewProject')}
-              </a>
-            )}
-            {links.repo && (
-              <a href={links.repo} class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
-                {t(locale, 'cta.viewCode')}
-              </a>
-            )}
-          </div>
-        )}
-      </header>
+          {links && (
+            <div class="project-links">
+              {links.live && (
+                <a href={links.live} class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                  {t(locale, 'cta.viewProject')}
+                </a>
+              )}
+              {links.repo && (
+                <a href={links.repo} class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+                  {t(locale, 'cta.viewCode')}
+                </a>
+              )}
+            </div>
+          )}
+        </header>
+      </ScrollReveal>
 
       <!-- Markdown body -->
-      <div class="prose">
-        <slot />
-      </div>
+      <ScrollReveal delay={120}>
+        <div class="prose">
+          <slot />
+        </div>
+      </ScrollReveal>
 
       <!-- Back link -->
-      <footer class="project-footer">
-        <a href={locale === 'es' ? '/#projects' : '/en/#projects'} class="back-link">
-          ← {t(locale, 'cta.backToProjects')}
-        </a>
-      </footer>
+      <ScrollReveal delay={180}>
+        <footer class="project-footer">
+          <a
+            href={locale === 'es' ? '/#projects' : '/en/#projects'}
+            class="back-link"
+            data-back-link
+          >
+            ← {t(locale, 'cta.backToProjects')}
+          </a>
+        </footer>
+      </ScrollReveal>
     </article>
   </main>
+
+  <Footer locale={locale} />
 </BaseLayout>
 
+<script>
+  /**
+   * Back-link scroll restoration.
+   *
+   * The default <a href="/#projects"> is a forward navigation, so the browser
+   * doesn't restore the scroll position the user had when they clicked into
+   * the project. If the visitor came from another page on this site, intercept
+   * the click and use history.back() — that triggers the browser's native
+   * scroll restoration, landing them on the exact card they tapped.
+   *
+   * Fallback (deep links, Google, social): let the href navigate normally.
+   */
+  const backLink = document.querySelector<HTMLAnchorElement>('[data-back-link]');
+  backLink?.addEventListener('click', (event) => {
+    if (!document.referrer) return;
+    try {
+      const ref = new URL(document.referrer);
+      if (ref.origin !== window.location.origin) return;
+      // Only intercept if there is real history to go back to
+      if (window.history.length <= 1) return;
+      event.preventDefault();
+      window.history.back();
+    } catch {
+      // Malformed referrer — fall through to default href navigation
+    }
+  });
+</script>
+
 <style>
+  /* Position context for the SectionBackdrop (absolute, inset: 0). */
+  .project-main {
+    position: relative;
+    overflow: hidden;
+  }
+
   .project-detail {
     max-width: 800px;
     margin: 0 auto;
-    padding: var(--space-8) var(--space-4);
+    padding: var(--space-12) var(--space-4) var(--space-8);
+    /* Sit above the SectionBackdrop */
+    position: relative;
+    z-index: 1;
   }
 
   .breadcrumb {
@@ -146,77 +184,83 @@ const yearDisplay = yearRange ?? String(year);
   .breadcrumb a {
     color: var(--muted);
     text-decoration: none;
+    transition: color var(--duration-fast) var(--ease-standard);
   }
 
   .breadcrumb a:hover {
-    color: var(--text);
-  }
-
-  .cover-placeholder {
-    width: 100%;
-    height: 320px;
-    background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: var(--space-8);
-  }
-
-  .cover-placeholder__initials {
-    font-size: 4rem;
-    font-weight: 700;
     color: var(--accent);
-    opacity: 0.4;
-    font-family: var(--font-display);
-    letter-spacing: -0.02em;
   }
+
+  /* ── Project header (faceted card) ───────────────────────────────────────── */
 
   .project-header {
+    background: linear-gradient(
+      180deg,
+      var(--surface) 0%,
+      color-mix(in srgb, var(--surface) 92%, var(--brand-strong) 8%) 100%
+    );
+    border: var(--border-width) solid color-mix(in srgb, var(--brand) 22%, var(--border));
+    padding: var(--space-6);
     margin-bottom: var(--space-8);
+    clip-path: polygon(
+      0 0,
+      calc(100% - var(--clip-facet)) 0,
+      100% var(--clip-facet),
+      100% 100%,
+      0 100%
+    );
   }
 
   .project-header h1 {
+    font-family: var(--font-heading);
     font-size: clamp(1.75rem, 4vw, 2.5rem);
     font-weight: 700;
     line-height: 1.1;
-    margin-bottom: var(--space-4);
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-3);
     color: var(--text);
+  }
+
+  .project-summary {
+    color: var(--muted);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    margin: 0 0 var(--space-5);
+    max-width: 60ch;
   }
 
   .project-meta {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-4);
-    margin-bottom: var(--space-4);
+    gap: var(--space-5);
+    margin: 0 0 var(--space-4);
+    padding-top: var(--space-4);
+    border-top: 1px solid color-mix(in srgb, var(--brand) 16%, transparent);
+  }
+
+  .project-meta > div {
+    min-width: 0;
   }
 
   .project-meta dt {
-    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--muted);
+    letter-spacing: 0.12em;
+    color: var(--brand);
     margin-bottom: var(--space-1);
   }
 
   .project-meta dd {
     color: var(--text);
-    font-size: 0.9rem;
+    font-size: 0.9375rem;
+    margin: 0;
   }
 
   .stack-list {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-1);
-  }
-
-  .stack-chip {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    background: var(--surface-2);
-    color: var(--accent);
-    padding: 2px var(--space-2);
-    border-radius: 4px;
   }
 
   .project-links {
@@ -226,25 +270,67 @@ const yearDisplay = yearRange ?? String(year);
     margin-top: var(--space-4);
   }
 
+  /* ── Markdown body ───────────────────────────────────────────────────────── */
+
   .prose {
     color: var(--text);
     line-height: 1.75;
   }
 
+  /* ── Back link footer ────────────────────────────────────────────────────── */
+
   .project-footer {
     margin-top: var(--space-12);
     padding-top: var(--space-6);
-    border-top: 1px solid var(--border);
+    border-top: 1px solid color-mix(in srgb, var(--brand) 18%, var(--border));
   }
 
   .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
     color: var(--muted);
     text-decoration: none;
-    font-size: 0.9rem;
-    transition: color 200ms;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    letter-spacing: 0.02em;
+    transition: color var(--duration-fast) var(--ease-standard), gap var(--duration-fast) var(--ease-standard);
   }
 
   .back-link:hover {
-    color: var(--text);
+    color: var(--accent);
+    gap: var(--space-3);
+  }
+
+  @media (max-width: 480px) {
+    .project-detail {
+      padding: var(--space-8) var(--space-4) var(--space-6);
+    }
+
+    .project-header {
+      padding: var(--space-5) var(--space-4);
+    }
+
+    .project-header h1 {
+      font-size: clamp(1.5rem, 8vw, 2.25rem);
+    }
+
+    .project-meta {
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .project-links {
+      flex-direction: column;
+    }
+
+    .project-links .btn {
+      width: 100%;
+    }
+
+    .project-footer {
+      margin-top: var(--space-8);
+      padding-top: var(--space-4);
+    }
   }
 </style>

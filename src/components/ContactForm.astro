@@ -144,6 +144,7 @@ const formId = 'contact-form';
           role="status"
           aria-live="polite"
           aria-atomic="true"
+          tabindex="-1"
         ></div>
       </form>
     </ScrollReveal>
@@ -222,11 +223,13 @@ const formId = 'contact-form';
     border-radius: 6px;
     color: var(--text);
     font-family: var(--font-body);
-    font-size: 0.9375rem;
+    font-size: 1rem;
     padding: var(--space-3) var(--space-3);
     transition: border-color 150ms, box-shadow 150ms;
     width: 100%;
     box-sizing: border-box;
+    min-height: 44px;
+    touch-action: manipulation;
   }
 
   .form-input::placeholder {
@@ -259,6 +262,7 @@ const formId = 'contact-form';
   .form-submit {
     align-self: flex-start;
     min-width: 160px;
+    min-height: 44px;
   }
 
   .form-submit[aria-busy='true'] {
@@ -289,6 +293,17 @@ const formId = 'contact-form';
     background: color-mix(in srgb, var(--danger) 10%, transparent);
     color: var(--danger);
     border: 1px solid color-mix(in srgb, var(--danger) 30%, transparent);
+  }
+
+  @media (max-width: 480px) {
+    .contact-section {
+      padding: var(--space-12) var(--space-4);
+    }
+
+    .form-submit {
+      width: 100%;
+      align-self: stretch;
+    }
   }
 </style>
 
@@ -339,6 +354,10 @@ const formId = 'contact-form';
       const name = String(data.get('name') ?? '');
       const email = String(data.get('email') ?? '');
       const message = String(data.get('message') ?? '');
+      const time = new Date().toLocaleString(locale === 'es' ? 'es-MX' : 'en-US', {
+        dateStyle: 'medium',
+        timeStyle: 'short',
+      });
 
       // Client-side validation
       const errors = validateContactForm({ name, email, message });
@@ -357,8 +376,11 @@ const formId = 'contact-form';
       submitBtn!.textContent = t(locale, 'form.submitting');
 
       const result = await submitContactForm({
+        name,
         from_name: name,
+        email,
         reply_to: email,
+        time,
         subject: `Portfolio contact from ${name}`,
         message,
       });
