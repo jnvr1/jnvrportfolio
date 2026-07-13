@@ -1,20 +1,22 @@
 ---
 /**
- * ScrollReveal.astro — Fade + translateY entrance animation via IntersectionObserver.
+ * ScrollReveal.astro — Facet entrance wrapper for a block.
  *
- * Wraps any child element. The data-scroll-reveal attribute is picked up by
- * scroll-reveal.ts which adds data-revealed once the element enters the viewport.
+ * Renders <div data-scroll-reveal>. The motion (a facet snap that echoes the
+ * logo's jnvr-facet-enter: rise + subtle scale overshoot + blur-to-sharp) lives
+ * in global.css keyed on [data-scroll-reveal]; the IntersectionObserver that
+ * adds [data-revealed] is the inline reveal script in BaseLayout. Content is
+ * visible by default — a script/CSP/network failure never blanks the page.
  *
- * CSS transitions handle the animation; JS only toggles the attribute.
- * prefers-reduced-motion: elements appear in final state immediately (no motion).
+ * For elements that need a specific tag (e.g. an <li> inside an <ol>), put
+ * data-scroll-reveal (+ a --reveal-delay style) directly on that element instead
+ * of wrapping it — see ExperienceCard.astro.
  *
  * Props:
- *   delay — Animation delay in ms (default: 0)
- *   once  — Only animate once (default: true)
+ *   delay — reveal delay in ms (default: 0); staggers grouped siblings
  */
 interface Props {
   delay?: number;
-  once?: boolean;
   class?: string;
 }
 
@@ -29,30 +31,3 @@ const { delay = 0, class: className, ...rest } = Astro.props;
 >
   <slot />
 </div>
-
-<style>
-  .scroll-reveal {
-    opacity: 0;
-    transform: translateY(12px);
-    transition:
-      opacity 200ms cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms),
-      transform 200ms cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
-  }
-
-  .scroll-reveal[data-revealed] {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .scroll-reveal {
-      opacity: 1;
-      transform: none;
-      transition: none;
-    }
-  }
-</style>
-
-<script>
-  import '../scripts/scroll-reveal.ts';
-</script>

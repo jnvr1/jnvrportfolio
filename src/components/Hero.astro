@@ -8,18 +8,18 @@
  * Props:
  *   locale — 'es' | 'en'
  */
-import type { Locale } from '../i18n/index';
-import { t } from '../i18n/index';
-import Logo from './Logo.astro';
-import FletesBadge from './FletesBadge.astro';
-import HeroBackdrop from './HeroBackdrop.astro';
+import type { Locale } from "../i18n/index";
+import { t } from "../i18n/index";
+import Logo from "./Logo.astro";
+import FletesBadge from "./FletesBadge.astro";
+import HeroBackdrop from "./HeroBackdrop.astro";
 
 interface Props {
   locale: Locale;
 }
 
 const { locale } = Astro.props;
-const base = locale === 'es' ? '' : '/en';
+const base = locale === "es" ? "" : "/en";
 ---
 
 <section id="hero" class="hero" aria-labelledby="hero-heading">
@@ -34,17 +34,17 @@ const base = locale === 'es' ? '' : '/en';
 
       <h1 id="hero-heading" class="hero-name">
         Jonathan Noé Viramontes
-        <span class="hero-role">{t(locale, 'hero.role')}</span>
+        <span class="hero-role">{t(locale, "hero.role")}</span>
       </h1>
 
-      <p class="hero-tagline">{t(locale, 'hero.tagline')}</p>
+      <p class="hero-tagline">{t(locale, "hero.tagline")}</p>
 
       <div class="hero-ctas">
         <a href={`${base}/#projects`} class="btn btn-primary">
-          {t(locale, 'cta.projects')}
+          {t(locale, "cta.projects")}
         </a>
         <a href={`${base}/#contact`} class="btn btn-secondary">
-          {t(locale, 'cta.contact')}
+          {t(locale, "cta.contact")}
         </a>
       </div>
     </div>
@@ -131,7 +131,7 @@ const base = locale === 'es' ? '' : '/en';
       padding-top: var(--space-10);
       min-height: auto;
     }
-    /* Logo mobile sizing is handled in Logo.astro (300px at ≤768px, 260px at ≤480px) */
+    /* Logo mobile sizing is handled in Logo.astro (241px at ≤768px, 213px at ≤480px) */
   }
 
   @media (max-width: 480px) {

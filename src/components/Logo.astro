@@ -15,8 +15,8 @@ interface Props {
   animated?: boolean;
 }
 
-const { size = 560, ariaLabel = 'JNVR', animated = false } = Astro.props;
-const src = animated ? '/logo-mark-optimized.svg' : '/logo-mark.svg';
+const { size = 560, ariaLabel = "JNVR", animated = false } = Astro.props;
+const src = animated ? "/logo-mark-optimized.svg" : "/logo-mark.svg";
 const mobileSize = animated
   ? Math.min(280, Math.max(220, Math.round(size * 0.43)))
   : Math.min(32, Math.max(24, Math.round(size * 0.9)));
@@ -53,6 +53,14 @@ const compactSize = animated
   }
 
   @media (max-width: 768px) {
+    .logo-wrapper > img {
+      width: var(--logo-size-md, var(--logo-size, 560px));
+    }
+  }
+
+  /* Landscape phones: wide enough to miss the 768px width step but too short
+     for the full-size logo, which would overflow above-the-fold. Step down. */
+  @media (orientation: landscape) and (max-height: 500px) {
     .logo-wrapper > img {
       width: var(--logo-size-md, var(--logo-size, 560px));
     }

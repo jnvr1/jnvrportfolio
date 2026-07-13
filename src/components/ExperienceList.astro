@@ -40,9 +40,7 @@ const sorted = [...entries].sort((a, b) => {
 
     <ol class="experience-timeline">
       {sorted.map((entry, i) => (
-        <ScrollReveal delay={i * 80}>
-          <ExperienceCard entry={entry} locale={locale} />
-        </ScrollReveal>
+        <ExperienceCard entry={entry} locale={locale} reveal revealDelay={i * 80} />
       ))}
     </ol>
   </div>

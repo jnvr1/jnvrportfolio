@@ -8,25 +8,46 @@
  *   entry  — CollectionEntry<'experience'>
  *   locale — 'es' | 'en'
  */
-import type { CollectionEntry } from 'astro:content';
-import type { Locale } from '../i18n/index';
-import { t } from '../i18n/index';
-import StackChip from './StackChip.astro';
+import type { CollectionEntry } from "astro:content";
+import type { Locale } from "../i18n/index";
+import { t } from "../i18n/index";
+import StackChip from "./StackChip.astro";
 
 interface Props {
-  entry: CollectionEntry<'experience'>;
+  entry: CollectionEntry<"experience">;
   locale: Locale;
+  /** When true, the <li> itself is a scroll-reveal target — keeps <ol> > <li>
+   *  intact (no wrapping <div>) so list semantics and the timeline spine hold. */
+  reveal?: boolean;
+  /** Stagger delay in ms for the reveal (only applied when reveal is true). */
+  revealDelay?: number;
 }
 
-const { entry, locale } = Astro.props;
-const { company, role, startYear, endYear, current, featured, location, summary, highlights, stack } =
-  entry.data;
+const { entry, locale, reveal = false, revealDelay = 0 } = Astro.props;
+const {
+  company,
+  role,
+  startYear,
+  endYear,
+  current,
+  featured,
+  location,
+  summary,
+  highlights,
+  stack,
+} = entry.data;
 
-const endDisplay = current ? t(locale, 'experience.present') : String(endYear ?? '');
+const endDisplay = current
+  ? t(locale, "experience.present")
+  : String(endYear ?? "");
 const dateRange = `${startYear}–${endDisplay}`;
 ---
 
-<li class:list={['experience-card', { 'experience-card--featured': featured }]}>
+<li
+  class:list={["experience-card", { "experience-card--featured": featured }]}
+  data-scroll-reveal={reveal || undefined}
+  style={reveal && revealDelay ? `--reveal-delay: ${revealDelay}ms` : undefined}
+>
   <!-- Timeline dot -->
   <span class="timeline-dot" aria-hidden="true"></span>
 
@@ -34,17 +55,22 @@ const dateRange = `${startYear}–${endDisplay}`;
     <header class="experience-card__header">
       <div class="experience-card__company-row">
         <span class="experience-card__company">{company}</span>
-        {location && (
-          <span class="experience-card__location" aria-label={`Location: ${location}`}>
-            {location}
-          </span>
-        )}
+        {
+          location && (
+            <span
+              class="experience-card__location"
+              aria-label={`${t(locale, "experience.location")}: ${location}`}
+            >
+              {location}
+            </span>
+          )
+        }
       </div>
       <p class="experience-card__role">{role}</p>
       <time
         class="experience-card__period"
-        datetime={`${startYear}/${endYear ?? 'present'}`}
-        aria-label={`${startYear} to ${endDisplay}`}
+        datetime={`${startYear}/${endYear ?? "present"}`}
+        aria-label={`${startYear} ${t(locale, "experience.rangeConnector")} ${endDisplay}`}
       >
         {dateRange}
       </time>
@@ -52,21 +78,25 @@ const dateRange = `${startYear}–${endDisplay}`;
 
     <p class="experience-card__summary">{summary}</p>
 
-    {highlights && highlights.length > 0 && (
-      <ul class="experience-card__highlights">
-        {highlights.map((h: string) => (
-          <li>{h}</li>
-        ))}
-      </ul>
-    )}
+    {
+      highlights && highlights.length > 0 && (
+        <ul class="experience-card__highlights">
+          {highlights.map((h: string) => (
+            <li>{h}</li>
+          ))}
+        </ul>
+      )
+    }
 
-    {stack && stack.length > 0 && (
-      <div class="experience-card__stack">
-        {stack.map((tech: string) => (
-          <StackChip tech={tech} locale={locale} />
-        ))}
-      </div>
-    )}
+    {
+      stack && stack.length > 0 && (
+        <div class="experience-card__stack">
+          {stack.map((tech: string) => (
+            <StackChip tech={tech} locale={locale} />
+          ))}
+        </div>
+      )
+    }
   </div>
 </li>
 
@@ -81,7 +111,7 @@ const dateRange = `${startYear}–${endDisplay}`;
   }
 
   .experience-card::before {
-    content: '';
+    content: "";
     position: absolute;
     left: 0;
     top: 8px;
@@ -119,21 +149,20 @@ const dateRange = `${startYear}–${endDisplay}`;
     gap: var(--space-2);
     background: var(--surface);
     border: var(--border-width) solid var(--border);
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     padding: var(--space-4);
-    clip-path: polygon(0 0, calc(100% - var(--clip-facet)) 0, 100% var(--clip-facet), 100% 100%, 0 100%);
+    clip-path: polygon(
+      0 0,
+      calc(100% - var(--clip-facet)) 0,
+      100% var(--clip-facet),
+      100% 100%,
+      0 100%
+    );
     transition:
       border-color var(--duration-base) var(--ease-standard),
       border-width var(--duration-base) var(--ease-standard),
       box-shadow var(--duration-base) var(--ease-standard),
       transform var(--card-hover-duration) var(--ease-standard);
-  }
-
-  .experience-card:hover .experience-card__body {
-    border-color: var(--brand);
-    border-width: var(--border-width-strong);
-    box-shadow: 0 4px 24px color-mix(in srgb, var(--brand) 12%, transparent);
-    transform: var(--card-hover-transform);
   }
 
   .experience-card__header {
@@ -202,7 +231,7 @@ const dateRange = `${startYear}–${endDisplay}`;
   }
 
   .experience-card__highlights li::before {
-    content: '—';
+    content: "—";
     position: absolute;
     left: 0;
     color: var(--accent);

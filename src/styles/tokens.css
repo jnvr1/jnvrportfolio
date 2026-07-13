@@ -21,6 +21,7 @@
   --brand-strong: #4A7A98;
   --accent: #A8C9DD;
   --success: #3FB950;
+  --warning: #E3B341;
   --danger: #F85149;
 
   /* ── Typography (font families — spec REQ-TS-4) ─────────────────────────── */
@@ -106,9 +107,9 @@
   --card-hover-transform: translateY(-2px);
   --card-hover-duration: var(--duration-fast);
 
-  /* Scroll reveal (spec REQ-PS-8) */
-  --reveal-translate: translateY(12px);
-  --reveal-duration: var(--duration-base);
+  /* Scroll reveal — facet entrance that echoes the logo's jnvr-facet-enter
+     (rise + subtle scale overshoot + blur-to-sharp). Motion in global.css. */
+  --reveal-duration: 680ms;
   --reveal-ease: var(--ease-out-expo);
 
   /* ── Z-index scale ───────────────────────────────────────────────────────── */

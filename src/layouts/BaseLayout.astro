@@ -10,8 +10,12 @@
  *   alternates  — { es: string; en: string } — hreflang alternate URLs
  *   ogImage     — Optional OG image URL (default: /og-default.png)
  */
-import type { Locale } from '../i18n/index';
-import SEO from '../components/SEO.astro';
+import type { Locale } from "../i18n/index";
+import SEO from "../components/SEO.astro";
+// Preload the SAME bundled woff2 files @font-face (src/styles/fonts.css) loads,
+// resolved to their hashed build URLs via Vite so the preload can't 404.
+import interWoff2 from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
+import bricolageWoff2 from "@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wght-normal.woff2?url";
 
 interface Props {
   title: string;
@@ -28,7 +32,7 @@ const {
   locale,
   canonical,
   alternates,
-  ogImage = '/og-default.png',
+  ogImage = "/og-default.png",
 } = Astro.props;
 ---
 
@@ -52,13 +56,22 @@ const {
     <!-- Favicon: use the square brand mark (recognizable at 16×16, no text) -->
     <link rel="icon" type="image/svg+xml" href="/logo-mark.svg" />
 
-    <!-- Font preload: Inter (primary UI font) -->
+    <!-- Font preload: Inter (primary UI/body font) -->
     <link
       rel="preload"
       as="font"
       type="font/woff2"
       crossorigin="anonymous"
-      href="/fonts/inter/inter-latin-wght-normal.woff2"
+      href={interWoff2}
+    />
+
+    <!-- Font preload: Bricolage Grotesque (above-the-fold LCP heading font) -->
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+      href={bricolageWoff2}
     />
 
     <!-- Structured data: Person + WebSite -->
@@ -90,11 +103,51 @@ const {
 
     <!-- Styles -->
     <style is:global>
-      @import '../styles/tokens.css';
-      @import '../styles/reset.css';
-      @import '../styles/fonts.css';
-      @import '../styles/global.css';
+      @import "../styles/tokens.css";
+      @import "../styles/reset.css";
+      @import "../styles/fonts.css";
+      @import "../styles/global.css";
     </style>
+
+    <!-- Scroll-reveal arming + observer. Inline (is:inline) so it can't 404;
+         if it never runs, content stays visible (global.css gates the hidden
+         state on html.reveal-js). Motion (facet-reveal) lives in global.css. -->
+    <script is:inline>
+      (function () {
+        var root = document.documentElement;
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+          return;
+        root.classList.add("reveal-js");
+        function reveal() {
+          var els = document.querySelectorAll("[data-scroll-reveal]");
+          if (!("IntersectionObserver" in window)) {
+            els.forEach(function (el) {
+              el.setAttribute("data-revealed", "");
+            });
+            return;
+          }
+          var io = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (e) {
+                if (e.isIntersecting) {
+                  e.target.setAttribute("data-revealed", "");
+                  io.unobserve(e.target);
+                }
+              });
+            },
+            { threshold: 0.1, rootMargin: "0px 0px -32px 0px" },
+          );
+          els.forEach(function (el) {
+            io.observe(el);
+          });
+        }
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", reveal);
+        } else {
+          reveal();
+        }
+      })();
+    </script>
 
     <!-- Named slot for page-specific head tags -->
     <slot name="head" />
@@ -103,7 +156,7 @@ const {
   <body>
     <!-- Skip to content link (a11y) -->
     <a class="skip-link" href="#main-content">
-      {locale === 'es' ? 'Ir al contenido principal' : 'Skip to main content'}
+      {locale === "es" ? "Ir al contenido principal" : "Skip to main content"}
     </a>
 
     <!-- Content wrapper: z-index 1 places all page content above the
@@ -115,7 +168,7 @@ const {
 
     <!-- No-op Service Worker registration (evicts Angular SW) -->
     <script>
-      import '../scripts/noop-sw-register.ts';
+      import "../scripts/noop-sw-register.ts";
     </script>
   </body>
 </html>
@@ -139,7 +192,7 @@ const {
     padding: var(--space-2) var(--space-4);
     font-weight: 600;
     z-index: 9999;
-    border-radius: 0 0 4px 0;
+    border-radius: 0 0 var(--radius-sm) 0;
     text-decoration: none;
   }
 

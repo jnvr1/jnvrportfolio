@@ -1,9 +1,10 @@
 ---
 title: "POS Multi-Negocio — Sistema La Brocha"
 client: Teotech
-year: 2025
+year: 2026
+yearRange: "2025–2026"
 stack: ["React", "FastAPI", "PostgreSQL", "Docker", "Capacitor"]
-summary: "POS + CRM multi-tenant con React 19, FastAPI y Docker Compose para ferretería con wrappers Android e iOS."
+summary: "POS + CRM multi-tenant con RBAC granular, React 19 y FastAPI para ferretería, con wrappers Android/iOS y escritorio vía Capacitor."
 role: "Full-stack Lead Developer"
 cover: ../../../assets/projects/pos-la-brocha.webp
 placeholder: false
@@ -14,22 +15,24 @@ order: 4
 
 ## El problema
 
-La Brocha, una ferretería con múltiples puntos de venta, operaba con procesos de venta y gestión de inventario desconectados. El cliente necesitaba un sistema POS que funcionara tanto en web como en dispositivos móviles Android, soportara múltiples negocios bajo la misma instalación y tuviera dashboards de métricas para decisiones operativas diarias.
+La Brocha, una ferretería con varios puntos de venta, operaba con ventas e inventario desconectados. Necesitaba un POS que corriera en web y en tablets Android, soportara múltiples negocios sobre una misma instalación, controlara con precisión qué puede ver y hacer cada rol, y siguiera siendo usable cuando la red o el servidor fallan.
 
 ## La solución
 
-Diseñé un sistema POS + CRM con arquitectura multi-tenant: un backend FastAPI con PostgreSQL orquestado vía Docker Compose, un frontend React 19 con Vite y TailwindCSS, y wrappers móviles con Capacitor para Android e iOS. Se añadió una envuelta Electron para uso en escritorio.
+Un backend FastAPI + PostgreSQL orquestado con Docker Compose (multi-tenant por schema: `labrocha`, `negocio2`…), y un frontend React 19 + Vite + TypeScript organizado con Feature-Sliced Design: capas `app`, `entities`, `features`, `pages`, `processes`, `shared` y `widgets`, cada una con una responsabilidad clara. TailwindCSS y una base de componentes (Ant Design + HeroUI) para la UI; wrappers Capacitor para Android e iOS y una envoltura Electron para escritorio.
 
-El stack de formularios usa react-hook-form + Zod para validación tipada en el cliente, que espeja las validaciones Pydantic en el backend. Zustand maneja el estado global del carrito y sesión. El dashboard de métricas (documentado en `DASHBOARD_METRICAS.md`) expone KPIs de ventas, inventario y márgenes en tiempo real.
+El estado global vive en stores de Zustand (sesión, carrito y una cache de consultas propia y ligera). Los formularios usan react-hook-form + Zod, espejando las validaciones Pydantic del backend. La capa de datos es un cliente HTTP tipado sobre `fetch` (`apiFetch`), con módulos por entidad, manejo central de errores y emisión de eventos de conexión/servidor.
+
+Sobre esa base construí el RBAC: CRUD de roles y permisos, tokens `rp:modulo:accion`, guardas de ruta `RequirePermission`, un guard de peticiones a la API (`canAccessApiRequest`) y filtrado del menú lateral según los permisos del usuario. Un `ErrorBoundary` global más pantallas dedicadas de error de conexión, error de servidor y error inesperado evitan que un fallo puntual tumbe toda la aplicación.
 
 ## Mi rol
 
-Fui el arquitecto y desarrollador principal. Definí el schema de la base de datos (multi-tenant con aislamiento por `negocio_id`), implementé los endpoints FastAPI, construí los módulos de frontend principales (POS, inventario, clientes, reportes), y configuré el Docker Compose para desarrollo y producción.
+Arquitecto y desarrollador principal. Definí el modelo multi-tenant en PostgreSQL, los endpoints FastAPI y los módulos de frontend (POS, inventario, productos, clientes, facturación CFDI y dashboard de métricas). Diseñé e implementé el RBAC de punta a punta —roles/permisos, guardas de ruta y de API, filtrado de menú— y la capa de resiliencia (ErrorBoundary + páginas de error). Configuré Docker Compose para desarrollo y producción.
 
 ## Resultado
 
-El sistema centraliza las operaciones de La Brocha: ventas, inventario y clientes en una sola plataforma. El wrapper Capacitor permite a los vendedores usar tablets Android como terminales POS sin aplicación nativa. El dashboard de métricas reduce el tiempo de generación de reportes de horas a segundos.
+Una sola plataforma centraliza ventas, inventario, clientes y facturación. Los vendedores usan tablets Android como terminales POS vía Capacitor, sin app nativa. El RBAC deja a cada rol exactamente lo que le corresponde —a nivel de ruta, de API y de menú—, y el dashboard de métricas expone KPIs de ventas, inventario y márgenes que antes tomaban horas de armar a mano.
 
 ## Aprendizaje notable
 
-React 19 con el modo concurrente y Suspense requiere un cambio de mentalidad en la gestión de estado asíncrono. El patrón más limpio que encontré fue combinar Server Components (donde el backend es Next.js) o, en este caso con Vite, usar `useSuspenseQuery` de TanStack Query para cargar datos de forma declarativa — el componente "suspende" mientras carga, sin lógica de loading manual.
+El aprendizaje real de este proyecto no fue una librería de data-fetching, sino la disciplina de arquitectura. Sin TanStack Query ni Suspense para datos, el estado asíncrono se resuelve con un cliente `fetch` tipado por entidad y stores de Zustand para el estado global (sesión, carrito y una cache de consultas propia y ligera). Feature-Sliced Design mantiene cada capa —`entities`, `features`, `pages`, `processes`, `shared`, `widgets`— con una responsabilidad única, y eso fue justo lo que permitió enchufar después el RBAC y la capa de resiliencia sin reescribir features. Fronteras bien puestas pesan más que sumar una dependencia.

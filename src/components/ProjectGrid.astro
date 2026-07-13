@@ -10,22 +10,22 @@
  *   projects — CollectionEntry<'projects'>[]
  *   locale   — 'es' | 'en'
  */
-import type { CollectionEntry } from 'astro:content';
-import type { Locale } from '../i18n/index';
-import { t } from '../i18n/index';
-import ProjectCard from './ProjectCard.astro';
-import ScrollReveal from './ScrollReveal.astro';
-import SectionBackdrop from './SectionBackdrop.astro';
+import type { CollectionEntry } from "astro:content";
+import type { Locale } from "../i18n/index";
+import { t } from "../i18n/index";
+import ProjectCard from "./ProjectCard.astro";
+import ScrollReveal from "./ScrollReveal.astro";
+import SectionBackdrop from "./SectionBackdrop.astro";
 
 interface Props {
-  projects: CollectionEntry<'projects'>[];
+  projects: CollectionEntry<"projects">[];
   locale: Locale;
 }
 
 const { projects, locale } = Astro.props;
 
 // The 4 main filter chips per design spec
-const FILTER_CHIPS = ['Flutter', 'React', 'PHP', 'Astro'] as const;
+const FILTER_CHIPS = ["Flutter", "React", "PHP", "Astro"] as const;
 ---
 
 <section
@@ -38,18 +38,18 @@ const FILTER_CHIPS = ['Flutter', 'React', 'PHP', 'Astro'] as const;
   <SectionBackdrop variant="projects" />
   <div class="projects-inner">
     <ScrollReveal>
-      <h2 id="projects-heading">{t(locale, 'projects.title')}</h2>
+      <h2 id="projects-heading">{t(locale, "projects.title")}</h2>
     </ScrollReveal>
 
     <ScrollReveal delay={80}>
-      <p class="projects-intro">{t(locale, 'projects.intro')}</p>
+      <p class="projects-intro">{t(locale, "projects.intro")}</p>
     </ScrollReveal>
 
     <!-- Filter chips -->
     <div
       class="filter-group"
       role="group"
-      aria-label={t(locale, 'projects.filterLabel')}
+      aria-label={t(locale, "projects.filterLabel")}
       id="project-filter-group"
     >
       <button
@@ -58,36 +58,45 @@ const FILTER_CHIPS = ['Flutter', 'React', 'PHP', 'Astro'] as const;
         data-filter="all"
         aria-pressed="true"
       >
-        All
+        {t(locale, "projects.filterAll")}
       </button>
-      {FILTER_CHIPS.map((tech) => (
-        <button
-          type="button"
-          class="filter-chip"
-          data-filter={tech}
-          aria-pressed="false"
-        >
-          {tech}
-        </button>
-      ))}
+      {
+        FILTER_CHIPS.map((tech) => (
+          <button
+            type="button"
+            class="filter-chip"
+            data-filter={tech}
+            aria-pressed="false"
+          >
+            {tech}
+          </button>
+        ))
+      }
     </div>
 
     <!-- Live region for filter count -->
     <p class="filter-count" role="status" aria-live="polite" id="filter-count">
-      {projects.length} {locale === 'es' ? 'proyectos' : 'projects'}
+      {projects.length}
+      {locale === "es" ? "proyectos" : "projects"}
     </p>
 
     <!-- Grid -->
     <div
       class="projects-grid"
       id="projects-grid"
-      aria-label={t(locale, 'projects.title')}
+      aria-label={t(locale, "projects.title")}
     >
-      {projects.map((entry, i) => (
-        <ScrollReveal delay={i * 60} class="project-grid-item" data-stack={entry.data.stack.join(' ')}>
-          <ProjectCard entry={entry} locale={locale} />
-        </ScrollReveal>
-      ))}
+      {
+        projects.map((entry, i) => (
+          <ScrollReveal
+            delay={i * 60}
+            class="project-grid-item"
+            data-stack={entry.data.stack.join(" ")}
+          >
+            <ProjectCard entry={entry} locale={locale} />
+          </ScrollReveal>
+        ))
+      }
     </div>
   </div>
 </section>
@@ -138,16 +147,19 @@ const FILTER_CHIPS = ['Flutter', 'React', 'PHP', 'Astro'] as const;
     min-height: 44px;
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 100px;
+    border-radius: var(--radius-full);
     color: var(--muted);
     cursor: pointer;
-    transition: background-color 150ms, border-color 150ms, color 150ms;
+    transition:
+      background-color 150ms,
+      border-color 150ms,
+      color 150ms;
     touch-action: manipulation;
   }
 
   .filter-chip:hover,
   .filter-chip--active,
-  .filter-chip[aria-pressed='true'] {
+  .filter-chip[aria-pressed="true"] {
     background: color-mix(in srgb, var(--accent) 10%, var(--surface));
     border-color: color-mix(in srgb, var(--accent) 40%, transparent);
     color: var(--accent);
@@ -190,8 +202,16 @@ const FILTER_CHIPS = ['Flutter', 'React', 'PHP', 'Astro'] as const;
       padding-inline: var(--space-4);
       padding-bottom: var(--space-1);
       /* Hint at horizontal scrollability with a fade on the right edge */
-      -webkit-mask-image: linear-gradient(to right, black calc(100% - 32px), transparent 100%);
-      mask-image: linear-gradient(to right, black calc(100% - 32px), transparent 100%);
+      -webkit-mask-image: linear-gradient(
+        to right,
+        black calc(100% - 32px),
+        transparent 100%
+      );
+      mask-image: linear-gradient(
+        to right,
+        black calc(100% - 32px),
+        transparent 100%
+      );
     }
 
     .filter-group::-webkit-scrollbar {
@@ -212,32 +232,34 @@ const FILTER_CHIPS = ['Flutter', 'React', 'PHP', 'Astro'] as const;
 
 <script>
   // Project filter client-side logic
-  const group = document.getElementById('project-filter-group');
-  const grid = document.getElementById('projects-grid');
-  const countEl = document.getElementById('filter-count');
-  const section = document.getElementById('projects');
-  const locale = (section?.getAttribute('data-locale') ?? 'es') as 'es' | 'en';
+  const group = document.getElementById("project-filter-group");
+  const grid = document.getElementById("projects-grid");
+  const countEl = document.getElementById("filter-count");
+  const section = document.getElementById("projects");
+  const locale = (section?.getAttribute("data-locale") ?? "es") as "es" | "en";
   const prefersReducedMotion =
-    typeof window !== 'undefined' &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const ENTER_DURATION = 180;
   const MOVE_DURATION = 240;
-  const ENTER_EASING = 'cubic-bezier(0.16, 1, 0.3, 1)';
-  const MOVE_EASING = 'cubic-bezier(0.2, 0, 0, 1)';
+  const ENTER_EASING = "cubic-bezier(0.16, 1, 0.3, 1)";
+  const MOVE_EASING = "cubic-bezier(0.2, 0, 0, 1)";
 
   if (group && grid) {
-    const chips = group.querySelectorAll<HTMLButtonElement>('[data-filter]');
-    const items = Array.from(grid.querySelectorAll<HTMLElement>('.project-grid-item'));
+    const chips = group.querySelectorAll<HTMLButtonElement>("[data-filter]");
+    const items = Array.from(
+      grid.querySelectorAll<HTMLElement>(".project-grid-item"),
+    );
 
     function matchesFilter(item: HTMLElement, filter: string) {
-      if (filter === 'all') return true;
-      const stack = item.getAttribute('data-stack') ?? '';
-      return stack.split(' ').includes(filter);
+      if (filter === "all") return true;
+      const stack = item.getAttribute("data-stack") ?? "";
+      return stack.split(" ").includes(filter);
     }
 
     function resetInlineMotion(item: HTMLElement) {
-      item.style.removeProperty('opacity');
-      item.style.removeProperty('transform');
+      item.style.removeProperty("opacity");
+      item.style.removeProperty("transform");
     }
 
     function cancelAnimations(item: HTMLElement) {
@@ -246,7 +268,7 @@ const FILTER_CHIPS = ['Flutter', 'React', 'PHP', 'Astro'] as const;
     }
 
     function filterProjects(filter: string) {
-      if (section) section.setAttribute('data-active-filter', filter);
+      if (section) section.setAttribute("data-active-filter", filter);
 
       const firstRects = new Map<HTMLElement, DOMRect>();
       const visibleBefore = items.filter((item) => !item.hidden);
@@ -269,15 +291,15 @@ const FILTER_CHIPS = ['Flutter', 'React', 'PHP', 'Astro'] as const;
         item.hidden = false;
 
         if (!firstRects.has(item)) {
-          item.style.opacity = '0';
-          item.style.transform = 'translateY(14px) scale(0.98)';
+          item.style.opacity = "0";
+          item.style.transform = "translateY(14px) scale(0.98)";
         }
       });
 
       const visible = visibleAfter.length;
 
       if (countEl) {
-        countEl.textContent = `${visible} ${locale === 'es' ? 'proyectos' : 'projects'}`;
+        countEl.textContent = `${visible} ${locale === "es" ? "proyectos" : "projects"}`;
       }
 
       if (prefersReducedMotion) {
@@ -298,16 +320,16 @@ const FILTER_CHIPS = ['Flutter', 'React', 'PHP', 'Astro'] as const;
           if (!first || !last) {
             const animation = item.animate(
               [
-                { opacity: 0, transform: 'translateY(14px) scale(0.98)' },
-                { opacity: 1, transform: 'translateY(0) scale(1)' },
+                { opacity: 0, transform: "translateY(14px) scale(0.98)" },
+                { opacity: 1, transform: "translateY(0) scale(1)" },
               ],
               {
                 duration: ENTER_DURATION,
                 easing: ENTER_EASING,
-                fill: 'both',
+                fill: "both",
               },
             );
-            animation.addEventListener('finish', () => {
+            animation.addEventListener("finish", () => {
               resetInlineMotion(item);
             });
             return;
@@ -326,15 +348,15 @@ const FILTER_CHIPS = ['Flutter', 'React', 'PHP', 'Astro'] as const;
           const animation = item.animate(
             [
               { transform: `translate(${dx}px, ${dy}px)`, opacity: 1 },
-              { transform: 'translate(0, 0)', opacity: 1 },
+              { transform: "translate(0, 0)", opacity: 1 },
             ],
             {
               duration: MOVE_DURATION,
               easing: MOVE_EASING,
-              fill: 'both',
+              fill: "both",
             },
           );
-          animation.addEventListener('finish', () => {
+          animation.addEventListener("finish", () => {
             resetInlineMotion(item);
           });
         });
@@ -342,16 +364,16 @@ const FILTER_CHIPS = ['Flutter', 'React', 'PHP', 'Astro'] as const;
     }
 
     chips.forEach((chip) => {
-      chip.addEventListener('click', () => {
+      chip.addEventListener("click", () => {
         // Update aria-pressed on all chips
-        chips.forEach((c) => c.setAttribute('aria-pressed', 'false'));
-        chip.setAttribute('aria-pressed', 'true');
+        chips.forEach((c) => c.setAttribute("aria-pressed", "false"));
+        chip.setAttribute("aria-pressed", "true");
 
-        const filter = chip.getAttribute('data-filter') ?? 'all';
+        const filter = chip.getAttribute("data-filter") ?? "all";
         filterProjects(filter);
       });
     });
 
-    filterProjects('all');
+    filterProjects("all");
   }
 </script>

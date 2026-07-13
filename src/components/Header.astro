@@ -9,10 +9,10 @@
  *   locale     — 'es' | 'en'
  *   alternates — { es: string; en: string } — for LocaleSwitcher
  */
-import type { Locale } from '../i18n/index';
-import { t } from '../i18n/index';
-import Logo from './Logo.astro';
-import LocaleSwitcher from './LocaleSwitcher.astro';
+import type { Locale } from "../i18n/index";
+import { t } from "../i18n/index";
+import Logo from "./Logo.astro";
+import LocaleSwitcher from "./LocaleSwitcher.astro";
 
 interface Props {
   locale: Locale;
@@ -21,25 +21,25 @@ interface Props {
 
 const { locale, alternates } = Astro.props;
 
-const base = locale === 'es' ? '' : '/en';
+const base = locale === "es" ? "" : "/en";
 ---
 
 <header class="site-header" id="site-header">
   <div class="header-inner">
     <!-- Brand -->
     <a
-      href={locale === 'es' ? '/' : '/en/'}
+      href={locale === "es" ? "/" : "/en/"}
       class="header-brand"
-      aria-label={t(locale, 'a11y.logoLabel')}
+      aria-label={t(locale, "a11y.logoLabel")}
     >
       <Logo size={32} ariaLabel="JNVR" />
     </a>
 
     <!-- Desktop nav -->
     <nav class="header-nav" aria-label="Primary">
-      <a href={`${base}/#projects`}>{t(locale, 'nav.projects')}</a>
-      <a href={`${base}/#experience`}>{t(locale, 'nav.experience')}</a>
-      <a href={`${base}/#contact`}>{t(locale, 'nav.contact')}</a>
+      <a href={`${base}/#projects`}>{t(locale, "nav.projects")}</a>
+      <a href={`${base}/#experience`}>{t(locale, "nav.experience")}</a>
+      <a href={`${base}/#contact`}>{t(locale, "nav.contact")}</a>
       <LocaleSwitcher currentLocale={locale} alternates={alternates} />
     </nav>
 
@@ -48,11 +48,11 @@ const base = locale === 'es' ? '' : '/en';
       type="button"
       class="hamburger"
       id="hamburger-btn"
-      aria-label={t(locale, 'a11y.openMenu')}
+      aria-label={t(locale, "a11y.openMenu")}
       aria-expanded="false"
       aria-controls="mobile-menu"
-      data-open-label={t(locale, 'a11y.openMenu')}
-      data-close-label={t(locale, 'a11y.closeMenu')}
+      data-open-label={t(locale, "a11y.openMenu")}
+      data-close-label={t(locale, "a11y.closeMenu")}
     >
       <span></span>
       <span></span>
@@ -61,15 +61,22 @@ const base = locale === 'es' ? '' : '/en';
   </div>
 
   <!-- Mobile menu -->
-  <div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-hidden="true">
+  <div
+    class="mobile-menu"
+    id="mobile-menu"
+    role="dialog"
+    aria-modal="true"
+    aria-hidden="true"
+    aria-label={t(locale, "a11y.openMenu")}
+  >
     <button
       type="button"
       class="mobile-backdrop"
       id="mobile-backdrop"
-      aria-label={t(locale, 'a11y.closeMenu')}
+      aria-label={t(locale, "a11y.closeMenu")}
       tabindex="-1"
     >
-      <span class="visually-hidden">{t(locale, 'a11y.closeMenu')}</span>
+      <span class="visually-hidden">{t(locale, "a11y.closeMenu")}</span>
     </button>
     <div class="mobile-panel">
       <div class="mobile-panel__header">
@@ -80,7 +87,7 @@ const base = locale === 'es' ? '' : '/en';
           type="button"
           class="mobile-close"
           id="mobile-close-btn"
-          aria-label={t(locale, 'a11y.closeMenu')}
+          aria-label={t(locale, "a11y.closeMenu")}
         >
           ✕
         </button>
@@ -88,19 +95,27 @@ const base = locale === 'es' ? '' : '/en';
 
       <nav aria-label="Mobile navigation" class="mobile-nav">
         <a href={`${base}/#projects`} class="mobile-link" style="--stagger: 1">
-          {t(locale, 'nav.projects')}
+          {t(locale, "nav.projects")}
         </a>
-        <a href={`${base}/#experience`} class="mobile-link" style="--stagger: 2">
-          {t(locale, 'nav.experience')}
+        <a
+          href={`${base}/#experience`}
+          class="mobile-link"
+          style="--stagger: 2"
+        >
+          {t(locale, "nav.experience")}
         </a>
         <a href={`${base}/#contact`} class="mobile-link" style="--stagger: 3">
-          {t(locale, 'nav.contact')}
+          {t(locale, "nav.contact")}
         </a>
       </nav>
 
       <div class="mobile-panel__footer">
-        <a href={`${base}/#contact`} class="btn btn-primary mobile-cta" style="--stagger: 4">
-          {t(locale, 'cta.contact')}
+        <a
+          href={`${base}/#contact`}
+          class="btn btn-primary mobile-cta"
+          style="--stagger: 4"
+        >
+          {t(locale, "cta.contact")}
         </a>
         <div class="mobile-locale" style="--stagger: 5">
           <LocaleSwitcher currentLocale={locale} alternates={alternates} />
@@ -116,7 +131,9 @@ const base = locale === 'es' ? '' : '/en';
     top: 0;
     z-index: 100;
     background: transparent;
-    transition: background-color 200ms ease, box-shadow 200ms ease;
+    transition:
+      background-color 200ms ease,
+      box-shadow 200ms ease;
   }
 
   .site-header.scrolled {
@@ -162,7 +179,11 @@ const base = locale === 'es' ? '' : '/en';
   .hamburger {
     display: none;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     gap: 5px;
+    min-width: 44px;
+    min-height: 44px;
     background: none;
     border: none;
     cursor: pointer;
@@ -175,8 +196,10 @@ const base = locale === 'es' ? '' : '/en';
     width: 22px;
     height: 2px;
     background: currentColor;
-    border-radius: 2px;
-    transition: transform 200ms, opacity 200ms;
+    border-radius: var(--radius-sm);
+    transition:
+      transform 200ms,
+      opacity 200ms;
   }
 
   .hamburger.open span:nth-child(1) {
@@ -415,72 +438,85 @@ const base = locale === 'es' ? '' : '/en';
 
 <script>
   // Scroll → transparent to solid transition
-  const header = document.getElementById('site-header');
+  const header = document.getElementById("site-header");
   let ticking = false;
 
   function updateHeader() {
     if (header) {
       if (window.scrollY > 0) {
-        header.classList.add('scrolled');
+        header.classList.add("scrolled");
       } else {
-        header.classList.remove('scrolled');
+        header.classList.remove("scrolled");
       }
     }
     ticking = false;
   }
 
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      window.requestAnimationFrame(updateHeader);
-      ticking = true;
-    }
-  }, { passive: true });
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateHeader);
+        ticking = true;
+      }
+    },
+    { passive: true },
+  );
 
   // Mobile menu
-  const hamburger = document.getElementById('hamburger-btn');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const mobileBackdrop = document.getElementById('mobile-backdrop');
-  const closeBtn = document.getElementById('mobile-close-btn');
+  const hamburger = document.getElementById("hamburger-btn");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const mobileBackdrop = document.getElementById("mobile-backdrop");
+  const closeBtn = document.getElementById("mobile-close-btn");
   let scrollY = 0;
 
   function isOpen() {
-    return Boolean(mobileMenu?.classList.contains('is-open'));
+    return Boolean(mobileMenu?.classList.contains("is-open"));
   }
 
   function openMenu() {
     if (mobileMenu && hamburger) {
       scrollY = window.scrollY;
-      mobileMenu.classList.add('is-open');
-      mobileMenu.setAttribute('aria-hidden', 'false');
-      hamburger.classList.add('open');
-      hamburger.setAttribute('aria-expanded', 'true');
-      hamburger.setAttribute('aria-label', hamburger.getAttribute('data-close-label') ?? 'Close menu');
-      document.body.style.position = 'fixed';
+      mobileMenu.classList.add("is-open");
+      mobileMenu.setAttribute("aria-hidden", "false");
+      hamburger.classList.add("open");
+      hamburger.setAttribute("aria-expanded", "true");
+      hamburger.setAttribute(
+        "aria-label",
+        hamburger.getAttribute("data-close-label") ?? "Close menu",
+      );
+      document.body.style.position = "fixed";
       document.body.style.top = `-${scrollY}px`;
-      document.body.style.left = '0';
-      document.body.style.right = '0';
-      document.body.classList.add('menu-open');
+      document.body.style.left = "0";
+      document.body.style.right = "0";
+      document.body.classList.add("menu-open");
       closeBtn?.focus();
     }
   }
 
-  function closeMenu() {
+  // returnFocus defaults true (ESC / ✕ / backdrop). Link clicks pass false so
+  // focus isn't yanked back to the hamburger during anchor navigation.
+  function closeMenu(returnFocus = true) {
     if (mobileMenu && hamburger) {
-      mobileMenu.classList.remove('is-open');
-      mobileMenu.setAttribute('aria-hidden', 'true');
-      hamburger.classList.remove('open');
-      hamburger.setAttribute('aria-expanded', 'false');
-      hamburger.setAttribute('aria-label', hamburger.getAttribute('data-open-label') ?? 'Open menu');
-      document.body.classList.remove('menu-open');
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.left = '';
-      document.body.style.right = '';
+      mobileMenu.classList.remove("is-open");
+      mobileMenu.setAttribute("aria-hidden", "true");
+      hamburger.classList.remove("open");
+      hamburger.setAttribute("aria-expanded", "false");
+      hamburger.setAttribute(
+        "aria-label",
+        hamburger.getAttribute("data-open-label") ?? "Open menu",
+      );
+      document.body.classList.remove("menu-open");
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
       window.scrollTo(0, scrollY);
+      if (returnFocus) hamburger.focus();
     }
   }
 
-  hamburger?.addEventListener('click', () => {
+  hamburger?.addEventListener("click", () => {
     if (isOpen()) {
       closeMenu();
     } else {
@@ -488,25 +524,48 @@ const base = locale === 'es' ? '' : '/en';
     }
   });
 
-  closeBtn?.addEventListener('click', closeMenu);
-  mobileBackdrop?.addEventListener('click', closeMenu);
+  closeBtn?.addEventListener("click", () => closeMenu(true));
+  mobileBackdrop?.addEventListener("click", () => closeMenu(true));
 
-  // Close on ESC
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && isOpen()) {
+  const panel = mobileMenu?.querySelector(".mobile-panel");
+
+  // Focus trap: keep Tab / Shift+Tab cycling inside the open dialog so keyboard
+  // and SR focus can't escape behind the overlay (WCAG 2.4.3 / ARIA dialog).
+  document.addEventListener("keydown", (e) => {
+    if (!isOpen()) return;
+
+    if (e.key === "Escape") {
       closeMenu();
-      hamburger?.focus();
+      return;
+    }
+
+    if (e.key === "Tab" && panel) {
+      const focusable = panel.querySelectorAll<HTMLElement>(
+        'a[href], button, input, textarea, select, [tabindex]:not([tabindex="-1"])',
+      );
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement;
+
+      if (e.shiftKey && active === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
     }
   });
 
-  window.addEventListener('resize', () => {
+  window.addEventListener("resize", () => {
     if (window.innerWidth > 768 && isOpen()) {
       closeMenu();
     }
   });
 
-  // Close on mobile link click
-  mobileMenu?.querySelectorAll('a').forEach((link) => {
-    link.addEventListener('click', closeMenu);
+  // Close on mobile link click — no focus return (anchor navigation takes over)
+  mobileMenu?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => closeMenu(false));
   });
 </script>

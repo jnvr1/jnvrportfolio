@@ -10,38 +10,38 @@
  * Spec: REQ-PS-2 (single-page layout), REQ-IR-1 (default locale without prefix),
  *       REQ-ET-5 (FletesBadge in Hero)
  */
-import { getCollection } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Header from '../components/Header.astro';
-import Hero from '../components/Hero.astro';
-import ProjectGrid from '../components/ProjectGrid.astro';
-import ExperienceList from '../components/ExperienceList.astro';
-import ContactForm from '../components/ContactForm.astro';
-import Footer from '../components/Footer.astro';
-import { t } from '../i18n/index';
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import ProjectGrid from "../components/ProjectGrid.astro";
+import ExperienceList from "../components/ExperienceList.astro";
+import ContactForm from "../components/ContactForm.astro";
+import Footer from "../components/Footer.astro";
+import { t } from "../i18n/index";
 
-const locale = 'es' as const;
-const siteUrl = 'https://jnvr-portafolio.web.app';
+const locale = "es" as const;
+const siteUrl = "https://jnvr-portafolio.web.app";
 
 // Canonical and alternates
-const canonical = siteUrl + '/';
+const canonical = siteUrl + "/";
 const alternates = {
   es: canonical,
   en: `${siteUrl}/en/`,
 };
 
 // Page meta
-const title = t(locale, 'meta.siteTitle');
-const description = t(locale, 'meta.siteDescription');
+const title = t(locale, "meta.siteTitle");
+const description = t(locale, "meta.siteDescription");
 
 // Fetch content — filter to ES locale only
-const allProjects = await getCollection('projects');
+const allProjects = await getCollection("projects");
 const esProjects = allProjects
-  .filter((p) => p.data.locale === 'es')
+  .filter((p) => p.data.locale === "es")
   .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
 
-const allExperience = await getCollection('experience');
-const esExperience = allExperience.filter((e) => e.data.locale === 'es');
+const allExperience = await getCollection("experience");
+const esExperience = allExperience.filter((e) => e.data.locale === "es");
 ---
 
 <BaseLayout
@@ -53,7 +53,7 @@ const esExperience = allExperience.filter((e) => e.data.locale === 'es');
 >
   <Header locale={locale} alternates={alternates} />
 
-  <main id="main-content">
+  <main id="main-content" tabindex="-1">
     <Hero locale={locale} />
     <ProjectGrid projects={esProjects} locale={locale} />
     <ExperienceList entries={esExperience} locale={locale} />

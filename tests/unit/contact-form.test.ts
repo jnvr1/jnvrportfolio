@@ -5,15 +5,21 @@
  * TDD: written RED before implementing submitContactForm / validateContactForm.
  */
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { submitContactForm, validateContactForm } from '../../src/scripts/contact-form';
+import {
+  submitContactForm,
+  validateContactForm,
+} from '../../src/scripts/contact-form';
 import type { EmailParams } from '../../src/config/contact';
 
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 const validParams: EmailParams = {
+  name: 'Ana García',
   from_name: 'Ana García',
+  email: 'ana@example.com',
   reply_to: 'ana@example.com',
+  time: '2026-05-01 12:00',
   subject: 'Consulta de proyecto',
   message: 'Hola, me gustaría hablar sobre un proyecto.',
 };
@@ -162,8 +168,11 @@ describe('submitContactForm', () => {
     const [, options] = (mockFetch as ReturnType<typeof vi.fn>).mock.calls[0];
     const body = JSON.parse((options as RequestInit).body as string);
     expect(body.template_params).toEqual({
+      name: validParams.name,
       from_name: validParams.from_name,
+      email: validParams.email,
       reply_to: validParams.reply_to,
+      time: validParams.time,
       subject: validParams.subject,
       message: validParams.message,
     });
@@ -189,6 +198,8 @@ describe('submitContactForm', () => {
 
   it('does NOT throw when fetch rejects — always returns a result', async () => {
     const mockFetch = makeFailingFetch();
-    await expect(submitContactForm(validParams, mockFetch)).resolves.toBeDefined();
+    await expect(
+      submitContactForm(validParams, mockFetch),
+    ).resolves.toBeDefined();
   });
 });

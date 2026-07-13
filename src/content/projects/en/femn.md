@@ -1,9 +1,9 @@
 ---
 title: "FEMN — Socioeconomic Surveys"
 client: FEMN
-year: 2025
-yearRange: "2024–2025"
-stack: ["Flutter", "Firebase", "Riverpod", "go_router"]
+year: 2026
+yearRange: "2025–2026"
+stack: ["Flutter", "Firestore", "Firebase Auth", "Riverpod", "Hive", "PDF", "fl_chart", "Clean Architecture"]
 summary: "Offline-first NGO field survey app for socioeconomic assessments and infant enrollment forms with on-device PDF generation."
 role: "Lead Mobile Developer"
 cover: ../../../assets/projects/femn-mobile.webp
@@ -15,22 +15,22 @@ order: 9
 
 ## The problem
 
-FEMN (Fundación para la Educación de Mujeres y Niños — Foundation for the Education of Women and Children) needed a digital tool for field evaluators: record adult socioeconomic surveys and infant enrollment forms in areas with limited connectivity, sync data to the central platform when online, and generate PDFs of the completed documents for families.
+FEMN (Fundación para la Educación de Mujeres y Niños — Foundation for the Education of Women and Children) needed a digital tool for field evaluators: record adult socioeconomic surveys and infant enrollment forms in areas with limited connectivity, sync data to the central platform when online, and generate PDFs of the completed documents for families. Over time, headquarters also needed to read that data — to understand what was happening in the field without exporting everything by hand.
 
 ## The solution
 
-I developed the app with Flutter 3 targeting Android, iOS, and Web, using Firebase as the backend. The design is offline-first: data is saved locally and synced to Firestore when a connection is available. Riverpod manages sync state reactively.
+I built the app with Flutter on a clean architecture (core / data / domain / presentation layers), using Firestore and Firebase Auth as the backend. The design is offline-first: each survey is persisted first to a local Hive store and synced to Firestore once connectivity returns, detected via `internet_connection_checker`. Riverpod manages sync state and pending-queue state reactively. Navigation is native Navigator/MaterialPageRoute — no external router.
 
-PDF generation (enrollment forms and socioeconomic study documents) happens on the device using a Dart library, allowing evaluators to deliver a printable document to the family during the visit itself. The app supports multiple languages (flutter_localizations) to adapt to the regional contexts where the foundation operates.
+PDF generation (enrollment forms and socioeconomic study documents) happens on the device with the `pdf` + `printing` libraries, letting evaluators hand a printable document to the family during the visit. The NotoSans fonts are bundled so the PDF renders Spanish accents and Unicode characters correctly.
 
 ## My role
 
-I designed the offline-first architecture, implemented the survey and enrollment form modules, built the on-device PDF generation module, and configured the Firestore sync logic including conflict handling for concurrent edits.
+I designed the offline-first architecture, implemented the sectioned adult and infant survey forms, built the on-device PDF generation module, and wrote the Firestore sync layer (submit, update, delete and sync-pending use cases). In 2026 I added the analytics reporting layer on top of the already-synced data.
 
 ## Outcome
 
-Field evaluators can complete surveys without an internet connection and generate the PDF document on-site. Automatic sync ensures the central team has access to data as soon as the evaluator regains connectivity. The direct impact is a reduction in the time between data collection in the field and availability at headquarters.
+Evaluators complete surveys offline and generate the PDF on-site; automatic sync makes the data available to the central team as soon as signal returns. The 2026 reporting layer added an analytics dashboard with `fl_chart` (donut charts, timeline, ranked bars and KPIs), category drill-down with Excel export, survey search, the infant survey module, and canonical aggregation of free-text fields — which unifies hand-typed variants ("IMSS" / "imss" / "imms") in memory, without mutating Firestore. The direct impact is cutting the time between capture in the field and useful reading at headquarters.
 
 ## Notable learning
 
-Offline-first design requires thinking about data differently: it's not just "save locally if no internet" — you have to design data models so that conflicts are deterministically resolvable. In this project, each survey is owned by the evaluator who created it and carries a creation timestamp — which makes merge rules simple and predictable.
+Offline-first design forces you to think about data differently: it's not just "save locally if no internet." Here the local Hive store is the evaluator's immediate source of truth, and Firestore sync is a deferred reconciliation triggered by reconnection. On the reporting side, the real lesson was that field data arrives dirty: the same free-text fields show up in dozens of variants, and aggregating them usefully means canonicalizing at the presentation layer without ever touching the original record.

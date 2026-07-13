@@ -5,8 +5,8 @@
  * Props:
  *   locale — 'es' | 'en'
  */
-import type { Locale } from '../i18n/index';
-import { t } from '../i18n/index';
+import type { Locale } from "../i18n/index";
+import { t } from "../i18n/index";
 
 interface Props {
   locale: Locale;
@@ -40,11 +40,23 @@ const year = new Date().getFullYear();
     </div>
 
     <p class="footer-copy">
-      &copy; {year} Jonathan Noé Viramontes &mdash; {t(locale, 'footer.rights')}
+      &copy; {year} Jonathan Noé Viramontes &mdash; {t(locale, "footer.rights")}
     </p>
 
-    <p class="footer-made">
-      {t(locale, 'footer.madeWith')} Astro 5 &amp; TypeScript
+    <p class="footer-archive">
+      <span class="footer-archive__label"
+        >{t(locale, "footer.archiveLabel")}:</span
+      >
+
+      <span class="footer-archive__sep" aria-hidden="true">·</span>
+      <a
+        href="https://jnvr-portafolio-v1.web.app/home"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="footer-archive__link"
+      >
+        v1 <span aria-hidden="true">↗</span>
+      </a>
     </p>
   </div>
 </footer>
@@ -76,7 +88,9 @@ const year = new Date().getFullYear();
 
   .social-link {
     color: var(--muted);
-    transition: color 150ms, opacity 150ms;
+    transition:
+      color 150ms,
+      opacity 150ms;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -95,11 +109,47 @@ const year = new Date().getFullYear();
     opacity: inherit;
   }
 
-  .footer-copy,
-  .footer-made {
+  .footer-copy {
     font-size: 0.8125rem;
     color: var(--muted);
     margin: 0;
+  }
+
+  .footer-archive {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-2);
+  }
+
+  .footer-archive__label {
+    color: var(--muted);
+    opacity: 0.75;
+  }
+
+  .footer-archive__link {
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1px dashed color-mix(in srgb, var(--brand) 40%, transparent);
+    padding-bottom: 1px;
+    transition:
+      color var(--duration-fast) var(--ease-standard),
+      border-color var(--duration-fast) var(--ease-standard);
+  }
+
+  .footer-archive__link:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  .footer-archive__sep {
+    color: var(--border);
+    user-select: none;
   }
 
   @media (max-width: 480px) {

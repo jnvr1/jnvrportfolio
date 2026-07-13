@@ -5,7 +5,7 @@
  */
 import { z } from 'zod';
 
-export const CLIENTS = ['Bloomotion','Centinela', 'Teotech', 'FEMN', 'Personal'] as const;
+export const CLIENTS = ['Bloomotion','Centinela', 'Teotech', 'FEMN', 'Villa Educare', 'Personal'] as const;
 export const LOCALES = ['es', 'en'] as const;
 
 /**

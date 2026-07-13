@@ -12,10 +12,10 @@
  * Props:
  *   locale — 'es' | 'en'
  */
-import type { Locale } from '../i18n/index';
-import { t } from '../i18n/index';
-import ScrollReveal from './ScrollReveal.astro';
-import SectionBackdrop from './SectionBackdrop.astro';
+import type { Locale } from "../i18n/index";
+import { t } from "../i18n/index";
+import ScrollReveal from "./ScrollReveal.astro";
+import SectionBackdrop from "./SectionBackdrop.astro";
 
 interface Props {
   locale: Locale;
@@ -23,24 +23,19 @@ interface Props {
 
 const { locale } = Astro.props;
 
-const formId = 'contact-form';
+const formId = "contact-form";
 ---
 
 <section id="contact" class="contact-section" aria-labelledby="contact-heading">
   <SectionBackdrop variant="contact" />
   <div class="contact-inner">
     <ScrollReveal>
-      <h2 id="contact-heading">{t(locale, 'contact.title')}</h2>
-      <p class="contact-subtitle">{t(locale, 'contact.subtitle')}</p>
+      <h2 id="contact-heading">{t(locale, "contact.title")}</h2>
+      <p class="contact-subtitle">{t(locale, "contact.subtitle")}</p>
     </ScrollReveal>
 
     <ScrollReveal delay={100}>
-      <form
-        id={formId}
-        class="contact-form"
-        novalidate
-        data-locale={locale}
-      >
+      <form id={formId} class="contact-form" novalidate data-locale={locale}>
         <!-- Honeypot (hidden from real users, bots fill it in) -->
         <input
           type="text"
@@ -54,7 +49,7 @@ const formId = 'contact-form';
         <!-- Name -->
         <div class="form-field">
           <label for="contact-name" class="form-label">
-            {t(locale, 'form.name')}
+            {t(locale, "form.name")}
             <span class="form-required" aria-hidden="true">*</span>
           </label>
           <input
@@ -62,7 +57,7 @@ const formId = 'contact-form';
             id="contact-name"
             name="name"
             class="form-input"
-            placeholder={t(locale, 'form.namePlaceholder')}
+            placeholder={t(locale, "form.namePlaceholder")}
             autocomplete="name"
             aria-required="true"
             aria-invalid="false"
@@ -72,15 +67,13 @@ const formId = 'contact-form';
             id="contact-name-error"
             class="form-error"
             data-error="name"
-            role="alert"
-            aria-live="polite"
-          ></span>
+            role="alert"></span>
         </div>
 
         <!-- Email -->
         <div class="form-field">
           <label for="contact-email" class="form-label">
-            {t(locale, 'form.email')}
+            {t(locale, "form.email")}
             <span class="form-required" aria-hidden="true">*</span>
           </label>
           <input
@@ -88,7 +81,7 @@ const formId = 'contact-form';
             id="contact-email"
             name="email"
             class="form-input"
-            placeholder={t(locale, 'form.emailPlaceholder')}
+            placeholder={t(locale, "form.emailPlaceholder")}
             autocomplete="email"
             aria-required="true"
             aria-invalid="false"
@@ -98,34 +91,29 @@ const formId = 'contact-form';
             id="contact-email-error"
             class="form-error"
             data-error="email"
-            role="alert"
-            aria-live="polite"
-          ></span>
+            role="alert"></span>
         </div>
 
         <!-- Message -->
         <div class="form-field">
           <label for="contact-message" class="form-label">
-            {t(locale, 'form.message')}
+            {t(locale, "form.message")}
             <span class="form-required" aria-hidden="true">*</span>
           </label>
           <textarea
             id="contact-message"
             name="message"
             class="form-input form-textarea"
-            placeholder={t(locale, 'form.messagePlaceholder')}
+            placeholder={t(locale, "form.messagePlaceholder")}
             rows="5"
             aria-required="true"
             aria-invalid="false"
-            aria-describedby="contact-message-error"
-          ></textarea>
+            aria-describedby="contact-message-error"></textarea>
           <span
             id="contact-message-error"
             class="form-error"
             data-error="message"
-            role="alert"
-            aria-live="polite"
-          ></span>
+            role="alert"></span>
         </div>
 
         <!-- Submit -->
@@ -134,7 +122,7 @@ const formId = 'contact-form';
           class="btn btn-primary form-submit"
           id="contact-submit"
         >
-          {t(locale, 'form.submit')}
+          {t(locale, "form.submit")}
         </button>
 
         <!-- Status message (success / error) -->
@@ -145,7 +133,8 @@ const formId = 'contact-form';
           aria-live="polite"
           aria-atomic="true"
           tabindex="-1"
-        ></div>
+        >
+        </div>
       </form>
     </ScrollReveal>
   </div>
@@ -225,7 +214,9 @@ const formId = 'contact-form';
     font-family: var(--font-body);
     font-size: 1rem;
     padding: var(--space-3) var(--space-3);
-    transition: border-color 150ms, box-shadow 150ms;
+    transition:
+      border-color 150ms,
+      box-shadow 150ms;
     width: 100%;
     box-sizing: border-box;
     min-height: 44px;
@@ -234,7 +225,9 @@ const formId = 'contact-form';
 
   .form-input::placeholder {
     color: var(--muted);
-    opacity: 0.6;
+    /* No opacity — --muted at full opacity on --surface is 6.15:1 (WCAG AA);
+       opacity:0.6 dropped it to ~3.1:1 (fails 1.4.3). */
+    opacity: 1;
   }
 
   .form-input:focus {
@@ -243,7 +236,7 @@ const formId = 'contact-form';
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
   }
 
-  .form-input[aria-invalid='true'] {
+  .form-input[aria-invalid="true"] {
     border-color: var(--danger);
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 15%, transparent);
   }
@@ -265,7 +258,7 @@ const formId = 'contact-form';
     min-height: 44px;
   }
 
-  .form-submit[aria-busy='true'] {
+  .form-submit[aria-busy="true"] {
     opacity: 0.7;
     cursor: not-allowed;
     pointer-events: none;
@@ -308,56 +301,72 @@ const formId = 'contact-form';
 </style>
 
 <script>
-  import { submitContactForm, validateContactForm } from '../scripts/contact-form';
-  import { t } from '../i18n/index';
-  import type { Locale } from '../i18n/index';
+  import {
+    submitContactForm,
+    validateContactForm,
+  } from "../scripts/contact-form";
+  import { t } from "../i18n/index";
+  import type { Locale } from "../i18n/index";
 
-  const form = document.getElementById('contact-form') as HTMLFormElement | null;
-  const submitBtn = document.getElementById('contact-submit') as HTMLButtonElement | null;
-  const statusEl = document.getElementById('contact-status') as HTMLElement | null;
+  const form = document.getElementById(
+    "contact-form",
+  ) as HTMLFormElement | null;
+  const submitBtn = document.getElementById(
+    "contact-submit",
+  ) as HTMLButtonElement | null;
+  const statusEl = document.getElementById(
+    "contact-status",
+  ) as HTMLElement | null;
 
   if (!form || !submitBtn || !statusEl) {
     // Form not present on this page
   } else {
-    const locale = (form.dataset.locale ?? 'es') as Locale;
+    const locale = (form.dataset.locale ?? "es") as Locale;
 
     function setFieldError(field: string, messageKey: string | undefined) {
       const input = form!.querySelector<HTMLElement>(`[name="${field}"]`);
-      const errorEl = form!.querySelector<HTMLElement>(`[data-error="${field}"]`);
+      const errorEl = form!.querySelector<HTMLElement>(
+        `[data-error="${field}"]`,
+      );
       if (input) {
-        input.setAttribute('aria-invalid', messageKey ? 'true' : 'false');
+        input.setAttribute("aria-invalid", messageKey ? "true" : "false");
       }
       if (errorEl) {
-        errorEl.textContent = messageKey ? t(locale, `form.${messageKey}`) : '';
+        errorEl.textContent = messageKey ? t(locale, `form.${messageKey}`) : "";
       }
     }
 
     function clearAllErrors() {
-      ['name', 'email', 'message'].forEach((field) => setFieldError(field, undefined));
+      ["name", "email", "message"].forEach((field) =>
+        setFieldError(field, undefined),
+      );
     }
 
-    function setStatus(message: string, type: 'success' | 'error' | '') {
+    function setStatus(message: string, type: "success" | "error" | "") {
       if (!statusEl) return;
       statusEl.textContent = message;
-      statusEl.className = `form-status${type ? ` form-status--${type}` : ''}`;
+      statusEl.className = `form-status${type ? ` form-status--${type}` : ""}`;
     }
 
-    form.addEventListener('submit', async (e) => {
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
       clearAllErrors();
-      setStatus('', '');
+      setStatus("", "");
 
       const data = new FormData(form);
       // Honeypot check
-      if (data.get('honeypot')) return;
+      if (data.get("honeypot")) return;
 
-      const name = String(data.get('name') ?? '');
-      const email = String(data.get('email') ?? '');
-      const message = String(data.get('message') ?? '');
-      const time = new Date().toLocaleString(locale === 'es' ? 'es-MX' : 'en-US', {
-        dateStyle: 'medium',
-        timeStyle: 'short',
-      });
+      const name = String(data.get("name") ?? "");
+      const email = String(data.get("email") ?? "");
+      const message = String(data.get("message") ?? "");
+      const time = new Date().toLocaleString(
+        locale === "es" ? "es-MX" : "en-US",
+        {
+          dateStyle: "medium",
+          timeStyle: "short",
+        },
+      );
 
       // Client-side validation
       const errors = validateContactForm({ name, email, message });
@@ -366,14 +375,16 @@ const formId = 'contact-form';
           setFieldError(field, errorKey);
         }
         // Focus the first invalid field
-        const firstInvalid = form.querySelector<HTMLElement>('[aria-invalid="true"]');
+        const firstInvalid = form.querySelector<HTMLElement>(
+          '[aria-invalid="true"]',
+        );
         firstInvalid?.focus();
         return;
       }
 
       // Submit
-      submitBtn!.setAttribute('aria-busy', 'true');
-      submitBtn!.textContent = t(locale, 'form.submitting');
+      submitBtn!.setAttribute("aria-busy", "true");
+      submitBtn!.textContent = t(locale, "form.submitting");
 
       const result = await submitContactForm({
         name,
@@ -385,15 +396,15 @@ const formId = 'contact-form';
         message,
       });
 
-      submitBtn!.removeAttribute('aria-busy');
-      submitBtn!.textContent = t(locale, 'form.submit');
+      submitBtn!.removeAttribute("aria-busy");
+      submitBtn!.textContent = t(locale, "form.submit");
 
       if (result.ok) {
-        setStatus(t(locale, 'form.success'), 'success');
+        setStatus(t(locale, "form.success"), "success");
         form.reset();
         statusEl!.focus();
       } else {
-        setStatus(t(locale, 'form.error'), 'error');
+        setStatus(t(locale, "form.error"), "error");
         statusEl!.focus();
       }
     });

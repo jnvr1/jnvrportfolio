@@ -6,30 +6,32 @@
  *   entry  — CollectionEntry<'projects'>
  *   locale — 'es' | 'en'
  */
-import type { CollectionEntry } from 'astro:content';
-import type { Locale } from '../i18n/index';
-import BaseLayout from './BaseLayout.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import SectionBackdrop from '../components/SectionBackdrop.astro';
-import ScrollReveal from '../components/ScrollReveal.astro';
-import StackChip from '../components/StackChip.astro';
-import { t } from '../i18n/index';
+import { Picture } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import type { Locale } from "../i18n/index";
+import BaseLayout from "./BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import SectionBackdrop from "../components/SectionBackdrop.astro";
+import ScrollReveal from "../components/ScrollReveal.astro";
+import StackChip from "../components/StackChip.astro";
+import { t } from "../i18n/index";
 
 interface Props {
-  entry: CollectionEntry<'projects'>;
+  entry: CollectionEntry<"projects">;
   locale: Locale;
 }
 
 const { entry, locale } = Astro.props;
-const { title, summary, client, year, yearRange, stack, links } = entry.data;
+const { title, summary, client, year, yearRange, stack, links, role, cover, placeholder } =
+  entry.data;
 // In Astro 5, entry.id is path-based with extension: "es/centinela-app.md".
 // Strip the locale prefix and .md extension to get the route slug: "centinela-app".
-const slug = entry.id.replace(/^(es|en)\//, '').replace(/\.mdx?$/, '');
+const slug = entry.id.replace(/^(es|en)\//, "").replace(/\.mdx?$/, "");
 
-const siteUrl = 'https://jnvr-portafolio.web.app';
+const siteUrl = "https://jnvr-portafolio.web.app";
 const canonical =
-  locale === 'es'
+  locale === "es"
     ? `${siteUrl}/projects/${slug}`
     : `${siteUrl}/en/projects/${slug}`;
 
@@ -40,6 +42,145 @@ const alternates = {
 
 const pageTitle = `${title} — JNVR`;
 const yearDisplay = yearRange ?? String(year);
+const coverInitials = title
+  .split(" ")
+  .filter(Boolean)
+  .slice(0, 2)
+  .map((w: string) => w[0])
+  .join("")
+  .toUpperCase();
+
+const copy =
+  locale === "es"
+    ? {
+        caseFile: "Case file",
+        quickFacts: "Datos clave del proyecto",
+        client: "Cliente",
+        year: "Año",
+        role: "Rol",
+        stack: "Stack",
+        snapshot: "Resumen ejecutivo",
+        problem: "Problema",
+        solution: "Solución",
+        outcome: "Resultado",
+        technicalSnapshot: "Snapshot técnico",
+        fullCase: "Caso completo",
+        readCase: "Leer caso completo",
+        fallbackProblem:
+          "Contexto del producto, necesidad del cliente y punto de partida del proyecto.",
+        fallbackSolution:
+          "Decisiones de arquitectura, implementación y entrega aplicadas al sistema.",
+        fallbackOutcome:
+          "Impacto funcional y aprendizaje obtenido después de entregar el proyecto.",
+      }
+    : {
+        caseFile: "Case file",
+        quickFacts: "Key project facts",
+        client: "Client",
+        year: "Year",
+        role: "Role",
+        stack: "Stack",
+        snapshot: "Executive summary",
+        problem: "Problem",
+        solution: "Solution",
+        outcome: "Outcome",
+        technicalSnapshot: "Technical snapshot",
+        fullCase: "Full case",
+        readCase: "Read full case",
+        fallbackProblem:
+          "Product context, client need, and project starting point.",
+        fallbackSolution:
+          "Architecture decisions, implementation, and delivery approach applied to the system.",
+        fallbackOutcome:
+          "Functional impact and learning after shipping the project.",
+      };
+
+const sectionHeadings =
+  locale === "es"
+    ? {
+        problem: "El problema",
+        solution: "La solución",
+        outcome: "Resultado",
+      }
+    : {
+        problem: "The problem",
+        solution: "The solution",
+        outcome: "Outcome",
+      };
+
+function escapeRegExp(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function stripMarkdown(value: string) {
+  return value
+    .replace(/```[\s\S]*?```/g, "")
+    .replace(/`([^`]+)`/g, "$1")
+    .replace(/\*\*([^*]+)\*\*/g, "$1")
+    .replace(/__([^_]+)__/g, "$1")
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    .replace(/<[^>]+>/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function truncateText(value: string, maxLength = 178) {
+  if (value.length <= maxLength) return value;
+  const trimmed = value.slice(0, maxLength).trimEnd();
+  const lastSpace = trimmed.lastIndexOf(" ");
+  return `${trimmed.slice(0, lastSpace > 120 ? lastSpace : maxLength).trimEnd()}…`;
+}
+
+function extractSectionPreview(
+  body: string,
+  heading: string,
+  fallback: string,
+) {
+  const pattern = new RegExp(
+    `^##\\s+${escapeRegExp(heading)}\\s*\\n([\\s\\S]*?)(?=\\n##\\s+|$)`,
+    "m",
+  );
+  const section = body.match(pattern)?.[1];
+  const firstParagraph = section
+    ?.split(/\n\s*\n/)
+    .map((part) => stripMarkdown(part))
+    .find(Boolean);
+
+  return truncateText(firstParagraph ?? fallback);
+}
+
+const caseSnapshot = [
+  {
+    key: "problem",
+    index: "01",
+    label: copy.problem,
+    text: extractSectionPreview(
+      entry.body,
+      sectionHeadings.problem,
+      copy.fallbackProblem,
+    ),
+  },
+  {
+    key: "solution",
+    index: "02",
+    label: copy.solution,
+    text: extractSectionPreview(
+      entry.body,
+      sectionHeadings.solution,
+      copy.fallbackSolution,
+    ),
+  },
+  {
+    key: "outcome",
+    index: "03",
+    label: copy.outcome,
+    text: extractSectionPreview(
+      entry.body,
+      sectionHeadings.outcome,
+      copy.fallbackOutcome,
+    ),
+  },
+];
 ---
 
 <BaseLayout
@@ -51,77 +192,169 @@ const yearDisplay = yearRange ?? String(year);
 >
   <Header locale={locale} alternates={alternates} />
 
-  <main id="main-content" class="project-main">
+  <main id="main-content" class="project-main" tabindex="-1">
     <SectionBackdrop variant="projects" />
     <article class="project-detail">
-      <!-- Breadcrumb (current page is the <h1> below — no need to repeat the title) -->
       <ScrollReveal>
-        <nav class="breadcrumb" aria-label="breadcrumb">
-          <a href={locale === 'es' ? '/' : '/en/'}>JNVR</a>
+        <nav class="breadcrumb" aria-label={t(locale, "a11y.breadcrumbLabel")}>
+          <a href={locale === "es" ? "/" : "/en/"}>JNVR</a>
           <span aria-hidden="true"> / </span>
-          <a href={locale === 'es' ? '/#projects' : '/en/#projects'} aria-current="page">
-            {t(locale, 'nav.projects')}
+          <a href={locale === "es" ? "/#projects" : "/en/#projects"}>
+            {t(locale, "nav.projects")}
           </a>
+          <span aria-hidden="true"> / </span>
+          <span class="breadcrumb-current" aria-current="page">{title}</span>
         </nav>
       </ScrollReveal>
 
-      <!-- Project header: faceted card, mirrors the project grid card vocabulary -->
       <ScrollReveal delay={60}>
         <header class="project-header">
-          <h1>{title}</h1>
-          <p class="project-summary">{summary}</p>
-          <dl class="project-meta">
-            <div>
-              <dt>{locale === 'es' ? 'Cliente' : 'Client'}</dt>
-              <dd>{client}</dd>
-            </div>
-            <div>
-              <dt>{locale === 'es' ? 'Año' : 'Year'}</dt>
-              <dd>{yearDisplay}</dd>
-            </div>
-            <div>
-              <dt>Stack</dt>
-              <dd class="stack-list">
-                {stack.map((tech: string) => (
-                  <StackChip tech={tech} locale={locale} />
-                ))}
-              </dd>
-            </div>
-          </dl>
+          <p class="project-kicker">
+            <span>{copy.caseFile}</span>
+            <span aria-hidden="true">/</span>
+            <span>{yearDisplay}</span>
+          </p>
 
-          {links && (
-            <div class="project-links">
-              {links.live && (
-                <a href={links.live} class="btn btn-primary" target="_blank" rel="noopener noreferrer">
-                  {t(locale, 'cta.viewProject')}
-                </a>
-              )}
-              {links.repo && (
-                <a href={links.repo} class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
-                  {t(locale, 'cta.viewCode')}
-                </a>
-              )}
+          <div class="project-hero-grid">
+            <div class="project-hero-copy">
+              <h1>{title}</h1>
+              <p class="project-summary">{summary}</p>
             </div>
-          )}
+
+            <dl class="project-quick-facts" aria-label={copy.quickFacts}>
+              <div>
+                <dt>{copy.client}</dt>
+                <dd>{client}</dd>
+              </div>
+              <div>
+                <dt>{copy.role}</dt>
+                <dd>{role}</dd>
+              </div>
+              <div>
+                <dt>{copy.year}</dt>
+                <dd>{yearDisplay}</dd>
+              </div>
+            </dl>
+          </div>
+
+          <section class="case-snapshot" aria-label={copy.snapshot}>
+            {
+              caseSnapshot.map((item) => (
+                <article
+                  class={`case-snapshot-card case-snapshot-card--${item.key}`}
+                >
+                  <span class="case-snapshot-index">{item.index}</span>
+                  <h2>{item.label}</h2>
+                  <p>{item.text}</p>
+                </article>
+              ))
+            }
+          </section>
         </header>
       </ScrollReveal>
 
-      <!-- Markdown body -->
+      <ScrollReveal delay={90}>
+        <figure class="project-cover">
+          {
+            placeholder || !cover ? (
+              <div class="project-cover__placeholder" role="presentation">
+                <span>{coverInitials}</span>
+              </div>
+            ) : (
+              <Picture
+                src={cover}
+                alt={`${title} — ${client}`}
+                class="project-cover__img"
+                formats={["avif", "webp"]}
+                fallbackFormat="webp"
+                widths={[640, 960, 1280]}
+                sizes="(max-width: 860px) 92vw, 1120px"
+                loading="eager"
+                pictureAttributes={{ style: "display:block;width:100%;height:100%" }}
+              />
+            )
+          }
+        </figure>
+      </ScrollReveal>
+
       <ScrollReveal delay={120}>
-        <div class="prose">
-          <slot />
+        <div class="project-content-grid">
+          <aside class="project-aside" aria-label={copy.technicalSnapshot}>
+            <div class="project-aside-card">
+              <p class="project-aside-title">{copy.technicalSnapshot}</p>
+              <dl class="project-aside-meta">
+                <div>
+                  <dt>{copy.client}</dt>
+                  <dd>{client}</dd>
+                </div>
+                <div>
+                  <dt>{copy.role}</dt>
+                  <dd>{role}</dd>
+                </div>
+                <div>
+                  <dt>{copy.year}</dt>
+                  <dd>{yearDisplay}</dd>
+                </div>
+                <div>
+                  <dt>{copy.stack}</dt>
+                  <dd class="stack-list">
+                    {
+                      stack.map((tech: string) => (
+                        <StackChip tech={tech} locale={locale} />
+                      ))
+                    }
+                  </dd>
+                </div>
+              </dl>
+
+              {
+                links && (
+                  <div class="project-links">
+                    {links.live && (
+                      <a
+                        href={links.live}
+                        class="btn btn-primary"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {t(locale, "cta.viewProject")}
+                      </a>
+                    )}
+                    {links.repo && (
+                      <a
+                        href={links.repo}
+                        class="btn btn-secondary"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {t(locale, "cta.viewCode")}
+                      </a>
+                    )}
+                  </div>
+                )
+              }
+
+              <a href="#case-study" class="project-aside-jump">
+                {copy.readCase}
+                <span aria-hidden="true">↓</span>
+              </a>
+            </div>
+          </aside>
+
+          <div class="prose" id="case-study" aria-label={copy.fullCase}>
+            <slot />
+          </div>
         </div>
       </ScrollReveal>
 
-      <!-- Back link -->
       <ScrollReveal delay={180}>
         <footer class="project-footer">
           <a
-            href={locale === 'es' ? '/#projects' : '/en/#projects'}
+            href={locale === "es" ? "/#projects" : "/en/#projects"}
             class="back-link"
             data-back-link
           >
-            ← {t(locale, 'cta.backToProjects')}
+            ← {t(locale, "cta.backToProjects")}
           </a>
         </footer>
       </ScrollReveal>
@@ -143,8 +376,9 @@ const yearDisplay = yearRange ?? String(year);
    *
    * Fallback (deep links, Google, social): let the href navigate normally.
    */
-  const backLink = document.querySelector<HTMLAnchorElement>('[data-back-link]');
-  backLink?.addEventListener('click', (event) => {
+  const backLink =
+    document.querySelector<HTMLAnchorElement>("[data-back-link]");
+  backLink?.addEventListener("click", (event) => {
     if (!document.referrer) return;
     try {
       const ref = new URL(document.referrer);
@@ -160,17 +394,15 @@ const yearDisplay = yearRange ?? String(year);
 </script>
 
 <style>
-  /* Position context for the SectionBackdrop (absolute, inset: 0). */
   .project-main {
     position: relative;
     overflow: hidden;
   }
 
   .project-detail {
-    max-width: 800px;
+    width: min(100% - var(--space-8), 1120px);
     margin: 0 auto;
-    padding: var(--space-12) var(--space-4) var(--space-8);
-    /* Sit above the SectionBackdrop */
+    padding: var(--space-12) 0 var(--space-8);
     position: relative;
     z-index: 1;
   }
@@ -191,17 +423,18 @@ const yearDisplay = yearRange ?? String(year);
     color: var(--accent);
   }
 
-  /* ── Project header (faceted card) ───────────────────────────────────────── */
+  .breadcrumb-current {
+    color: var(--text);
+  }
 
-  .project-header {
-    background: linear-gradient(
-      180deg,
-      var(--surface) 0%,
-      color-mix(in srgb, var(--surface) 92%, var(--brand-strong) 8%) 100%
-    );
-    border: var(--border-width) solid color-mix(in srgb, var(--brand) 22%, var(--border));
-    padding: var(--space-6);
-    margin-bottom: var(--space-8);
+  .project-cover {
+    margin: 0 0 var(--space-6);
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--surface);
+    border: var(--border-width) solid
+      color-mix(in srgb, var(--brand) 20%, var(--border));
+    border-radius: var(--radius-md);
     clip-path: polygon(
       0 0,
       calc(100% - var(--clip-facet)) 0,
@@ -211,38 +444,132 @@ const yearDisplay = yearRange ?? String(year);
     );
   }
 
-  .project-header h1 {
-    font-family: var(--font-heading);
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
+  .project-cover__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+  }
+
+  .project-cover__placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--accent) 8%, var(--surface)) 0%,
+      color-mix(in srgb, var(--accent) 4%, var(--surface-2)) 100%
+    );
+  }
+
+  .project-cover__placeholder span {
+    font-family: var(--font-display);
+    font-size: 4rem;
     font-weight: 700;
-    line-height: 1.1;
+    color: var(--accent);
+    opacity: 0.25;
     letter-spacing: -0.02em;
-    margin-bottom: var(--space-3);
+    user-select: none;
+  }
+
+  .project-header {
+    position: relative;
+    overflow: hidden;
+    background:
+      linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--surface) 94%, var(--brand) 6%) 0%,
+        color-mix(in srgb, var(--surface) 88%, var(--brand-strong) 12%) 100%
+      ),
+      var(--surface);
+    border: var(--border-width) solid
+      color-mix(in srgb, var(--brand) 24%, var(--border));
+    padding: clamp(var(--space-5), 4vw, var(--space-8));
+    margin-bottom: var(--space-6);
+    clip-path: polygon(
+      0 0,
+      calc(100% - var(--clip-facet)) 0,
+      100% var(--clip-facet),
+      100% 100%,
+      0 100%
+    );
+  }
+
+  .project-header::before {
+    content: "";
+    position: absolute;
+    inset: auto -8% -32% auto;
+    width: 22rem;
+    aspect-ratio: 1;
+    background: color-mix(in srgb, var(--brand) 14%, transparent);
+    clip-path: polygon(45% 0, 100% 28%, 78% 100%, 12% 72%, 0 18%);
+    opacity: 0.35;
+    pointer-events: none;
+  }
+
+  .project-kicker {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0 0 var(--space-4);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brand);
+  }
+
+  .project-hero-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(15rem, 0.34fr);
+    gap: clamp(var(--space-5), 5vw, var(--space-8));
+    align-items: start;
+  }
+
+  .project-hero-copy h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 5vw, 3.65rem);
+    font-weight: 700;
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+    margin: 0 0 var(--space-4);
     color: var(--text);
+    text-wrap: balance;
   }
 
   .project-summary {
     color: var(--muted);
-    font-size: 1.0625rem;
-    line-height: 1.6;
-    margin: 0 0 var(--space-5);
-    max-width: 60ch;
+    font-size: clamp(1.0625rem, 2vw, 1.25rem);
+    line-height: 1.65;
+    margin: 0;
+    max-width: 58ch;
+    text-wrap: pretty;
   }
 
-  .project-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-5);
-    margin: 0 0 var(--space-4);
-    padding-top: var(--space-4);
-    border-top: 1px solid color-mix(in srgb, var(--brand) 16%, transparent);
+  .project-quick-facts {
+    display: grid;
+    gap: var(--space-3);
+    margin: 0;
+    padding: var(--space-4);
+    background: color-mix(in srgb, var(--surface-elevated) 52%, transparent);
+    border: var(--border-width) solid
+      color-mix(in srgb, var(--brand) 16%, var(--border));
+    border-radius: var(--radius-md);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--accent) 12%, transparent);
   }
 
-  .project-meta > div {
+  .project-quick-facts div,
+  .project-aside-meta div {
     min-width: 0;
   }
 
-  .project-meta dt {
+  .project-quick-facts dt,
+  .project-aside-meta dt {
     font-family: var(--font-mono);
     font-size: 0.6875rem;
     text-transform: uppercase;
@@ -251,9 +578,91 @@ const yearDisplay = yearRange ?? String(year);
     margin-bottom: var(--space-1);
   }
 
-  .project-meta dd {
+  .project-quick-facts dd,
+  .project-aside-meta dd {
     color: var(--text);
     font-size: 0.9375rem;
+    line-height: 1.45;
+    margin: 0;
+  }
+
+  .case-snapshot {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+
+  .case-snapshot-card {
+    min-width: 0;
+    padding: var(--space-4);
+    background: color-mix(in srgb, var(--bg) 58%, transparent);
+    border: var(--border-width) solid
+      color-mix(in srgb, var(--brand) 18%, var(--border));
+    border-radius: var(--radius-md);
+  }
+
+  .case-snapshot-index {
+    display: block;
+    margin-bottom: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--accent);
+    letter-spacing: 0.14em;
+  }
+
+  .case-snapshot-card h2 {
+    margin: 0 0 var(--space-2);
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: var(--weight-semibold);
+    color: var(--text);
+  }
+
+  .case-snapshot-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+
+  .project-content-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 18rem;
+    grid-template-areas: "prose aside";
+    gap: clamp(var(--space-6), 6vw, var(--space-10));
+    align-items: start;
+  }
+
+  .project-aside {
+    grid-area: aside;
+    position: sticky;
+    top: calc(var(--space-10) + 56px);
+  }
+
+  .project-aside-card {
+    background: color-mix(in srgb, var(--surface) 88%, transparent);
+    border: var(--border-width) solid
+      color-mix(in srgb, var(--brand) 18%, var(--border));
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--accent) 10%, transparent);
+  }
+
+  .project-aside-title {
+    margin: 0 0 var(--space-4);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .project-aside-meta {
+    display: grid;
+    gap: var(--space-4);
     margin: 0;
   }
 
@@ -265,19 +674,84 @@ const yearDisplay = yearRange ?? String(year);
 
   .project-links {
     display: flex;
-    gap: var(--space-3);
-    flex-wrap: wrap;
-    margin-top: var(--space-4);
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-top: var(--space-5);
   }
 
-  /* ── Markdown body ───────────────────────────────────────────────────────── */
+  .project-links .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .project-aside-jump {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: var(--space-5);
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition:
+      color var(--duration-fast) var(--ease-standard),
+      gap var(--duration-fast) var(--ease-standard);
+  }
+
+  .project-aside-jump:hover {
+    color: var(--accent);
+    gap: var(--space-3);
+  }
 
   .prose {
+    grid-area: prose;
+    max-width: 68ch;
     color: var(--text);
-    line-height: 1.75;
+    line-height: 1.78;
   }
 
-  /* ── Back link footer ────────────────────────────────────────────────────── */
+  .prose :global(h2) {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin: var(--space-10) 0 var(--space-4);
+    padding-top: var(--space-2);
+    font-family: var(--font-heading);
+    font-size: clamp(1.35rem, 2.6vw, 1.75rem);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    color: var(--text);
+    scroll-margin-top: 7rem;
+  }
+
+  .prose :global(h2:first-child) {
+    margin-top: 0;
+  }
+
+  .prose :global(h2::before) {
+    content: "";
+    flex: 0 0 auto;
+    width: 0.75rem;
+    height: 0.75rem;
+    background: var(--brand);
+    clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+    opacity: 0.85;
+  }
+
+  .prose :global(p) {
+    margin: 0 0 var(--space-5);
+    color: color-mix(in srgb, var(--text) 88%, var(--muted));
+    font-size: 1rem;
+    line-height: 1.78;
+    text-wrap: pretty;
+  }
+
+  .prose :global(strong) {
+    color: var(--text);
+    font-weight: var(--weight-semibold);
+  }
 
   .project-footer {
     margin-top: var(--space-12);
@@ -291,10 +765,12 @@ const yearDisplay = yearRange ?? String(year);
     gap: var(--space-2);
     color: var(--muted);
     text-decoration: none;
-    font-family: var(--font-mono);
+    font-family: var(--font-body);
     font-size: 0.875rem;
     letter-spacing: 0.02em;
-    transition: color var(--duration-fast) var(--ease-standard), gap var(--duration-fast) var(--ease-standard);
+    transition:
+      color var(--duration-fast) var(--ease-standard),
+      gap var(--duration-fast) var(--ease-standard);
   }
 
   .back-link:hover {
@@ -302,22 +778,62 @@ const yearDisplay = yearRange ?? String(year);
     gap: var(--space-3);
   }
 
+  @media (max-width: 860px) {
+    .project-detail {
+      width: min(100% - var(--space-6), 1120px);
+      padding-top: var(--space-8);
+    }
+
+    .project-hero-grid,
+    .case-snapshot,
+    .project-content-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .project-content-grid {
+      grid-template-areas:
+        "aside"
+        "prose";
+      gap: var(--space-7);
+    }
+
+    .project-aside {
+      position: static;
+    }
+
+    .project-aside-card {
+      display: grid;
+      gap: var(--space-4);
+    }
+
+    .project-links {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .project-links .btn {
+      width: auto;
+    }
+  }
+
   @media (max-width: 480px) {
     .project-detail {
-      padding: var(--space-8) var(--space-4) var(--space-6);
+      width: min(100% - var(--space-4), 1120px);
+      padding: var(--space-8) 0 var(--space-6);
     }
 
     .project-header {
       padding: var(--space-5) var(--space-4);
     }
 
-    .project-header h1 {
-      font-size: clamp(1.5rem, 8vw, 2.25rem);
+    .project-hero-copy h1 {
+      font-size: clamp(1.75rem, 10vw, 2.45rem);
     }
 
-    .project-meta {
-      flex-direction: column;
-      gap: var(--space-3);
+    .project-quick-facts,
+    .case-snapshot-card,
+    .project-aside-card {
+      padding: var(--space-3);
     }
 
     .project-links {
@@ -326,6 +842,10 @@ const yearDisplay = yearRange ?? String(year);
 
     .project-links .btn {
       width: 100%;
+    }
+
+    .prose :global(h2) {
+      margin-top: var(--space-8);
     }
 
     .project-footer {

@@ -1,5 +1,13 @@
 {
   "projects": {
     "default": "jnvr-portafolio"
+  },
+  "targets": {
+    "jnvr-portafolio": {
+      "hosting": {
+        "main": ["jnvr-portafolio"],
+        "v1": ["jnvr-portafolio-v1"]
+      }
+    }
   }
 }

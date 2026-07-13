@@ -10,58 +10,72 @@
  *   entry  — CollectionEntry<'projects'>
  *   locale — 'es' | 'en'
  */
-import { Image } from 'astro:assets';
-import type { CollectionEntry } from 'astro:content';
-import type { Locale } from '../i18n/index';
-import { t } from '../i18n/index';
-import StackChip from './StackChip.astro';
+import { Picture } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import type { Locale } from "../i18n/index";
+import { t } from "../i18n/index";
+import StackChip from "./StackChip.astro";
 
 interface Props {
-  entry: CollectionEntry<'projects'>;
+  entry: CollectionEntry<"projects">;
   locale: Locale;
 }
 
 const { entry, locale } = Astro.props;
-const { title, client, year, yearRange, stack, summary, placeholder, confidential, cover } = entry.data;
+const {
+  title,
+  client,
+  year,
+  yearRange,
+  stack,
+  summary,
+  placeholder,
+  confidential,
+  cover,
+} = entry.data;
 // In Astro 5, entry.id is the path-based id including extension: "es/centinela-app.md".
 // Strip the locale prefix and the .md extension to get the route slug: "centinela-app".
-const slug = entry.id.replace(/^(es|en)\//, '').replace(/\.mdx?$/, '');
+const slug = entry.id.replace(/^(es|en)\//, "").replace(/\.mdx?$/, "");
 
-const href = locale === 'es' ? `/projects/${slug}` : `/en/projects/${slug}`;
+const href = locale === "es" ? `/projects/${slug}` : `/en/projects/${slug}`;
 const yearDisplay = yearRange ?? String(year);
 
 // Initials for placeholder cover
 const initials = title
-  .split(' ')
+  .split(" ")
   .slice(0, 2)
   .map((w: string) => w[0])
-  .join('')
+  .join("")
   .toUpperCase();
 ---
 
-<article
-  class="project-card"
-  data-stack={stack.join(',')}
->
+<article class="project-card" data-stack={stack.join(",")}>
   <!-- Cover area -->
   <a href={href} class="card-cover-link" tabindex="-1" aria-hidden="true">
-    {placeholder || !cover ? (
-      <div class="card-placeholder" role="presentation">
-        <span class="card-placeholder__initials">{initials}</span>
-      </div>
-    ) : (
-      <div class="card-cover-wrap">
-        <Image
-          src={cover}
-          alt={`${title} — ${client}`}
-          class="card-cover"
-          widths={[400, 720, 960]}
-          sizes="(max-width: 480px) 90vw, (max-width: 1024px) 45vw, 320px"
-          loading="lazy"
-          decoding="async"
-        />
-      </div>
-    )}
+    {
+      placeholder || !cover ? (
+        <div class="card-placeholder" role="presentation">
+          <span class="card-placeholder__initials">{initials}</span>
+        </div>
+      ) : (
+        <div class="card-cover-wrap">
+          <Picture
+            src={cover}
+            alt={`${title} — ${client}`}
+            class="card-cover"
+            pictureAttributes={{
+              style: "display:block;width:100%;height:100%",
+            }}
+            formats={["avif", "webp"]}
+            fallbackFormat="webp"
+            widths={[400, 720, 960]}
+            sizes="(max-width: 580px) 90vw, (max-width: 1024px) 45vw, 320px"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      )
+    }
   </a>
 
   <div class="card-body">
@@ -69,11 +83,16 @@ const initials = title
     <div class="card-meta">
       <span class="card-client">{client}</span>
       <span class="card-year">{yearDisplay}</span>
-      {confidential && (
-        <span class="card-confidential" aria-label="Confidential project">
-          Confidential
-        </span>
-      )}
+      {
+        confidential && (
+          <span
+            class="card-confidential"
+            aria-label={t(locale, "projects.confidential")}
+          >
+            {t(locale, "projects.confidential")}
+          </span>
+        )
+      }
     </div>
 
     <!-- Title (the link) -->
@@ -85,13 +104,21 @@ const initials = title
     <p class="card-summary">{summary}</p>
 
     <!-- Stack chips -->
-    <div class="card-stack" aria-label={`${t(locale, 'projects.stackLabel')}: ${stack.join(', ')}`}>
-      {stack.slice(0, 4).map((tech: string) => (
-        <StackChip tech={tech} locale={locale} />
-      ))}
-      {stack.length > 4 && (
-        <span class="card-stack-more">+{stack.length - 4}</span>
-      )}
+    <div class="card-stack" role="list">
+      {
+        stack.slice(0, 4).map((tech: string) => (
+          <span role="listitem">
+            <StackChip tech={tech} locale={locale} />
+          </span>
+        ))
+      }
+      {
+        stack.length > 4 && (
+          <span class="card-stack-more" role="listitem">
+            +{stack.length - 4}
+          </span>
+        )
+      }
     </div>
   </div>
 </article>
@@ -100,7 +127,7 @@ const initials = title
   .project-card {
     background: var(--surface);
     border: var(--border-width) solid var(--border);
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     overflow: visible;
     display: flex;
     flex-direction: column;
@@ -110,7 +137,13 @@ const initials = title
       box-shadow var(--duration-base) var(--ease-standard),
       transform var(--card-hover-duration) var(--ease-standard),
       opacity var(--duration-base) var(--ease-standard);
-    clip-path: polygon(0 0, calc(100% - var(--clip-facet)) 0, 100% var(--clip-facet), 100% 100%, 0 100%);
+    clip-path: polygon(
+      0 0,
+      calc(100% - var(--clip-facet)) 0,
+      100% var(--clip-facet),
+      100% 100%,
+      0 100%
+    );
   }
 
   .project-card:hover {
@@ -133,7 +166,7 @@ const initials = title
     display: block;
     text-decoration: none;
     overflow: hidden;
-    border-radius: 8px 8px 0 0;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
   }
 
   /* Wrapper enforces aspect ratio regardless of intrinsic image dimensions */
@@ -204,15 +237,15 @@ const initials = title
     align-items: center;
     gap: 4px;
     font-size: 0.6875rem;
-    background: color-mix(in srgb, var(--warning, #F0883E) 15%, transparent);
-    color: var(--warning, #F0883E);
-    border: 1px solid color-mix(in srgb, var(--warning, #F0883E) 30%, transparent);
+    background: color-mix(in srgb, var(--warning) 15%, transparent);
+    color: var(--warning);
+    border: 1px solid color-mix(in srgb, var(--warning) 30%, transparent);
     padding: 2px var(--space-2);
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
   }
 
   .card-confidential::before {
-    content: '🔒';
+    content: "🔒";
     font-style: normal;
   }
 

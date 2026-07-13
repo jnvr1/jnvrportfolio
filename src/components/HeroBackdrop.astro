@@ -4,7 +4,7 @@
  *
  * Inline SVG (~5 polygons) that positions itself absolutely behind the
  * Hero content. Echoes the logo's geometric language (logo colors:
- * st0 = #73A0BE, st1 = #0F293F, st3 = #A7A6A8) with denser facet
+ * st0 = --brand, st1 = --surface, st3 = --text-muted) with denser facet
  * composition than the global backdrop-facets.svg.
  *
  * Stacking: position absolute, inset: 0, z-index: 0.
@@ -28,88 +28,77 @@
   >
     <!--
       5 facets arranged to frame the center (logo position) without covering it.
-      Colors sourced directly from the logo's st0/st1/st3 class fills.
+      Fills/strokes are routed through design tokens via palette role classes
+      (fill-* and stroke-*) — no literal hex in this SVG (audit #41).
       All at low opacity so the body-level facets + orbs remain visible through.
 
-      Logo color reference:
-        st0 = #73A0BE (brand blue — dominant logo shape)
-        st1 = #0F293F (deep navy — logo shadow/depth)
-        st3 = #A7A6A8 (warm gray — logo dot accent)
-        surface-elevated = #1A3A5C
+      Logo color reference (token equivalents):
+        st0 = var(--brand)            (brand blue — dominant logo shape)
+        st1 = var(--surface)          (deep navy — logo shadow/depth)
+        st3 = var(--text-muted)       (warm gray — logo dot accent)
+        surface-elevated = var(--surface-elevated)
     -->
 
     <!-- Top-left wing: large diagonal cut echoing the N/J letter diagonal -->
     <g class="facet facet-1">
       <polygon
+        class="fill-surface stroke-brand"
         points="0,0 420,0 280,180 0,240"
-        fill="#0F293F"
         opacity="0.55"
-        stroke="#73A0BE"
         stroke-opacity="0.14"
-        stroke-width="0.8"
-      />
+        stroke-width="0.8"></polygon>
     </g>
 
     <!-- Top-right wing: mirrors the V letterform wedge from the logo -->
     <g class="facet facet-2">
       <polygon
+        class="fill-elevated stroke-brand"
         points="780,0 1200,0 1200,200 960,120"
-        fill="#1A3A5C"
         opacity="0.45"
-        stroke="#73A0BE"
         stroke-opacity="0.12"
-        stroke-width="0.9"
-      />
+        stroke-width="0.9"></polygon>
     </g>
 
     <!-- Left-center shard: brand-blue highlight at very low opacity -->
     <!-- Echoes the st0 diagonal cut in the N letterform -->
     <g class="facet facet-3">
       <polygon
+        class="fill-brand stroke-brand"
         points="0,180 200,120 260,300 40,340"
-        fill="#73A0BE"
         opacity="0.06"
-        stroke="#73A0BE"
         stroke-opacity="0.18"
-        stroke-width="0.7"
-      />
+        stroke-width="0.7"></polygon>
     </g>
 
     <!-- Bottom-left anchor: heavy base mass like the J's foot -->
     <g class="facet facet-4">
       <polygon
+        class="fill-surface stroke-brand"
         points="0,480 360,420 440,600 180,700 0,700"
-        fill="#0F293F"
         opacity="0.50"
-        stroke="#73A0BE"
         stroke-opacity="0.13"
-        stroke-width="1.0"
-      />
+        stroke-width="1.0"></polygon>
     </g>
 
     <!-- Bottom-right anchor: mirrors logo's lower-right shadow stack -->
     <g class="facet facet-5">
       <polygon
+        class="fill-elevated stroke-brand"
         points="760,520 1200,440 1200,700 700,700"
-        fill="#1A3A5C"
         opacity="0.40"
-        stroke="#73A0BE"
         stroke-opacity="0.11"
-        stroke-width="0.8"
-      />
+        stroke-width="0.8"></polygon>
     </g>
 
-    <!-- Center subtle warm-gray shimmer: echoes logo's st3 dot (#A7A6A8) -->
+    <!-- Center subtle warm-gray shimmer: echoes logo's st3 dot (--text-muted) -->
     <!-- Very low opacity — just a whisper of warmth behind the logo -->
     <g class="facet facet-6">
       <polygon
+        class="fill-muted stroke-muted"
         points="480,60 720,40 760,160 500,180"
-        fill="#A7A6A8"
         opacity="0.03"
-        stroke="#A7A6A8"
         stroke-opacity="0.16"
-        stroke-width="0.6"
-      />
+        stroke-width="0.6"></polygon>
     </g>
 
     <!--
@@ -119,15 +108,50 @@
     -->
     <g class="particles" aria-hidden="true">
       <!-- Top-left region -->
-      <rect class="particle particle-1" x="140" y="90"  width="5" height="5" fill="#73A0BE" opacity="0.40" transform="rotate(45 142.5 92.5)"/>
+      <rect
+        class="particle particle-1 fill-brand"
+        x="140"
+        y="90"
+        width="5"
+        height="5"
+        opacity="0.40"
+        transform="rotate(45 142.5 92.5)"></rect>
       <!-- Top-right region -->
-      <rect class="particle particle-2" x="980" y="60"  width="4" height="4" fill="#A8C9DD" opacity="0.30" transform="rotate(45 982 62)"/>
+      <rect
+        class="particle particle-2 fill-accent"
+        x="980"
+        y="60"
+        width="4"
+        height="4"
+        opacity="0.30"
+        transform="rotate(45 982 62)"></rect>
       <!-- Left-mid region -->
-      <rect class="particle particle-3" x="60"  y="380" width="3" height="3" fill="#73A0BE" opacity="0.35" transform="rotate(45 61.5 381.5)"/>
+      <rect
+        class="particle particle-3 fill-brand"
+        x="60"
+        y="380"
+        width="3"
+        height="3"
+        opacity="0.35"
+        transform="rotate(45 61.5 381.5)"></rect>
       <!-- Bottom-right region -->
-      <rect class="particle particle-4" x="1060" y="580" width="6" height="6" fill="#A8C9DD" opacity="0.25" transform="rotate(45 1063 583)"/>
+      <rect
+        class="particle particle-4 fill-accent"
+        x="1060"
+        y="580"
+        width="6"
+        height="6"
+        opacity="0.25"
+        transform="rotate(45 1063 583)"></rect>
       <!-- Right-upper region -->
-      <rect class="particle particle-5" x="1100" y="200" width="4" height="4" fill="#73A0BE" opacity="0.32" transform="rotate(45 1102 202)"/>
+      <rect
+        class="particle particle-5 fill-brand"
+        x="1100"
+        y="200"
+        width="4"
+        height="4"
+        opacity="0.32"
+        transform="rotate(45 1102 202)"></rect>
     </g>
   </svg>
 </div>
@@ -139,6 +163,9 @@
     z-index: 0;
     pointer-events: none;
     overflow: hidden;
+    /* Isolate style/paint of these offscreen-drifting decorative layers so
+       sections out of view stop paying for the infinite animations (audit #33). */
+    contain: layout paint;
   }
 
   .hero-backdrop__svg {
@@ -147,25 +174,73 @@
     display: block;
   }
 
+  /* ── Palette role classes — route fills/strokes through design tokens ────── */
+  /* Colors equal the old literal hex; appearance is unchanged (audit #41). */
+  .hero-backdrop .fill-brand {
+    fill: var(--brand);
+  }
+  .hero-backdrop .fill-surface {
+    fill: var(--surface);
+  }
+  .hero-backdrop .fill-elevated {
+    fill: var(--surface-elevated);
+  }
+  .hero-backdrop .fill-muted {
+    fill: var(--text-muted);
+  }
+  .hero-backdrop .fill-accent {
+    fill: var(--accent);
+  }
+  .hero-backdrop .stroke-brand {
+    stroke: var(--brand);
+  }
+  .hero-backdrop .stroke-muted {
+    stroke: var(--text-muted);
+  }
+
   /* ── Drifting Facet Animations ──────────────────────────────────────────── */
 
+  /* No blanket will-change: the browser promotes these transform animations on
+     demand. A permanent hint here would hold GPU layers for every facet even
+     offscreen / on mobile where drift is disabled (audit #14). */
   .hero-backdrop .facet {
     transform-origin: center;
-    will-change: transform;
     animation: hero-facet-drift 18s ease-in-out infinite alternate;
   }
 
   /* Staggered timing: each facet drifts on its own schedule */
-  .hero-backdrop .facet-1 { animation-duration: 22s; animation-delay: -2s; }
-  .hero-backdrop .facet-2 { animation-duration: 16s; animation-delay: -7s; }
-  .hero-backdrop .facet-3 { animation-duration: 20s; animation-delay: -12s; }
-  .hero-backdrop .facet-4 { animation-duration: 14s; animation-delay: -4s; }
-  .hero-backdrop .facet-5 { animation-duration: 19s; animation-delay: -9s; }
-  .hero-backdrop .facet-6 { animation-duration: 17s; animation-delay: -14s; }
+  .hero-backdrop .facet-1 {
+    animation-duration: 22s;
+    animation-delay: -2s;
+  }
+  .hero-backdrop .facet-2 {
+    animation-duration: 16s;
+    animation-delay: -7s;
+  }
+  .hero-backdrop .facet-3 {
+    animation-duration: 20s;
+    animation-delay: -12s;
+  }
+  .hero-backdrop .facet-4 {
+    animation-duration: 14s;
+    animation-delay: -4s;
+  }
+  .hero-backdrop .facet-5 {
+    animation-duration: 19s;
+    animation-delay: -9s;
+  }
+  .hero-backdrop .facet-6 {
+    animation-duration: 17s;
+    animation-delay: -14s;
+  }
 
   @keyframes hero-facet-drift {
-    from { transform: translate(0, 0) scale(1); }
-    to   { transform: translate(6px, -4px) scale(1.03); }
+    from {
+      transform: translate(0, 0) scale(1);
+    }
+    to {
+      transform: translate(6px, -4px) scale(1.03);
+    }
   }
 
   /* Mobile: disable facet drift to reduce GPU load on low-end devices */

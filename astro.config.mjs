@@ -1,29 +1,9 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import { assertBilingualParity } from './src/content/bilingual-parity.ts';
 
-/**
- * Build-time bilingual parity check.
- * Runs after the build completes and throws if any slug is missing its EN or ES counterpart.
- * Dynamic import of getCollection so astro:content is NOT loaded at config parse time
- * (it's only available inside the Astro build pipeline, not when the config is evaluated).
- */
-const bilingualCheck = {
-  name: 'bilingual-parity',
-  hooks: {
-    'astro:build:done': async () => {
-      const { getCollection } = await import('astro:content');
-      const all = await getCollection('projects');
-      // In Astro 5, entry.id is the path-based id with extension: "es/centinela-app.md".
-      // Strip the locale prefix AND the .md extension to get the canonical slug.
-      const entries = all.map((p) => ({
-        slug: p.id.replace(/^(es|en)\//, '').replace(/\.mdx?$/, ''),
-        locale: p.data.locale,
-      }));
-      assertBilingualParity(entries);
-    },
-  },
-};
+// Bilingual parity is validated by `npm run check:parity` (scripts/check-bilingual-parity.ts).
+// The previous astro:build:done hook duplicated that logic and broke under Astro 5
+// because the Vite module runner closes before the hook can dynamically import astro:content.
 
 // https://astro.build/config
 export default defineConfig({
@@ -48,6 +28,5 @@ export default defineConfig({
         },
       },
     }),
-    bilingualCheck,
   ],
 });

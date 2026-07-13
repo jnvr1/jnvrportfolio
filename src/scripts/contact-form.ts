@@ -86,6 +86,11 @@ export async function submitContactForm(
 
 /**
  * Apply aria-invalid attributes to form inputs based on validation errors.
+ *
+ * NOTE: `errors` values are RAW i18n keys (e.g. 'nameRequired'), NOT localized
+ * strings. This writes them verbatim to the error element's textContent, so the
+ * CALLER MUST pre-map keys → localized strings (via t(locale, `form.${key}`))
+ * before passing them in if the text is meant to be shown to users.
  */
 export function applyValidationErrors(
   form: HTMLFormElement,

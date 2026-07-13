@@ -1,12 +1,11 @@
 ---
 title: "Bloomotion Tech — Sitio Corporativo"
 client: Bloomotion
-year: 2024
-yearRange: "2022–2024"
-stack: ["Flutter Web", "Google Fonts"]
-summary: "Sitio corporativo para plataforma logística: secciones animadas, métricas, integraciones y contacto."
+year: 2025
+stack: ["Flutter Web", "Dart", "Firebase Hosting", "Google Fonts", "Material Design"]
+summary: "SPA corporativa en Flutter Web para plataforma logística: navegación con scroll suave, métricas animadas y CTA fijo en móvil."
 role: "Flutter Web Developer"
-cover: ../../../assets/projects/bloomotion-tech-mobile.webp
+cover: ../../../assets/projects/bloomotion-tech.webp
 placeholder: false
 confidential: false
 locale: es
@@ -15,22 +14,22 @@ order: 3
 
 ## El problema
 
-Bloomotion, una plataforma logística en crecimiento, necesitaba un sitio corporativo que comunicara su propuesta de valor a prospectos B2B: capacidades de integración, resultados medibles y confiabilidad. El sitio debía tener la presencia visual de un producto maduro y diferenciarse de los sitios genéricos del sector.
+Bloomotion, una plataforma logística en crecimiento, necesitaba un sitio corporativo que comunicara su propuesta de valor a prospectos B2B: capacidades de integración, resultados medibles y confiabilidad. El sitio debía tener la presencia visual de un producto maduro y no leerse como una landing genérica del sector.
 
 ## La solución
 
-Desarrollé el sitio con Flutter Web para mantener consistencia tecnológica con el equipo del cliente. El sitio incluye secciones animadas con contadores progresivos (métricas de la plataforma), animaciones de reveal-on-scroll, y una arquitectura de widgets por sección: hero, capacidades, soluciones, integraciones, testimoniales, FAQ y contacto.
+Construí una SPA de una sola página con Flutter Web y Material Design. No es un sitio de siete secciones: es un recorrido largo con hero, métricas, resultados, servicios, soluciones, proyectos, cómo funciona, integraciones, beneficios, nosotros, FAQ, un bloque CTA y contacto, más el footer. La navegación usa scroll suave con `easeInOutCubic` y duración proporcional a la distancia hacia cada sección (servicios, soluciones, plataforma, nosotros, contacto). En móvil aparece un CTA fijo "Agenda una demo" que se muestra tras pasar el hero y se oculta al llegar a contacto. Las animaciones (contadores progresivos, reveal on load, gradientes animados, tarjetas con hover) están encapsuladas en widgets reutilizables.
 
-**Nota sobre Bloomotion Landing v1**: Una primera versión del sitio (`bloom`) fue una landing page estática en HTML puro. Esta segunda versión Flutter Web reemplazó y expandió ese trabajo inicial — el contenido y la narrativa de la v1 están integrados en este sitio.
+**Evolución desde la v1**: la primera versión (`bloom`) fue una landing estática en HTML. Esta versión en Flutter Web la reemplazó y expandió, integrando su contenido y narrativa dentro de la SPA.
 
 ## Mi rol
 
-Diseñé la arquitectura de widgets, implementé las animaciones de entrada y los contadores progresivos, y configuré el despliegue con hosting de Firebase. Trabajé directamente con el equipo de Bloomotion para refinar el copywriting técnico de las secciones de capacidades e integraciones.
+Diseñé la arquitectura de widgets por sección, implementé la lógica de scroll (offset calculado con el viewport, CTA fijo dependiente del scroll y de la visibilidad de contacto), los contadores progresivos y las animaciones de entrada. Configuré el despliegue en Firebase Hosting, verificado en el repo.
 
 ## Resultado
 
-El sitio corporativo sirvió como herramienta de ventas para las reuniones comerciales de Bloomotion, reemplazando las presentaciones en PowerPoint. Las animaciones de métricas ("X envíos procesados", "Y% reducción en tiempos") generaron puntos de conversación concretos con prospectos.
+El sitio corporativo funciona como herramienta de ventas para las reuniones comerciales de Bloomotion, en lugar de una presentación estática. Las métricas animadas dan puntos de conversación concretos con prospectos, y la navegación con scroll suave mantiene el recorrido en una sola página.
 
 ## Aprendizaje notable
 
-Flutter Web para sitios de marketing tiene un trade-off claro: la fidelidad visual es alta pero el bundle inicial es mayor que un sitio Astro equivalente. Para un sitio corporativo con audiencia B2B (desktop, conexión estable), el trade-off es aceptable. Para un sitio de portafolio personal con audiencia mixta, no lo sería — de ahí la elección de Astro para este portafolio.
+Flutter Web para sitios de marketing tiene un trade-off claro: la fidelidad visual y el control de las animaciones son altos, pero el bundle inicial es mayor que un sitio Astro equivalente. Para una audiencia B2B en desktop con conexión estable, el trade-off es aceptable. Para un portafolio personal con audiencia mixta no lo sería — de ahí la elección de Astro para este sitio.

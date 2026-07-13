@@ -7,9 +7,9 @@
  *       REQ-PS-9 (container 1200px), REQ-TS-7 (no hardcoded hex)
  */
 
-@import './reset.css';
-@import './fonts.css';
-@import './tokens.css';
+@import "./reset.css";
+@import "./fonts.css";
+@import "./tokens.css";
 
 /* ── Base ────────────────────────────────────────────────────────────────── */
 
@@ -26,20 +26,14 @@ body {
   color: var(--text);
   /* Faceted backdrop: static SVG layer over base color */
   background-color: var(--bg);
-  background-image: url('/backdrop-facets.svg');
+  background-image: url("/backdrop-facets.svg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed;
+  /* Background scrolls with content (default). fixed-attachment forced a
+     full-viewport repaint every scroll frame — dropped for scroll perf. */
   /* Stacking context so content sits above pseudo-element orbs */
   position: relative;
-}
-
-/* Mobile: fixed-attachment causes jank on iOS Safari */
-@media (max-width: 768px) {
-  body {
-    background-attachment: scroll;
-  }
 }
 
 /* ── Atmospheric Orbs (Option 3 complement) ──────────────────────────────── */
@@ -59,7 +53,7 @@ body {
 
 body::before,
 body::after {
-  content: '';
+  content: "";
   position: fixed;
   width: 60vw;
   height: 60vw;
@@ -69,8 +63,7 @@ body::after {
   filter: blur(120px);
   opacity: 0.12;
   pointer-events: none;
-  z-index: 0;
-  will-change: transform;
+  z-index: var(--z-base);
 }
 
 body::before {
@@ -88,13 +81,21 @@ body::after {
 }
 
 @keyframes orb-drift-1 {
-  from { transform: translate(0, 0) scale(1); }
-  to   { transform: translate(15vw, 10vh) scale(1.15); }
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(15vw, 10vh) scale(1.15);
+  }
 }
 
 @keyframes orb-drift-2 {
-  from { transform: translate(0, 0) scale(1.05); }
-  to   { transform: translate(-12vw, -8vh) scale(1); }
+  from {
+    transform: translate(0, 0) scale(1.05);
+  }
+  to {
+    transform: translate(-12vw, -8vh) scale(1);
+  }
 }
 
 /* Disable orb motion for users who prefer reduced motion.
@@ -284,28 +285,60 @@ section[id] {
   font-family: var(--font-mono);
 }
 
-/* ── Scroll Reveal Base State (spec REQ-PS-8) ────────────────────────────── */
+/* ── Scroll Reveal — facet entrance (spec REQ-PS-8) ──────────────────────── */
 /*
- * Elements wrapped in <ScrollReveal> start hidden and transition to visible
- * when they enter the viewport. The IntersectionObserver in scroll-reveal.ts
- * toggles the [data-revealed] attribute.
+ * Content is VISIBLE by default. The hidden start-state applies ONLY when JS is
+ * confirmed (html.reveal-js, set by the inline reveal script in BaseLayout) and
+ * prefers-reduced-motion is not set — so a failed/blocked script, a 404'd chunk,
+ * or a no-JS client never blanks the page (this is progressive enhancement, not
+ * content-gated-by-JS).
  *
- * prefers-reduced-motion: reduce is handled in reset.css (suppresses
- * animation-duration/transition-duration globally) AND in the IS script
- * (which skips IntersectionObserver and applies final state immediately).
+ * The motion echoes the logo's own jnvr-facet-enter (logo-mark-optimized.svg):
+ * each block snaps into focus — rise + subtle scale overshoot + blur-to-sharp,
+ * on the shared ease-out-expo curve. This is the logo's vocabulary, not a
+ * generic library fade. Per-item stagger via --reveal-delay.
+ *
+ * fill-mode is `backwards` (not `both`): the 0% state covers the stagger delay
+ * so there's no flash, but the final state is NOT held forward — otherwise it
+ * would clobber the :hover transform on cards after the reveal finishes.
  */
 
-[data-reveal] {
+html.reveal-js [data-scroll-reveal]:not([data-revealed]) {
   opacity: 0;
-  transform: var(--reveal-translate);
-  transition:
-    opacity var(--reveal-duration) var(--reveal-ease),
-    transform var(--reveal-duration) var(--reveal-ease);
+  transform: translateY(14px) scale(0.985);
+  filter: blur(6px);
 }
 
-[data-reveal][data-revealed] {
-  opacity: 1;
-  transform: none;
+html.reveal-js [data-scroll-reveal][data-revealed] {
+  animation: facet-reveal var(--reveal-duration) var(--reveal-ease)
+    var(--reveal-delay, 0ms) backwards;
+}
+
+@keyframes facet-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) scale(0.985);
+    filter: blur(6px);
+  }
+  62% {
+    opacity: 1;
+    transform: translateY(-1px) scale(1.006);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-scroll-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    animation: none !important;
+  }
 }
 
 /* ── Card Hover Lift (spec REQ-TS-6) ─────────────────────────────────────── */
@@ -386,6 +419,17 @@ section[id] {
   border-radius: var(--radius-sm);
 }
 
+/* Forced-colors: box-shadow rings are stripped, so these higher-specificity
+   outline:none focus states would leave no visible indicator. Restore a real
+   outline (WCAG 2.4.7). */
+@media (forced-colors: active) {
+  .btn:focus-visible,
+  .focus-ring:focus-visible {
+    outline: 2px solid CanvasText;
+    outline-offset: var(--focus-ring-offset);
+  }
+}
+
 /* ── Section Backdrop Parallax (Option 4 Full Composition) ───────────────── */
 /*
  * CSS scroll-driven animation for per-section backdrops.
@@ -404,22 +448,35 @@ section[id] {
 
 @supports (animation-timeline: view()) {
   .section-backdrop {
-    animation: backdrop-parallax linear, backdrop-fade linear;
+    animation:
+      backdrop-parallax linear,
+      backdrop-fade linear;
     animation-timeline: view(), view();
     animation-range: entry 0% exit 100%;
-    will-change: transform, opacity;
   }
 
   @keyframes backdrop-parallax {
-    from { transform: translateY(0); }
-    to   { transform: translateY(-30px); }
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-30px);
+    }
   }
 
   @keyframes backdrop-fade {
-    0%   { opacity: 0.4; }
-    20%  { opacity: 1; }
-    80%  { opacity: 1; }
-    100% { opacity: 0.4; }
+    0% {
+      opacity: 0.4;
+    }
+    20% {
+      opacity: 1;
+    }
+    80% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.4;
+    }
   }
 }
 
@@ -451,7 +508,6 @@ section[id] {
     animation-range: entry 0% exit 100%;
     animation-fill-mode: both;
     animation-timing-function: ease-in-out;
-    will-change: transform, opacity;
   }
 
   /* ── Projects variant: 6 facets ─────────────────────────────────────────── */
@@ -548,38 +604,90 @@ section[id] {
 
   @keyframes facet-bloom-up {
     /*  Entry: rises from below + slight CCW twist; Exit: drifts upward + CW, fades */
-    0%   { transform: translateY(36px)  scale(0.82) rotate(-3deg); opacity: 0; }
-    20%  { opacity: 0.75; }
-    50%  { transform: translateY(0)     scale(1)    rotate(0deg);  opacity: 1; }
-    80%  { opacity: 0.75; }
-    100% { transform: translateY(-18px) scale(1.04) rotate(2deg);  opacity: 0; }
+    0% {
+      transform: translateY(36px) scale(0.82) rotate(-3deg);
+      opacity: 0;
+    }
+    20% {
+      opacity: 0.75;
+    }
+    50% {
+      transform: translateY(0) scale(1) rotate(0deg);
+      opacity: 1;
+    }
+    80% {
+      opacity: 0.75;
+    }
+    100% {
+      transform: translateY(-18px) scale(1.04) rotate(2deg);
+      opacity: 0;
+    }
   }
 
   @keyframes facet-bloom-down {
     /*  Entry: drops from above + slight CW twist; Exit: drifts downward + CCW, fades */
-    0%   { transform: translateY(-36px) scale(0.82) rotate(4deg);  opacity: 0; }
-    20%  { opacity: 0.75; }
-    50%  { transform: translateY(0)     scale(1)    rotate(0deg);  opacity: 1; }
-    80%  { opacity: 0.75; }
-    100% { transform: translateY(18px)  scale(1.04) rotate(-3deg); opacity: 0; }
+    0% {
+      transform: translateY(-36px) scale(0.82) rotate(4deg);
+      opacity: 0;
+    }
+    20% {
+      opacity: 0.75;
+    }
+    50% {
+      transform: translateY(0) scale(1) rotate(0deg);
+      opacity: 1;
+    }
+    80% {
+      opacity: 0.75;
+    }
+    100% {
+      transform: translateY(18px) scale(1.04) rotate(-3deg);
+      opacity: 0;
+    }
   }
 
   @keyframes facet-bloom-left {
     /*  Entry: slides from the left + CW twist; Exit: drifts right + CCW, fades */
-    0%   { transform: translateX(-28px) scale(0.84) rotate(3deg);  opacity: 0; }
-    20%  { opacity: 0.75; }
-    50%  { transform: translateX(0)     scale(1)    rotate(0deg);  opacity: 1; }
-    80%  { opacity: 0.75; }
-    100% { transform: translateX(14px)  scale(1.04) rotate(-2deg); opacity: 0; }
+    0% {
+      transform: translateX(-28px) scale(0.84) rotate(3deg);
+      opacity: 0;
+    }
+    20% {
+      opacity: 0.75;
+    }
+    50% {
+      transform: translateX(0) scale(1) rotate(0deg);
+      opacity: 1;
+    }
+    80% {
+      opacity: 0.75;
+    }
+    100% {
+      transform: translateX(14px) scale(1.04) rotate(-2deg);
+      opacity: 0;
+    }
   }
 
   @keyframes facet-bloom-right {
     /*  Entry: slides from the right + CCW twist; Exit: drifts left + CW, fades */
-    0%   { transform: translateX(28px)  scale(0.84) rotate(-4deg); opacity: 0; }
-    20%  { opacity: 0.75; }
-    50%  { transform: translateX(0)     scale(1)    rotate(0deg);  opacity: 1; }
-    80%  { opacity: 0.75; }
-    100% { transform: translateX(-14px) scale(1.04) rotate(3deg);  opacity: 0; }
+    0% {
+      transform: translateX(28px) scale(0.84) rotate(-4deg);
+      opacity: 0;
+    }
+    20% {
+      opacity: 0.75;
+    }
+    50% {
+      transform: translateX(0) scale(1) rotate(0deg);
+      opacity: 1;
+    }
+    80% {
+      opacity: 0.75;
+    }
+    100% {
+      transform: translateX(-14px) scale(1.04) rotate(3deg);
+      opacity: 0;
+    }
   }
 }
 
@@ -601,7 +709,6 @@ section[id] {
     animation-range: 0% 55%;
     animation-fill-mode: both;
     animation-timing-function: ease-in;
-    will-change: transform, opacity;
   }
 
   /* Each facet disperses to a distinct direction — radially outward */
@@ -632,46 +739,83 @@ section[id] {
 
   @keyframes hero-disperse-upleft {
     /* top-left wing rotates CW as it flies away */
-    0%   { transform: translate(0, 0)         scale(1)    rotate(0deg);  opacity: 1; }
-    100% { transform: translate(-24px, -32px) scale(0.78) rotate(6deg);  opacity: 0; }
+    0% {
+      transform: translate(0, 0) scale(1) rotate(0deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(-24px, -32px) scale(0.78) rotate(6deg);
+      opacity: 0;
+    }
   }
 
   @keyframes hero-disperse-upright {
     /* top-right wing rotates CCW as it peels off */
-    0%   { transform: translate(0, 0)        scale(1)    rotate(0deg);  opacity: 1; }
-    100% { transform: translate(24px, -28px) scale(0.78) rotate(-8deg); opacity: 0; }
+    0% {
+      transform: translate(0, 0) scale(1) rotate(0deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(24px, -28px) scale(0.78) rotate(-8deg);
+      opacity: 0;
+    }
   }
 
   @keyframes hero-disperse-left {
     /* left shard tilts CW as it slides out */
-    0%   { transform: translate(0, 0)   scale(1)    rotate(0deg); opacity: 1; }
-    100% { transform: translate(-30px, 0) scale(0.82) rotate(5deg); opacity: 0; }
+    0% {
+      transform: translate(0, 0) scale(1) rotate(0deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(-30px, 0) scale(0.82) rotate(5deg);
+      opacity: 0;
+    }
   }
 
   @keyframes hero-disperse-downleft {
     /* bottom-left anchor rotates CCW as it sinks */
-    0%   { transform: translate(0, 0)       scale(1)    rotate(0deg);   opacity: 1; }
-    100% { transform: translate(-20px, 30px) scale(0.80) rotate(-6deg);  opacity: 0; }
+    0% {
+      transform: translate(0, 0) scale(1) rotate(0deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(-20px, 30px) scale(0.8) rotate(-6deg);
+      opacity: 0;
+    }
   }
 
   @keyframes hero-disperse-downright {
     /* bottom-right anchor rotates CW as it sinks */
-    0%   { transform: translate(0, 0)      scale(1)    rotate(0deg);  opacity: 1; }
-    100% { transform: translate(20px, 28px) scale(0.80) rotate(7deg);  opacity: 0; }
+    0% {
+      transform: translate(0, 0) scale(1) rotate(0deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(20px, 28px) scale(0.8) rotate(7deg);
+      opacity: 0;
+    }
   }
 
   @keyframes hero-disperse-center {
     /* center shimmer spins slightly as it dissolves */
-    0%   { transform: scale(1)    rotate(0deg);  opacity: 1; }
-    100% { transform: scale(0.88) rotate(-4deg); opacity: 0; }
+    0% {
+      transform: scale(1) rotate(0deg);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(0.88) rotate(-4deg);
+      opacity: 0;
+    }
   }
 }
 
-/* ── Stroke Draw-In (scroll-driven blueprint sketch) ────────────────────── */
+/* ── Facet Strokes (static) ──────────────────────────────────────────────── */
 /*
- * Fallback (non-supporting browsers): strokes are always visible — just static.
- * The @supports block overrides to animate only when scroll-driven animations
- * are available. stroke-dashoffset:0 outside means: always shown by default.
+ * Strokes render fully drawn. A scroll-driven stroke-draw animation used to
+ * animate stroke-dashoffset here, but stroke-dashoffset is a PAINT property
+ * (non-compositable) so it repainted every backdrop SVG on every scroll frame.
+ * Removed for scroll perf — the draw-in was a near-invisible blueprint flourish.
  */
 
 .section-backdrop .facet polygon,
@@ -683,70 +827,53 @@ section[id] {
   stroke-dashoffset: 0;
 }
 
-@supports (animation-timeline: view()) {
-  @keyframes facet-stroke-draw {
-    from { stroke-dashoffset: 1200; }
-    to   { stroke-dashoffset: 0; }
-  }
-
-  .section-backdrop .facet polygon,
-  .section-backdrop .facet rect {
-    stroke-dasharray: 1200;
-    stroke-dashoffset: 1200;
-    animation: facet-stroke-draw linear;
-    animation-timeline: view();
-    animation-range: entry 0% cover 50%;
-  }
-}
-
-@supports (animation-timeline: scroll()) {
-  @keyframes facet-stroke-draw-hero {
-    from { stroke-dashoffset: 1200; }
-    to   { stroke-dashoffset: 0; }
-  }
-
-  .hero-backdrop .facet polygon {
-    stroke-dasharray: 1200;
-    stroke-dashoffset: 1200;
-    animation: facet-stroke-draw-hero linear;
-    animation-timeline: scroll();
-    animation-range: 0% 30%;
-  }
-}
-
 /* ── Floating Particles ──────────────────────────────────────────────────── */
 /*
  * Small SVG diamond rects that drift on independent time-based loops.
- * Transform-only → GPU composited. will-change: transform applied only here.
+ * Transform-only → GPU composited (compositor promotes on demand; no will-change).
  * Different durations and delays make each particle feel independent.
  */
 
 @keyframes particle-drift-a {
-  from { transform: translate(0, 0)     rotate(45deg); }
-  to   { transform: translate(-18px, 28px) rotate(225deg); }
+  from {
+    transform: translate(0, 0) rotate(45deg);
+  }
+  to {
+    transform: translate(-18px, 28px) rotate(225deg);
+  }
 }
 
 @keyframes particle-drift-b {
-  from { transform: translate(0, 0)    rotate(45deg); }
-  to   { transform: translate(22px, -16px) rotate(225deg); }
+  from {
+    transform: translate(0, 0) rotate(45deg);
+  }
+  to {
+    transform: translate(22px, -16px) rotate(225deg);
+  }
 }
 
 @keyframes particle-drift-c {
-  from { transform: translate(0, 0)    rotate(45deg); }
-  to   { transform: translate(-12px, -24px) rotate(225deg); }
+  from {
+    transform: translate(0, 0) rotate(45deg);
+  }
+  to {
+    transform: translate(-12px, -24px) rotate(225deg);
+  }
 }
 
 @keyframes particle-drift-hero {
   /* Ascending sparks: float upward and slightly sideways */
-  from { transform: translate(0, 0)    rotate(45deg); opacity: 0.4; }
-  to   { transform: translate(8px, -32px) rotate(225deg); opacity: 0.1; }
+  from {
+    transform: translate(0, 0) rotate(45deg);
+    opacity: 0.4;
+  }
+  to {
+    transform: translate(8px, -32px) rotate(225deg);
+    opacity: 0.1;
+  }
 }
 
 /* Section particles */
-.section-backdrop .particle {
-  will-change: transform;
-}
-
 .section-backdrop .particle-1 {
   animation: particle-drift-a 25s ease-in-out infinite alternate;
   animation-delay: -3s;
@@ -769,10 +896,6 @@ section[id] {
 }
 
 /* Hero particles — ascending sparks */
-.hero-backdrop .particle {
-  will-change: transform;
-}
-
 .hero-backdrop .particle-1 {
   animation: particle-drift-hero 20s ease-in-out infinite alternate;
   animation-delay: -4s;
@@ -820,37 +943,67 @@ section[id] {
 /* Logo always visible by default; strokes overlay as a blueprint effect that draws in then fades.
    If the stroke animation fails to apply for any reason, the logo still renders normally. */
 .logo-wrapper > svg path {
-  stroke: #73a0be;
+  stroke: var(--brand);
   stroke-width: 1;
   stroke-opacity: 0;
   stroke-dasharray: 2000;
   stroke-dashoffset: 2000;
   animation:
-    logo-path-draw  1.2s ease-out both,
+    logo-path-draw 1.2s ease-out both,
     logo-path-stroke-fade 0.5s ease-out 1.3s both;
 }
 
 /* Stagger via nth-of-type so <defs> and other non-path siblings don't shift the index.
    Each bucket: (draw-start, stroke-fade-start) */
-.logo-wrapper > svg path:nth-of-type(10n+1)  { animation-delay: 0.00s, 1.30s; }
-.logo-wrapper > svg path:nth-of-type(10n+2)  { animation-delay: 0.04s, 1.34s; }
-.logo-wrapper > svg path:nth-of-type(10n+3)  { animation-delay: 0.08s, 1.38s; }
-.logo-wrapper > svg path:nth-of-type(10n+4)  { animation-delay: 0.12s, 1.42s; }
-.logo-wrapper > svg path:nth-of-type(10n+5)  { animation-delay: 0.16s, 1.46s; }
-.logo-wrapper > svg path:nth-of-type(10n+6)  { animation-delay: 0.20s, 1.50s; }
-.logo-wrapper > svg path:nth-of-type(10n+7)  { animation-delay: 0.24s, 1.54s; }
-.logo-wrapper > svg path:nth-of-type(10n+8)  { animation-delay: 0.28s, 1.58s; }
-.logo-wrapper > svg path:nth-of-type(10n+9)  { animation-delay: 0.32s, 1.62s; }
-.logo-wrapper > svg path:nth-of-type(10n+10) { animation-delay: 0.36s, 1.66s; }
+.logo-wrapper > svg path:nth-of-type(10n + 1) {
+  animation-delay: 0s, 1.3s;
+}
+.logo-wrapper > svg path:nth-of-type(10n + 2) {
+  animation-delay: 0.04s, 1.34s;
+}
+.logo-wrapper > svg path:nth-of-type(10n + 3) {
+  animation-delay: 0.08s, 1.38s;
+}
+.logo-wrapper > svg path:nth-of-type(10n + 4) {
+  animation-delay: 0.12s, 1.42s;
+}
+.logo-wrapper > svg path:nth-of-type(10n + 5) {
+  animation-delay: 0.16s, 1.46s;
+}
+.logo-wrapper > svg path:nth-of-type(10n + 6) {
+  animation-delay: 0.2s, 1.5s;
+}
+.logo-wrapper > svg path:nth-of-type(10n + 7) {
+  animation-delay: 0.24s, 1.54s;
+}
+.logo-wrapper > svg path:nth-of-type(10n + 8) {
+  animation-delay: 0.28s, 1.58s;
+}
+.logo-wrapper > svg path:nth-of-type(10n + 9) {
+  animation-delay: 0.32s, 1.62s;
+}
+.logo-wrapper > svg path:nth-of-type(10n + 10) {
+  animation-delay: 0.36s, 1.66s;
+}
 
 @keyframes logo-path-draw {
-  from { stroke-opacity: 0.85; stroke-dashoffset: 2000; }
-  to   { stroke-opacity: 0.85; stroke-dashoffset: 0; }
+  from {
+    stroke-opacity: 0.85;
+    stroke-dashoffset: 2000;
+  }
+  to {
+    stroke-opacity: 0.85;
+    stroke-dashoffset: 0;
+  }
 }
 
 @keyframes logo-path-stroke-fade {
-  from { stroke-opacity: 0.85; }
-  to   { stroke-opacity: 0; }
+  from {
+    stroke-opacity: 0.85;
+  }
+  to {
+    stroke-opacity: 0;
+  }
 }
 
 /* Respect user motion preference — disable ALL backdrop and facet motion */
@@ -905,4 +1058,3 @@ section[id] {
     opacity: 0.3;
   }
 }
-

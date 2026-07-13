@@ -1,10 +1,10 @@
 ---
-title: "Teotech CRM — Invoicing Suite and Document Repository"
+title: "Teotech — CRM, CFDI 4.0 Invoicing and Document Suite"
 client: Teotech
-year: 2025
-yearRange: "2022–2025"
-stack: ["PHP", "MySQL", "JavaScript", "dompdf"]
-summary: "Modular PHP CRM with CFDI 4.0 invoicing, quotations, PWA capability, and a permission-based document repository."
+year: 2026
+yearRange: "2025–2026"
+stack: ["PHP 8", "MySQL", "JavaScript", "CFDI 4.0 / SAT", "PHPMailer", "dompdf", "PWA"]
+summary: "Multi-tenant PHP 8 suite: CFDI 4.0 invoicing, a timbrado job queue, AV/DLP file repository, and observability."
 role: "Backend Developer & Systems Architect"
 placeholder: true
 confidential: true
@@ -14,22 +14,28 @@ order: 5
 
 ## The problem
 
-A professional services firm needed to unify three critical workflows in a single system: CFDI 4.0 invoice generation compliant with Mexico's SAT regulations, quotation management with status tracking, and a document repository with per-user access control, storage quotas, and automatic expiration alerts for time-sensitive files.
+Teotech ran its tax, commercial, and document operations spread across spreadsheets, shared folders, and manual SAT filings. It lacked a multi-tenant platform that could issue CFDI 4.0 invoices reliably, control per-file access and quotas, and provide end-to-end traceability over invoicing, collections, and certificate expiration. Synchronous timbrado against the PAC was fragile: every request was at the mercy of the external service's latency and outages.
 
 ## The solution
 
-I designed and built a modular PHP suite running on XAMPP/Apache with MySQL. The architecture separates concerns into `php/` (domain logic) and `api/` (REST endpoints consumed by the JavaScript frontend). The invoicing module covers all CFDI 4.0 document types: standard invoices, global invoices, payment complements, and cancellations, with SAT timbrado integration.
+I built a PHP 8 suite on MySQL that progressively migrated toward a layered, DDD-style architecture. Domain logic lives in a PSR-4 `src/` layer (`Teotech\Domain` for Files, Clients, and Invoicing; `Teotech\Http` for request/response), while `php/` and `api/` expose the REST endpoints and controllers that still hold legacy rules and gradually drain them into the domain.
 
-The document repository handles per-user access permissions, role-based storage quotas, and PHPMailer-driven email alerts when a document approaches its expiration date. A PWA manifest enables installation as a desktop application.
+The tax core covers the CFDI 4.0 document types —standard, global, payment complement, and cancellation— backed by the SAT catalogs (tax regime, CFDI use, payment methods, product and unit keys). Timbrado was decoupled into a job queue with retries, backoff, and metrics, processed by a worker outside the request cycle. Around it, real modules grew: client management with their certificates, collections, support tickets, and certificate-expiration tracking with email alerts (PHPMailer) and scheduled tasks.
+
+The document repository is multi-tenant, with role-based quotas and per-user structure. Uploads run through a security pipeline: extension/MIME allow-listing, policy-driven AV/DLP scanning, and file versioning. A separate indexing worker keeps its own queue to catalog content, and an observability middleware propagates a correlation ID per request and exports structured authentication and operation events. The dashboard lazy-loads its modules dynamically based on the permissions and modules enabled per company, and a PWA manifest lets it install as a desktop application.
 
 ## My role
 
-I was the sole developer and architect. I designed the database schema, built the invoicing and repository modules, integrated PHPMailer for the automated alerting system, wrote the database migration and backup scripts, and delivered technical documentation for the system administrator.
+I was the developer and architect of the platform. I designed the database schema and versioned migrations, extracted the domain into the PSR-4 layer, implemented the timbrado and indexing queues with their workers, the upload pipeline with AV/DLP and versioning, the observability middleware, and the per-company role, quota, and module system. I integrated PHPMailer for alerts and delivered migration, seed, and backup scripts via Composer.
 
 ## Outcome
 
-The system centralizes the firm's document and tax operations in an internal portal. CFDI 4.0 invoice generation is SAT-compliant. The document repository replaced unstructured shared folders and provides visibility into the expiration status of critical documents.
+Teotech now runs on a single internal portal that centralizes invoicing, clients, collections, support, and documents. Asynchronous timbrado absorbs PAC outages without blocking the user and leaves metrics to diagnose failures. The repository replaced shared folders with controlled, scanned, versioned storage, and observability provides per-request traceability across the whole operation.
+
+## Notable learning
+
+Decoupling timbrado into a queue with retries was the highest-impact change: turning an unstable external dependency into an asynchronous process with backoff and metrics transformed how reliable the system felt. I also learned to migrate a legacy base toward DDD incrementally —domain in `src/` coexisting with legacy endpoints in `php/`— without halting operations.
 
 ## Confidentiality note
 
-This project is for a private client. Business-specific details, client names, and SAT configuration are not disclosed in this portfolio. This entry focuses on the technical architecture and scope of work.
+This project is for a private client. Business names, SAT configuration, credentials, and operational data are not disclosed in this portfolio. This entry focuses on the technical architecture and scope of work.

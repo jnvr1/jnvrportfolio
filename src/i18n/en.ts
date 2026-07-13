@@ -45,6 +45,8 @@ export const enStrings: Strings = {
     title: 'Projects',
     intro: 'Selected systems I designed, built, and shipped to production.',
     filterLabel: 'Filter by technology',
+    filterAll: 'All',
+    confidential: 'Confidential',
     showingCount: (n: number) => `Showing ${n} project${n === 1 ? '' : 's'}`,
     placeholderAlt: 'Screenshot not available',
     stackLabel: 'Stack',
@@ -52,8 +54,11 @@ export const enStrings: Strings = {
   experience: {
     title: 'Experience',
     present: 'Present',
-    intro: 'Roles, responsibilities, and impact that show how my path grew across product, backend, support, and technical leadership.',
+    intro:
+      'Roles, responsibilities, and impact that show how my path grew across product, backend, support, and technical leadership.',
     currentRole: 'Current role',
+    location: 'Location',
+    rangeConnector: 'to',
   },
   contact: {
     title: 'Contact',
@@ -61,7 +66,7 @@ export const enStrings: Strings = {
   },
   footer: {
     rights: 'All rights reserved',
-    madeWith: 'Made with',
+    archiveLabel: 'Past versions',
   },
   a11y: {
     skipToContent: 'Skip to main content',
@@ -69,6 +74,7 @@ export const enStrings: Strings = {
     closeMenu: 'Close menu',
     logoLabel: 'JNVR — home',
     localeSwitcherLabel: 'Switch language',
+    breadcrumbLabel: 'breadcrumb',
   },
   meta: {
     siteTitle: 'JNVR — Full-Stack Developer',

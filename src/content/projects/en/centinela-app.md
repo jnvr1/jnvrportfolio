@@ -1,10 +1,10 @@
 ---
 title: "Centinela — Residential Access Control System"
 client: Centinela
-year: 2024
-yearRange: "2022–2024"
-stack: ["Flutter", "Firebase", "Stripe", "MercadoPago"]
-summary: "Mobile SaaS for residential access control: visitor management, real-time chat, push notifications, and subscriptions."
+year: 2026
+yearRange: "2024–2026"
+stack: ["Flutter", "Firebase", "Cloud Functions", "Firestore", "MercadoPago", "FCM"]
+summary: "Mobile SaaS for residential access control: visitors, chat with voice notes, notifications, and subscriptions."
 role: "Lead Mobile Developer & Architect"
 cover: ../../../assets/projects/centinela-app-mobile.webp
 placeholder: false
@@ -19,18 +19,18 @@ Residential communities managed visitor access manually — paper logs, security
 
 ## The solution
 
-I designed and built Centinela: a Flutter application for Android and iOS using Firebase as the complete backend. The architecture follows Clean Architecture conventions (layers: `presentation`, `domain`, `application`, `data`) to keep business logic decoupled from the framework.
+I designed and built Centinela: a Flutter application for Android and iOS using Firebase as the complete backend. The architecture follows Clean Architecture conventions (layers: `presentation`, `domain`, `application`, `data`) to keep business logic decoupled from the framework, with a unidirectional `Repository → UseCase → Controller → Screen` flow.
 
-Core modules include: QR code generation for visitor passes with configurable expiration, real-time resident chat with moderation, FCM push notifications for entry alerts and messages, and a subscription billing system integrating both Stripe (international cards) and MercadoPago (Mexican market). Firebase App Check protects Cloud Functions from abuse.
+Core modules include: visitor access codes with configurable expiration and use limits, shared as text or number (share_plus) with nothing to scan; real-time resident chat with voice notes; exportable Excel reports; FCM push notifications plus transactional email via Nodemailer; and a subscription system built on MercadoPago alongside a manual subscription type. Firebase App Check protects Cloud Functions from abuse.
 
 ## My role
 
-I was the sole developer and architect. I defined the Firestore collection structure, implemented security rules, set up Cloud Functions for payment processing and notification delivery, and shipped the project from prototype to the first production releases on the Play Store.
+I was the lead developer and architect. I defined the Firestore collection structure and its indexes, implemented security rules, and built the Cloud Functions (Node 20, v2) for payments, reconciliation, notifications, and scheduled jobs. I shipped the project from prototype to production releases on the Play Store.
 
 ## Outcome
 
-The app allows community administrators to manage 100% of visitor flows from their phone, eliminating paper logs entirely. The SaaS model enabled onboarding new communities without infrastructure changes. Residents receive push alerts within 2 seconds of a visitor being registered at the gate.
+The app lets community administrators manage 100% of visitor flows from their phone, eliminating paper logs entirely. The SaaS model enabled onboarding new communities without infrastructure changes, and residents receive push alerts in real time the moment a visitor is registered at the gate.
 
 ## Notable learning
 
-Integrating two payment gateways (Stripe for international cards, MercadoPago for the Mexican market) in a single Cloud Function required designing a clean payment abstraction layer — so the application domain had no knowledge of any specific gateway. Dependency inversion principle applied in a real production context.
+Integrating MercadoPago in production meant more than taking payments: I built a scheduled job (`reconcileMercadoPagoPayments`) that queries the API, detects refunds and chargebacks, and suspends or reactivates subscriptions based on the payment's real status. All of it sits behind a payment-type abstraction (MercadoPago and manual coexist without the domain knowing any gateway's details) — dependency inversion applied to a real money flow.

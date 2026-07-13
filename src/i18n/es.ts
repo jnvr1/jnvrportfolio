@@ -43,6 +43,8 @@ export const esStrings = {
     title: 'Proyectos',
     intro: 'Algunos sistemas que diseñé, construí y llevé a producción.',
     filterLabel: 'Filtrar por tecnología',
+    filterAll: 'Todos',
+    confidential: 'Confidencial',
     showingCount: (n: number) => `Mostrando ${n} proyecto${n === 1 ? '' : 's'}`,
     placeholderAlt: 'Captura no disponible',
     stackLabel: 'Stack',
@@ -50,8 +52,11 @@ export const esStrings = {
   experience: {
     title: 'Experiencia',
     present: 'Presente',
-    intro: 'Roles, responsabilidades e impacto que muestran cómo fui creciendo entre producto, backend, soporte y liderazgo técnico.',
+    intro:
+      'Roles, responsabilidades e impacto que muestran cómo fui creciendo entre producto, backend, soporte y liderazgo técnico.',
     currentRole: 'Rol actual',
+    location: 'Ubicación',
+    rangeConnector: 'a',
   },
   contact: {
     title: 'Contacto',
@@ -59,7 +64,7 @@ export const esStrings = {
   },
   footer: {
     rights: 'Todos los derechos reservados',
-    madeWith: 'Hecho con',
+    archiveLabel: 'Versiones anteriores',
   },
   a11y: {
     skipToContent: 'Ir al contenido principal',
@@ -67,6 +72,7 @@ export const esStrings = {
     closeMenu: 'Cerrar menú',
     logoLabel: 'JNVR — inicio',
     localeSwitcherLabel: 'Cambiar idioma',
+    breadcrumbLabel: 'ruta de navegación',
   },
   meta: {
     siteTitle: 'JNVR — Desarrollador Full-Stack',
